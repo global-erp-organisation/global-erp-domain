@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.joda.time.DateTime;
 
@@ -44,7 +45,11 @@ public class Inventaire extends Entite {
 
     private boolean inventaireClos;
 
+    @OneToMany(mappedBy = "inventaire")
     private Collection<Document> documents;
+
+    @OneToMany(mappedBy = "inventaire")
+    private Collection<LigneInventaire> ligneInventaires;
 
     public int getInventaireId() {
         return inventaireId;
@@ -116,6 +121,14 @@ public class Inventaire extends Entite {
 
     public void setDocuments(Collection<Document> documents) {
         this.documents = documents;
+    }
+
+    public Collection<LigneInventaire> getLigneInventaires() {
+        return ligneInventaires;
+    }
+
+    public void setLigneInventaires(Collection<LigneInventaire> ligneInventaires) {
+        this.ligneInventaires = ligneInventaires;
     }
 
     @Override

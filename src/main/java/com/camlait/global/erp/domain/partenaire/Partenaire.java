@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.partenaire;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +11,16 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.document.vente.DocumentDeVente;
+import com.camlait.global.erp.domain.immobilisation.Immobilisation;
 import com.camlait.global.erp.domain.localisation.Centre;
+import com.camlait.global.erp.domain.operation.Operation;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -38,6 +44,15 @@ public class Partenaire extends Entite {
     @ManyToOne
     @JoinColumn(name = ClePrimaires.LOCALISATION_ID)
     private Centre centre;
+
+    @OneToMany(mappedBy = "client")
+    private Collection<DocumentDeVente> documents;
+
+    @OneToMany(mappedBy = "immobilisation")
+    private Collection<Immobilisation> immobilisations;
+
+    @OneToMany(mappedBy = "partenaire")
+    private Collection<Operation> operations;
 
     public int getPartenaireId() {
         return partenaireId;
@@ -95,6 +110,14 @@ public class Partenaire extends Entite {
         this.centre = centre;
     }
 
+    public Collection<DocumentDeVente> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(Collection<DocumentDeVente> documents) {
+        this.documents = documents;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -102,6 +125,22 @@ public class Partenaire extends Entite {
         result = prime * result + ((codePartenaire == null) ? 0 : codePartenaire.hashCode());
         result = prime * result + partenaireId;
         return result;
+    }
+
+    public Collection<Immobilisation> getImmobilisations() {
+        return immobilisations;
+    }
+
+    public void setImmobilisations(Collection<Immobilisation> immobilisations) {
+        this.immobilisations = immobilisations;
+    }
+
+    public Collection<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(Collection<Operation> operations) {
+        this.operations = operations;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.reglement;
+package com.camlait.global.erp.domain.operation.reglement;
 
 import javax.persistence.Entity;
 

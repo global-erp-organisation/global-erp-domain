@@ -1,8 +1,11 @@
 package com.camlait.global.erp.domain.partenaire;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.immobilisation.Vehicule;
@@ -15,9 +18,8 @@ public class Vendeur extends Employe {
     @JoinColumn(name = ClePrimaires.LOCALISATION_ID)
     private Zone zoneDeVente;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.IMMO_ID)
-    private Vehicule vehicule;
+    @OneToMany(mappedBy = "immobilisation")
+    private Collection<Vehicule> vehicules;
 
     public Zone getZoneDeVente() {
         return zoneDeVente;
@@ -27,11 +29,12 @@ public class Vendeur extends Employe {
         this.zoneDeVente = zoneDeVente;
     }
 
-    public Vehicule getVehicule() {
-        return vehicule;
+    public Collection<Vehicule> getVehicules() {
+        return vehicules;
     }
 
-    public void setVehicule(Vehicule vehicule) {
-        this.vehicule = vehicule;
+    public void setVehicules(Collection<Vehicule> vehicules) {
+        this.vehicules = vehicules;
     }
+
 }

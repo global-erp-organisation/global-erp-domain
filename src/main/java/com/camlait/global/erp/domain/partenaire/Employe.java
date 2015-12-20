@@ -1,14 +1,18 @@
 package com.camlait.global.erp.domain.partenaire;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.auth.Utilisateur;
 import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.operation.Operation;
 
 @Entity
 public class Employe extends Partenaire {
@@ -26,6 +30,9 @@ public class Employe extends Partenaire {
     @ManyToOne
     @JoinColumn(name = ClePrimaires.UTILISATEUR_ID)
     private Utilisateur utilisateur;
+
+    @OneToMany(mappedBy = "responsable")
+    private Collection<Operation> operations;
 
     public String getMatricule() {
         return matricule;
@@ -66,4 +73,13 @@ public class Employe extends Partenaire {
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
     }
+
+    public Collection<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(Collection<Operation> operations) {
+        this.operations = operations;
+    }
+
 }

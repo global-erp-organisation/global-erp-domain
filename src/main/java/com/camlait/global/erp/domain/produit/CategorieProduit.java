@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.produit;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.config.ClePrimaires;
@@ -31,6 +34,9 @@ public class CategorieProduit extends Entite {
     private Portee portee;
 
     private boolean categorieTaxable;
+
+    @OneToMany(mappedBy = "categorie")
+    private Collection<Produit> produits;
 
     public int getCategorieProduitId() {
         return categorieProduitId;
@@ -78,6 +84,14 @@ public class CategorieProduit extends Entite {
 
     public void setCategorieTaxable(boolean categorieTaxable) {
         this.categorieTaxable = categorieTaxable;
+    }
+
+    public Collection<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(Collection<Produit> produits) {
+        this.produits = produits;
     }
 
     @Override

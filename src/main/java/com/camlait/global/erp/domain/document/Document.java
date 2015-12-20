@@ -9,6 +9,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.joda.time.DateTime;
 
@@ -21,7 +22,7 @@ import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Document extends Entite {
 
     @Id
@@ -54,6 +55,9 @@ public class Document extends Entite {
     @ManyToOne
     @JoinColumn(name = ClePrimaires.INVENTAIRE_ID)
     private Inventaire inventaire;
+
+    @OneToMany(mappedBy = "document")
+    private LigneDeDocument ligneDocuments;
 
     public int getDocumentId() {
         return DocumentId;
@@ -133,6 +137,14 @@ public class Document extends Entite {
 
     public void setInventaire(Inventaire inventaire) {
         this.inventaire = inventaire;
+    }
+
+    public LigneDeDocument getLigneDocuments() {
+        return ligneDocuments;
+    }
+
+    public void setLigneDocuments(LigneDeDocument ligneDocuments) {
+        this.ligneDocuments = ligneDocuments;
     }
 
     @Override

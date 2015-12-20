@@ -1,10 +1,10 @@
-package com.camlait.global.erp.domain.reglement;
+package com.camlait.global.erp.domain.operation.marge;
 
 import javax.persistence.Entity;
 
 import com.camlait.global.erp.domain.operation.Operation;
 
 @Entity
-public class Reglement extends Operation{
+public class MargeFinancier extends Operation {
 
 }

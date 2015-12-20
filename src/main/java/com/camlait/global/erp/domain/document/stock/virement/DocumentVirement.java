@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.document.virement;
+package com.camlait.global.erp.domain.document.stock.virement;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

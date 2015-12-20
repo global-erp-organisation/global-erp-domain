@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.operation.caisse;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.joda.time.DateTime;
 
@@ -32,6 +35,9 @@ public class JournalCaisse extends Entite {
     @ManyToOne
     @JoinColumn(name = ClePrimaires.CAISSE_ID)
     private Caisse caisse;
+
+    @OneToMany(mappedBy = "journal")
+    private Collection<OperationDeCaisse> opreations;
 
     public int getJournalId() {
         return journalId;
@@ -75,6 +81,14 @@ public class JournalCaisse extends Entite {
 
     public Caisse getCaisse() {
         return caisse;
+    }
+
+    public Collection<OperationDeCaisse> getOpreations() {
+        return opreations;
+    }
+
+    public void setOpreations(Collection<OperationDeCaisse> opreations) {
+        this.opreations = opreations;
     }
 
     @Override

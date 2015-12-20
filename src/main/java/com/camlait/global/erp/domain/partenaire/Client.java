@@ -3,13 +3,12 @@ package com.camlait.global.erp.domain.partenaire;
 import java.util.Collection;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.config.ClePrimaires;
-import com.camlait.global.erp.domain.document.vente.DocumentDeVente;
+import com.camlait.global.erp.domain.document.vente.FactureClient;
 import com.camlait.global.erp.domain.immobilisation.Refrigerateur;
 import com.camlait.global.erp.domain.localisation.Zone;
 
@@ -20,10 +19,11 @@ public class Client extends Partenaire {
     @JoinColumn(name = ClePrimaires.LOCALISATION_ID)
     private Zone zone;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
-    private Collection<Refrigerateur> refrigerateurs;
+    @OneToMany(mappedBy = "client")
+    private Collection<FactureClient> factures;
 
-    private Collection<DocumentDeVente> documents;
+    @OneToMany(mappedBy = "immobilisation")
+    private Collection<Refrigerateur> refrigerateurs;
 
     public Zone getZone() {
         return zone;
@@ -41,11 +41,12 @@ public class Client extends Partenaire {
         this.refrigerateurs = refrigerateurs;
     }
 
-    public Collection<DocumentDeVente> getDocuments() {
-        return documents;
+    public Collection<FactureClient> getFactures() {
+        return factures;
     }
 
-    public void setDocuments(Collection<DocumentDeVente> documents) {
-        this.documents = documents;
+    public void setFactures(Collection<FactureClient> factures) {
+        this.factures = factures;
     }
+
 }

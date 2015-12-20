@@ -54,6 +54,8 @@ public class Bmq extends Entite {
 
     private DateTime derniereMiseAJour;
 
+    private boolean bmqClos;
+
     public PKBmq getBmqId() {
         return bmqId;
     }
@@ -133,7 +135,7 @@ public class Bmq extends Entite {
     public void setLigneBmqs(Collection<LigneBmq> ligneBmqs) {
         this.ligneBmqs = ligneBmqs;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -141,6 +143,14 @@ public class Bmq extends Entite {
         result = prime * result + ((bmqId == null) ? 0 : bmqId.hashCode());
         result = prime * result + ((codeBmq == null) ? 0 : codeBmq.hashCode());
         return result;
+    }
+
+    public boolean isBmqClos() {
+        return bmqClos;
+    }
+
+    public void setBmqClos(boolean bmqClos) {
+        this.bmqClos = bmqClos;
     }
 
     @Override

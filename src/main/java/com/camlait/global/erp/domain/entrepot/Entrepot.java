@@ -1,15 +1,22 @@
 package com.camlait.global.erp.domain.entrepot;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.localisation.Centre;
+import com.camlait.global.erp.domain.partenaire.Employe;
 
 @Entity
 public class Entrepot extends Entite {
@@ -28,6 +35,13 @@ public class Entrepot extends Entite {
     private DateTime dateDeCreation;
 
     private DateTime derniereMiseAJour;
+
+    @ManyToOne
+    @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+    private Employe responsable;
+
+    @OneToMany(mappedBy = "entrepot")
+    private Collection<Magasin> magasins;
 
     public int getEntrepotId() {
         return entrepotId;
@@ -75,6 +89,22 @@ public class Entrepot extends Entite {
 
     public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
         this.derniereMiseAJour = derniereMiseAJour;
+    }
+
+    public Collection<Magasin> getMagasins() {
+        return magasins;
+    }
+
+    public void setMagasins(Collection<Magasin> magasins) {
+        this.magasins = magasins;
+    }
+
+    public Employe getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(Employe responsable) {
+        this.responsable = responsable;
     }
 
     @Override

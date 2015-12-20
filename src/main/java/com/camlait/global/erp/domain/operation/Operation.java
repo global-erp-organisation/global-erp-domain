@@ -14,6 +14,7 @@ import org.joda.time.DateTime;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
+import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
 
 @Entity
@@ -38,7 +39,7 @@ public class Operation extends Entite {
 
     @ManyToOne
     @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
-    private Partenaire responsable;
+    private Employe responsable;
 
     @ManyToOne
     @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
@@ -100,11 +101,11 @@ public class Operation extends Entite {
         this.montantOperation = montantOperation;
     }
 
-    public Partenaire getResponsable() {
+    public Employe getResponsable() {
         return responsable;
     }
 
-    public void setResponsable(Partenaire responsable) {
+    public void setResponsable(Employe responsable) {
         this.responsable = responsable;
     }
 
