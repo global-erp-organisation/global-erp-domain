@@ -19,101 +19,110 @@ import com.camlait.global.erp.domain.config.ClePrimaires;
 @Entity
 public class JournalCaisse extends Entite {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int journalId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long journalId;
 
-    @Column(unique = true, nullable = false)
-    private String codeJournal;
+	@Column(unique = true, nullable = false)
+	private String codeJournal;
 
-    private String description;
+	private String description;
 
-    private DateTime dateDebutJournal;
+	private DateTime dateDebutJournal;
 
-    private DateTime dateFinJournal;
+	private DateTime dateFinJournal;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.CAISSE_ID)
-    private Caisse caisse;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.CAISSE_ID)
+	private Caisse caisse;
 
-    @OneToMany(mappedBy = "journal")
-    private Collection<OperationDeCaisse> opreations;
+	@OneToMany(mappedBy = "journal")
+	private Collection<OperationDeCaisse> opreations;
 
-    public int getJournalId() {
-        return journalId;
-    }
+	public Long getJournalId() {
+		return journalId;
+	}
 
-    public void setJournalId(int journalId) {
-        this.journalId = journalId;
-    }
+	public void setJournalId(Long journalId) {
+		this.journalId = journalId;
+	}
 
-    public String getCodeJournal() {
-        return codeJournal;
-    }
+	public String getCodeJournal() {
+		return codeJournal;
+	}
 
-    public void setCodeJournal(String codeJournal) {
-        this.codeJournal = codeJournal;
-    }
+	public void setCodeJournal(String codeJournal) {
+		this.codeJournal = codeJournal;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public DateTime getDateDebutJournal() {
-        return dateDebutJournal;
-    }
+	public DateTime getDateDebutJournal() {
+		return dateDebutJournal;
+	}
 
-    public void setDateDebutJournal(DateTime dateDebutJournal) {
-        this.dateDebutJournal = dateDebutJournal;
-    }
+	public void setDateDebutJournal(DateTime dateDebutJournal) {
+		this.dateDebutJournal = dateDebutJournal;
+	}
 
-    public DateTime getDateFinJournal() {
-        return dateFinJournal;
-    }
+	public DateTime getDateFinJournal() {
+		return dateFinJournal;
+	}
 
-    public void setDateFinJournal(DateTime dateFinJournal) {
-        this.dateFinJournal = dateFinJournal;
-    }
+	public void setDateFinJournal(DateTime dateFinJournal) {
+		this.dateFinJournal = dateFinJournal;
+	}
 
-    public Caisse getCaisse() {
-        return caisse;
-    }
+	public Caisse getCaisse() {
+		return caisse;
+	}
 
-    public Collection<OperationDeCaisse> getOpreations() {
-        return opreations;
-    }
+	public Collection<OperationDeCaisse> getOpreations() {
+		return opreations;
+	}
 
-    public void setOpreations(Collection<OperationDeCaisse> opreations) {
-        this.opreations = opreations;
-    }
+	public void setOpreations(Collection<OperationDeCaisse> opreations) {
+		this.opreations = opreations;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + journalId;
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codeJournal == null) ? 0 : codeJournal.hashCode());
+		result = prime * result + ((journalId == null) ? 0 : journalId.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        JournalCaisse other = (JournalCaisse) obj;
-        if (journalId != other.journalId)
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		JournalCaisse other = (JournalCaisse) obj;
+		if (codeJournal == null) {
+			if (other.codeJournal != null)
+				return false;
+		} else if (!codeJournal.equals(other.codeJournal))
+			return false;
+		if (journalId == null) {
+			if (other.journalId != null)
+				return false;
+		} else if (!journalId.equals(other.journalId))
+			return false;
+		return true;
+	}
 
-    public void setCaisse(Caisse caisse) {
-        this.caisse = caisse;
-    }
+	public void setCaisse(Caisse caisse) {
+		this.caisse = caisse;
+	}
 }

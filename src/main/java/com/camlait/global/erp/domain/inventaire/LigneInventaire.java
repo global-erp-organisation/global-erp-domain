@@ -13,109 +13,108 @@ import com.camlait.global.erp.domain.produit.Produit;
 @Entity
 public class LigneInventaire extends Entite {
 
-    @EmbeddedId
-    private PKLigneInventaire ligneInventaireId;
+	@EmbeddedId
+	private PKLigneInventaire ligneInventaireId;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.INVENTAIRE_ID)
-    private Inventaire inventaire;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.INVENTAIRE_ID)
+	private Inventaire inventaire;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.PRODUIT_ID)
-    private Produit produit;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.PRODUIT_ID)
+	private Produit produit;
 
-    private int quantiteReelle;
+	private Long quantiteReelle;
 
-    private int quantiteAjustee;
+	private Long quantiteAjustee;
 
-    private double prixUnitaireReelle;
+	private double prixUnitaireReelle;
 
-    private double prixUnitaireAjustee;
+	private double prixUnitaireAjustee;
 
-    public PKLigneInventaire getLigneInventaireId() {
-        return ligneInventaireId;
-    }
+	public PKLigneInventaire getLigneInventaireId() {
+		return ligneInventaireId;
+	}
 
-    public void setLigneInventaireId(PKLigneInventaire ligneInventaireId) {
-        this.ligneInventaireId = ligneInventaireId;
-    }
+	public void setLigneInventaireId(PKLigneInventaire ligneInventaireId) {
+		this.ligneInventaireId = ligneInventaireId;
+	}
 
-    public Inventaire getInventaire() {
-        return inventaire;
-    }
+	public Inventaire getInventaire() {
+		return inventaire;
+	}
 
-    public void setInventaire(Inventaire inventaire) {
-        this.inventaire = inventaire;
-    }
+	public void setInventaire(Inventaire inventaire) {
+		this.inventaire = inventaire;
+	}
 
-    public Produit getProduit() {
-        return produit;
-    }
+	public Produit getProduit() {
+		return produit;
+	}
 
-    public void setProduit(Produit produit) {
-        this.produit = produit;
-    }
+	public void setProduit(Produit produit) {
+		this.produit = produit;
+	}
 
-    public int getQuantiteReelle() {
-        return quantiteReelle;
-    }
+	public Long getQuantiteReelle() {
+		return quantiteReelle;
+	}
 
-    public void setQuantiteReelle(int quantiteReelle) {
-        this.quantiteReelle = quantiteReelle;
-    }
+	public void setQuantiteReelle(Long quantiteReelle) {
+		this.quantiteReelle = quantiteReelle;
+	}
 
-    public int getQuantiteAjustee() {
-        return quantiteAjustee;
-    }
+	public Long getQuantiteAjustee() {
+		return quantiteAjustee;
+	}
 
-    public void setQuantiteAjustee(int quantiteAjustee) {
-        this.quantiteAjustee = quantiteAjustee;
-    }
+	public void setQuantiteAjustee(Long quantiteAjustee) {
+		this.quantiteAjustee = quantiteAjustee;
+	}
 
-    public double getPrixUnitaireReelle() {
-        return prixUnitaireReelle;
-    }
+	public double getPrixUnitaireReelle() {
+		return prixUnitaireReelle;
+	}
 
-    public void setPrixUnitaireReelle(double prixUnitaireReelle) {
-        this.prixUnitaireReelle = prixUnitaireReelle;
-    }
+	public void setPrixUnitaireReelle(double prixUnitaireReelle) {
+		this.prixUnitaireReelle = prixUnitaireReelle;
+	}
 
-    public double getPrixUnitaireAjustee() {
-        return prixUnitaireAjustee;
-    }
+	public double getPrixUnitaireAjustee() {
+		return prixUnitaireAjustee;
+	}
 
-    public void setPrixUnitaireAjustee(double prixUnitaireAjustee) {
-        this.prixUnitaireAjustee = prixUnitaireAjustee;
-    }
+	public void setPrixUnitaireAjustee(double prixUnitaireAjustee) {
+		this.prixUnitaireAjustee = prixUnitaireAjustee;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((ligneInventaireId == null) ? 0 : ligneInventaireId.hashCode());
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ligneInventaireId == null) ? 0 : ligneInventaireId.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        LigneInventaire other = (LigneInventaire) obj;
-        if (ligneInventaireId == null) {
-            if (other.ligneInventaireId != null)
-                return false;
-        }
-        else if (!ligneInventaireId.equals(other.ligneInventaireId))
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LigneInventaire other = (LigneInventaire) obj;
+		if (ligneInventaireId == null) {
+			if (other.ligneInventaireId != null)
+				return false;
+		} else if (!ligneInventaireId.equals(other.ligneInventaireId))
+			return false;
+		return true;
+	}
 
-    public LigneInventaire() {
+	public LigneInventaire() {
 
-    }
+	}
 
 }

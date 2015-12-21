@@ -6,34 +6,38 @@ import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.document.Document;
+import com.camlait.global.erp.domain.enumeration.SensOperation;
+import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.partenaire.Client;
 
 @Entity
 public class DocumentDeVente extends Document {
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
-    private Client client;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	private Client client;
 
-    private boolean documentSolde;
+	private boolean documentSolde;
 
-    public Client getClient() {
-        return client;
-    }
+	public Client getClient() {
+		return client;
+	}
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
+	public void setClient(Client client) {
+		this.client = client;
+	}
 
-    public boolean isDocumentSolde() {
-        return documentSolde;
-    }
+	public boolean isDocumentSolde() {
+		return documentSolde;
+	}
 
-    public void setDocumentSolde(boolean documentSolde) {
-        this.documentSolde = documentSolde;
-    }
+	public void setDocumentSolde(boolean documentSolde) {
+		this.documentSolde = documentSolde;
+	}
 
-    public DocumentDeVente() {
+	public DocumentDeVente() {
+		setSensOperation(SensOperation.SORTIE);
+		setTypeDocument(TypeDocuments.FACTURE_CLIENT);
+	}
 
-    }
 }

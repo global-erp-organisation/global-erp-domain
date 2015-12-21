@@ -21,122 +21,124 @@ import com.camlait.global.erp.domain.partenaire.Employe;
 @Entity
 public class Entrepot extends Entite {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int entrepotId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long entrepotId;
 
-    @Column(nullable = false, unique = true)
-    private String codeEntrepot;
+	@Column(nullable = false, unique = true)
+	private String codeEntrepot;
 
-    private String descriptionEntrepot;
+	private String descriptionEntrepot;
 
-    private Centre centre;
+	private Centre centre;
 
-    private DateTime dateDeCreation;
+	private DateTime dateDeCreation;
 
-    private DateTime derniereMiseAJour;
+	private DateTime derniereMiseAJour;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
-    private Employe responsable;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	private Employe responsable;
 
-    @OneToMany(mappedBy = "entrepot")
-    private Collection<Magasin> magasins;
+	@OneToMany(mappedBy = "entrepot")
+	private Collection<Magasin> magasins;
 
-    public int getEntrepotId() {
-        return entrepotId;
-    }
+	public Long getEntrepotId() {
+		return entrepotId;
+	}
 
-    public void setEntrepotId(int entrepotId) {
-        this.entrepotId = entrepotId;
-    }
+	public void setEntrepotId(Long entrepotId) {
+		this.entrepotId = entrepotId;
+	}
 
-    public String getCodeEntrepot() {
-        return codeEntrepot;
-    }
+	public String getCodeEntrepot() {
+		return codeEntrepot;
+	}
 
-    public void setCodeEntrepot(String codeEntrepot) {
-        this.codeEntrepot = codeEntrepot;
-    }
+	public void setCodeEntrepot(String codeEntrepot) {
+		this.codeEntrepot = codeEntrepot;
+	}
 
-    public String getDescriptionEntrepot() {
-        return descriptionEntrepot;
-    }
+	public String getDescriptionEntrepot() {
+		return descriptionEntrepot;
+	}
 
-    public void setDescriptionEntrepot(String descriptionEntrepot) {
-        this.descriptionEntrepot = descriptionEntrepot;
-    }
+	public void setDescriptionEntrepot(String descriptionEntrepot) {
+		this.descriptionEntrepot = descriptionEntrepot;
+	}
 
-    public Centre getCentre() {
-        return centre;
-    }
+	public Centre getCentre() {
+		return centre;
+	}
 
-    public void setCentre(Centre centre) {
-        this.centre = centre;
-    }
+	public void setCentre(Centre centre) {
+		this.centre = centre;
+	}
 
-    public DateTime getDateDeCreation() {
-        return dateDeCreation;
-    }
+	public DateTime getDateDeCreation() {
+		return dateDeCreation;
+	}
 
-    public void setDateDeCreation(DateTime dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
+	public void setDateDeCreation(DateTime dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
 
-    public DateTime getDerniereMiseAJour() {
-        return derniereMiseAJour;
-    }
+	public DateTime getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
 
-    public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
-        this.derniereMiseAJour = derniereMiseAJour;
-    }
+	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
 
-    public Collection<Magasin> getMagasins() {
-        return magasins;
-    }
+	public Collection<Magasin> getMagasins() {
+		return magasins;
+	}
 
-    public void setMagasins(Collection<Magasin> magasins) {
-        this.magasins = magasins;
-    }
+	public void setMagasins(Collection<Magasin> magasins) {
+		this.magasins = magasins;
+	}
 
-    public Employe getResponsable() {
-        return responsable;
-    }
+	public Employe getResponsable() {
+		return responsable;
+	}
 
-    public void setResponsable(Employe responsable) {
-        this.responsable = responsable;
-    }
+	public void setResponsable(Employe responsable) {
+		this.responsable = responsable;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((codeEntrepot == null) ? 0 : codeEntrepot.hashCode());
-        result = prime * result + entrepotId;
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codeEntrepot == null) ? 0 : codeEntrepot.hashCode());
+		result = prime * result + ((entrepotId == null) ? 0 : entrepotId.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Entrepot other = (Entrepot) obj;
-        if (codeEntrepot == null) {
-            if (other.codeEntrepot != null)
-                return false;
-        }
-        else if (!codeEntrepot.equals(other.codeEntrepot))
-            return false;
-        if (entrepotId != other.entrepotId)
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Entrepot other = (Entrepot) obj;
+		if (codeEntrepot == null) {
+			if (other.codeEntrepot != null)
+				return false;
+		} else if (!codeEntrepot.equals(other.codeEntrepot))
+			return false;
+		if (entrepotId == null) {
+			if (other.entrepotId != null)
+				return false;
+		} else if (!entrepotId.equals(other.entrepotId))
+			return false;
+		return true;
+	}
 
-    public Entrepot() {
+	public Entrepot() {
 
-    }
+	}
 }

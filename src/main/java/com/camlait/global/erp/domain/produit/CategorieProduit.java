@@ -18,112 +18,114 @@ import com.camlait.global.erp.domain.enumeration.Portee;
 @Entity
 public class CategorieProduit extends Entite {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int categorieProduitId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long categorieProduitId;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.CATEGORIE_PRODUIT_ID)
-    private CategorieProduit categorieParent;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.CATEGORIE_PRODUIT_ID)
+	private CategorieProduit categorieParent;
 
-    @Column(unique = true, nullable = false)
-    private String codeCategorieProduit;
+	@Column(unique = true, nullable = false)
+	private String codeCategorieProduit;
 
-    private String descriptionCategorie;
+	private String descriptionCategorie;
 
-    private Portee portee;
+	private Portee portee;
 
-    private boolean categorieTaxable;
+	private boolean categorieTaxable;
 
-    @OneToMany(mappedBy = "categorie")
-    private Collection<Produit> produits;
+	@OneToMany(mappedBy = "categorie")
+	private Collection<Produit> produits;
 
-    public int getCategorieProduitId() {
-        return categorieProduitId;
-    }
+	public Long getCategorieProduitId() {
+		return categorieProduitId;
+	}
 
-    public void setCategorieProduitId(int categorieProduitId) {
-        this.categorieProduitId = categorieProduitId;
-    }
+	public void setCategorieProduitId(Long categorieProduitId) {
+		this.categorieProduitId = categorieProduitId;
+	}
 
-    public CategorieProduit getCategorieParent() {
-        return categorieParent;
-    }
+	public CategorieProduit getCategorieParent() {
+		return categorieParent;
+	}
 
-    public void setCategorieParent(CategorieProduit categorieParent) {
-        this.categorieParent = categorieParent;
-    }
+	public void setCategorieParent(CategorieProduit categorieParent) {
+		this.categorieParent = categorieParent;
+	}
 
-    public String getCodeCategorieProduit() {
-        return codeCategorieProduit;
-    }
+	public String getCodeCategorieProduit() {
+		return codeCategorieProduit;
+	}
 
-    public void setCodeCategorieProduit(String codeCategorieProduit) {
-        this.codeCategorieProduit = codeCategorieProduit;
-    }
+	public void setCodeCategorieProduit(String codeCategorieProduit) {
+		this.codeCategorieProduit = codeCategorieProduit;
+	}
 
-    public String getDescriptionCategorie() {
-        return descriptionCategorie;
-    }
+	public String getDescriptionCategorie() {
+		return descriptionCategorie;
+	}
 
-    public void setDescriptionCategorie(String descriptionCategorie) {
-        this.descriptionCategorie = descriptionCategorie;
-    }
+	public void setDescriptionCategorie(String descriptionCategorie) {
+		this.descriptionCategorie = descriptionCategorie;
+	}
 
-    public Portee getPortee() {
-        return portee;
-    }
+	public Portee getPortee() {
+		return portee;
+	}
 
-    public void setPortee(Portee portee) {
-        this.portee = portee;
-    }
+	public void setPortee(Portee portee) {
+		this.portee = portee;
+	}
 
-    public boolean isCategorieTaxable() {
-        return categorieTaxable;
-    }
+	public boolean isCategorieTaxable() {
+		return categorieTaxable;
+	}
 
-    public void setCategorieTaxable(boolean categorieTaxable) {
-        this.categorieTaxable = categorieTaxable;
-    }
+	public void setCategorieTaxable(boolean categorieTaxable) {
+		this.categorieTaxable = categorieTaxable;
+	}
 
-    public Collection<Produit> getProduits() {
-        return produits;
-    }
+	public Collection<Produit> getProduits() {
+		return produits;
+	}
 
-    public void setProduits(Collection<Produit> produits) {
-        this.produits = produits;
-    }
+	public void setProduits(Collection<Produit> produits) {
+		this.produits = produits;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + categorieProduitId;
-        result = prime * result + ((codeCategorieProduit == null) ? 0 : codeCategorieProduit.hashCode());
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((categorieParent == null) ? 0 : categorieParent.hashCode());
+		result = prime * result + ((categorieProduitId == null) ? 0 : categorieProduitId.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        CategorieProduit other = (CategorieProduit) obj;
-        if (categorieProduitId != other.categorieProduitId)
-            return false;
-        if (codeCategorieProduit == null) {
-            if (other.codeCategorieProduit != null)
-                return false;
-        }
-        else if (!codeCategorieProduit.equals(other.codeCategorieProduit))
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CategorieProduit other = (CategorieProduit) obj;
+		if (categorieParent == null) {
+			if (other.categorieParent != null)
+				return false;
+		} else if (!categorieParent.equals(other.categorieParent))
+			return false;
+		if (categorieProduitId == null) {
+			if (other.categorieProduitId != null)
+				return false;
+		} else if (!categorieProduitId.equals(other.categorieProduitId))
+			return false;
+		return true;
+	}
 
-    public CategorieProduit() {
-        //
-    }
+	public CategorieProduit() {
+		//
+	}
 }

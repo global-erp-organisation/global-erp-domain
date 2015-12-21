@@ -5,49 +5,54 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class PKFactureReglement {
 
-    private int reglementId;
+	private Long reglementId;
 
-    private int documentId;
+	private Long documentId;
 
-    public int getReglementId() {
-        return reglementId;
-    }
+	public Long getReglementId() {
+		return reglementId;
+	}
 
-    public void setReglementId(int reglementId) {
-        this.reglementId = reglementId;
-    }
+	public void setReglementId(Long reglementId) {
+		this.reglementId = reglementId;
+	}
 
-    public int getDocumentId() {
-        return documentId;
-    }
+	public Long getDocumentId() {
+		return documentId;
+	}
 
-    public void setDocumentId(int documentId) {
-        this.documentId = documentId;
-    }
+	public void setDocumentId(Long documentId) {
+		this.documentId = documentId;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + documentId;
-        result = prime * result + reglementId;
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((documentId == null) ? 0 : documentId.hashCode());
+		result = prime * result + ((reglementId == null) ? 0 : reglementId.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        PKFactureReglement other = (PKFactureReglement) obj;
-        if (documentId != other.documentId)
-            return false;
-        if (reglementId != other.reglementId)
-            return false;
-        return true;
-    }
-
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PKFactureReglement other = (PKFactureReglement) obj;
+		if (documentId == null) {
+			if (other.documentId != null)
+				return false;
+		} else if (!documentId.equals(other.documentId))
+			return false;
+		if (reglementId == null) {
+			if (other.reglementId != null)
+				return false;
+		} else if (!reglementId.equals(other.reglementId))
+			return false;
+		return true;
+	}
 }

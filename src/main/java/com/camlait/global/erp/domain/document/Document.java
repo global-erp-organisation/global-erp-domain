@@ -18,6 +18,7 @@ import com.camlait.global.erp.domain.bmq.Bmq;
 import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
+import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
 
@@ -25,158 +26,170 @@ import com.camlait.global.erp.domain.partenaire.Employe;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Document extends Entite {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int DocumentId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long DocumentId;
 
-    @Column(unique = true, nullable = false)
-    private String codeDocument;
+	@Column(unique = true, nullable = false)
+	private String codeDocument;
 
-    private DateTime dateDocument;
+	private DateTime dateDocument;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.MAGASIN_ID)
-    private Magasin magasin;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.MAGASIN_ID)
+	private Magasin magasin;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
-    private Employe responsableDocument;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	private Employe responsableDocument;
 
-    private DateTime dateDeCreation;
+	private DateTime dateDeCreation;
 
-    private DateTime derniereMiseAJour;
+	private DateTime derniereMiseAJour;
 
-    private SensOperation sensOperation;
+	private SensOperation sensOperation;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.BMQ_ID)
-    private Bmq bmq;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.BMQ_ID)
+	private Bmq bmq;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.INVENTAIRE_ID)
-    private Inventaire inventaire;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.INVENTAIRE_ID)
+	private Inventaire inventaire;
 
-    @OneToMany(mappedBy = "document")
-    private LigneDeDocument ligneDocuments;
+	@OneToMany(mappedBy = "document")
+	private LigneDeDocument ligneDocuments;
 
-    public int getDocumentId() {
-        return DocumentId;
-    }
+	private TypeDocuments typeDocument;
 
-    public void setDocumentId(int documentId) {
-        DocumentId = documentId;
-    }
+	public Long getDocumentId() {
+		return DocumentId;
+	}
 
-    public String getCodeDocument() {
-        return codeDocument;
-    }
+	public void setDocumentId(Long documentId) {
+		DocumentId = documentId;
+	}
 
-    public void setCodeDocument(String codeDocument) {
-        this.codeDocument = codeDocument;
-    }
+	public String getCodeDocument() {
+		return codeDocument;
+	}
 
-    public DateTime getDateDocument() {
-        return dateDocument;
-    }
+	public void setCodeDocument(String codeDocument) {
+		this.codeDocument = codeDocument;
+	}
 
-    public void setDateDocument(DateTime dateDocument) {
-        this.dateDocument = dateDocument;
-    }
+	public DateTime getDateDocument() {
+		return dateDocument;
+	}
 
-    public Magasin getMagasin() {
-        return magasin;
-    }
+	public void setDateDocument(DateTime dateDocument) {
+		this.dateDocument = dateDocument;
+	}
 
-    public void setMagasin(Magasin magasin) {
-        this.magasin = magasin;
-    }
+	public Magasin getMagasin() {
+		return magasin;
+	}
 
-    public Employe getResponsableDocument() {
-        return responsableDocument;
-    }
+	public void setMagasin(Magasin magasin) {
+		this.magasin = magasin;
+	}
 
-    public void setResponsableDocument(Employe responsableDocument) {
-        this.responsableDocument = responsableDocument;
-    }
+	public Employe getResponsableDocument() {
+		return responsableDocument;
+	}
 
-    public DateTime getDateDeCreation() {
-        return dateDeCreation;
-    }
+	public void setResponsableDocument(Employe responsableDocument) {
+		this.responsableDocument = responsableDocument;
+	}
 
-    public void setDateDeCreation(DateTime dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
+	public DateTime getDateDeCreation() {
+		return dateDeCreation;
+	}
 
-    public DateTime getDerniereMiseAJour() {
-        return derniereMiseAJour;
-    }
+	public void setDateDeCreation(DateTime dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
 
-    public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
-        this.derniereMiseAJour = derniereMiseAJour;
-    }
+	public DateTime getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
 
-    public SensOperation getSensOperation() {
-        return sensOperation;
-    }
+	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
 
-    public Bmq getBmq() {
-        return bmq;
-    }
+	public SensOperation getSensOperation() {
+		return sensOperation;
+	}
 
-    public void setBmq(Bmq bmq) {
-        this.bmq = bmq;
-    }
+	public Bmq getBmq() {
+		return bmq;
+	}
 
-    public void setSensOperation(SensOperation sensOperation) {
-        this.sensOperation = sensOperation;
-    }
+	public void setBmq(Bmq bmq) {
+		this.bmq = bmq;
+	}
 
-    public Inventaire getInventaire() {
-        return inventaire;
-    }
+	public void setSensOperation(SensOperation sensOperation) {
+		this.sensOperation = sensOperation;
+	}
 
-    public void setInventaire(Inventaire inventaire) {
-        this.inventaire = inventaire;
-    }
+	public Inventaire getInventaire() {
+		return inventaire;
+	}
 
-    public LigneDeDocument getLigneDocuments() {
-        return ligneDocuments;
-    }
+	public void setInventaire(Inventaire inventaire) {
+		this.inventaire = inventaire;
+	}
 
-    public void setLigneDocuments(LigneDeDocument ligneDocuments) {
-        this.ligneDocuments = ligneDocuments;
-    }
+	public LigneDeDocument getLigneDocuments() {
+		return ligneDocuments;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + DocumentId;
-        result = prime * result + ((codeDocument == null) ? 0 : codeDocument.hashCode());
-        return result;
-    }
+	public void setLigneDocuments(LigneDeDocument ligneDocuments) {
+		this.ligneDocuments = ligneDocuments;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Document other = (Document) obj;
-        if (DocumentId != other.DocumentId)
-            return false;
-        if (codeDocument == null) {
-            if (other.codeDocument != null)
-                return false;
-        }
-        else if (!codeDocument.equals(other.codeDocument))
-            return false;
-        return true;
-    }
+	public TypeDocuments getTypeDocument() {
+		return typeDocument;
+	}
 
-    public Document() {
-        //
-    }
+	public void setTypeDocument(TypeDocuments typeDocument) {
+		this.typeDocument = typeDocument;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((DocumentId == null) ? 0 : DocumentId.hashCode());
+		result = prime * result + ((codeDocument == null) ? 0 : codeDocument.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Document other = (Document) obj;
+		if (DocumentId == null) {
+			if (other.DocumentId != null)
+				return false;
+		} else if (!DocumentId.equals(other.DocumentId))
+			return false;
+		if (codeDocument == null) {
+			if (other.codeDocument != null)
+				return false;
+		} else if (!codeDocument.equals(other.codeDocument))
+			return false;
+		return true;
+	}
+
+	public Document() {
+		//
+	}
 }

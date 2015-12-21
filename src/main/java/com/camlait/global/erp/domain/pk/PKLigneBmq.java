@@ -5,61 +5,71 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class PKLigneBmq {
 
-    private int bmqId;
+	private Long bmqId;
 
-    private int produitId;
+	private Long produitId;
 
-    private int documentId;
+	private Long documentId;
 
-    public int getBmqId() {
-        return bmqId;
-    }
+	public Long getBmqId() {
+		return bmqId;
+	}
 
-    public void setBmqId(int bmqId) {
-        this.bmqId = bmqId;
-    }
+	public void setBmqId(Long bmqId) {
+		this.bmqId = bmqId;
+	}
 
-    public int getProduitId() {
-        return produitId;
-    }
+	public Long getProduitId() {
+		return produitId;
+	}
 
-    public void setProduitId(int produitId) {
-        this.produitId = produitId;
-    }
+	public void setProduitId(Long produitId) {
+		this.produitId = produitId;
+	}
 
-    public int getDocumentId() {
-        return documentId;
-    }
+	public Long getDocumentId() {
+		return documentId;
+	}
 
-    public void setDocumentId(int documentId) {
-        this.documentId = documentId;
-    }
+	public void setDocumentId(Long documentId) {
+		this.documentId = documentId;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + bmqId;
-        result = prime * result + documentId;
-        result = prime * result + produitId;
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bmqId == null) ? 0 : bmqId.hashCode());
+		result = prime * result + ((documentId == null) ? 0 : documentId.hashCode());
+		result = prime * result + ((produitId == null) ? 0 : produitId.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        PKLigneBmq other = (PKLigneBmq) obj;
-        if (bmqId != other.bmqId)
-            return false;
-        if (documentId != other.documentId)
-            return false;
-        if (produitId != other.produitId)
-            return false;
-        return true;
-    }   
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PKLigneBmq other = (PKLigneBmq) obj;
+		if (bmqId == null) {
+			if (other.bmqId != null)
+				return false;
+		} else if (!bmqId.equals(other.bmqId))
+			return false;
+		if (documentId == null) {
+			if (other.documentId != null)
+				return false;
+		} else if (!documentId.equals(other.documentId))
+			return false;
+		if (produitId == null) {
+			if (other.produitId != null)
+				return false;
+		} else if (!produitId.equals(other.produitId))
+			return false;
+		return true;
+	}
+
 }

@@ -13,91 +13,75 @@ import com.camlait.global.erp.domain.Entite;
 @Entity
 public class Taxe extends Entite {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int taxeId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long taxeId;
 
-    @Column(unique = true, nullable = false)
-    private String codeTaxe;
+	@Column(unique = true, nullable = false)
+	private String codeTaxe;
 
-    private String taxeDescription;
+	private String taxeDescription;
 
-    private double valeurPourcentage;
+	private double valeurPourcentage;
 
-    private DateTime dateDeCreation;
+	private DateTime dateDeCreation;
 
-    private DateTime derniereMiseAJour;
+	private DateTime derniereMiseAJour;
 
-    public int getTaxeId() {
-        return taxeId;
-    }
+	public Long getTaxeId() {
+		return taxeId;
+	}
 
-    public void setTaxeId(int taxeId) {
-        this.taxeId = taxeId;
-    }
+	public void setTaxeId(Long taxeId) {
+		this.taxeId = taxeId;
+	}
 
-    public String getCodeTaxe() {
-        return codeTaxe;
-    }
+	public String getCodeTaxe() {
+		return codeTaxe;
+	}
 
-    public void setCodeTaxe(String codeTaxe) {
-        this.codeTaxe = codeTaxe;
-    }
+	public void setCodeTaxe(String codeTaxe) {
+		this.codeTaxe = codeTaxe;
+	}
 
-    public String getTaxeDescription() {
-        return taxeDescription;
-    }
+	public String getTaxeDescription() {
+		return taxeDescription;
+	}
 
-    public void setTaxeDescription(String taxeDescription) {
-        this.taxeDescription = taxeDescription;
-    }
+	public void setTaxeDescription(String taxeDescription) {
+		this.taxeDescription = taxeDescription;
+	}
 
-    public double getValeurPourcentage() {
-        return valeurPourcentage;
-    }
+	public double getValeurPourcentage() {
+		return valeurPourcentage;
+	}
 
-    public void setValeurPourcentage(double valeurPourcentage) {
-        this.valeurPourcentage = valeurPourcentage;
-    }
+	public void setValeurPourcentage(double valeurPourcentage) {
+		this.valeurPourcentage = valeurPourcentage;
+	}
 
-    public DateTime getDateDeCreation() {
-        return dateDeCreation;
-    }
+	public DateTime getDateDeCreation() {
+		return dateDeCreation;
+	}
 
-    public void setDateDeCreation(DateTime dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
+	public void setDateDeCreation(DateTime dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
 
-    public DateTime getDerniereMiseAJour() {
-        return derniereMiseAJour;
-    }
+	public DateTime getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
 
-    public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
-        this.derniereMiseAJour = derniereMiseAJour;
-    }
+	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + taxeId;
-        return result;
-    }
+	public Taxe(Long taxeId, String codeTaxe) {
+		super();
+		this.taxeId = taxeId;
+		this.codeTaxe = codeTaxe;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Taxe other = (Taxe) obj;
-        if (taxeId != other.taxeId)
-            return false;
-        return true;
-    }
-
-    public Taxe() {
-    }
+	public Taxe() {
+	}
 }

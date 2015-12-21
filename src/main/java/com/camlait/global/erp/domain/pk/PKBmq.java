@@ -7,25 +7,25 @@ import org.joda.time.DateTime;
 @Embeddable
 public class PKBmq {
 
-    private int magasinId;
+    private Long magasinId;
 
-    private int partenaireId;
+    private Long partenaireId;
 
     private DateTime dateBmq;
 
-    public int getMagasinId() {
+    public Long getMagasinId() {
         return magasinId;
     }
 
-    public void setMagasinId(int magasinId) {
+    public void setMagasinId(Long magasinId) {
         this.magasinId = magasinId;
     }
 
-    public int getPartenaireId() {
+    public Long getPartenaireId() {
         return partenaireId;
     }
 
-    public void setPartenaireId(int partenaireId) {
+    public void setPartenaireId(Long partenaireId) {
         this.partenaireId = partenaireId;
     }
 
@@ -37,35 +37,36 @@ public class PKBmq {
         this.dateBmq = dateBmq;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((dateBmq == null) ? 0 : dateBmq.hashCode());
-        result = prime * result + magasinId;
-        result = prime * result + partenaireId;
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((magasinId == null) ? 0 : magasinId.hashCode());
+		result = prime * result + ((partenaireId == null) ? 0 : partenaireId.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        PKBmq other = (PKBmq) obj;
-        if (dateBmq == null) {
-            if (other.dateBmq != null)
-                return false;
-        }
-        else if (!dateBmq.equals(other.dateBmq))
-            return false;
-        if (magasinId != other.magasinId)
-            return false;
-        if (partenaireId != other.partenaireId)
-            return false;
-        return true;
-    }
-}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PKBmq other = (PKBmq) obj;
+		if (magasinId == null) {
+			if (other.magasinId != null)
+				return false;
+		} else if (!magasinId.equals(other.magasinId))
+			return false;
+		if (partenaireId == null) {
+			if (other.partenaireId != null)
+				return false;
+		} else if (!partenaireId.equals(other.partenaireId))
+			return false;
+		return true;
+	}
+
+    
+ }

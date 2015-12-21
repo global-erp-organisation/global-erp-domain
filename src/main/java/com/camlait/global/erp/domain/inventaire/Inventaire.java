@@ -21,146 +21,148 @@ import com.camlait.global.erp.domain.partenaire.Magasinier;
 @Entity
 public class Inventaire extends Entite {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int inventaireId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long inventaireId;
 
-    private String codeInventaire;
+	private String codeInventaire;
 
-    private DateTime dateInventaire;
+	private DateTime dateInventaire;
 
-    private String note;
+	private String note;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.MAGASIN_ID)
-    private Magasin magasin;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.MAGASIN_ID)
+	private Magasin magasin;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
-    private Magasinier magasinierSortant;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	private Magasinier magasinierSortant;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
-    private Magasinier magasinierEntrant;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	private Magasinier magasinierEntrant;
 
-    private boolean inventaireClos;
+	private boolean inventaireClos;
 
-    @OneToMany(mappedBy = "inventaire")
-    private Collection<Document> documents;
+	@OneToMany(mappedBy = "inventaire")
+	private Collection<Document> documents;
 
-    @OneToMany(mappedBy = "inventaire")
-    private Collection<LigneInventaire> ligneInventaires;
+	@OneToMany(mappedBy = "inventaire")
+	private Collection<LigneInventaire> ligneInventaires;
 
-    public int getInventaireId() {
-        return inventaireId;
-    }
+	public Long getInventaireId() {
+		return inventaireId;
+	}
 
-    public void setInventaireId(int inventaireId) {
-        this.inventaireId = inventaireId;
-    }
+	public void setInventaireId(Long inventaireId) {
+		this.inventaireId = inventaireId;
+	}
 
-    public String getCodeInventaire() {
-        return codeInventaire;
-    }
+	public String getCodeInventaire() {
+		return codeInventaire;
+	}
 
-    public void setCodeInventaire(String codeInventaire) {
-        this.codeInventaire = codeInventaire;
-    }
+	public void setCodeInventaire(String codeInventaire) {
+		this.codeInventaire = codeInventaire;
+	}
 
-    public DateTime getDateInventaire() {
-        return dateInventaire;
-    }
+	public DateTime getDateInventaire() {
+		return dateInventaire;
+	}
 
-    public void setDateInventaire(DateTime dateInventaire) {
-        this.dateInventaire = dateInventaire;
-    }
+	public void setDateInventaire(DateTime dateInventaire) {
+		this.dateInventaire = dateInventaire;
+	}
 
-    public String getNote() {
-        return note;
-    }
+	public String getNote() {
+		return note;
+	}
 
-    public void setNote(String note) {
-        this.note = note;
-    }
+	public void setNote(String note) {
+		this.note = note;
+	}
 
-    public Magasin getMagasin() {
-        return magasin;
-    }
+	public Magasin getMagasin() {
+		return magasin;
+	}
 
-    public void setMagasin(Magasin magasin) {
-        this.magasin = magasin;
-    }
+	public void setMagasin(Magasin magasin) {
+		this.magasin = magasin;
+	}
 
-    public Magasinier getMagasinierSortant() {
-        return magasinierSortant;
-    }
+	public Magasinier getMagasinierSortant() {
+		return magasinierSortant;
+	}
 
-    public void setMagasinierSortant(Magasinier magasinierSortant) {
-        this.magasinierSortant = magasinierSortant;
-    }
+	public void setMagasinierSortant(Magasinier magasinierSortant) {
+		this.magasinierSortant = magasinierSortant;
+	}
 
-    public Magasinier getMagasinierEntrant() {
-        return magasinierEntrant;
-    }
+	public Magasinier getMagasinierEntrant() {
+		return magasinierEntrant;
+	}
 
-    public void setMagasinierEntrant(Magasinier magasinierEntrant) {
-        this.magasinierEntrant = magasinierEntrant;
-    }
+	public void setMagasinierEntrant(Magasinier magasinierEntrant) {
+		this.magasinierEntrant = magasinierEntrant;
+	}
 
-    public boolean isInventaireClos() {
-        return inventaireClos;
-    }
+	public boolean isInventaireClos() {
+		return inventaireClos;
+	}
 
-    public void setInventaireClos(boolean inventaireClos) {
-        this.inventaireClos = inventaireClos;
-    }
+	public void setInventaireClos(boolean inventaireClos) {
+		this.inventaireClos = inventaireClos;
+	}
 
-    public Collection<Document> getDocuments() {
-        return documents;
-    }
+	public Collection<Document> getDocuments() {
+		return documents;
+	}
 
-    public void setDocuments(Collection<Document> documents) {
-        this.documents = documents;
-    }
+	public void setDocuments(Collection<Document> documents) {
+		this.documents = documents;
+	}
 
-    public Collection<LigneInventaire> getLigneInventaires() {
-        return ligneInventaires;
-    }
+	public Collection<LigneInventaire> getLigneInventaires() {
+		return ligneInventaires;
+	}
 
-    public void setLigneInventaires(Collection<LigneInventaire> ligneInventaires) {
-        this.ligneInventaires = ligneInventaires;
-    }
+	public void setLigneInventaires(Collection<LigneInventaire> ligneInventaires) {
+		this.ligneInventaires = ligneInventaires;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((codeInventaire == null) ? 0 : codeInventaire.hashCode());
-        result = prime * result + inventaireId;
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codeInventaire == null) ? 0 : codeInventaire.hashCode());
+		result = prime * result + ((inventaireId == null) ? 0 : inventaireId.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Inventaire other = (Inventaire) obj;
-        if (codeInventaire == null) {
-            if (other.codeInventaire != null)
-                return false;
-        }
-        else if (!codeInventaire.equals(other.codeInventaire))
-            return false;
-        if (inventaireId != other.inventaireId)
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Inventaire other = (Inventaire) obj;
+		if (codeInventaire == null) {
+			if (other.codeInventaire != null)
+				return false;
+		} else if (!codeInventaire.equals(other.codeInventaire))
+			return false;
+		if (inventaireId == null) {
+			if (other.inventaireId != null)
+				return false;
+		} else if (!inventaireId.equals(other.inventaireId))
+			return false;
+		return true;
+	}
 
-    public Inventaire() {
+	public Inventaire() {
 
-    }
+	}
 }
