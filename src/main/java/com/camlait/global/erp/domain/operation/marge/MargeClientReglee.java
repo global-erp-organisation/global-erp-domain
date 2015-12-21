@@ -5,9 +5,9 @@ import javax.persistence.Entity;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 
 @Entity
-public class VersementMarge extends MargeFinancier {
+public class MargeClientReglee extends MargeClient {
 
-    public VersementMarge(){
+    public MargeClientReglee(){
         setSensOperation(SensOperation.SORTIE);
     }
 }

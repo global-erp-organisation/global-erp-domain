@@ -1,9 +1,11 @@
 package com.camlait.global.erp.domain.pk;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class PKStock {
+public class PKStock implements Serializable{
 
 	private Long produitId;
 

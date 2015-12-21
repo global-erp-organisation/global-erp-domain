@@ -5,6 +5,6 @@ import javax.persistence.Entity;
 import com.camlait.global.erp.domain.operation.Operation;
 
 @Entity
-public class MargeFinancier extends Operation {
+public class MargeClient extends Operation {
 
 }

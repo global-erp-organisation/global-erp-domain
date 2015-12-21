@@ -1,11 +1,13 @@
 package com.camlait.global.erp.domain.pk;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 
 import org.joda.time.DateTime;
 
 @Embeddable
-public class PKClientImmobilisation {
+public class PKPartenaireImmobilisation implements Serializable{
 
 	private Long partenaireId;
 	private Long immoId;
@@ -53,7 +55,7 @@ public class PKClientImmobilisation {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PKClientImmobilisation other = (PKClientImmobilisation) obj;
+		PKPartenaireImmobilisation other = (PKPartenaireImmobilisation) obj;
 		if (dateAllocation == null) {
 			if (other.dateAllocation != null)
 				return false;

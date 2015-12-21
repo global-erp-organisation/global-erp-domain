@@ -1,13 +1,13 @@
-package com.camlait.global.erp.domain.operation.manquant;
+package com.camlait.global.erp.domain.operation.marge;
 
 import javax.persistence.Entity;
 
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 
 @Entity
-public class ManquantDu extends ManquantFinancier {
+public class MargeClientDu extends MargeClient {
 
-    public ManquantDu(){
+    public MargeClientDu() {
         setSensOperation(SensOperation.ENTREE);
     }
 }

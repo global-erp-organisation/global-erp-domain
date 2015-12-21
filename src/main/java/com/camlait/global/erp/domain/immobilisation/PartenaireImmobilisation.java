@@ -8,12 +8,12 @@ import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
-import com.camlait.global.erp.domain.pk.PKClientImmobilisation;
+import com.camlait.global.erp.domain.pk.PKPartenaireImmobilisation;
 
-public class ClientImmobilisation {
+public class PartenaireImmobilisation {
 
     @EmbeddedId
-    private PKClientImmobilisation clientImmoId;
+    private PKPartenaireImmobilisation clientImmoId;
 
     @ManyToOne
     @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
@@ -27,11 +27,11 @@ public class ClientImmobilisation {
 
     private boolean actif;
 
-    public PKClientImmobilisation getClientImmoId() {
+    public PKPartenaireImmobilisation getClientImmoId() {
         return clientImmoId;
     }
 
-    public void setClientImmoId(PKClientImmobilisation clientImmoId) {
+    public void setClientImmoId(PKPartenaireImmobilisation clientImmoId) {
         this.clientImmoId = clientImmoId;
     }
 
@@ -83,7 +83,7 @@ public class ClientImmobilisation {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ClientImmobilisation other = (ClientImmobilisation) obj;
+        PartenaireImmobilisation other = (PartenaireImmobilisation) obj;
         if (clientImmoId == null) {
             if (other.clientImmoId != null)
                 return false;

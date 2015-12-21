@@ -1,9 +1,11 @@
 package com.camlait.global.erp.domain.pk;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class PKFactureReglement {
+public class PKFactureReglement implements Serializable{
 
 	private Long reglementId;
 

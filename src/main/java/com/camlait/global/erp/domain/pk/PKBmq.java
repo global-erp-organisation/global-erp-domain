@@ -1,41 +1,43 @@
 package com.camlait.global.erp.domain.pk;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 
 import org.joda.time.DateTime;
 
 @Embeddable
-public class PKBmq {
+public class PKBmq implements Serializable {
 
-    private Long magasinId;
+	private Long magasinId;
 
-    private Long partenaireId;
+	private Long partenaireId;
 
-    private DateTime dateBmq;
+	private DateTime dateBmq;
 
-    public Long getMagasinId() {
-        return magasinId;
-    }
+	public Long getMagasinId() {
+		return magasinId;
+	}
 
-    public void setMagasinId(Long magasinId) {
-        this.magasinId = magasinId;
-    }
+	public void setMagasinId(Long magasinId) {
+		this.magasinId = magasinId;
+	}
 
-    public Long getPartenaireId() {
-        return partenaireId;
-    }
+	public Long getPartenaireId() {
+		return partenaireId;
+	}
 
-    public void setPartenaireId(Long partenaireId) {
-        this.partenaireId = partenaireId;
-    }
+	public void setPartenaireId(Long partenaireId) {
+		this.partenaireId = partenaireId;
+	}
 
-    public DateTime getDateBmq() {
-        return dateBmq;
-    }
+	public DateTime getDateBmq() {
+		return dateBmq;
+	}
 
-    public void setDateBmq(DateTime dateBmq) {
-        this.dateBmq = dateBmq;
-    }
+	public void setDateBmq(DateTime dateBmq) {
+		this.dateBmq = dateBmq;
+	}
 
 	@Override
 	public int hashCode() {
@@ -68,5 +70,4 @@ public class PKBmq {
 		return true;
 	}
 
-    
- }
+}
