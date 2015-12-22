@@ -21,7 +21,7 @@ public class LigneDeDocument extends Entite {
 	private PKLigneDocument ligneDocumentId;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PRODUIT_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Produit produit;
 
 	@Column(name="quantiteLigne")
@@ -31,7 +31,7 @@ public class LigneDeDocument extends Entite {
 	private double prixunitaiteLigne;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.DOCUMENT_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Document document;
 
     @Column(name="dateDeCreation")

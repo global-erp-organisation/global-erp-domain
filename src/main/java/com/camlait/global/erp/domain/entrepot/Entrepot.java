@@ -32,7 +32,7 @@ public class Entrepot extends Entite {
 	private String descriptionEntrepot;
 
 	@ManyToOne
-	@JoinColumn(name=ClePrimaires.LOCALISATION_ID,updatable=false,insertable=false)
+	@JoinColumn(name=ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Centre centre;
 
     @Column(name="dateDeCreation")
@@ -42,7 +42,7 @@ public class Entrepot extends Entite {
     private DateTime derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Employe responsable;
 
 	@OneToMany(mappedBy = "entrepot")

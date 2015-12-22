@@ -21,11 +21,11 @@ public class Stock extends Entite {
 	private PKStock stockId;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PRODUIT_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Produit produit;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.MAGASIN_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Magasin magasin;
 
 	@Column(name = "quantiteDisponible")

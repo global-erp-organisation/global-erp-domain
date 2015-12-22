@@ -30,7 +30,7 @@ public class Produit extends Entite {
 	private double prixUnitaireProduit;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.CATEGORIE_PRODUIT_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private CategorieProduit categorie;
 
 	@Column(name = "produitTaxable")

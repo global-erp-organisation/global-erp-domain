@@ -12,7 +12,7 @@ import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 public class DocumentVirement extends Document {
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.MAGASIN_ID)
+	@JoinColumn(name = ClePrimaires.AUTO_ID)
 	private Magasin magasinDestination;
 
 	public Magasin getMagasinDestination() {

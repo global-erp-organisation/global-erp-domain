@@ -45,11 +45,11 @@ public class Operation extends Entite {
 	private double montantOperation;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Employe responsable;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Partenaire partenaire;
 
 	public Long getOperationId() {

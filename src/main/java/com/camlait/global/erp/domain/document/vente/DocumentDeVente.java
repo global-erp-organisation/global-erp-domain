@@ -16,11 +16,11 @@ import com.camlait.global.erp.domain.partenaire.Client;
 public class DocumentDeVente extends Document {
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Client client;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.LOCALISATION_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Zone zone;
 
 	@Column(name="documentSolde")

@@ -19,11 +19,11 @@ public class PartenaireImmobilisation {
     private PKPartenaireImmobilisation clientImmoId;
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
+    @JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
     private Partenaire partenaire;
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.IMMO_ID,updatable=false,insertable=false)
+    @JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
     private Immobilisation immobilisation;
 
     @Column(name="dateAllocation",updatable=false,insertable=false)

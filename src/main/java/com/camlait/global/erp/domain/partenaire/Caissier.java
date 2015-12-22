@@ -14,7 +14,7 @@ import com.camlait.global.erp.domain.operation.caisse.Caisse;
 public class Caissier extends Employe {
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.CAISSE_ID)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Caisse caisse;
 
 	@Column(name = "motDePasse")

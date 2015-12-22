@@ -13,7 +13,7 @@ import com.camlait.global.erp.domain.config.ClePrimaires;
 public class Secteur extends Localisation {
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.LOCALISATION_ID,updatable=false,insertable=false)
+    @JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
     private Region region;
 
     @OneToMany(mappedBy="secteur")

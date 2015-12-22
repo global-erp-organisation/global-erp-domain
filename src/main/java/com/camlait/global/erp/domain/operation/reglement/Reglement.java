@@ -18,7 +18,7 @@ public class Reglement extends Operation {
 	private Collection<FactureReglement> factureReglements;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.MODE_REGLEMENT_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private ModeDeReglement modeDeReglement;
 
 	public Collection<FactureReglement> getFactureReglements() {

@@ -27,7 +27,7 @@ public class Caisse extends Entite {
 	private String descriptionCaisse;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Employe responsable;
 
 	@Column(name = "dateDeCreation")

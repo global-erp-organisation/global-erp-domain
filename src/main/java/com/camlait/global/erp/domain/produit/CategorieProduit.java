@@ -26,7 +26,7 @@ public class CategorieProduit extends Entite {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.CATEGORIE_PRODUIT_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private CategorieProduit categorieParent;
 
 	@Column(name = "cedCategorieProduit", unique = true, nullable = false)

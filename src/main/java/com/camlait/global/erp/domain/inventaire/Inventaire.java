@@ -36,11 +36,11 @@ public class Inventaire extends Entite {
 	private String note;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.MAGASIN_ID, insertable = false, updatable = false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID, insertable = false, updatable = false)
 	private Magasin magasin;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID, insertable = false, updatable = false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID, insertable = false, updatable = false)
 	private Magasinier magasinier;
 
 	@Column(name = "inventaireClos")

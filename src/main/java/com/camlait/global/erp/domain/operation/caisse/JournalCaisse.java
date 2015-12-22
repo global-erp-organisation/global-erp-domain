@@ -35,7 +35,7 @@ public class JournalCaisse extends Entite {
 	private DateTime dateFinJournal;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.CAISSE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Caisse caisse;
 
 	@OneToMany(mappedBy = "journal")

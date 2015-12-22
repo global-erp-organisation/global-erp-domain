@@ -20,11 +20,11 @@ public class LigneInventaire extends Entite {
 	private PKLigneInventaire ligneInventaireId;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.INVENTAIRE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Inventaire inventaire;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PRODUIT_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Produit produit;
 
 	@Column(name = "quantiteReelle")

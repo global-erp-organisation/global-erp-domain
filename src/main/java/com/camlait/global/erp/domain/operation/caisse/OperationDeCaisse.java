@@ -11,7 +11,7 @@ import com.camlait.global.erp.domain.operation.Operation;
 public class OperationDeCaisse extends Operation {
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.JOURNAL_CAISSE_ID)
+    @JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
     private JournalCaisse journal;
 
     public JournalCaisse getJournal() {

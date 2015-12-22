@@ -18,7 +18,7 @@ import com.camlait.global.erp.domain.localisation.Zone;
 public class Client extends Partenaire {
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.LOCALISATION_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Zone zone;
 
 	@OneToMany(mappedBy = "client")

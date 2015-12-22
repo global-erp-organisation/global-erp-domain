@@ -26,7 +26,7 @@ public class Magasin extends Entite {
 	private String descriptionMagasin;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.ENTREPOT_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Entrepot entrepot;
 
     @Column(name="dateDeCreation")

@@ -5,6 +5,9 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -22,21 +25,25 @@ import com.camlait.global.erp.domain.pk.PKBmq;
 @Entity
 public class Bmq extends Entite {
 
-	@EmbeddedId
-	private PKBmq bmqId;
+	// @EmbeddedId
+	// private PKBmq bmqId;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	@Column(nullable = false, unique = true)
 	private String codeBmq;
 
-	@Column(insertable=false,updatable=false)
+	@Column(insertable = false, updatable = false)
 	private DateTime dateBmq;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID, updatable = false, insertable = false)
 	private Vendeur vendeur;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.MAGASIN_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID, updatable = false, insertable = false)
 	private Magasin magasin;
 
 	@OneToMany(mappedBy = "bmq")
@@ -57,16 +64,22 @@ public class Bmq extends Entite {
 	@Column(name = "bmqClos")
 	private boolean bmqClos;
 
-	public PKBmq getBmqId() {
-		return bmqId;
-	}
-
-	public void setBmqId(PKBmq bmqId) {
-		this.bmqId = bmqId;
-	}
+	/*
+	 * public PKBmq getBmqId() { return bmqId; }
+	 * 
+	 * public void setBmqId(PKBmq bmqId) { this.bmqId = bmqId; }
+	 */
 
 	public String getCodeBmq() {
 		return codeBmq;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setCodeBmq(String codeBmq) {
@@ -137,21 +150,16 @@ public class Bmq extends Entite {
 		this.ligneBmqs = ligneBmqs;
 	}
 
+	public void setBmqClos(boolean bmqClos) {
+		this.bmqClos = bmqClos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bmqId == null) ? 0 : bmqId.hashCode());
-		result = prime * result + ((codeBmq == null) ? 0 : codeBmq.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
-	}
-
-	public boolean isBmqClos() {
-		return bmqClos;
-	}
-
-	public void setBmqClos(boolean bmqClos) {
-		this.bmqClos = bmqClos;
 	}
 
 	@Override
@@ -163,15 +171,10 @@ public class Bmq extends Entite {
 		if (getClass() != obj.getClass())
 			return false;
 		Bmq other = (Bmq) obj;
-		if (bmqId == null) {
-			if (other.bmqId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!bmqId.equals(other.bmqId))
-			return false;
-		if (codeBmq == null) {
-			if (other.codeBmq != null)
-				return false;
-		} else if (!codeBmq.equals(other.codeBmq))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

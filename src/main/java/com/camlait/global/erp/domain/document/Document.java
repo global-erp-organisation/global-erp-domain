@@ -1,7 +1,5 @@
 package com.camlait.global.erp.domain.document;
 
-import static com.camlait.global.erp.domain.config.ClePrimaires.*;
-
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -43,11 +41,11 @@ public class Document extends Entite {
 	private DateTime dateDocument;
 
 	@ManyToOne
-	@JoinColumn(name = MAGASIN_ID,updatable=false,insertable=false)
+	@JoinColumn(name =ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Magasin magasin;
 
 	@ManyToOne
-	@JoinColumn(name = PARTENAIRE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Employe responsableDocument;
 
     @Column(name="dateDeCreation")
@@ -60,11 +58,12 @@ public class Document extends Entite {
 	private SensOperation sensOperation;
 
 	@ManyToOne
-	@JoinColumns({ @JoinColumn(name = MAGASIN_ID), @JoinColumn(name = PARTENAIRE_ID), @JoinColumn(name = "dateBmq") })
+	//@JoinColumns({ @JoinColumn(name = ClePrimaires.AUTO_ID), @JoinColumn(name = ClePrimaires.AUTO_ID), @JoinColumn(name = "dateBmq") })
+	@JoinColumn(name=ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Bmq bmq;
 
 	@ManyToOne
-	@JoinColumn(name = INVENTAIRE_ID)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Inventaire inventaire;
 
 	@OneToMany(mappedBy = "document")

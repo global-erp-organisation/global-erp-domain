@@ -37,7 +37,7 @@ public class Immobilisation extends Entite {
 	private DateTime derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Client client;
 
 	public Long getImmoId() {

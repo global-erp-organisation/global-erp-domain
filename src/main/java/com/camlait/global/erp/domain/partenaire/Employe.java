@@ -29,7 +29,7 @@ public class Employe extends Partenaire {
     private DateTime dateDeNaissance;
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.UTILISATEUR_ID,updatable=false,insertable=false)
+    @JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
     private Utilisateur utilisateur;
 
     @OneToMany(mappedBy = "responsable")

@@ -44,7 +44,7 @@ public class Partenaire extends Entite {
 	private DateTime derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.LOCALISATION_ID,updatable=false,insertable=false)
+	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
 	private Centre centre;
 
 	@OneToMany(mappedBy = "client")
