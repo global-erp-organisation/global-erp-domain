@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.localisation.Centre;
 import com.camlait.global.erp.domain.partenaire.Employe;
 
@@ -32,7 +32,7 @@ public class Entrepot extends Entite {
 	private String descriptionEntrepot;
 
 	@ManyToOne
-	@JoinColumn(name=ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name=GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Centre centre;
 
     @Column(name="dateDeCreation")
@@ -42,7 +42,7 @@ public class Entrepot extends Entite {
     private DateTime derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Employe responsable;
 
 	@OneToMany(mappedBy = "entrepot")

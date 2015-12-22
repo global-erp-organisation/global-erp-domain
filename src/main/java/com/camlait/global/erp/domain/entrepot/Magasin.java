@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 
 @Entity
 public class Magasin extends Entite {
@@ -26,7 +26,7 @@ public class Magasin extends Entite {
 	private String descriptionMagasin;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Entrepot entrepot;
 
     @Column(name="dateDeCreation")

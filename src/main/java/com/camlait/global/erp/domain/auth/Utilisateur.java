@@ -10,7 +10,6 @@ import javax.persistence.OneToMany;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.localisation.Centre;
 import com.camlait.global.erp.domain.partenaire.Employe;
 
 @Entity

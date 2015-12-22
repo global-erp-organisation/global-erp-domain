@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.partenaire.Magasinier;
@@ -36,11 +36,11 @@ public class Inventaire extends Entite {
 	private String note;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID, insertable = false, updatable = false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, insertable = false, updatable = false)
 	private Magasin magasin;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID, insertable = false, updatable = false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, insertable = false, updatable = false)
 	private Magasinier magasinier;
 
 	@Column(name = "inventaireClos")

@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.document.vente.FactureClient;
 import com.camlait.global.erp.domain.operation.reglement.Reglement;
 import com.camlait.global.erp.domain.pk.PKFactureReglement;
@@ -21,11 +21,11 @@ public class FactureReglement extends Entite {
 	private PKFactureReglement factureReglementId;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private FactureClient facture;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID, insertable = false, updatable = false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, insertable = false, updatable = false)
 	private Reglement reglement;
 
 	@Column(name = "dateDeVentilation")

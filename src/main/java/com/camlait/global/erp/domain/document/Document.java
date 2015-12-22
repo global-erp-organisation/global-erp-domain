@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -18,7 +17,7 @@ import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.bmq.Bmq;
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
@@ -41,11 +40,11 @@ public class Document extends Entite {
 	private DateTime dateDocument;
 
 	@ManyToOne
-	@JoinColumn(name =ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name =GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Magasin magasin;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Employe responsableDocument;
 
     @Column(name="dateDeCreation")
@@ -58,12 +57,12 @@ public class Document extends Entite {
 	private SensOperation sensOperation;
 
 	@ManyToOne
-	//@JoinColumns({ @JoinColumn(name = ClePrimaires.AUTO_ID), @JoinColumn(name = ClePrimaires.AUTO_ID), @JoinColumn(name = "dateBmq") })
-	@JoinColumn(name=ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	//@JoinColumns({ @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION), @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION), @JoinColumn(name = "dateBmq") })
+	@JoinColumn(name=GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Bmq bmq;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Inventaire inventaire;
 
 	@OneToMany(mappedBy = "document")

@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.pk.PKStock;
 import com.camlait.global.erp.domain.produit.Produit;
@@ -21,11 +21,11 @@ public class Stock extends Entite {
 	private PKStock stockId;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Produit produit;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Magasin magasin;
 
 	@Column(name = "quantiteDisponible")

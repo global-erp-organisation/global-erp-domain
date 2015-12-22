@@ -3,7 +3,6 @@ package com.camlait.global.erp.domain.bmq;
 import java.util.Collection;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,12 +14,11 @@ import javax.persistence.OneToMany;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.operation.Recouvrement;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
-import com.camlait.global.erp.domain.pk.PKBmq;
 
 @Entity
 public class Bmq extends Entite {
@@ -39,11 +37,11 @@ public class Bmq extends Entite {
 	private DateTime dateBmq;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID, updatable = false, insertable = false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, updatable = false, insertable = false)
 	private Vendeur vendeur;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID, updatable = false, insertable = false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, updatable = false, insertable = false)
 	private Magasin magasin;
 
 	@OneToMany(mappedBy = "bmq")

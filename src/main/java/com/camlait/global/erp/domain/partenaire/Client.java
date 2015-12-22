@@ -7,18 +7,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.document.vente.DocumentDeVente;
-import com.camlait.global.erp.domain.document.vente.FactureClient;
 import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
-import com.camlait.global.erp.domain.immobilisation.Refrigerateur;
 import com.camlait.global.erp.domain.localisation.Zone;
 
 @Entity
 public class Client extends Partenaire {
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Zone zone;
 
 	@OneToMany(mappedBy = "client")

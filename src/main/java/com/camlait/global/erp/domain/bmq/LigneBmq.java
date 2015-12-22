@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.pk.PKLigneBmq;
 import com.camlait.global.erp.domain.produit.Produit;
@@ -22,7 +22,7 @@ public class LigneBmq extends Entite {
 	private PKLigneBmq ligneBmqId;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Produit produit;
 
 	@Column(name="quantiteLigne")
@@ -32,8 +32,8 @@ public class LigneBmq extends Entite {
 	private double prixUnitaireLigne;
 
 	@ManyToOne
-	//@JoinColumns({ @JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false), @JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false), @JoinColumn(name = "dateBmq",updatable=false,insertable=false) })
-	@JoinColumn(name=ClePrimaires.AUTO_ID)
+	//@JoinColumns({ @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false), @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false), @JoinColumn(name = "dateBmq",updatable=false,insertable=false) })
+	@JoinColumn(name=GlobalAppConstants.AUTO_ID_NOTATION)
 	private Bmq bmq;
 
     @Column(name="dateDeCreation")
@@ -43,7 +43,7 @@ public class LigneBmq extends Entite {
     private DateTime derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Document document;
 
 	public PKLigneBmq getLigneBmqId() {

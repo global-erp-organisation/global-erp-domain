@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 
 import org.joda.time.DateTime;
 
-import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
 import com.camlait.global.erp.domain.pk.PKPartenaireImmobilisation;
 
@@ -19,11 +19,11 @@ public class PartenaireImmobilisation {
     private PKPartenaireImmobilisation clientImmoId;
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+    @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
     private Partenaire partenaire;
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.AUTO_ID,updatable=false,insertable=false)
+    @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
     private Immobilisation immobilisation;
 
     @Column(name="dateAllocation",updatable=false,insertable=false)
