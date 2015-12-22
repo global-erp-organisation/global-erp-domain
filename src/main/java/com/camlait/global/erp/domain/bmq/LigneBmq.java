@@ -1,40 +1,50 @@
 package com.camlait.global.erp.domain.bmq;
 
+import static com.camlait.global.erp.domain.config.ClePrimaires.*;
+
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.pk.PKLigneBmq;
 import com.camlait.global.erp.domain.produit.Produit;
 
+
+@Entity
 public class LigneBmq extends Entite {
 
 	@EmbeddedId
 	private PKLigneBmq ligneBmqId;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PRODUIT_ID)
+	@JoinColumn(name = PRODUIT_ID,updatable=false,insertable=false)
 	private Produit produit;
 
+	@Column(name="quantiteLigne")
 	private Long quantiteLigne;
 
+	@Column(name="prixUnitaireLigne")
 	private double prixUnitaireLigne;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.BMQ_ID)
+	@JoinColumns({ @JoinColumn(name = MAGASIN_ID,updatable=false,insertable=false), @JoinColumn(name = PARTENAIRE_ID,updatable=false,insertable=false), @JoinColumn(name = "dateBmq",updatable=false,insertable=false) })
 	private Bmq bmq;
 
-	private DateTime dateDeCreation;
+    @Column(name="dateDeCreation")
+    private DateTime dateDeCreation;
 
-	private DateTime derniereMiseAJour;
+    @Column(name="derniereMiseAJour")
+    private DateTime derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.DOCUMENT_ID)
+	@JoinColumn(name = DOCUMENT_ID,updatable=false,insertable=false)
 	private Document document;
 
 	public PKLigneBmq getLigneBmqId() {

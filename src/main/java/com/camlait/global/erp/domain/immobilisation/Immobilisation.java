@@ -19,29 +19,33 @@ public class Immobilisation extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long immoId;
+	private Long id;
 
-	@Column(nullable = false, unique = true)
+	@Column(name = "codeImmo", nullable = false, unique = true)
 	private String codeImmo;
 
+	@Column(name = "dateAcquisition")
 	private DateTime dateAcquisition;
 
+	@Column(name = "dateMiseEnService")
 	private DateTime dateMiseEnService;
 
+	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
+	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
 	private Client client;
 
 	public Long getImmoId() {
-		return immoId;
+		return id;
 	}
 
 	public void setImmoId(Long immoId) {
-		this.immoId = immoId;
+		this.id = immoId;
 	}
 
 	public String getCodeImmo() {
@@ -89,7 +93,7 @@ public class Immobilisation extends Entite {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codeImmo == null) ? 0 : codeImmo.hashCode());
-		result = prime * result + ((immoId == null) ? 0 : immoId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -107,10 +111,10 @@ public class Immobilisation extends Entite {
 				return false;
 		} else if (!codeImmo.equals(other.codeImmo))
 			return false;
-		if (immoId == null) {
-			if (other.immoId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!immoId.equals(other.immoId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

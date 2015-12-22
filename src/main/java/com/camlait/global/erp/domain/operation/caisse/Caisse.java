@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.joda.time.DateTime;
+
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.partenaire.Employe;
@@ -16,23 +18,30 @@ import com.camlait.global.erp.domain.partenaire.Employe;
 public class Caisse extends Entite {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long caisseId;
+	private Long id;
 
-	@Column(unique = true, nullable = false)
+	@Column(name = "codeCaisse", unique = true, nullable = false)
 	private String codeCaisse;
 
+	@Column(name = "descriptionCaisse")
 	private String descriptionCaisse;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
 	private Employe responsable;
 
+	@Column(name = "dateDeCreation")
+	private DateTime dateDeCreation;
+
+	@Column(name = "derniereMiseAJour")
+	private DateTime derniereMiseAJour;
+
 	public Long getCaisseId() {
-		return caisseId;
+		return id;
 	}
 
 	public void setCaisseId(Long caisseId) {
-		this.caisseId = caisseId;
+		this.id = caisseId;
 	}
 
 	public String getCodeCaisse() {
@@ -59,11 +68,27 @@ public class Caisse extends Entite {
 		this.responsable = responsable;
 	}
 
+	public DateTime getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(DateTime dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public DateTime getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((caisseId == null) ? 0 : caisseId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((codeCaisse == null) ? 0 : codeCaisse.hashCode());
 		return result;
 	}
@@ -77,10 +102,10 @@ public class Caisse extends Entite {
 		if (getClass() != obj.getClass())
 			return false;
 		Caisse other = (Caisse) obj;
-		if (caisseId == null) {
-			if (other.caisseId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!caisseId.equals(other.caisseId))
+		} else if (!id.equals(other.id))
 			return false;
 		if (codeCaisse == null) {
 			if (other.codeCaisse != null)

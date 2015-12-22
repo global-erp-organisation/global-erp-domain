@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.joda.time.DateTime;
+
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.enumeration.Portee;
@@ -20,30 +22,39 @@ public class CategorieProduit extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long categorieProduitId;
+	@Column(name = "categorieProduitId")
+	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.CATEGORIE_PRODUIT_ID)
+	@JoinColumn(name = ClePrimaires.CATEGORIE_PRODUIT_ID,updatable=false,insertable=false)
 	private CategorieProduit categorieParent;
 
-	@Column(unique = true, nullable = false)
+	@Column(name = "cedCategorieProduit", unique = true, nullable = false)
 	private String codeCategorieProduit;
 
+	@Column(name = "descriptionCategorie")
 	private String descriptionCategorie;
 
 	private Portee portee;
 
+	@Column(name = "categorieTaxable")
 	private boolean categorieTaxable;
+
+	@Column(name = "dateDeCreation")
+	private DateTime dateDeCreation;
+
+	@Column(name = "derniereMiseAJour")
+	private DateTime derniereMiseAJour;
 
 	@OneToMany(mappedBy = "categorie")
 	private Collection<Produit> produits;
 
 	public Long getCategorieProduitId() {
-		return categorieProduitId;
+		return id;
 	}
 
 	public void setCategorieProduitId(Long categorieProduitId) {
-		this.categorieProduitId = categorieProduitId;
+		this.id = categorieProduitId;
 	}
 
 	public CategorieProduit getCategorieParent() {
@@ -94,12 +105,28 @@ public class CategorieProduit extends Entite {
 		this.produits = produits;
 	}
 
+	public DateTime getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(DateTime dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public DateTime getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((categorieParent == null) ? 0 : categorieParent.hashCode());
-		result = prime * result + ((categorieProduitId == null) ? 0 : categorieProduitId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -117,10 +144,10 @@ public class CategorieProduit extends Entite {
 				return false;
 		} else if (!categorieParent.equals(other.categorieParent))
 			return false;
-		if (categorieProduitId == null) {
-			if (other.categorieProduitId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!categorieProduitId.equals(other.categorieProduitId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

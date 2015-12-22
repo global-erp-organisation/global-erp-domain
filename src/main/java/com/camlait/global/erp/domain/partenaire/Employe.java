@@ -25,10 +25,11 @@ public class Employe extends Partenaire {
 
     private String prenom;
 
+    @Column(name="dateDeNassance")
     private DateTime dateDeNaissance;
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.UTILISATEUR_ID)
+    @JoinColumn(name = ClePrimaires.UTILISATEUR_ID,updatable=false,insertable=false)
     private Utilisateur utilisateur;
 
     @OneToMany(mappedBy = "responsable")

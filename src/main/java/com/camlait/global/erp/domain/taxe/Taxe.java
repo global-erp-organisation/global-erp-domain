@@ -15,25 +15,29 @@ public class Taxe extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long taxeId;
+	private Long id;
 
-	@Column(unique = true, nullable = false)
+	@Column(name = "codeTaxe", unique = true, nullable = false)
 	private String codeTaxe;
 
+	@Column(name = "taxeDescription")
 	private String taxeDescription;
 
+	@Column(name = "valeurPourcentage")
 	private double valeurPourcentage;
 
+	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
+	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Long getTaxeId() {
-		return taxeId;
+		return id;
 	}
 
 	public void setTaxeId(Long taxeId) {
-		this.taxeId = taxeId;
+		this.id = taxeId;
 	}
 
 	public String getCodeTaxe() {
@@ -78,7 +82,7 @@ public class Taxe extends Entite {
 
 	public Taxe(Long taxeId, String codeTaxe) {
 		super();
-		this.taxeId = taxeId;
+		this.id = taxeId;
 		this.codeTaxe = codeTaxe;
 	}
 

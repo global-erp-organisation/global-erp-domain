@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.operation;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,34 +24,40 @@ public class Operation extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long operationId;
+	private Long id;
 
+	@Column(name="dateOperation")
 	private DateTime dateOperation;
 
+	@Column(name="sensOperation")
 	private SensOperation sensOperation;
 
-	private DateTime dateDeCreation;
+    @Column(name="dateDeCreation")
+    private DateTime dateDeCreation;
 
-	private DateTime derniereMiseAJour;
+    @Column(name="derniereMiseAJour")
+    private DateTime derniereMiseAJour;
 
+    @Column(name="libelleOperation")
 	private String libelleOperation;
 
+    @Column(name="montantOperation")
 	private double montantOperation;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
 	private Employe responsable;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
 	private Partenaire partenaire;
 
 	public Long getOperationId() {
-		return operationId;
+		return id;
 	}
 
 	public void setOperationId(Long operationId) {
-		this.operationId = operationId;
+		this.id = operationId;
 	}
 
 	public DateTime getDateOperation() {
@@ -121,7 +128,7 @@ public class Operation extends Entite {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((operationId == null) ? 0 : operationId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -134,10 +141,10 @@ public class Operation extends Entite {
 		if (getClass() != obj.getClass())
 			return false;
 		Operation other = (Operation) obj;
-		if (operationId == null) {
-			if (other.operationId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!operationId.equals(other.operationId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

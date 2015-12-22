@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.inventaire;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,26 +24,26 @@ public class Inventaire extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long inventaireId;
+	@Column(name = "inventaireId")
+	private Long id;
 
+	@Column(name = "codeInventaire", nullable = false, unique = true)
 	private String codeInventaire;
 
+	@Column(name = "dateInventaire", nullable = false)
 	private DateTime dateInventaire;
 
 	private String note;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.MAGASIN_ID)
+	@JoinColumn(name = ClePrimaires.MAGASIN_ID, insertable = false, updatable = false)
 	private Magasin magasin;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
-	private Magasinier magasinierSortant;
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID, insertable = false, updatable = false)
+	private Magasinier magasinier;
 
-	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
-	private Magasinier magasinierEntrant;
-
+	@Column(name = "inventaireClos")
 	private boolean inventaireClos;
 
 	@OneToMany(mappedBy = "inventaire")
@@ -51,12 +52,18 @@ public class Inventaire extends Entite {
 	@OneToMany(mappedBy = "inventaire")
 	private Collection<LigneInventaire> ligneInventaires;
 
+	@Column(name = "dateDeCreation")
+	private DateTime dateDeCreation;
+
+	@Column(name = "derniereMiseAJour")
+	private DateTime derniereMiseAJour;
+
 	public Long getInventaireId() {
-		return inventaireId;
+		return id;
 	}
 
 	public void setInventaireId(Long inventaireId) {
-		this.inventaireId = inventaireId;
+		this.id = inventaireId;
 	}
 
 	public String getCodeInventaire() {
@@ -91,20 +98,12 @@ public class Inventaire extends Entite {
 		this.magasin = magasin;
 	}
 
-	public Magasinier getMagasinierSortant() {
-		return magasinierSortant;
+	public Magasinier getMagasinier() {
+		return magasinier;
 	}
 
-	public void setMagasinierSortant(Magasinier magasinierSortant) {
-		this.magasinierSortant = magasinierSortant;
-	}
-
-	public Magasinier getMagasinierEntrant() {
-		return magasinierEntrant;
-	}
-
-	public void setMagasinierEntrant(Magasinier magasinierEntrant) {
-		this.magasinierEntrant = magasinierEntrant;
+	public void setMagasinier(Magasinier magasinier) {
+		this.magasinier = magasinier;
 	}
 
 	public boolean isInventaireClos() {
@@ -131,12 +130,28 @@ public class Inventaire extends Entite {
 		this.ligneInventaires = ligneInventaires;
 	}
 
+	public DateTime getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(DateTime dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public DateTime getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codeInventaire == null) ? 0 : codeInventaire.hashCode());
-		result = prime * result + ((inventaireId == null) ? 0 : inventaireId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -154,10 +169,10 @@ public class Inventaire extends Entite {
 				return false;
 		} else if (!codeInventaire.equals(other.codeInventaire))
 			return false;
-		if (inventaireId == null) {
-			if (other.inventaireId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!inventaireId.equals(other.inventaireId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

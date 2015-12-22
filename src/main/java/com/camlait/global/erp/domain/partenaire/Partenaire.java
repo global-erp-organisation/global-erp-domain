@@ -18,7 +18,7 @@ import org.joda.time.DateTime;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.document.vente.DocumentDeVente;
-import com.camlait.global.erp.domain.immobilisation.Immobilisation;
+import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.localisation.Centre;
 import com.camlait.global.erp.domain.operation.Operation;
 
@@ -28,38 +28,40 @@ public class Partenaire extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long partenaireId;
+	private Long id;
 
-	@Column(nullable = false, unique = true)
+	@Column(name = "codePartenaire", nullable = false, unique = true)
 	private String codePartenaire;
 
 	private String adresse;
 
 	private String telephone;
 
+	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
+	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.LOCALISATION_ID)
+	@JoinColumn(name = ClePrimaires.LOCALISATION_ID,updatable=false,insertable=false)
 	private Centre centre;
 
 	@OneToMany(mappedBy = "client")
 	private Collection<DocumentDeVente> documents;
 
 	@OneToMany(mappedBy = "immobilisation")
-	private Collection<Immobilisation> immobilisations;
+	private Collection<PartenaireImmobilisation> partenaireImmobilisations;
 
 	@OneToMany(mappedBy = "partenaire")
 	private Collection<Operation> operations;
 
 	public Long getPartenaireId() {
-		return partenaireId;
+		return id;
 	}
 
 	public void setPartenaireId(Long partenaireId) {
-		this.partenaireId = partenaireId;
+		this.id = partenaireId;
 	}
 
 	public String getCodePartenaire() {
@@ -118,12 +120,12 @@ public class Partenaire extends Entite {
 		this.documents = documents;
 	}
 
-	public Collection<Immobilisation> getImmobilisations() {
-		return immobilisations;
+	public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
+		return partenaireImmobilisations;
 	}
 
-	public void setImmobilisations(Collection<Immobilisation> immobilisations) {
-		this.immobilisations = immobilisations;
+	public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
+		this.partenaireImmobilisations = partenaireImmobilisations;
 	}
 
 	public Collection<Operation> getOperations() {
@@ -139,7 +141,7 @@ public class Partenaire extends Entite {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codePartenaire == null) ? 0 : codePartenaire.hashCode());
-		result = prime * result + ((partenaireId == null) ? 0 : partenaireId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -157,10 +159,10 @@ public class Partenaire extends Entite {
 				return false;
 		} else if (!codePartenaire.equals(other.codePartenaire))
 			return false;
-		if (partenaireId == null) {
-			if (other.partenaireId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!partenaireId.equals(other.partenaireId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

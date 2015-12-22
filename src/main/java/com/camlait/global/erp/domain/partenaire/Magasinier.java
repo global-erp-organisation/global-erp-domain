@@ -3,12 +3,14 @@ package com.camlait.global.erp.domain.partenaire;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 
 @Entity
 public class Magasinier extends Employe {
 
+	@OneToMany(mappedBy="magasinier")
     private Collection<Inventaire> inventaires;
 
     public Collection<Inventaire> getInventaires() {

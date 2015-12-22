@@ -17,27 +17,30 @@ import com.camlait.global.erp.domain.config.ClePrimaires;
 public class Magasin extends Entite {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long magasinId;
+	private Long id;
 
-	@Column(unique = true, nullable = false)
+	@Column(name="codeMagasin",unique = true, nullable = false)
 	private String codeMagasin;
 
+	@Column(name="descriptionMagasin")
 	private String descriptionMagasin;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.ENTREPOT_ID)
+	@JoinColumn(name = ClePrimaires.ENTREPOT_ID,updatable=false,insertable=false)
 	private Entrepot entrepot;
 
-	private DateTime dateDeCreation;
+    @Column(name="dateDeCreation")
+    private DateTime dateDeCreation;
 
-	private DateTime derniereMiseAJour;
+    @Column(name="derniereMiseAJour")
+    private DateTime derniereMiseAJour;
 
 	public Long getMagasinId() {
-		return magasinId;
+		return id;
 	}
 
 	public void setMagasinId(Long magasinId) {
-		this.magasinId = magasinId;
+		this.id = magasinId;
 	}
 
 	public String getCodeMagasin() {
@@ -85,7 +88,7 @@ public class Magasin extends Entite {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codeMagasin == null) ? 0 : codeMagasin.hashCode());
-		result = prime * result + ((magasinId == null) ? 0 : magasinId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -103,10 +106,10 @@ public class Magasin extends Entite {
 				return false;
 		} else if (!codeMagasin.equals(other.codeMagasin))
 			return false;
-		if (magasinId == null) {
-			if (other.magasinId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!magasinId.equals(other.magasinId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

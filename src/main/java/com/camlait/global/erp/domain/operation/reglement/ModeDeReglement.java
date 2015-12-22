@@ -18,23 +18,26 @@ public class ModeDeReglement extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long modeReglementId;
+	private Long id;
 
-	@Column(nullable = false, unique = true)
+	@Column(name = "codeModeReglement", nullable = false, unique = true)
 	private String codeModeReglement;
 
+	@Column(name = "descriptionModeDeReglement")
 	private String descriptionModeReglement;
 
+	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
+	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Long getModeReglementId() {
-		return modeReglementId;
+		return id;
 	}
 
 	public void setModeReglementId(Long modeReglementId) {
-		this.modeReglementId = modeReglementId;
+		this.id = modeReglementId;
 	}
 
 	public String getCodeModeReglement() {
@@ -74,7 +77,7 @@ public class ModeDeReglement extends Entite {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codeModeReglement == null) ? 0 : codeModeReglement.hashCode());
-		result = prime * result + ((modeReglementId == null) ? 0 : modeReglementId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -92,10 +95,10 @@ public class ModeDeReglement extends Entite {
 				return false;
 		} else if (!codeModeReglement.equals(other.codeModeReglement))
 			return false;
-		if (modeReglementId == null) {
-			if (other.modeReglementId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!modeReglementId.equals(other.modeReglementId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

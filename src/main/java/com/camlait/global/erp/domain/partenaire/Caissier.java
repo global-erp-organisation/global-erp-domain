@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.partenaire;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,49 +13,30 @@ import com.camlait.global.erp.domain.operation.caisse.Caisse;
 @Entity
 public class Caissier extends Employe {
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.CAISSE_ID)
-    private Caisse caisse;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.CAISSE_ID)
+	private Caisse caisse;
 
-    private String motDePasse;
+	@Column(name = "motDePasse")
+	private String motDePasse;
 
-    private DateTime dateDeCreation;
+	public Caisse getCaisse() {
+		return caisse;
+	}
 
-    private DateTime derniereMiseAJour;
+	public void setCaisse(Caisse caisse) {
+		this.caisse = caisse;
+	}
 
-    public Caisse getCaisse() {
-        return caisse;
-    }
+	public String getMotDePasse() {
+		return motDePasse;
+	}
 
-    public void setCaisse(Caisse caisse) {
-        this.caisse = caisse;
-    }
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
 
-    public String getMotDePasse() {
-        return motDePasse;
-    }
+	public Caissier() {
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
-    }
-
-    public DateTime getDateDeCreation() {
-        return dateDeCreation;
-    }
-
-    public void setDateDeCreation(DateTime dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
-
-    public DateTime getDerniereMiseAJour() {
-        return derniereMiseAJour;
-    }
-
-    public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
-        this.derniereMiseAJour = derniereMiseAJour;
-    }
-
-    public Caissier() {
-
-    }
+	}
 }

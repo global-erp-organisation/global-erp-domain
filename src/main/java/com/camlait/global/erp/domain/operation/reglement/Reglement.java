@@ -8,33 +8,33 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.config.ClePrimaires;
-import com.camlait.global.erp.domain.document.vente.FactureClient;
 import com.camlait.global.erp.domain.operation.Operation;
+import com.camlait.global.erp.domain.operation.reglement.lettrage.FactureReglement;
 
 @Entity
 public class Reglement extends Operation {
 
-    @OneToMany(mappedBy = "reglement")
-    private Collection<FactureClient> factures;
+	@OneToMany(mappedBy = "reglement")
+	private Collection<FactureReglement> factureReglements;
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.MODE_REGLEMENT_ID)
-    private ModeDeReglement modeDeReglement;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.MODE_REGLEMENT_ID,updatable=false,insertable=false)
+	private ModeDeReglement modeDeReglement;
 
-    public Collection<FactureClient> getFactures() {
-        return factures;
-    }
+	public Collection<FactureReglement> getFactureReglements() {
+		return factureReglements;
+	}
 
-    public void setFactures(Collection<FactureClient> factures) {
-        this.factures = factures;
-    }
+	public void setFactureReglements(Collection<FactureReglement> factureReglements) {
+		this.factureReglements = factureReglements;
+	}
 
-    public ModeDeReglement getModeDeReglement() {
-        return modeDeReglement;
-    }
+	public ModeDeReglement getModeDeReglement() {
+		return modeDeReglement;
+	}
 
-    public void setModeDeReglement(ModeDeReglement modeDeReglement) {
-        this.modeDeReglement = modeDeReglement;
-    }
+	public void setModeDeReglement(ModeDeReglement modeDeReglement) {
+		this.modeDeReglement = modeDeReglement;
+	}
 
 }

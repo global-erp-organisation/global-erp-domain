@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.document;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -20,21 +21,26 @@ public class LigneDeDocument extends Entite {
 	private PKLigneDocument ligneDocumentId;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PRODUIT_ID)
+	@JoinColumn(name = ClePrimaires.PRODUIT_ID,updatable=false,insertable=false)
 	private Produit produit;
 
+	@Column(name="quantiteLigne")
 	private Long quantiteLigne;
 
+	@Column(name="prixUnitaireLigne")
 	private double prixunitaiteLigne;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.DOCUMENT_ID)
+	@JoinColumn(name = ClePrimaires.DOCUMENT_ID,updatable=false,insertable=false)
 	private Document document;
 
-	private DateTime dateDeCreation;
+    @Column(name="dateDeCreation")
+    private DateTime dateDeCreation;
 
-	private DateTime derniereMiseAJour;
+    @Column(name="derniereMiseAJour")
+    private DateTime derniereMiseAJour;
 
+    @Column(name="sensOperation",updatable=false,insertable=false)
 	private SensOperation sensOperation;
 
 	public PKLigneDocument getLigneDocumentId() {

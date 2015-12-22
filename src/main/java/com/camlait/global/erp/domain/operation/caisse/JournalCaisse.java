@@ -21,30 +21,38 @@ public class JournalCaisse extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long journalId;
+	private Long id;
 
-	@Column(unique = true, nullable = false)
+	@Column(name = "codeJournal", unique = true, nullable = false)
 	private String codeJournal;
 
 	private String description;
 
+	@Column(name = "dateDebutJournal")
 	private DateTime dateDebutJournal;
 
+	@Column(name = "dateFinJournal")
 	private DateTime dateFinJournal;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.CAISSE_ID)
+	@JoinColumn(name = ClePrimaires.CAISSE_ID,updatable=false,insertable=false)
 	private Caisse caisse;
 
 	@OneToMany(mappedBy = "journal")
 	private Collection<OperationDeCaisse> opreations;
 
+	@Column(name = "dateDeCreation")
+	private DateTime dateDeCreation;
+
+	@Column(name = "derniereMiseAJour")
+	private DateTime derniereMiseAJour;
+
 	public Long getJournalId() {
-		return journalId;
+		return id;
 	}
 
 	public void setJournalId(Long journalId) {
-		this.journalId = journalId;
+		this.id = journalId;
 	}
 
 	public String getCodeJournal() {
@@ -91,12 +99,28 @@ public class JournalCaisse extends Entite {
 		this.opreations = opreations;
 	}
 
+	public DateTime getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(DateTime dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public DateTime getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codeJournal == null) ? 0 : codeJournal.hashCode());
-		result = prime * result + ((journalId == null) ? 0 : journalId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -114,10 +138,10 @@ public class JournalCaisse extends Entite {
 				return false;
 		} else if (!codeJournal.equals(other.codeJournal))
 			return false;
-		if (journalId == null) {
-			if (other.journalId != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!journalId.equals(other.journalId))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

@@ -18,31 +18,36 @@ public class Produit extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long produitId;
+	private Long id;
 
-	@Column(unique = true, nullable = false)
+	@Column(name = "codeProduit", unique = true, nullable = false)
 	private String codeProduit;
 
+	@Column(name = "descriptionProduit")
 	private String descriptionProduit;
 
+	@Column(name = "prixUnitaireProduit")
 	private double prixUnitaireProduit;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.CATEGORIE_PRODUIT_ID)
+	@JoinColumn(name = ClePrimaires.CATEGORIE_PRODUIT_ID,updatable=false,insertable=false)
 	private CategorieProduit categorie;
 
+	@Column(name = "produitTaxable")
 	private boolean produitTaxable;
 
+	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
+	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Long getProduitId() {
-		return produitId;
+		return id;
 	}
 
 	public void setProduitId(Long produitId) {
-		this.produitId = produitId;
+		this.id = produitId;
 	}
 
 	public String getCodeProduit() {

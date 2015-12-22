@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.document.vente;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -8,15 +9,21 @@ import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
+import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.partenaire.Client;
 
 @Entity
 public class DocumentDeVente extends Document {
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+	@JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
 	private Client client;
 
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.LOCALISATION_ID,updatable=false,insertable=false)
+	private Zone zone;
+
+	@Column(name="documentSolde")
 	private boolean documentSolde;
 
 	public Client getClient() {
@@ -33,6 +40,14 @@ public class DocumentDeVente extends Document {
 
 	public void setDocumentSolde(boolean documentSolde) {
 		this.documentSolde = documentSolde;
+	}
+
+	public Zone getZone() {
+		return zone;
+	}
+
+	public void setZone(Zone zone) {
+		this.zone = zone;
 	}
 
 	public DocumentDeVente() {

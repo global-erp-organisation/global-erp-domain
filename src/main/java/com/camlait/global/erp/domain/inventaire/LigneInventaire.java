@@ -1,9 +1,12 @@
 package com.camlait.global.erp.domain.inventaire;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.config.ClePrimaires;
@@ -17,20 +20,30 @@ public class LigneInventaire extends Entite {
 	private PKLigneInventaire ligneInventaireId;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.INVENTAIRE_ID)
+	@JoinColumn(name = ClePrimaires.INVENTAIRE_ID,updatable=false,insertable=false)
 	private Inventaire inventaire;
 
 	@ManyToOne
-	@JoinColumn(name = ClePrimaires.PRODUIT_ID)
+	@JoinColumn(name = ClePrimaires.PRODUIT_ID,updatable=false,insertable=false)
 	private Produit produit;
 
+	@Column(name = "quantiteReelle")
 	private Long quantiteReelle;
 
+	@Column(name = "quantiteAjustee")
 	private Long quantiteAjustee;
 
+	@Column(name = "prixUnitaireReelle")
 	private double prixUnitaireReelle;
 
+	@Column(name = "prixUnitaireAjustee")
 	private double prixUnitaireAjustee;
+
+	@Column(name = "dateDeCreation")
+	private DateTime dateDeCreation;
+
+	@Column(name = "derniereMiseAJour")
+	private DateTime derniereMiseAJour;
 
 	public PKLigneInventaire getLigneInventaireId() {
 		return ligneInventaireId;
@@ -86,6 +99,22 @@ public class LigneInventaire extends Entite {
 
 	public void setPrixUnitaireAjustee(double prixUnitaireAjustee) {
 		this.prixUnitaireAjustee = prixUnitaireAjustee;
+	}
+
+	public DateTime getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(DateTime dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public DateTime getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
 	}
 
 	@Override

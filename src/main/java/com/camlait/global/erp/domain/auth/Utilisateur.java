@@ -17,17 +17,19 @@ import com.camlait.global.erp.domain.partenaire.Employe;
 public class Utilisateur extends Entite {
 
     @Id
+    @Column(name="codeUtilisateur")
     private String codeUtilisateur;
 
     @Column(nullable = false)
     private String courriel;
 
+    @Column(name="motDePasse")
     private String motDePasse;
 
-    private Collection<Centre> centres;
-
+    @Column(name="dateDeCreation")
     private DateTime dateDeCreation;
 
+    @Column(name="derniereMiseAJour")
     private DateTime derniereMiseAJour;
 
     @OneToMany(mappedBy="utilisateur")
@@ -55,14 +57,6 @@ public class Utilisateur extends Entite {
 
     public void setMotDePasse(String motDePasse) {
         this.motDePasse = motDePasse;
-    }
-
-    public Collection<Centre> getCentres() {
-        return centres;
-    }
-
-    public void setCentres(Collection<Centre> centres) {
-        this.centres = centres;
     }
 
     public DateTime getDateDeCreation() {

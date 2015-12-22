@@ -1,6 +1,8 @@
 package com.camlait.global.erp.domain.immobilisation;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -10,21 +12,24 @@ import com.camlait.global.erp.domain.config.ClePrimaires;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
 import com.camlait.global.erp.domain.pk.PKPartenaireImmobilisation;
 
+@Entity
 public class PartenaireImmobilisation {
 
     @EmbeddedId
     private PKPartenaireImmobilisation clientImmoId;
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.PARTENAIRE_ID)
+    @JoinColumn(name = ClePrimaires.PARTENAIRE_ID,updatable=false,insertable=false)
     private Partenaire partenaire;
 
     @ManyToOne
-    @JoinColumn(name = ClePrimaires.IMMO_ID)
+    @JoinColumn(name = ClePrimaires.IMMO_ID,updatable=false,insertable=false)
     private Immobilisation immobilisation;
 
+    @Column(name="dateAllocation",updatable=false,insertable=false)
     private DateTime dateAllocation;
 
+    @Column(name="actif")
     private boolean actif;
 
     public PKPartenaireImmobilisation getClientImmoId() {

@@ -8,33 +8,34 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.immobilisation.Vehicule;
 import com.camlait.global.erp.domain.localisation.Zone;
 
 @Entity
 public class Vendeur extends Employe {
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.LOCALISATION_ID)
-    private Zone zoneDeVente;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.LOCALISATION_ID,updatable=false,insertable=false)
+	private Zone zoneDeVente;
 
-    @OneToMany(mappedBy = "immobilisation")
-    private Collection<Vehicule> vehicules;
+	@OneToMany(mappedBy = "immobilisation")
+	private Collection<PartenaireImmobilisation> partenaireImmobilisations;
 
-    public Zone getZoneDeVente() {
-        return zoneDeVente;
-    }
+	public Zone getZoneDeVente() {
+		return zoneDeVente;
+	}
 
-    public void setZoneDeVente(Zone zoneDeVente) {
-        this.zoneDeVente = zoneDeVente;
-    }
+	public void setZoneDeVente(Zone zoneDeVente) {
+		this.zoneDeVente = zoneDeVente;
+	}
 
-    public Collection<Vehicule> getVehicules() {
-        return vehicules;
-    }
+	public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
+		return partenaireImmobilisations;
+	}
 
-    public void setVehicules(Collection<Vehicule> vehicules) {
-        this.vehicules = vehicules;
-    }
+	public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
+		this.partenaireImmobilisations = partenaireImmobilisations;
+	}
 
 }

@@ -8,45 +8,47 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.config.ClePrimaires;
+import com.camlait.global.erp.domain.document.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.document.vente.FactureClient;
+import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.immobilisation.Refrigerateur;
 import com.camlait.global.erp.domain.localisation.Zone;
 
 @Entity
 public class Client extends Partenaire {
 
-    @ManyToOne
-    @JoinColumn(name = ClePrimaires.LOCALISATION_ID)
-    private Zone zone;
+	@ManyToOne
+	@JoinColumn(name = ClePrimaires.LOCALISATION_ID,updatable=false,insertable=false)
+	private Zone zone;
 
-    @OneToMany(mappedBy = "client")
-    private Collection<FactureClient> factures;
+	@OneToMany(mappedBy = "client")
+	private Collection<DocumentDeVente> documentDeVentes;
 
-    @OneToMany(mappedBy = "immobilisation")
-    private Collection<Refrigerateur> refrigerateurs;
+	@OneToMany(mappedBy = "immobilisation")
+	private Collection<PartenaireImmobilisation> partenaireImmobilisations;
 
-    public Zone getZone() {
-        return zone;
-    }
+	public Zone getZone() {
+		return zone;
+	}
 
-    public void setZone(Zone zone) {
-        this.zone = zone;
-    }
+	public void setZone(Zone zone) {
+		this.zone = zone;
+	}
 
-    public Collection<Refrigerateur> getRefrigerateurs() {
-        return refrigerateurs;
-    }
+	public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
+		return partenaireImmobilisations;
+	}
 
-    public void setRefrigerateurs(Collection<Refrigerateur> refrigerateurs) {
-        this.refrigerateurs = refrigerateurs;
-    }
+	public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
+		this.partenaireImmobilisations = partenaireImmobilisations;
+	}
 
-    public Collection<FactureClient> getFactures() {
-        return factures;
-    }
+	public Collection<DocumentDeVente> getDocumentDeVentes() {
+		return documentDeVentes;
+	}
 
-    public void setFactures(Collection<FactureClient> factures) {
-        this.factures = factures;
-    }
+	public void setDocumentDeVentes(Collection<DocumentDeVente> documentDeVentes) {
+		this.documentDeVentes = documentDeVentes;
+	}
 
 }
