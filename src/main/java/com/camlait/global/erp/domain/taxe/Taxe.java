@@ -20,16 +20,12 @@ public class Taxe extends Entite {
 	@Column(name = "codeTaxe", unique = true, nullable = false)
 	private String codeTaxe;
 
-	@Column(name = "taxeDescription")
 	private String taxeDescription;
 
-	@Column(name = "valeurPourcentage")
 	private double valeurPourcentage;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Long getTaxeId() {

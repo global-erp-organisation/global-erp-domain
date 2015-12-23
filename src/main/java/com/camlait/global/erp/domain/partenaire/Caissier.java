@@ -1,6 +1,5 @@
 package com.camlait.global.erp.domain.partenaire;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,7 +14,6 @@ public class Caissier extends Employe {
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Caisse caisse;
 
-	@Column(name = "motDePasse")
 	private String motDePasse;
 
 	public Caisse getCaisse() {

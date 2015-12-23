@@ -23,13 +23,10 @@ public class ModeDeReglement extends Entite {
 	@Column(name = "codeModeReglement", nullable = false, unique = true)
 	private String codeModeReglement;
 
-	@Column(name = "descriptionModeDeReglement")
 	private String descriptionModeReglement;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Long getModeReglementId() {

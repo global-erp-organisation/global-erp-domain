@@ -36,7 +36,6 @@ public class Document extends Entite {
 	@Column(name="codeDocument",unique = true, nullable = false)
 	private String codeDocument;
 
-	@Column(name="dateDocument")
 	private DateTime dateDocument;
 
 	@ManyToOne
@@ -47,13 +46,10 @@ public class Document extends Entite {
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Employe responsableDocument;
 
-    @Column(name="dateDeCreation")
     private DateTime dateDeCreation;
 
-    @Column(name="derniereMiseAJour")
     private DateTime derniereMiseAJour;
 
-    @Column(name="sensOperation")
 	private SensOperation sensOperation;
 
 	@ManyToOne
@@ -68,7 +64,6 @@ public class Document extends Entite {
 	@OneToMany(mappedBy = "document")
 	private Collection<LigneDeDocument> ligneDocuments;
 
-	@Column(name="typeDocument")
 	private TypeDocuments typeDocument;
 
 	public Long getDocumentId() {

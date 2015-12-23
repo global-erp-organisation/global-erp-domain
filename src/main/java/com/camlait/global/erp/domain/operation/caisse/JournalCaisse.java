@@ -28,10 +28,8 @@ public class JournalCaisse extends Entite {
 
 	private String description;
 
-	@Column(name = "dateDebutJournal")
 	private DateTime dateDebutJournal;
 
-	@Column(name = "dateFinJournal")
 	private DateTime dateFinJournal;
 
 	@ManyToOne
@@ -41,10 +39,8 @@ public class JournalCaisse extends Entite {
 	@OneToMany(mappedBy = "journal")
 	private Collection<OperationDeCaisse> opreations;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Long getJournalId() {

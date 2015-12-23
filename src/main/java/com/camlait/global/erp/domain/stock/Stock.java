@@ -1,6 +1,5 @@
 package com.camlait.global.erp.domain.stock;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -21,20 +20,17 @@ public class Stock extends Entite {
 	private PKStock stockId;
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, updatable = false, insertable = false)
 	private Produit produit;
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, updatable = false, insertable = false)
 	private Magasin magasin;
 
-	@Column(name = "quantiteDisponible")
 	private Long quantiteDisponible;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Produit getProduit() {

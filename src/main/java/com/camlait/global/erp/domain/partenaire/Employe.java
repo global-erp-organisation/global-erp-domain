@@ -25,7 +25,6 @@ public class Employe extends Partenaire {
 
     private String prenom;
 
-    @Column(name="dateDeNassance")
     private DateTime dateDeNaissance;
 
     @ManyToOne

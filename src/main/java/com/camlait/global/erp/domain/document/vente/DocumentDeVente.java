@@ -1,6 +1,5 @@
 package com.camlait.global.erp.domain.document.vente;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +22,6 @@ public class DocumentDeVente extends Document {
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Zone zone;
 
-	@Column(name="documentSolde")
 	private boolean documentSolde;
 
 	public Client getClient() {

@@ -28,17 +28,14 @@ public class Entrepot extends Entite {
 	@Column(name="codeEntrepot",nullable = false, unique = true)
 	private String codeEntrepot;
 
-	@Column(name="descriptionEntrepot")
 	private String descriptionEntrepot;
 
 	@ManyToOne
 	@JoinColumn(name=GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Centre centre;
 
-    @Column(name="dateDeCreation")
     private DateTime dateDeCreation;
 
-    @Column(name="derniereMiseAJour")
     private DateTime derniereMiseAJour;
 
 	@ManyToOne

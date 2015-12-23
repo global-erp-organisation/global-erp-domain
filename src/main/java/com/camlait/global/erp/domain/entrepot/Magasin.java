@@ -21,18 +21,15 @@ public class Magasin extends Entite {
 
 	@Column(name="codeMagasin",unique = true, nullable = false)
 	private String codeMagasin;
-
-	@Column(name="descriptionMagasin")
+	
 	private String descriptionMagasin;
 
 	@ManyToOne
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Entrepot entrepot;
 
-    @Column(name="dateDeCreation")
     private DateTime dateDeCreation;
 
-    @Column(name="derniereMiseAJour")
     private DateTime derniereMiseAJour;
 
 	public Long getMagasinId() {

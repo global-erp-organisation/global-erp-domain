@@ -24,20 +24,16 @@ public class LigneDeDocument extends Entite {
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Produit produit;
 
-	@Column(name="quantiteLigne")
 	private Long quantiteLigne;
-
-	@Column(name="prixUnitaireLigne")
+	
 	private double prixunitaiteLigne;
 
 	@ManyToOne
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Document document;
 
-    @Column(name="dateDeCreation")
     private DateTime dateDeCreation;
 
-    @Column(name="derniereMiseAJour")
     private DateTime derniereMiseAJour;
 
     @Column(name="sensOperation",updatable=false,insertable=false)

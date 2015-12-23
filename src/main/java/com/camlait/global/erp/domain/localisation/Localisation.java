@@ -23,11 +23,9 @@ public class Localisation extends Entite {
 	@Column(nullable = false, unique = true)
 	private String code;
 
-    @Column(name="dateDeCreation")
-    private DateTime dateDeCreation;
+	private DateTime dateDeCreation;
 
-    @Column(name="derniereMiseAJour")
-    private DateTime derniereMiseAJour;
+	private DateTime derniereMiseAJour;
 
 	public Long getLocalId() {
 		return id;
@@ -52,6 +50,30 @@ public class Localisation extends Entite {
 		result = prime * result + ((code == null) ? 0 : code.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public DateTime getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(DateTime dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public DateTime getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import javax.persistence.Embeddable;
 
 import org.joda.time.DateTime;
 
+@SuppressWarnings("serial")
 @Embeddable
 public class PKBmq implements Serializable {
 

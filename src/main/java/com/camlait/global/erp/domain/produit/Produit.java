@@ -23,23 +23,18 @@ public class Produit extends Entite {
 	@Column(name = "codeProduit", unique = true, nullable = false)
 	private String codeProduit;
 
-	@Column(name = "descriptionProduit")
 	private String descriptionProduit;
 
-	@Column(name = "prixUnitaireProduit")
 	private double prixUnitaireProduit;
 
 	@ManyToOne
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private CategorieProduit categorie;
 
-	@Column(name = "produitTaxable")
 	private boolean produitTaxable;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Long getProduitId() {

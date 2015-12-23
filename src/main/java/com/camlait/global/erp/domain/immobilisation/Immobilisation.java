@@ -24,16 +24,12 @@ public class Immobilisation extends Entite {
 	@Column(name = "codeImmo", nullable = false, unique = true)
 	private String codeImmo;
 
-	@Column(name = "dateAcquisition")
 	private DateTime dateAcquisition;
 
-	@Column(name = "dateMiseEnService")
 	private DateTime dateMiseEnService;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	@ManyToOne

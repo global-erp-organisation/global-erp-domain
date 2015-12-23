@@ -52,10 +52,8 @@ public class Inventaire extends Entite {
 	@OneToMany(mappedBy = "inventaire")
 	private Collection<LigneInventaire> ligneInventaires;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Long getInventaireId() {

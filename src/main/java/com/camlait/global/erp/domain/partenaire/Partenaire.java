@@ -37,10 +37,8 @@ public class Partenaire extends Entite {
 
 	private String telephone;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	@ManyToOne

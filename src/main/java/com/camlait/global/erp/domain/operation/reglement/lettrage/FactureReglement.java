@@ -1,6 +1,5 @@
 package com.camlait.global.erp.domain.operation.reglement.lettrage;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -28,13 +27,10 @@ public class FactureReglement extends Entite {
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, insertable = false, updatable = false)
 	private Reglement reglement;
 
-	@Column(name = "dateDeVentilation")
 	private DateTime dateDeVentilation;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public PKFactureReglement getFactureReglementId() {

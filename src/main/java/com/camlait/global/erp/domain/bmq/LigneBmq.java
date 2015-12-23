@@ -1,6 +1,5 @@
 package com.camlait.global.erp.domain.bmq;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -25,10 +24,8 @@ public class LigneBmq extends Entite {
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Produit produit;
 
-	@Column(name="quantiteLigne")
 	private Long quantiteLigne;
 
-	@Column(name="prixUnitaireLigne")
 	private double prixUnitaireLigne;
 
 	@ManyToOne
@@ -36,10 +33,8 @@ public class LigneBmq extends Entite {
 	@JoinColumn(name=GlobalAppConstants.AUTO_ID_NOTATION)
 	private Bmq bmq;
 
-    @Column(name="dateDeCreation")
     private DateTime dateDeCreation;
 
-    @Column(name="derniereMiseAJour")
     private DateTime derniereMiseAJour;
 
 	@ManyToOne

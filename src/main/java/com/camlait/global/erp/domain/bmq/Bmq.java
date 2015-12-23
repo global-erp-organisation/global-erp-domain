@@ -53,13 +53,10 @@ public class Bmq extends Entite {
 	@OneToMany(mappedBy = "bmq")
 	private Collection<LigneBmq> ligneBmqs;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
-	@Column(name = "bmqClos")
 	private boolean bmqClos;
 
 	/*
@@ -146,6 +143,10 @@ public class Bmq extends Entite {
 
 	public void setLigneBmqs(Collection<LigneBmq> ligneBmqs) {
 		this.ligneBmqs = ligneBmqs;
+	}
+
+	public boolean isBmqClos() {
+		return bmqClos;
 	}
 
 	public void setBmqClos(boolean bmqClos) {

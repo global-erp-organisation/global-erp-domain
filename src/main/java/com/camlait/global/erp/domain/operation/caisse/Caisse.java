@@ -23,17 +23,14 @@ public class Caisse extends Entite {
 	@Column(name = "codeCaisse", unique = true, nullable = false)
 	private String codeCaisse;
 
-	@Column(name = "descriptionCaisse")
 	private String descriptionCaisse;
 
 	@ManyToOne
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Employe responsable;
 
-	@Column(name = "dateDeCreation")
 	private DateTime dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private DateTime derniereMiseAJour;
 
 	public Long getCaisseId() {

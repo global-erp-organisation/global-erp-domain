@@ -1,6 +1,5 @@
 package com.camlait.global.erp.domain.operation;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,22 +25,16 @@ public class Operation extends Entite {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name="dateOperation")
 	private DateTime dateOperation;
 
-	@Column(name="sensOperation")
 	private SensOperation sensOperation;
 
-    @Column(name="dateDeCreation")
     private DateTime dateDeCreation;
 
-    @Column(name="derniereMiseAJour")
     private DateTime derniereMiseAJour;
 
-    @Column(name="libelleOperation")
 	private String libelleOperation;
 
-    @Column(name="montantOperation")
 	private double montantOperation;
 
 	@ManyToOne
