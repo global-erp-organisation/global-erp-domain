@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.entrepot;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.config.GlobalAppConstants;
@@ -28,9 +28,9 @@ public class Magasin extends Entite {
 	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
 	private Entrepot entrepot;
 
-    private DateTime dateDeCreation;
+    private Date dateDeCreation;
 
-    private DateTime derniereMiseAJour;
+    private Date derniereMiseAJour;
 
 	public Long getMagasinId() {
 		return id;
@@ -64,23 +64,32 @@ public class Magasin extends Entite {
 		this.entrepot = entrepot;
 	}
 
-	public DateTime getDateDeCreation() {
-		return dateDeCreation;
-	}
 
-	public void setDateDeCreation(DateTime dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
+	public Long getId() {
+        return id;
+    }
 
-	public DateTime getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
+    public Date getDateDeCreation() {
+        return dateDeCreation;
+    }
 
-	@Override
+    public void setDateDeCreation(Date dateDeCreation) {
+        this.dateDeCreation = dateDeCreation;
+    }
+
+    public Date getDerniereMiseAJour() {
+        return derniereMiseAJour;
+    }
+
+    public void setDerniereMiseAJour(Date derniereMiseAJour) {
+        this.derniereMiseAJour = derniereMiseAJour;
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

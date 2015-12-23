@@ -1,12 +1,12 @@
 package com.camlait.global.erp.domain.immobilisation;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
@@ -27,7 +27,7 @@ public class PartenaireImmobilisation {
     private Immobilisation immobilisation;
 
     @Column(name="dateAllocation",updatable=false,insertable=false)
-    private DateTime dateAllocation;
+    private Date dateAllocation;
 
     @Column(name="actif")
     private boolean actif;
@@ -56,13 +56,6 @@ public class PartenaireImmobilisation {
         this.immobilisation = immobilisation;
     }
 
-    public DateTime getDateAllocation() {
-        return dateAllocation;
-    }
-
-    public void setDateAllocation(DateTime dateAllocation) {
-        this.dateAllocation = dateAllocation;
-    }
 
     public boolean isActif() {
         return actif;

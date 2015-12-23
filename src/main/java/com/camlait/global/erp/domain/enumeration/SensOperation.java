@@ -3,20 +3,20 @@ package com.camlait.global.erp.domain.enumeration;
 import java.util.stream.Stream;
 
 public enum SensOperation {
-                           ENTREE(1, "E"),
-                           SORTIE(2, "S"),
-                           VIREMENT(3, "V");
+                           ENTREE("E","Entree"),
+                           SORTIE("S","Sortie"),
+                           VIREMENT("V", "Virement");
 
-    private final int id;
+    private final String id;
 
     private final String libelle;
 
-    private SensOperation(int id, String libelle) {
+    private SensOperation(String id, String libelle) {
         this.id = id;
         this.libelle = libelle;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.produit;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.Portee;
@@ -31,9 +31,9 @@ public class CategorieProduit extends Entite {
     
     private boolean categorieTaxable;
     
-    private DateTime dateDeCreation;
+    private Date dateDeCreation;
     
-    private DateTime derniereMiseAJour;
+    private Date derniereMiseAJour;
     
     @OneToMany(mappedBy = "categorie")
     private Collection<Produit> produits;
@@ -102,19 +102,19 @@ public class CategorieProduit extends Entite {
         this.produits = produits;
     }
     
-    public DateTime getDateDeCreation() {
+    public Date getDateDeCreation() {
         return dateDeCreation;
     }
     
-    public void setDateDeCreation(DateTime dateDeCreation) {
+    public void setDateDeCreation(Date dateDeCreation) {
         this.dateDeCreation = dateDeCreation;
     }
     
-    public DateTime getDerniereMiseAJour() {
+    public Date getDerniereMiseAJour() {
         return derniereMiseAJour;
     }
     
-    public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+    public void setDerniereMiseAJour(Date derniereMiseAJour) {
         this.derniereMiseAJour = derniereMiseAJour;
     }
     

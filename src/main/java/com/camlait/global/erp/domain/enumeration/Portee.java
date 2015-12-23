@@ -3,13 +3,13 @@ package com.camlait.global.erp.domain.enumeration;
 import java.util.stream.Stream;
 
 public enum Portee {
-	DETAIL(1, "Detail"), TOTAL(2, "Total");
+	DETAIL("D", "Detail"), TOTAL("T", "Total");
 
-	private final int porteeId;
+	private final String porteeId;
 
 	private final String descriptionPortee;
 
-	public int getPorteeId() {
+	public String getPorteeId() {
 		return porteeId;
 	}
 
@@ -17,7 +17,7 @@ public enum Portee {
 		return descriptionPortee;
 	}
 
-	private Portee(int id, String description) {
+	private Portee(String id, String description) {
 		this.porteeId = id;
 		this.descriptionPortee = description;
 	}
