@@ -11,34 +11,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 
 @Entity
 public class Magasin extends Entite {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long magasinId;
 
-	@Column(name="codeMagasin",unique = true, nullable = false)
+	@Column(name = "codeMagasin", unique = true, nullable = false)
 	private String codeMagasin;
-	
+
 	private String descriptionMagasin;
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "entrepotId")
 	private Entrepot entrepot;
 
-    private Date dateDeCreation;
+	private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
-
-	public Long getMagasinId() {
-		return id;
-	}
-
-	public void setMagasinId(Long magasinId) {
-		this.id = magasinId;
-	}
+	private Date derniereMiseAJour;
 
 	public String getCodeMagasin() {
 		return codeMagasin;
@@ -64,37 +55,36 @@ public class Magasin extends Entite {
 		this.entrepot = entrepot;
 	}
 
+	public Long getMagasinId() {
+		return magasinId;
+	}
 
-	public Long getId() {
-        return id;
-    }
+	public void setMagasinId(Long magasinId) {
+		this.magasinId = magasinId;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Date getDateDeCreation() {
+		return dateDeCreation;
+	}
 
-    public Date getDateDeCreation() {
-        return dateDeCreation;
-    }
+	public void setDateDeCreation(Date dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
 
-    public void setDateDeCreation(Date dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
+	public Date getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
 
-    public Date getDerniereMiseAJour() {
-        return derniereMiseAJour;
-    }
+	public void setDerniereMiseAJour(Date derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
 
-    public void setDerniereMiseAJour(Date derniereMiseAJour) {
-        this.derniereMiseAJour = derniereMiseAJour;
-    }
-
-    @Override
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codeMagasin == null) ? 0 : codeMagasin.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((magasinId == null) ? 0 : magasinId.hashCode());
 		return result;
 	}
 
@@ -112,10 +102,10 @@ public class Magasin extends Entite {
 				return false;
 		} else if (!codeMagasin.equals(other.codeMagasin))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (magasinId == null) {
+			if (other.magasinId != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!magasinId.equals(other.magasinId))
 			return false;
 		return true;
 	}

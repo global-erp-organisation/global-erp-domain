@@ -10,7 +10,7 @@ import com.camlait.global.erp.domain.inventaire.Inventaire;
 @Entity
 public class Magasinier extends Employe {
 
-	@OneToMany(mappedBy="magasinier")
+	@OneToMany(mappedBy="magasinierSortant")
     private Collection<Inventaire> inventaires;
 
     public Collection<Inventaire> getInventaires() {

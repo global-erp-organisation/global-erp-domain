@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.localisation.Centre;
 import com.camlait.global.erp.domain.partenaire.Employe;
 
@@ -22,34 +21,34 @@ public class Entrepot extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long entrepotId;
 
-	@Column(name="codeEntrepot",nullable = false, unique = true)
+	@Column(name = "codeEntrepot", nullable = false, unique = true)
 	private String codeEntrepot;
 
 	private String descriptionEntrepot;
 
 	@ManyToOne
-	@JoinColumn(name=GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "centreId")
 	private Centre centre;
 
-    private Date dateDeCreation;
+	private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
+	private Date derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "responsableId")
 	private Employe responsable;
 
 	@OneToMany(mappedBy = "entrepot")
 	private Collection<Magasin> magasins;
 
 	public Long getEntrepotId() {
-		return id;
+		return entrepotId;
 	}
 
 	public void setEntrepotId(Long entrepotId) {
-		this.id = entrepotId;
+		this.entrepotId = entrepotId;
 	}
 
 	public String getCodeEntrepot() {
@@ -76,32 +75,23 @@ public class Entrepot extends Entite {
 		this.centre = centre;
 	}
 
+	public Date getDateDeCreation() {
+		return dateDeCreation;
+	}
 
-	public Long getId() {
-        return id;
-    }
+	public void setDateDeCreation(Date dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Date getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
 
-    public Date getDateDeCreation() {
-        return dateDeCreation;
-    }
+	public void setDerniereMiseAJour(Date derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
 
-    public void setDateDeCreation(Date dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
-
-    public Date getDerniereMiseAJour() {
-        return derniereMiseAJour;
-    }
-
-    public void setDerniereMiseAJour(Date derniereMiseAJour) {
-        this.derniereMiseAJour = derniereMiseAJour;
-    }
-
-    public Collection<Magasin> getMagasins() {
+	public Collection<Magasin> getMagasins() {
 		return magasins;
 	}
 
@@ -122,7 +112,7 @@ public class Entrepot extends Entite {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codeEntrepot == null) ? 0 : codeEntrepot.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((entrepotId == null) ? 0 : entrepotId.hashCode());
 		return result;
 	}
 
@@ -140,10 +130,10 @@ public class Entrepot extends Entite {
 				return false;
 		} else if (!codeEntrepot.equals(other.codeEntrepot))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (entrepotId == null) {
+			if (other.entrepotId != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!entrepotId.equals(other.entrepotId))
 			return false;
 		return true;
 	}

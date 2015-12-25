@@ -7,7 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.localisation.Zone;
 
@@ -15,7 +14,7 @@ import com.camlait.global.erp.domain.localisation.Zone;
 public class Vendeur extends Employe {
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "zoneIdd")
 	private Zone zoneDeVente;
 
 	@OneToMany(mappedBy = "immobilisation")

@@ -7,13 +7,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
-
 @Entity
 public class Region extends Localisation {
 
     @ManyToOne
-    @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+    @JoinColumn(name = "centreId")
     private Centre centre;
 
     @OneToMany(mappedBy="region")

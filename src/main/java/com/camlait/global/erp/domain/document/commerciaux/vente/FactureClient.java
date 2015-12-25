@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.document.vente;
+package com.camlait.global.erp.domain.document.commerciaux.vente;
 
 import java.util.Collection;
 

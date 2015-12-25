@@ -1,25 +1,24 @@
-package com.camlait.global.erp.domain.document.vente;
+package com.camlait.global.erp.domain.document.commerciaux.vente;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
-import com.camlait.global.erp.domain.document.Document;
+import com.camlait.global.erp.domain.document.commerciaux.DocumentCommerciaux;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.partenaire.Client;
 
 @Entity
-public class DocumentDeVente extends Document {
+public class DocumentDeVente extends DocumentCommerciaux {
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "clientId")
 	private Client client;
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "zoneId")
 	private Zone zone;
 
 	private boolean documentSolde;

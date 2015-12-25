@@ -4,14 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.operation.caisse.Caisse;
 
 @Entity
 public class Caissier extends Employe {
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "caisseId",updatable=false,insertable=false)
 	private Caisse caisse;
 
 	private String motDePasse;

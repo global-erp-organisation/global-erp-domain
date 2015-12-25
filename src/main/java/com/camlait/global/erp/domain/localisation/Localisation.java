@@ -18,7 +18,7 @@ public class Localisation extends Entite {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long localId;
     
     @Column(nullable = false, unique = true)
     private String code;
@@ -28,11 +28,11 @@ public class Localisation extends Entite {
     private Date derniereMiseAJour;
     
     public Long getLocalId() {
-        return id;
+        return localId;
     }
     
     public void setLocalId(Long localId) {
-        this.id = localId;
+        this.localId = localId;
     }
     
     public String getCode() {
@@ -48,18 +48,11 @@ public class Localisation extends Entite {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((code == null) ? 0 : code.hashCode());
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((localId == null) ? 0 : localId.hashCode());
         return result;
     }
     
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
+     
     public Date getDateDeCreation() {
         return dateDeCreation;
     }
@@ -90,10 +83,10 @@ public class Localisation extends Entite {
                 return false;
         } else if (!code.equals(other.code))
             return false;
-        if (id == null) {
-            if (other.id != null)
+        if (localId == null) {
+            if (other.localId != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!localId.equals(other.localId))
             return false;
         return true;
     }

@@ -18,7 +18,7 @@ public class ModeDeReglement extends Entite {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long modeDeReglementId;
     
     @Column(name = "codeModeReglement", nullable = false, unique = true)
     private String codeModeReglement;
@@ -29,14 +29,7 @@ public class ModeDeReglement extends Entite {
     
     private Date derniereMiseAJour;
     
-    public Long getModeReglementId() {
-        return id;
-    }
-    
-    public void setModeReglementId(Long modeReglementId) {
-        this.id = modeReglementId;
-    }
-    
+      
     public String getCodeModeReglement() {
         return codeModeReglement;
     }
@@ -53,12 +46,12 @@ public class ModeDeReglement extends Entite {
         this.descriptionModeReglement = descriptionModeReglement;
     }
     
-    public Long getId() {
-        return id;
+    public Long getModeDeReglementId() {
+        return modeDeReglementId;
     }
     
-    public void setId(Long id) {
-        this.id = id;
+    public void setModeDeReglementId(Long id) {
+        this.modeDeReglementId = id;
     }
     
     public Date getDateDeCreation() {
@@ -82,7 +75,7 @@ public class ModeDeReglement extends Entite {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((codeModeReglement == null) ? 0 : codeModeReglement.hashCode());
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((modeDeReglementId == null) ? 0 : modeDeReglementId.hashCode());
         return result;
     }
     
@@ -100,10 +93,10 @@ public class ModeDeReglement extends Entite {
                 return false;
         } else if (!codeModeReglement.equals(other.codeModeReglement))
             return false;
-        if (id == null) {
-            if (other.id != null)
+        if (modeDeReglementId == null) {
+            if (other.modeDeReglementId != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!modeDeReglementId.equals(other.modeDeReglementId))
             return false;
         return true;
     }

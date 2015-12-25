@@ -3,92 +3,98 @@ package com.camlait.global.erp.domain.immobilisation;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
-import com.camlait.global.erp.domain.pk.PKPartenaireImmobilisation;
 
 @Entity
 public class PartenaireImmobilisation {
 
-    @EmbeddedId
-    private PKPartenaireImmobilisation clientImmoId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long clientImmoId;
 
-    @ManyToOne
-    @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
-    private Partenaire partenaire;
+	@ManyToOne
+	@JoinColumn(name = "partenaireId")
+	private Partenaire partenaire;
 
-    @ManyToOne
-    @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
-    private Immobilisation immobilisation;
+	@ManyToOne
+	@JoinColumn(name = "immoId")
+	private Immobilisation immobilisation;
 
-    @Column(name="dateAllocation",updatable=false,insertable=false)
-    private Date dateAllocation;
+	private Date dateAllocation;
 
-    @Column(name="actif")
-    private boolean actif;
+	@Column(name = "actif")
+	private boolean actif;
 
-    public PKPartenaireImmobilisation getClientImmoId() {
-        return clientImmoId;
-    }
+	public Long getClientImmoId() {
+		return clientImmoId;
+	}
 
-    public void setClientImmoId(PKPartenaireImmobilisation clientImmoId) {
-        this.clientImmoId = clientImmoId;
-    }
+	public void setClientImmoId(Long clientImmoId) {
+		this.clientImmoId = clientImmoId;
+	}
 
-    public Partenaire getPartenaire() {
-        return partenaire;
-    }
+	public Partenaire getPartenaire() {
+		return partenaire;
+	}
 
-    public void setPartenaire(Partenaire partenaire) {
-        this.partenaire = partenaire;
-    }
+	public void setPartenaire(Partenaire partenaire) {
+		this.partenaire = partenaire;
+	}
 
-    public Immobilisation getImmobilisation() {
-        return immobilisation;
-    }
+	public Immobilisation getImmobilisation() {
+		return immobilisation;
+	}
 
-    public void setImmobilisation(Immobilisation immobilisation) {
-        this.immobilisation = immobilisation;
-    }
+	public void setImmobilisation(Immobilisation immobilisation) {
+		this.immobilisation = immobilisation;
+	}
 
+	public Date getDateAllocation() {
+		return dateAllocation;
+	}
 
-    public boolean isActif() {
-        return actif;
-    }
+	public void setDateAllocation(Date dateAllocation) {
+		this.dateAllocation = dateAllocation;
+	}
 
-    public void setActif(boolean actif) {
-        this.actif = actif;
-    }
+	public boolean isActif() {
+		return actif;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((clientImmoId == null) ? 0 : clientImmoId.hashCode());
-        return result;
-    }
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        PartenaireImmobilisation other = (PartenaireImmobilisation) obj;
-        if (clientImmoId == null) {
-            if (other.clientImmoId != null)
-                return false;
-        }
-        else if (!clientImmoId.equals(other.clientImmoId))
-            return false;
-        return true;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((clientImmoId == null) ? 0 : clientImmoId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PartenaireImmobilisation other = (PartenaireImmobilisation) obj;
+		if (clientImmoId == null) {
+			if (other.clientImmoId != null)
+				return false;
+		} else if (!clientImmoId.equals(other.clientImmoId))
+			return false;
+		return true;
+	}
 
 }

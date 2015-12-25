@@ -5,13 +5,12 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.auth.Utilisateur;
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.operation.Operation;
 
 @Entity
@@ -27,8 +26,8 @@ public class Employe extends Partenaire {
 
     private DateTime dateDeNaissance;
 
-    @ManyToOne
-    @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+    @OneToOne
+    @JoinColumn(name = "codeUtilisateur",updatable=false,insertable=false)
     private Utilisateur utilisateur;
 
     @OneToMany(mappedBy = "responsable")
@@ -82,4 +81,8 @@ public class Employe extends Partenaire {
         this.operations = operations;
     }
 
+    @Override
+    public String toString() {
+    	return "["+matricule+"] "+prenom+" "+nom;
+    }
 }

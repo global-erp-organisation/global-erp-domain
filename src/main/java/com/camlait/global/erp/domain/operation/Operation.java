@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
@@ -23,7 +22,7 @@ public class Operation extends Entite {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long operationId;
     
     private Date dateOperation;
     
@@ -38,20 +37,13 @@ public class Operation extends Entite {
     private double montantOperation;
     
     @ManyToOne
-    @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, updatable = false, insertable = false)
+    @JoinColumn(name = "responsableId")
     private Employe responsable;
     
     @ManyToOne
-    @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, updatable = false, insertable = false)
+    @JoinColumn(name = "partenaireId")
     private Partenaire partenaire;
     
-    public Long getOperationId() {
-        return id;
-    }
-    
-    public void setOperationId(Long operationId) {
-        this.id = operationId;
-    }
     
     public Date getDateOperation() {
         return dateOperation;
@@ -69,12 +61,12 @@ public class Operation extends Entite {
         this.sensOperation = sensOperation;
     }
     
-    public Long getId() {
-        return id;
+    public Long getOperationId() {
+        return operationId;
     }
     
-    public void setId(Long id) {
-        this.id = id;
+    public void setOperationId(Long id) {
+        this.operationId = id;
     }
     
     public Date getDateDeCreation() {
@@ -129,7 +121,7 @@ public class Operation extends Entite {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((operationId == null) ? 0 : operationId.hashCode());
         return result;
     }
     
@@ -142,10 +134,10 @@ public class Operation extends Entite {
         if (getClass() != obj.getClass())
             return false;
         Operation other = (Operation) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (operationId == null) {
+            if (other.operationId != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!operationId.equals(other.operationId))
             return false;
         return true;
     }

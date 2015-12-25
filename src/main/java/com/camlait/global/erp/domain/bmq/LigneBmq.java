@@ -1,27 +1,27 @@
 package com.camlait.global.erp.domain.bmq;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.document.Document;
-import com.camlait.global.erp.domain.pk.PKLigneBmq;
 import com.camlait.global.erp.domain.produit.Produit;
-
 
 @Entity
 public class LigneBmq extends Entite {
 
-	@EmbeddedId
-	private PKLigneBmq ligneBmqId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long ligneBmqId;
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "produitId")
 	private Produit produit;
 
 	private Long quantiteLigne;
@@ -29,23 +29,22 @@ public class LigneBmq extends Entite {
 	private double prixUnitaireLigne;
 
 	@ManyToOne
-	//@JoinColumns({ @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false), @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false), @JoinColumn(name = "dateBmq",updatable=false,insertable=false) })
-	@JoinColumn(name=GlobalAppConstants.AUTO_ID_NOTATION)
+	@JoinColumn(name = "bmqId")
 	private Bmq bmq;
 
-    private DateTime dateDeCreation;
+	private DateTime dateDeCreation;
 
-    private DateTime derniereMiseAJour;
+	private DateTime derniereMiseAJour;
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "documentId")
 	private Document document;
 
-	public PKLigneBmq getLigneBmqId() {
+	public Long getLigneBmqId() {
 		return ligneBmqId;
 	}
 
-	public void setLigneBmqId(PKLigneBmq ligneBmqId) {
+	public void setLigneBmqId(Long ligneBmqId) {
 		this.ligneBmqId = ligneBmqId;
 	}
 

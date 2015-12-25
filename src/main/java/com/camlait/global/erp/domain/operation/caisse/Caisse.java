@@ -11,14 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.partenaire.Employe;
 
 @Entity
 public class Caisse extends Entite {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long caisseId;
     
     @Column(name = "codeCaisse", unique = true, nullable = false)
     private String codeCaisse;
@@ -26,21 +25,14 @@ public class Caisse extends Entite {
     private String descriptionCaisse;
     
     @ManyToOne
-    @JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION, updatable = false, insertable = false)
+    @JoinColumn(name ="responsableId")
     private Employe responsable;
     
     private Date dateDeCreation;
     
     private Date derniereMiseAJour;
     
-    public Long getCaisseId() {
-        return id;
-    }
-    
-    public void setCaisseId(Long caisseId) {
-        this.id = caisseId;
-    }
-    
+     
     public String getCodeCaisse() {
         return codeCaisse;
     }
@@ -65,12 +57,12 @@ public class Caisse extends Entite {
         this.responsable = responsable;
     }
     
-    public Long getId() {
-        return id;
+    public Long getCaisseId() {
+        return caisseId;
     }
     
-    public void setId(Long id) {
-        this.id = id;
+    public void setCaisseId(Long id) {
+        this.caisseId = id;
     }
     
     public Date getDateDeCreation() {
@@ -93,7 +85,7 @@ public class Caisse extends Entite {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((caisseId == null) ? 0 : caisseId.hashCode());
         result = prime * result + ((codeCaisse == null) ? 0 : codeCaisse.hashCode());
         return result;
     }
@@ -107,10 +99,10 @@ public class Caisse extends Entite {
         if (getClass() != obj.getClass())
             return false;
         Caisse other = (Caisse) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (caisseId == null) {
+            if (other.caisseId != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!caisseId.equals(other.caisseId))
             return false;
         if (codeCaisse == null) {
             if (other.codeCaisse != null)

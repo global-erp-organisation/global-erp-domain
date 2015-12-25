@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.camlait.global.erp.domain.config.GlobalAppConstants;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
@@ -14,7 +13,7 @@ import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 public class DocumentVirement extends Document {
 
 	@ManyToOne
-	@JoinColumn(name = GlobalAppConstants.AUTO_ID_NOTATION,updatable=false,insertable=false)
+	@JoinColumn(name = "magasinDestinationId")
 	private Magasin magasinDestination;
 
 	public Magasin getMagasinDestination() {
