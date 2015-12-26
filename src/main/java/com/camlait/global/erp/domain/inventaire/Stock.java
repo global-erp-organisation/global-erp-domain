@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.stock;
+package com.camlait.global.erp.domain.inventaire;
 
 import java.util.Date;
 
@@ -108,6 +108,7 @@ public class Stock extends Entite {
 	}
 
 	public Stock() {
-
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

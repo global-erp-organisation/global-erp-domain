@@ -108,7 +108,8 @@ public class Immobilisation extends Entite {
 	}
 
 	public Immobilisation() {
-
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 
 }

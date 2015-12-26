@@ -164,6 +164,7 @@ public class Partenaire extends Entite {
 	}
 
 	public Partenaire() {
-
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

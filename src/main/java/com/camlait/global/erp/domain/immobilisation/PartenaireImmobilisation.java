@@ -32,6 +32,9 @@ public class PartenaireImmobilisation {
 	@Column(name = "actif")
 	private boolean actif;
 
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
+
 	public Long getClientImmoId() {
 		return clientImmoId;
 	}
@@ -72,6 +75,22 @@ public class PartenaireImmobilisation {
 		this.actif = actif;
 	}
 
+	public Date getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(Date dateCreation) {
+		this.dateDeCreation = dateCreation;
+	}
+
+	public Date getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(Date derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -95,6 +114,12 @@ public class PartenaireImmobilisation {
 		} else if (!clientImmoId.equals(other.clientImmoId))
 			return false;
 		return true;
+	}
+
+	public PartenaireImmobilisation() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+
 	}
 
 }

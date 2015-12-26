@@ -9,19 +9,15 @@ import com.camlait.global.erp.domain.operation.Operation;
 @Entity
 public class OperationDeCaisse extends Operation {
 
-    @ManyToOne
-    @JoinColumn(name = "journalId")
-    private JournalCaisse journal;
+	@ManyToOne
+	@JoinColumn(name = "journalId")
+	private JournalCaisse journal;
 
-    public JournalCaisse getJournal() {
-        return journal;
-    }
+	public JournalCaisse getJournal() {
+		return journal;
+	}
 
-    public void setJournal(JournalCaisse journal) {
-        this.journal = journal;
-    }
-
-    public OperationDeCaisse() {
-
-    }
+	public void setJournal(JournalCaisse journal) {
+		this.journal = journal;
+	}
 }

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,6 +50,7 @@ public class Document extends Entite {
 
 	private Date derniereMiseAJour;
 
+	@Enumerated(EnumType.STRING)
 	private SensOperation sensOperation;
 
 	@ManyToOne
@@ -61,6 +64,7 @@ public class Document extends Entite {
 	@OneToMany(mappedBy = "document")
 	private Collection<LigneDeDocument> ligneDocuments;
 
+	@Enumerated(EnumType.STRING)
 	private TypeDocuments typeDocument;
 
 	public Long getDocumentId() {
@@ -191,6 +195,7 @@ public class Document extends Entite {
 	}
 
 	public Document() {
-		//
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

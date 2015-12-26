@@ -5,7 +5,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.document.Document;
-import com.camlait.global.erp.domain.taxe.ModeleDeTaxation;
 
 @Entity
 public class DocumentCommerciaux extends Document {

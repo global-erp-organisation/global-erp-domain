@@ -184,6 +184,7 @@ public class Inventaire extends Entite {
 	}
 
 	public Inventaire() {
-
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

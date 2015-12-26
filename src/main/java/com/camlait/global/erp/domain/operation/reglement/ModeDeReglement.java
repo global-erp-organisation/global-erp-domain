@@ -102,6 +102,7 @@ public class ModeDeReglement extends Entite {
     }
     
     public ModeDeReglement() {
-    
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
     }
 }

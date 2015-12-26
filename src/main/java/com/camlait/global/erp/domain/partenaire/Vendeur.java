@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.localisation.Zone;
+import com.camlait.global.erp.domain.operation.manquant.ManquantFinancier;
 
 @Entity
 public class Vendeur extends Employe {
@@ -19,6 +20,9 @@ public class Vendeur extends Employe {
 
 	@OneToMany(mappedBy = "immobilisation")
 	private Collection<PartenaireImmobilisation> partenaireImmobilisations;
+
+	@OneToMany(mappedBy = "vendeur")
+	private Collection<ManquantFinancier> manquantFinanciers;
 
 	public Zone getZoneDeVente() {
 		return zoneDeVente;
@@ -36,4 +40,11 @@ public class Vendeur extends Employe {
 		this.partenaireImmobilisations = partenaireImmobilisations;
 	}
 
+	public Collection<ManquantFinancier> getManquantFinanciers() {
+		return manquantFinanciers;
+	}
+
+	public void setManquantFinanciers(Collection<ManquantFinancier> manquantFinanciers) {
+		this.manquantFinanciers = manquantFinanciers;
+	}
 }

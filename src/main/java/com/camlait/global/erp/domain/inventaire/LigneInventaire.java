@@ -144,7 +144,8 @@ public class LigneInventaire extends Entite {
 	}
 
 	public LigneInventaire() {
-
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 
 }

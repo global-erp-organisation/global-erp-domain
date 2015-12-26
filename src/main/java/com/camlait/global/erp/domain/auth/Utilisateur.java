@@ -103,6 +103,7 @@ public class Utilisateur extends Entite {
     }
     
     public Utilisateur() {
-    
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
     }
 }

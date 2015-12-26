@@ -143,4 +143,9 @@ public class JournalCaisse extends Entite {
 	public void setCaisse(Caisse caisse) {
 		this.caisse = caisse;
 	}
+
+	public JournalCaisse() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
 }

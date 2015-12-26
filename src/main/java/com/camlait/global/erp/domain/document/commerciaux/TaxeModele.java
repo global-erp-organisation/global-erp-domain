@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.taxe;
+package com.camlait.global.erp.domain.document.commerciaux;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

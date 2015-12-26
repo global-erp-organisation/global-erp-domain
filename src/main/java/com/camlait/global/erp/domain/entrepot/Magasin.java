@@ -111,6 +111,7 @@ public class Magasin extends Entite {
 	}
 
 	public Magasin() {
-
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

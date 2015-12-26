@@ -107,4 +107,8 @@ public class FactureReglement extends Entite {
 		return true;
 	}
 
+	public FactureReglement() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
 }

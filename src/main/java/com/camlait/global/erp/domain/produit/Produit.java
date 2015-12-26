@@ -137,6 +137,7 @@ public class Produit extends Entite {
 	}
 
 	public Produit() {
-		//
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

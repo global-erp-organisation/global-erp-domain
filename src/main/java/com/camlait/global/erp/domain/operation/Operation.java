@@ -3,6 +3,8 @@ package com.camlait.global.erp.domain.operation;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,7 @@ public class Operation extends Entite {
     
     private Date dateOperation;
     
+    @Enumerated(EnumType.STRING)
     private SensOperation sensOperation;
     
     private Date dateDeCreation;
@@ -143,6 +146,7 @@ public class Operation extends Entite {
     }
     
     public Operation() {
-    
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
     }
 }

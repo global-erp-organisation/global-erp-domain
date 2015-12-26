@@ -1,6 +1,7 @@
-package com.camlait.global.erp.domain.taxe;
+package com.camlait.global.erp.domain.document.commerciaux;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,9 @@ public class ModeleDeTaxation extends Entite {
 	private Long modeleDeTaxationId;
 
 	private String descriptionModele;
+	
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
 
 	@OneToMany(mappedBy="modeleDeTaxation")
 	private Collection<TaxeModele> taxeModeles;
@@ -37,4 +41,32 @@ public class ModeleDeTaxation extends Entite {
 		this.descriptionModele = descriptionModele;
 	}
 
+	public Date getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(Date dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public Date getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(Date derniereMiseAjour) {
+		this.derniereMiseAJour = derniereMiseAjour;
+	}
+
+	public Collection<TaxeModele> getTaxeModeles() {
+		return taxeModeles;
+	}
+
+	public void setTaxeModeles(Collection<TaxeModele> taxeModeles) {
+		this.taxeModeles = taxeModeles;
+	}
+
+	public ModeleDeTaxation(){
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
 }

@@ -171,6 +171,7 @@ public class Bmq extends Entite {
 	}
 
 	public Bmq() {
-		// Fait rien
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

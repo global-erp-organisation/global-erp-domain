@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.taxe;
+package com.camlait.global.erp.domain.document.commerciaux;
 
 import java.util.Date;
 
@@ -83,5 +83,7 @@ public class Taxe extends Entite {
 	}
 
 	public Taxe() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

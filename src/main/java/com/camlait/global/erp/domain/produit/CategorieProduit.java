@@ -154,6 +154,7 @@ public class CategorieProduit extends Entite {
 	}
 
 	public CategorieProduit() {
-		//
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

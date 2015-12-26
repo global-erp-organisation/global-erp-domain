@@ -25,5 +25,4 @@ public class Recouvrement extends Operation {
 	public Recouvrement() {
 		setSensOperation(SensOperation.ENTREE);
 	}
-
 }

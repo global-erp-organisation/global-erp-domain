@@ -1,13 +1,13 @@
 package com.camlait.global.erp.domain.bmq;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.Document;
@@ -32,9 +32,9 @@ public class LigneBmq extends Entite {
 	@JoinColumn(name = "bmqId")
 	private Bmq bmq;
 
-	private DateTime dateDeCreation;
+	private Date dateDeCreation;
 
-	private DateTime derniereMiseAJour;
+	private Date derniereMiseAJour;
 
 	@ManyToOne
 	@JoinColumn(name = "documentId")
@@ -80,19 +80,19 @@ public class LigneBmq extends Entite {
 		this.bmq = bmq;
 	}
 
-	public DateTime getDateDeCreation() {
+	public Date getDateDeCreation() {
 		return dateDeCreation;
 	}
 
-	public void setDateDeCreation(DateTime dateDeCreation) {
+	public void setDateDeCreation(Date dateDeCreation) {
 		this.dateDeCreation = dateDeCreation;
 	}
 
-	public DateTime getDerniereMiseAJour() {
+	public Date getDerniereMiseAJour() {
 		return derniereMiseAJour;
 	}
 
-	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
+	public void setDerniereMiseAJour(Date derniereMiseAJour) {
 		this.derniereMiseAJour = derniereMiseAJour;
 	}
 
@@ -130,7 +130,8 @@ public class LigneBmq extends Entite {
 	}
 
 	public LigneBmq() {
-
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 
 }

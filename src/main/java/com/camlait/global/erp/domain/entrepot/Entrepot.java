@@ -139,6 +139,7 @@ public class Entrepot extends Entite {
 	}
 
 	public Entrepot() {
-
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }
