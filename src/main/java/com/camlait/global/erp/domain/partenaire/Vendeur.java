@@ -24,6 +24,8 @@ public class Vendeur extends Employe {
 	@OneToMany(mappedBy = "vendeur")
 	private Collection<ManquantFinancier> manquantFinanciers;
 
+	private Long partenaireId;
+
 	public Zone getZoneDeVente() {
 		return zoneDeVente;
 	}
@@ -46,5 +48,17 @@ public class Vendeur extends Employe {
 
 	public void setManquantFinanciers(Collection<ManquantFinancier> manquantFinanciers) {
 		this.manquantFinanciers = manquantFinanciers;
+	}
+
+	public Long getPartenaireId() {
+		return partenaireId;
+	}
+
+	public void setPartenaireId(Long partenaireId) {
+		this.partenaireId = partenaireId;
+	}
+
+	public Vendeur() {
+		this.partenaireId = super.getPartenaireId();
 	}
 }
