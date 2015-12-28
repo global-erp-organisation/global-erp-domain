@@ -21,9 +21,6 @@ import com.camlait.global.erp.domain.partenaire.Vendeur;
 @Entity
 public class Bmq extends Entite {
 
-	// @EmbeddedId
-	// private PKBmq bmqId;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long bmqId;
@@ -39,7 +36,7 @@ public class Bmq extends Entite {
 	private Vendeur vendeur;
 
 	@ManyToOne
-	@JoinColumn(name = "magasinid")
+	@JoinColumn(name = "magasinId")
 	private Magasin magasin;
 
 	@OneToMany(mappedBy = "bmq")

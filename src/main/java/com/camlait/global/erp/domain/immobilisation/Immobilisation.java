@@ -7,10 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 import com.camlait.global.erp.domain.Entite;
 
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Immobilisation extends Entite {
 
 	@Id
