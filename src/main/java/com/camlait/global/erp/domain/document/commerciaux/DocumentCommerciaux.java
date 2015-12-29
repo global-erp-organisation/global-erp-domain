@@ -5,6 +5,6 @@ import javax.persistence.Entity;
 import com.camlait.global.erp.domain.document.Document;
 
 @Entity
-public class DocumentCommerciaux extends Document {
+public abstract class DocumentCommerciaux extends Document {
 
 }

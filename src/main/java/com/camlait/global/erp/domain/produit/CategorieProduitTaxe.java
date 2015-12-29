@@ -1,8 +1,7 @@
-package com.camlait.global.erp.domain.bmq;
+package com.camlait.global.erp.domain.produit;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,39 +13,38 @@ import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.Taxe;
 
 @Entity
-public class LigneBmqTaxe extends Entite {
+public class CategorieProduitTaxe extends Entite {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ligneBmqTaxeId;
+    private Long categorieProduitTaxeId;
     
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "ligneBmqId")
-    private LigneBmq ligneBmq;
+    @ManyToOne
+    @JoinColumn(name = "categorieProduitId")
+    private CategorieProduit categorie;
     
-    @ManyToOne(cascade=CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "taxeId")
     private Taxe taxe;
-    
-    private double tauxDeTaxe;
     
     private Date dateDeCreation;
     
     private Date derniereMiseAJour;
     
-    public Long getLigneBmqTaxeId() {
-        return ligneBmqTaxeId;
+    public Long getCategorieProduitTaxeId() {
+        return categorieProduitTaxeId;
     }
     
-    public void setLigneBmqTaxeId(Long ligneBmqTaxeId) {
-        this.ligneBmqTaxeId = ligneBmqTaxeId;
+    public void setCategorieProduitTaxeId(Long categorieProduitTaxeId) {
+        this.categorieProduitTaxeId = categorieProduitTaxeId;
     }
     
-    public LigneBmq getLigneBmq() {
-        return ligneBmq;
+    public CategorieProduit getCategorie() {
+        return categorie;
     }
     
-    public void setLigneBmq(LigneBmq ligneBmq) {
-        this.ligneBmq = ligneBmq;
+    public void setCategorie(CategorieProduit categorie) {
+        this.categorie = categorie;
     }
     
     public Taxe getTaxe() {
@@ -55,14 +53,6 @@ public class LigneBmqTaxe extends Entite {
     
     public void setTaxe(Taxe taxe) {
         this.taxe = taxe;
-    }
-    
-    public double getTauxDeTaxe() {
-        return tauxDeTaxe;
-    }
-    
-    public void setTauxDeTaxe(double tauxDeTaxe) {
-        this.tauxDeTaxe = tauxDeTaxe;
     }
     
     public Date getDateDeCreation() {
@@ -85,7 +75,7 @@ public class LigneBmqTaxe extends Entite {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((ligneBmqTaxeId == null) ? 0 : ligneBmqTaxeId.hashCode());
+        result = prime * result + ((categorieProduitTaxeId == null) ? 0 : categorieProduitTaxeId.hashCode());
         return result;
     }
     
@@ -97,17 +87,18 @@ public class LigneBmqTaxe extends Entite {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        LigneBmqTaxe other = (LigneBmqTaxe) obj;
-        if (ligneBmqTaxeId == null) {
-            if (other.ligneBmqTaxeId != null)
+        CategorieProduitTaxe other = (CategorieProduitTaxe) obj;
+        if (categorieProduitTaxeId == null) {
+            if (other.categorieProduitTaxeId != null)
                 return false;
-        } else if (!ligneBmqTaxeId.equals(other.ligneBmqTaxeId))
+        } else if (!categorieProduitTaxeId.equals(other.categorieProduitTaxeId))
             return false;
         return true;
     }
     
-    public LigneBmqTaxe() {
+    public CategorieProduitTaxe() {
         setDateDeCreation(new Date());
         setDerniereMiseAJour(new Date());
     }
+    
 }

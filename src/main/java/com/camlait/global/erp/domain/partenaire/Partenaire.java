@@ -22,7 +22,7 @@ import com.camlait.global.erp.domain.operation.Operation;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Partenaire extends Entite {
+public abstract class Partenaire extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

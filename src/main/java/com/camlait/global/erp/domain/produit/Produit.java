@@ -2,7 +2,9 @@ package com.camlait.global.erp.domain.produit;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +36,7 @@ public class Produit extends Entite {
     
     private boolean produitTaxable;
     
-    @OneToMany(mappedBy = "produit")
+    @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
     private Collection<ProduitTaxe> produitTaxes;
     
     private Date dateDeCreation;
@@ -71,6 +73,7 @@ public class Produit extends Entite {
     
     public void setCategorie(CategorieProduit categorie) {
         this.categorie = categorie;
+        copieCategorieProduitTaxe();
     }
     
     public boolean isProduitTaxable() {
@@ -152,5 +155,21 @@ public class Produit extends Entite {
     public Produit() {
         setDateDeCreation(new Date());
         setDerniereMiseAJour(new Date());
+    }
+    
+    private void copieCategorieProduitTaxe() {
+        final Collection<ProduitTaxe> taxes = new HashSet<>();
+        if (categorie != null) {
+            final Collection<CategorieProduitTaxe> ctaxes = categorie.getCategorieProduitTaxes();
+            if ((ctaxes != null) && (!ctaxes.isEmpty())) {
+                ctaxes.stream().forEach(c -> {
+                    ProduitTaxe pt = new ProduitTaxe();
+                    pt.setProduit(this);
+                    pt.setTaxe(c.getTaxe());
+                    taxes.add(pt);
+                });
+                setProduitTaxes(taxes);
+            }
+        }       
     }
 }

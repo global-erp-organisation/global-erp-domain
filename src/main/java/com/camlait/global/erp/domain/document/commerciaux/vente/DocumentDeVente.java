@@ -11,7 +11,7 @@ import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.partenaire.Client;
 
 @Entity
-public class DocumentDeVente extends DocumentCommerciaux {
+public abstract class DocumentDeVente extends DocumentCommerciaux {
 
 	@ManyToOne
 	@JoinColumn(name = "clientId")

@@ -26,7 +26,7 @@ import com.camlait.global.erp.domain.partenaire.Employe;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Document extends Entite {
+public abstract class Document extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

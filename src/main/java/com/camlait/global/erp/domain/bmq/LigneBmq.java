@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.bmq;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class LigneBmq extends Entite {
     @JoinColumn(name = "documentId")
     private Document document;
     
-    @OneToMany(mappedBy = "ligneBmq", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "ligneBmq", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<LigneBmqTaxe> ligneBmqTaxes;
     
     public Long getLigneBmqId() {
