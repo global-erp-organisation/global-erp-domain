@@ -20,7 +20,7 @@ import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.bmq.Bmq;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
-import com.camlait.global.erp.domain.enumeration.TypeDocuments;
+import com.camlait.global.erp.domain.enumeration.document.TypeDocuments;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
 

@@ -4,13 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.camlait.global.erp.domain.document.Document;
+import com.camlait.global.erp.domain.document.stock.DocumentDeStock;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
-import com.camlait.global.erp.domain.enumeration.TypeDocuments;
+import com.camlait.global.erp.domain.enumeration.document.TypeDocumentStock;
 
 @Entity
-public class DocumentVirement extends Document {
+public class DocumentVirement extends DocumentDeStock {
 
 	@ManyToOne
 	@JoinColumn(name = "magasinDestinationId")
@@ -26,6 +26,6 @@ public class DocumentVirement extends Document {
 
 	public DocumentVirement() {
 		setSensOperation(SensOperation.VIREMENT);
-		setTypeDocument(TypeDocuments.VIREMENT);
+		setTypeDocumentStock(TypeDocumentStock.TRANSFERT);
 	}
 }

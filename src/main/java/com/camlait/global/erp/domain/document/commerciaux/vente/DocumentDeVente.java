@@ -1,12 +1,15 @@
 package com.camlait.global.erp.domain.document.commerciaux.vente;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.document.commerciaux.DocumentCommerciaux;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
-import com.camlait.global.erp.domain.enumeration.TypeDocuments;
+import com.camlait.global.erp.domain.enumeration.document.TypeDocumentCommerciaux;
+import com.camlait.global.erp.domain.enumeration.document.TypeDocumentVente;
 import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.partenaire.Client;
 
@@ -20,6 +23,9 @@ public abstract class DocumentDeVente extends DocumentCommerciaux {
 	@ManyToOne
 	@JoinColumn(name = "zoneId")
 	private Zone zone;
+
+	@Enumerated(EnumType.STRING)
+	private TypeDocumentVente typeDocumentDeVente;
 
 	private boolean documentSolde;
 
@@ -47,9 +53,17 @@ public abstract class DocumentDeVente extends DocumentCommerciaux {
 		this.zone = zone;
 	}
 
+	public TypeDocumentVente getTypeDocumentDeVente() {
+		return typeDocumentDeVente;
+	}
+
+	public void setTypeDocumentDeVente(TypeDocumentVente typeDocumentDeVente) {
+		this.typeDocumentDeVente = typeDocumentDeVente;
+	}
+
 	public DocumentDeVente() {
 		setSensOperation(SensOperation.SORTIE);
-		setTypeDocument(TypeDocuments.FACTURE_CLIENT);
+		setTypeDocumentCommerciaux(TypeDocumentCommerciaux.DOCUMENT_DE_VENTE);
 	}
 
 }

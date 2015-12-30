@@ -5,9 +5,9 @@ import javax.persistence.Entity;
 import com.camlait.global.erp.domain.enumeration.document.TypeDocumentSortie;
 
 @Entity
-public class Don extends DocumentDeSortie {
+public class Avarie extends DocumentDeSortie {
 
-	public Don() {
-		setTypeDocumentSortie(TypeDocumentSortie.DON);
+	public Avarie() {
+		setTypeDocumentSortie(TypeDocumentSortie.AVARIE);
 	}
 }
