@@ -5,7 +5,7 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 
 @Entity
@@ -23,7 +23,7 @@ public class Magasinier extends Employe {
     }
 
     public Magasinier() {
-    	setTypePartenaire(AutreEnum.MAGASINIER);
+    	setTypePartenaire(TypePartenaire.MAGASINIER);
     }
 
 }

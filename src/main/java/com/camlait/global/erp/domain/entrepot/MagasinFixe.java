@@ -2,6 +2,8 @@ package com.camlait.global.erp.domain.entrepot;
 
 import javax.persistence.Entity;
 
+import com.camlait.global.erp.domain.enumeration.AutreEnum;
+
 @Entity
 public class MagasinFixe extends Magasin {
     
@@ -15,4 +17,7 @@ public class MagasinFixe extends Magasin {
         this.adresse = adresse;
     }
     
+    public MagasinFixe(){
+        setTypeMagasin(AutreEnum.MAGASIN_FIXE);
+    }
 }

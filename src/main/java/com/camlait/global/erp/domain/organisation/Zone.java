@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.localisation;
+package com.camlait.global.erp.domain.organisation;
 
 import java.util.Collection;
 
@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
+import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.partenaire.Client;
 
 @Entity
@@ -48,6 +49,6 @@ public class Zone extends Localisation {
     }
 
     public Zone() {
-
+        setTypeLocal(AutreEnum.ZONE);
     }
 }

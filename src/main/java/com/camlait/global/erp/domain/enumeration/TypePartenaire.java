@@ -1,18 +1,17 @@
 package com.camlait.global.erp.domain.enumeration;
 
-public enum AutreEnum implements EnumTypeEntite {
-    INVENTAIRE("INV"),
-    BMQ("BMQ"),
-    CENTRE("C"),
-    REGION("R"),
-    SECTEUR("S"),
-    ZONE("Z"),
-    MAGASIN_MOBILE("MM"),
-    MAGASIN_FIXE("MF"),
-    ENTREPOT ("EN");
+public enum TypePartenaire implements EnumTypeEntite {
+    CLIENT("CL"),
+    VENDEUR("VE"),
+    EMPLOYE("EM"),
+    CAISSIER("CA"),
+    CLIENT_COMPTANT("CC"),
+    MAGASINIER("MA"),
+    CLIENT_A_MARGE("CM");
+    
     private final String type;
     
-    private AutreEnum(String type) {
+    private TypePartenaire(String type) {
         this.type = type;
     }
     
@@ -24,6 +23,5 @@ public enum AutreEnum implements EnumTypeEntite {
     @Override
     public String getType() {
         return this.type;
-    }
-    
+    }    
 }

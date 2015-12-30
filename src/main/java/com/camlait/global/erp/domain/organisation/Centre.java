@@ -1,9 +1,11 @@
-package com.camlait.global.erp.domain.localisation;
+package com.camlait.global.erp.domain.organisation;
 
 import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+
+import com.camlait.global.erp.domain.enumeration.AutreEnum;
 
 @Entity
 public class Centre extends Localisation {
@@ -20,6 +22,6 @@ public class Centre extends Localisation {
     }
 
     public Centre() {
-
+        setTypeLocal(AutreEnum.CENTRE);
     }
 }

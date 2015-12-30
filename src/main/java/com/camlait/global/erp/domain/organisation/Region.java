@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.localisation;
+package com.camlait.global.erp.domain.organisation;
 
 import java.util.Collection;
 
@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.camlait.global.erp.domain.enumeration.AutreEnum;
 
 @Entity
 public class Region extends Localisation {
@@ -34,7 +36,7 @@ public class Region extends Localisation {
     }
 
     public Region() {
-
+        setTypeLocal(AutreEnum.REGION);
     }
 
 }

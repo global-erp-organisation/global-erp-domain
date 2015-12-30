@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.auth.Utilisateur;
-import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.operation.Operation;
 
 @Entity
@@ -28,7 +28,7 @@ public class Employe extends Partenaire {
     private DateTime dateDeNaissance;
 
     @OneToOne
-    @JoinColumn(name = "codeUtilisateur",updatable=false,insertable=false)
+    @JoinColumn(name = "codeUtilisateur")
     private Utilisateur utilisateur;
 
     @OneToMany(mappedBy = "responsable")
@@ -88,6 +88,6 @@ public class Employe extends Partenaire {
     }
     
     public Employe(){
-    	setTypePartenaire(AutreEnum.EMPLOYE);
+    	setTypePartenaire(TypePartenaire.EMPLOYE);
     }
 }

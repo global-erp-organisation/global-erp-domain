@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.entrepot;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.localisation.Centre;
+import com.camlait.global.erp.domain.organisation.Centre;
 import com.camlait.global.erp.domain.partenaire.Employe;
 
 @Entity
@@ -28,7 +29,7 @@ public class Entrepot extends Entite {
 
 	private String descriptionEntrepot;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "centreId")
 	private Centre centre;
 
@@ -36,11 +37,11 @@ public class Entrepot extends Entite {
 
 	private Date derniereMiseAJour;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "responsableId")
 	private Employe responsable;
 
-	@OneToMany(mappedBy = "entrepot")
+	@OneToMany(mappedBy = "entrepot", cascade=CascadeType.ALL)
 	private Collection<Magasin> magasins;
 
 	public Long getEntrepotId() {

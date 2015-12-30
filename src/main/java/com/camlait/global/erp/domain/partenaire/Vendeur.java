@@ -7,10 +7,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
-import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.operation.manquant.ManquantFinancier;
+import com.camlait.global.erp.domain.organisation.Zone;
 
 @Entity
 public class Vendeur extends Employe {
@@ -60,7 +60,7 @@ public class Vendeur extends Employe {
     }
     
     public Vendeur() {
-        this.vendeurId = super.getPartenaireId();
-        setTypePartenaire(AutreEnum.VENDEUR);
+        //this.vendeurId = super.getPartenaireId();
+        setTypePartenaire(TypePartenaire.VENDEUR);
     }
 }

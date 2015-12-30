@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.localisation;
+package com.camlait.global.erp.domain.organisation;
 
 import java.util.Collection;
 
@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.camlait.global.erp.domain.enumeration.AutreEnum;
 
 @Entity
 public class Secteur extends Localisation {
@@ -34,6 +36,6 @@ public class Secteur extends Localisation {
     }
 
     public Secteur() {
-
+        setTypeLocal(AutreEnum.SECTEUR);
     }
 }
