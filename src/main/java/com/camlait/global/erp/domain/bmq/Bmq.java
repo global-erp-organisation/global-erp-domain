@@ -16,6 +16,7 @@ import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.operation.Recouvrement;
+import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
 
 @Entity
@@ -53,6 +54,10 @@ public class Bmq extends Entite {
 	private Date derniereMiseAJour;
 
 	private boolean bmqClos;
+
+	@ManyToOne
+	@JoinColumn(name = "responsableId")
+	private Employe responsable;
 
 	public Long getBmqId() {
 		return bmqId;
@@ -140,6 +145,14 @@ public class Bmq extends Entite {
 
 	public void setBmqClos(boolean bmqClos) {
 		this.bmqClos = bmqClos;
+	}
+
+	public Employe getResponsable() {
+		return responsable;
+	}
+
+	public void setResponsable(Employe responsable) {
+		this.responsable = responsable;
 	}
 
 	@Override

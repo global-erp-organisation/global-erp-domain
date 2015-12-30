@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
+import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.localisation.Zone;
 
@@ -46,6 +47,10 @@ public class Client extends Partenaire {
 
 	public void setDocumentDeVentes(Collection<DocumentDeVente> documentDeVentes) {
 		this.documentDeVentes = documentDeVentes;
+	}
+	
+	public Client(){
+		setTypePartenaire(AutreEnum.CLIENT);
 	}
 
 }

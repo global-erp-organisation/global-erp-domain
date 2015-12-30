@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain.enumeration.document;
 
-public enum TypeDocumentStock {
+public enum TypeDocumentStock implements EnumTypeEntite {
 
 	DOCUMENT_ENTREE("DE"), DOCUMENT_SORTIE("DS"), TRANSFERT("VD");
 
@@ -13,4 +13,10 @@ public enum TypeDocumentStock {
 	public String getType() {
 		return type;
 	}
+
+	@Override
+	public EnumTypeEntite getEnumType() {
+		return this;
+	}
+
 }

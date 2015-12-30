@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.auth.Utilisateur;
+import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.operation.Operation;
 
 @Entity
@@ -84,5 +85,9 @@ public class Employe extends Partenaire {
     @Override
     public String toString() {
     	return "["+matricule+"] "+prenom+" "+nom;
+    }
+    
+    public Employe(){
+    	setTypePartenaire(AutreEnum.EMPLOYE);
     }
 }

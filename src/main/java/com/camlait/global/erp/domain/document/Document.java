@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.document;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,6 +24,7 @@ import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.document.TypeDocuments;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
+import static com.camlait.global.erp.domain.util.Utility.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -67,6 +69,7 @@ public abstract class Document extends Entite {
 	@Enumerated(EnumType.STRING)
 	private TypeDocuments typeDocument;
 
+	
 	public Long getDocumentId() {
 		return documentId;
 	}

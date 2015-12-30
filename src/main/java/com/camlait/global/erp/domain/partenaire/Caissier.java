@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.operation.caisse.Caisse;
 
 @Entity
@@ -32,6 +33,6 @@ public class Caissier extends Employe {
 	}
 
 	public Caissier() {
-
+		setTypePartenaire(AutreEnum.CAISSIER);
 	}
 }

@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain.enumeration.document;
 
-public enum TypeDocumentEntree {
+public enum TypeDocumentEntree implements EnumTypeEntite{
 	BON_ENTREE("BE"), BON_RETOUR("BR");
 
 	private final String type;
@@ -11,5 +11,10 @@ public enum TypeDocumentEntree {
 
 	public String getType() {
 		return type;
+	}
+
+	@Override
+	public EnumTypeEntite getEnumType() {
+		return this;
 	}
 }
