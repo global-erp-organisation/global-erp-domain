@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.config;
 
+import com.camlait.global.erp.domain.exception.GlobalErpServiceException;
+
 public class GlobalAppConstants {
     
     private GlobalAppConstants() {
@@ -35,12 +37,25 @@ public class GlobalAppConstants {
     public final static String PARTNER_DAO_BASE_PACKAGE = ROOT_PACKAGE + DAO_BASE_PACKAGE + ".partenaire";
     public final static String BMQ_DAO_BASE_PACKAGE = ROOT_PACKAGE + DAO_BASE_PACKAGE + ".bmq";
     
-    public static String buildNotFindMessage(Class<?> objectType, Object value) {
+    public static void verifyIllegalArgumentException(Object fieldValue, String fieldName) {
+        if (fieldValue == null) {
+            throw new IllegalArgumentException(buildIllegalArgumentMessage(fieldName));
+        }
+    }
+    
+    public static void verifyObjectNoFindException(Object fieldValue, Class<?> objectType, Object fieldName) {
+        if (fieldValue == null) {
+            throw new GlobalErpServiceException(buildNotFindMessage(objectType, fieldName));
+            
+        }
+    }
+    
+    private static String buildNotFindMessage(Class<?> objectType, Object value) {
         return "L'objet " + objectType.getCanonicalName() + " ayant l'identifiant " + String.valueOf(value)
                 + " n'existe pas";
     }
     
-    public static String buildIllegalArgumentMessage(String object) {
+    private static String buildIllegalArgumentMessage(String object) {
         return "L'Objet " + object + " ne peut pas etre null";
     }
 }
