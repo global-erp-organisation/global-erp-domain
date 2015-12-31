@@ -14,53 +14,42 @@ import com.camlait.global.erp.domain.organisation.Zone;
 
 @Entity
 public class Vendeur extends Employe {
-    
-    @ManyToOne
-    @JoinColumn(name = "zoneId")
-    private Zone zoneDeVente;
-    
-    @OneToMany(mappedBy = "immobilisation")
-    private Collection<PartenaireImmobilisation> partenaireImmobilisations;
-    
-    @OneToMany(mappedBy = "vendeur")
-    private Collection<ManquantFinancier> manquantFinanciers;
-    
-    private Long vendeurId;
-    
-    public Zone getZoneDeVente() {
-        return zoneDeVente;
-    }
-    
-    public void setZoneDeVente(Zone zoneDeVente) {
-        this.zoneDeVente = zoneDeVente;
-    }
-    
-    public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
-        return partenaireImmobilisations;
-    }
-    
-    public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
-        this.partenaireImmobilisations = partenaireImmobilisations;
-    }
-    
-    public Collection<ManquantFinancier> getManquantFinanciers() {
-        return manquantFinanciers;
-    }
-    
-    public void setManquantFinanciers(Collection<ManquantFinancier> manquantFinanciers) {
-        this.manquantFinanciers = manquantFinanciers;
-    }
-    
-    public Long getVendeurId() {
-        return vendeurId;
-    }
-    
-    public void setVendeurId(Long vendeurId) {
-        this.vendeurId = vendeurId;
-    }
-    
-    public Vendeur() {
-        //this.vendeurId = super.getPartenaireId();
-        setTypePartenaire(TypePartenaire.VENDEUR);
-    }
+
+	@ManyToOne
+	@JoinColumn(name = "zoneId")
+	private Zone zoneDeVente;
+
+	@OneToMany(mappedBy = "immobilisation")
+	private Collection<PartenaireImmobilisation> partenaireImmobilisations;
+
+	@OneToMany(mappedBy = "vendeur")
+	private Collection<ManquantFinancier> manquantFinanciers;
+
+	public Zone getZoneDeVente() {
+		return zoneDeVente;
+	}
+
+	public void setZoneDeVente(Zone zoneDeVente) {
+		this.zoneDeVente = zoneDeVente;
+	}
+
+	public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
+		return partenaireImmobilisations;
+	}
+
+	public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
+		this.partenaireImmobilisations = partenaireImmobilisations;
+	}
+
+	public Collection<ManquantFinancier> getManquantFinanciers() {
+		return manquantFinanciers;
+	}
+
+	public void setManquantFinanciers(Collection<ManquantFinancier> manquantFinanciers) {
+		this.manquantFinanciers = manquantFinanciers;
+	}
+
+	public Vendeur() {
+		setTypePartenaire(TypePartenaire.VENDEUR);
+	}
 }

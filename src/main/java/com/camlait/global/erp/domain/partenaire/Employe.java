@@ -1,93 +1,78 @@
 package com.camlait.global.erp.domain.partenaire;
 
-import java.util.Collection;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.auth.Utilisateur;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
-import com.camlait.global.erp.domain.operation.Operation;
 
 @Entity
 public class Employe extends Partenaire {
 
-    @Column(unique = true, nullable = false)
-    private String matricule;
+	@Column(unique = true, nullable = false)
+	private String matricule;
 
-    @Column(nullable = false)
-    private String nom;
+	@Column(nullable = false)
+	private String nom;
 
-    private String prenom;
+	private String prenom;
 
-    private DateTime dateDeNaissance;
+	private DateTime dateDeNaissance;
 
-    @OneToOne
-    @JoinColumn(name = "codeUtilisateur")
-    private Utilisateur utilisateur;
+	@OneToOne
+	@JoinColumn(name = "codeUtilisateur")
+	private Utilisateur utilisateur;
 
-    @OneToMany(mappedBy = "responsable")
-    private Collection<Operation> operations;
+	public String getMatricule() {
+		return matricule;
+	}
 
-    public String getMatricule() {
-        return matricule;
-    }
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
+	}
 
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
+	public String getNom() {
+		return nom;
+	}
 
-    public String getNom() {
-        return nom;
-    }
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+	public String getPrenom() {
+		return prenom;
+	}
 
-    public String getPrenom() {
-        return prenom;
-    }
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+	public DateTime getDateDeNaissance() {
+		return dateDeNaissance;
+	}
 
-    public DateTime getDateDeNaissance() {
-        return dateDeNaissance;
-    }
+	public void setDateDeNaissance(DateTime dateDeNaissance) {
+		this.dateDeNaissance = dateDeNaissance;
+	}
 
-    public void setDateDeNaissance(DateTime dateDeNaissance) {
-        this.dateDeNaissance = dateDeNaissance;
-    }
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
 
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
-    }
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
 
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
+	@Override
+	public String toString() {
+		return "[" + matricule + "] " + prenom + " " + nom;
+	}
 
-    public Collection<Operation> getOperations() {
-        return operations;
-    }
-
-    public void setOperations(Collection<Operation> operations) {
-        this.operations = operations;
-    }
-
-    @Override
-    public String toString() {
-    	return "["+matricule+"] "+prenom+" "+nom;
-    }
-    
-    public Employe(){
-    	setTypePartenaire(TypePartenaire.EMPLOYE);
-    }
+	public Employe() {
+		setTypePartenaire(TypePartenaire.EMPLOYE);
+	}
 }
