@@ -14,43 +14,53 @@ import com.camlait.global.erp.domain.organisation.Zone;
 
 @Entity
 public class Client extends Partenaire {
-
-	@ManyToOne
-	@JoinColumn(name = "zoneId")
-	private Zone zone;
-
-	@OneToMany(mappedBy = "client")
-	private Collection<DocumentDeVente> documentDeVentes;
-
-	@OneToMany(mappedBy = "immobilisation")
-	private Collection<PartenaireImmobilisation> partenaireImmobilisations;
-
-	public Zone getZone() {
-		return zone;
-	}
-
-	public void setZone(Zone zone) {
-		this.zone = zone;
-	}
-
-	public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
-		return partenaireImmobilisations;
-	}
-
-	public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
-		this.partenaireImmobilisations = partenaireImmobilisations;
-	}
-
-	public Collection<DocumentDeVente> getDocumentDeVentes() {
-		return documentDeVentes;
-	}
-
-	public void setDocumentDeVentes(Collection<DocumentDeVente> documentDeVentes) {
-		this.documentDeVentes = documentDeVentes;
-	}
-	
-	public Client(){
-		setTypePartenaire(TypePartenaire.CLIENT);
-	}
-
+    
+    @ManyToOne
+    @JoinColumn(name = "zoneId")
+    private Zone zone;
+    
+    @OneToMany(mappedBy = "client")
+    private Collection<DocumentDeVente> documentDeVentes;
+    
+    @OneToMany(mappedBy = "immobilisation")
+    private Collection<PartenaireImmobilisation> partenaireImmobilisations;
+    
+    private String description;
+    
+    public Zone getZone() {
+        return zone;
+    }
+    
+    public void setZone(Zone zone) {
+        this.zone = zone;
+    }
+    
+    public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
+        return partenaireImmobilisations;
+    }
+    
+    public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
+        this.partenaireImmobilisations = partenaireImmobilisations;
+    }
+    
+    public Collection<DocumentDeVente> getDocumentDeVentes() {
+        return documentDeVentes;
+    }
+    
+    public void setDocumentDeVentes(Collection<DocumentDeVente> documentDeVentes) {
+        this.documentDeVentes = documentDeVentes;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public Client() {
+        setTypePartenaire(TypePartenaire.CLIENT);
+    }
+    
 }
