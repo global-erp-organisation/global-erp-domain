@@ -29,7 +29,6 @@ public class Bmq extends Entite {
 	@Column(nullable = false, unique = true)
 	private String codeBmq;
 
-	@Column(insertable = false, updatable = false)
 	private Date dateBmq;
 
 	@ManyToOne

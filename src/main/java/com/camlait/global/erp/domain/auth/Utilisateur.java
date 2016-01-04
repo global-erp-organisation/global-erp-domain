@@ -13,10 +13,9 @@ import com.camlait.global.erp.domain.partenaire.Employe;
 
 @Entity
 public class Utilisateur extends Entite {
-
 	@Id
 	private String codeUtilisateur;
-	
+
 	@Column(nullable = false)
 	private String courriel;
 
@@ -76,6 +75,7 @@ public class Utilisateur extends Entite {
 	public void setEmployes(Collection<Employe> employes) {
 		this.employes = employes;
 	}
+
 
 	@Override
 	public int hashCode() {
