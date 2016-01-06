@@ -32,6 +32,10 @@ public class Client extends Partenaire {
     
     private String description;
     
+    private boolean clientAristourne;
+    
+    private double ristourne;
+    
     public Zone getZone() {
         return zone;
     }
@@ -62,6 +66,22 @@ public class Client extends Partenaire {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public boolean isClientAristourne() {
+        return clientAristourne;
+    }
+    
+    public void setClientAristourne(boolean clientAristourne) {
+        this.clientAristourne = clientAristourne;
+    }
+    
+    public double getRistourne() {
+        return ristourne;
+    }
+    
+    public void setRistourne(double ristourne) {
+        this.ristourne = ristourne;
     }
     
     public Client() {

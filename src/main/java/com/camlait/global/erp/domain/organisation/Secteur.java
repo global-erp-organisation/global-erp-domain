@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.organisation;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,7 +20,7 @@ public class Secteur extends Localisation {
     @JoinColumn(name = "regionId")
     private Region region;
 
-    @OneToMany(mappedBy="secteur")
+    @OneToMany(mappedBy="secteur",fetch=FetchType.EAGER)
     @JsonManagedReference
     private Collection<Zone> zones;
 

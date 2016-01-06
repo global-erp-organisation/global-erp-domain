@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 public class Centre extends Localisation {
 
-    @OneToMany(mappedBy = "centre")
+    @OneToMany(mappedBy = "centre",fetch=FetchType.EAGER)
     @JsonManagedReference
     private Collection<Region> regions;
 
