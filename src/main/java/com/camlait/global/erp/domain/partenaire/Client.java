@@ -11,18 +11,23 @@ import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.organisation.Zone;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Client extends Partenaire {
     
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "zoneId")
     private Zone zone;
     
     @OneToMany(mappedBy = "client")
+    @JsonManagedReference
     private Collection<DocumentDeVente> documentDeVentes;
     
     @OneToMany(mappedBy = "immobilisation")
+    @JsonManagedReference
     private Collection<PartenaireImmobilisation> partenaireImmobilisations;
     
     private String description;

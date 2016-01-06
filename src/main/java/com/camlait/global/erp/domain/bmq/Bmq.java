@@ -18,6 +18,8 @@ import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.operation.Recouvrement;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Bmq extends Entite {
@@ -32,20 +34,25 @@ public class Bmq extends Entite {
 	private Date dateBmq;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "vendeurId")
 	private Vendeur vendeur;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "magasinId")
 	private Magasin magasin;
 
 	@OneToMany(mappedBy = "bmq")
+	@JsonManagedReference
 	private Collection<Document> documents;
 
 	@OneToMany(mappedBy = "bmq")
+	@JsonManagedReference
 	private Collection<Recouvrement> recouvrements;
 
 	@OneToMany(mappedBy = "bmq")
+	@JsonManagedReference
 	private Collection<LigneBmq> ligneBmqs;
 
 	private Date dateDeCreation;
@@ -55,6 +62,7 @@ public class Bmq extends Entite {
 	private boolean bmqClos;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "responsableId")
 	private Employe responsable;
 

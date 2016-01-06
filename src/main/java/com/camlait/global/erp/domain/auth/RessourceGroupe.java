@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.Entite;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class RessourceGroupe extends Entite {
@@ -17,10 +18,12 @@ public class RessourceGroupe extends Entite {
 	private Long resourceGroupeId;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "groupeId")
 	private Groupe groupe;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "ressourceId")
 	private Ressource ressource;
 

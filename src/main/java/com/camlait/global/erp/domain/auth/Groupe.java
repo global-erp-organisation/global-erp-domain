@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Groupe extends Entite {
@@ -20,6 +21,7 @@ public class Groupe extends Entite {
 	private String descriptionGroupe;
 
 	@OneToMany(mappedBy = "groupe")
+	@JsonManagedReference
 	private Collection<GroupeUtilisateur> groupeUtilisateurs;
 
 	public Long getGroupeId() {

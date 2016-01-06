@@ -8,15 +8,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Secteur extends Localisation {
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "regionId")
     private Region region;
 
     @OneToMany(mappedBy="secteur")
+    @JsonManagedReference
     private Collection<Zone> zones;
 
     public Region getRegion() {

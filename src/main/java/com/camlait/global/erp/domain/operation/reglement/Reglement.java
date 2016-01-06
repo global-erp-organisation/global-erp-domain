@@ -9,14 +9,18 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.reglement.lettrage.FactureReglement;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Reglement extends Operation {
 
 	@OneToMany(mappedBy = "reglement")
+	@JsonManagedReference
 	private Collection<FactureReglement> factureReglements;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "modeDeReglementId")
 	private ModeDeReglement modeDeReglement;
 

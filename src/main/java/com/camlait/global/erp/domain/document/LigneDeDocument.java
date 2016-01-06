@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.produit.Produit;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class LigneDeDocument extends Entite {
@@ -26,6 +28,7 @@ public class LigneDeDocument extends Entite {
     private Long ligneDeDocumentId;
     
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "produitId")
     private Produit produit;
     
@@ -34,6 +37,7 @@ public class LigneDeDocument extends Entite {
     private double prixunitaiteLigne;
     
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "documentId")
     private Document document;
     
@@ -45,6 +49,7 @@ public class LigneDeDocument extends Entite {
     private SensOperation sensOperation;
     
     @OneToMany(mappedBy = "ligneDeDocument", fetch=FetchType.EAGER)
+    @JsonManagedReference
     private Collection<LigneDeDocumentTaxe> ligneDeDocumentTaxes;
     
     public Long getLigneDeDocumentId() {

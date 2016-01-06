@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class JournalCaisse extends Entite {
@@ -31,10 +33,12 @@ public class JournalCaisse extends Entite {
 	private Date dateFinJournal;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "caisseId")
 	private Caisse caisse;
 
 	@OneToMany(mappedBy = "journal")
+	@JsonManagedReference
 	private Collection<OperationDeCaisse> opreations;
 
 	private Date dateDeCreation;

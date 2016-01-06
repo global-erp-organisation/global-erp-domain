@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.Entite;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Ressource extends Entite {
@@ -20,6 +21,7 @@ public class Ressource extends Entite {
 	private String codeRessource;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "ressourceParentId")
 	private Ressource ressourceParent;
 

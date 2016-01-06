@@ -5,11 +5,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.operation.Operation;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class OperationDeCaisse extends Operation {
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "journalId")
 	private JournalCaisse journal;
 

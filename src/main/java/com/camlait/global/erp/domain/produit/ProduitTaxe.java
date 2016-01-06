@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.Taxe;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class ProduitTaxe extends Entite {
@@ -20,9 +21,12 @@ public class ProduitTaxe extends Entite {
     private Long produitTaxeId;
     
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "produitId")
     private Produit produit;
+    
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "taxeId")
     private Taxe taxe;
     

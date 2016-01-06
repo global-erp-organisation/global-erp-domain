@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 
 import com.camlait.global.erp.domain.auth.Utilisateur;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Employe extends Partenaire {
@@ -24,6 +25,7 @@ public class Employe extends Partenaire {
 	private DateTime dateDeNaissance;
 
 	@OneToOne
+	@JsonBackReference
 	@JoinColumn(name = "codeUtilisateur")
 	private Utilisateur utilisateur;
 

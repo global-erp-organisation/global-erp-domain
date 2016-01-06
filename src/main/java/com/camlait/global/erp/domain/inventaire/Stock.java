@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.produit.Produit;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Stock extends Entite {
@@ -21,10 +22,12 @@ public class Stock extends Entite {
 	private Long stockId;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "produitId")
 	private Produit produit;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "magasinId")
 	private Magasin magasin;
 

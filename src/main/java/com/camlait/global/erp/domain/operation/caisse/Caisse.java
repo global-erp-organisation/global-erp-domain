@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.partenaire.Employe;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Caisse extends Entite {
@@ -25,6 +26,7 @@ public class Caisse extends Entite {
 	private String descriptionCaisse;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "responsableId")
 	private Employe responsable;
 

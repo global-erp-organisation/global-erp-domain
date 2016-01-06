@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClient;
 import com.camlait.global.erp.domain.operation.reglement.Reglement;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class FactureReglement extends Entite {
@@ -21,10 +22,12 @@ public class FactureReglement extends Entite {
 	private Long factureReglementId;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "documentId")
 	private FactureClient facture;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "reglementId")
 	private Reglement reglement;
 

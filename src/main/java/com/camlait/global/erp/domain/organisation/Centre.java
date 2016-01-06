@@ -7,11 +7,13 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Centre extends Localisation {
 
-    @OneToMany(mappedBy = "centre", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "centre")
+    @JsonManagedReference
     private Collection<Region> regions;
 
     public Collection<Region> getRegions() {

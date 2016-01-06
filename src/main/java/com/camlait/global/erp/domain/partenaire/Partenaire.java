@@ -22,6 +22,8 @@ import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.organisation.Centre;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -46,16 +48,20 @@ public abstract class Partenaire extends Entite {
     private TypePartenaire typePartenaire;
     
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "centreId")
     private Centre centre;
     
     @OneToMany(mappedBy = "client")
+    @JsonManagedReference
     private Collection<DocumentDeVente> documents;
     
     @OneToMany(mappedBy = "immobilisation")
+    @JsonManagedReference
     private Collection<PartenaireImmobilisation> partenaireImmobilisations;
     
     @OneToMany(mappedBy = "partenaire")
+    @JsonManagedReference
     private Collection<Operation> operations;
     
     public Long getPartenaireId() {

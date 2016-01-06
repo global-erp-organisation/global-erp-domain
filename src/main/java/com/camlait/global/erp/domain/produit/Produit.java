@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Produit extends Entite {
@@ -34,13 +35,14 @@ public class Produit extends Entite {
     private double prixUnitaireMarge;
     
     @ManyToOne
-    @JoinColumn(name = "categorieProduitId")
     @JsonBackReference
+    @JoinColumn(name = "categorieProduitId")
     private CategorieProduit categorie;
     
     private boolean produitTaxable;
     
     @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Collection<ProduitTaxe> produitTaxes;
     
     private Date dateDeCreation;

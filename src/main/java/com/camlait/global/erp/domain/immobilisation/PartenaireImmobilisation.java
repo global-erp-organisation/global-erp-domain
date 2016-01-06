@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.partenaire.Partenaire;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class PartenaireImmobilisation {
@@ -20,10 +21,12 @@ public class PartenaireImmobilisation {
 	private Long clientImmoId;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "partenaireId")
 	private Partenaire partenaire;
 
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "immoId")
 	private Immobilisation immobilisation;
 
