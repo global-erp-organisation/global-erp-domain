@@ -16,6 +16,7 @@ public enum TypeDocuments implements EnumTypeEntite {
 		this.type = type;
 	}
 
+	@Override
 	public String getType() {
 		return type;
 	}

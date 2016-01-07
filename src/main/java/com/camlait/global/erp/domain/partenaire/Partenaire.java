@@ -36,6 +36,7 @@ public abstract class Partenaire extends Entite {
     @Column(name = "codePartenaire", nullable = false, unique = true)
     private String codePartenaire;
     
+    @Column(length=512)
     private String adresse;
     
     private String telephone;

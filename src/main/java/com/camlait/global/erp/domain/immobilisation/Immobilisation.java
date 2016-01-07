@@ -13,7 +13,7 @@ import javax.persistence.InheritanceType;
 import com.camlait.global.erp.domain.Entite;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Immobilisation extends Entite {
 
 	@Id
@@ -30,6 +30,8 @@ public class Immobilisation extends Entite {
 	private Date dateDeCreation;
 
 	private Date derniereMiseAJour;
+
+	private String descriptionImmo;
 
 	public Long getImmoId() {
 		return immoId;
@@ -77,6 +79,14 @@ public class Immobilisation extends Entite {
 
 	public void setDerniereMiseAJour(Date derniereMiseAJour) {
 		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
+	public String getDescriptionImmo() {
+		return descriptionImmo;
+	}
+
+	public void setDescriptionImmo(String descriptionImmo) {
+		this.descriptionImmo = descriptionImmo;
 	}
 
 	@Override
