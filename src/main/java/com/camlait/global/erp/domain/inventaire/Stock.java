@@ -13,8 +13,11 @@ import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.produit.Produit;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Stock extends Entite {
 
 	@Id
@@ -22,12 +25,10 @@ public class Stock extends Entite {
 	private Long stockId;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "produitId")
 	private Produit produit;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "magasinId")
 	private Magasin magasin;
 

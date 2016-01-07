@@ -4,15 +4,21 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.camlait.global.erp.domain.auth.Utilisateur;
+import com.camlait.global.erp.domain.enumeration.Sexe;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Employe extends Partenaire {
     
     @Column(unique = true, nullable = false)
@@ -26,14 +32,15 @@ public class Employe extends Partenaire {
     private Date dateDeNaissance;
     
     @OneToOne
-    @JsonBackReference
     @JoinColumn(name = "codeUtilisateur")
     private Utilisateur utilisateur;
     
     @ManyToOne
     @JoinColumn(name = "emploisId")
-    @JsonBackReference
     private Emplois emplois;
+    
+    @Enumerated(EnumType.STRING)
+    private Sexe sexe;
     
     public String getMatricule() {
         return matricule;
@@ -83,9 +90,17 @@ public class Employe extends Partenaire {
         this.emplois = emplois;
     }
     
+    public Sexe getSexe() {
+        return sexe;
+    }
+    
+    public void setSexe(Sexe sexe) {
+        this.sexe = sexe;
+    }
+    
     @Override
     public String toString() {
-        return "[" + matricule + "] " + prenom + " " + nom;
+        return "[" + matricule + "] " + prenom + " " + nom+""+sexe.getType()+" "+emplois.getDescriptionEmplois();
     }
     
     public Employe() {

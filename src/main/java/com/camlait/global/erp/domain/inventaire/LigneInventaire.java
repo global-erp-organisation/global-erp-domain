@@ -13,8 +13,11 @@ import javax.persistence.ManyToOne;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.produit.Produit;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class LigneInventaire extends Entite {
 
 	@Id
@@ -22,31 +25,23 @@ public class LigneInventaire extends Entite {
 	private Long ligneInventaireId;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "inventaireId")
 	private Inventaire inventaire;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "produitId")
 	private Produit produit;
 
-	@Column(name = "quantiteReelle")
 	private Long quantiteReelle;
 
-	@Column(name = "quantiteAjustee")
 	private Long quantiteAjustee;
 
-	@Column(name = "prixUnitaireReelle")
 	private double prixUnitaireReelle;
 
-	@Column(name = "prixUnitaireAjustee")
 	private double prixUnitaireAjustee;
 
-	@Column(name = "dateDeCreation")
 	private Date dateDeCreation;
 
-	@Column(name = "derniereMiseAJour")
 	private Date derniereMiseAJour;
 
 	public Long getLigneInventaireId() {

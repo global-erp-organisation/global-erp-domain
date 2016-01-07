@@ -11,22 +11,22 @@ import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.partenaire.Client;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Zone extends Localisation {
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "secteurId")
     private Secteur secteur;
 
     @OneToMany(mappedBy = "zone")
-    @JsonManagedReference
     private Collection<DocumentDeVente> documents;
 
     @OneToMany(mappedBy = "zone")
-    @JsonManagedReference
     private Collection<Client> clients;
 
     public Secteur getSecteur() {

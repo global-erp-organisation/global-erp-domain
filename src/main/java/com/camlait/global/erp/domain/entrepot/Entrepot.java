@@ -16,9 +16,12 @@ import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.organisation.Centre;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Entrepot extends Entite {
 
 	@Id
@@ -31,7 +34,6 @@ public class Entrepot extends Entite {
 	private String descriptionEntrepot;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "centreId")
 	private Centre centre;
 
@@ -40,12 +42,10 @@ public class Entrepot extends Entite {
 	private Date derniereMiseAJour;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "responsableId")
 	private Employe responsable;
 
 	@OneToMany(mappedBy = "entrepot")
-	@JsonManagedReference
 	private Collection<Magasin> magasins;
 
 	public Long getEntrepotId() {

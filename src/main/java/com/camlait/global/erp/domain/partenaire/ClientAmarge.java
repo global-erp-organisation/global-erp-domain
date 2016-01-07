@@ -7,13 +7,15 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.operation.marge.MargeClient;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class ClientAmarge extends Client {
 
 	@OneToMany(mappedBy = "client")
-	@JsonManagedReference
 	private Collection<MargeClient> margeClients;
 
 	public Collection<MargeClient> getMargeClients() {

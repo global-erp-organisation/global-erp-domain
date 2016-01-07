@@ -13,8 +13,11 @@ import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClient;
 import com.camlait.global.erp.domain.operation.reglement.Reglement;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class FactureReglement extends Entite {
 
 	@Id
@@ -22,12 +25,10 @@ public class FactureReglement extends Entite {
 	private Long factureReglementId;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "documentId")
 	private FactureClient facture;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "reglementId")
 	private Reglement reglement;
 

@@ -24,10 +24,13 @@ import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public abstract class Document extends Entite {
 
 	@Id
@@ -41,12 +44,10 @@ public abstract class Document extends Entite {
 	private Date dateDocument;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "magasinId")
 	private Magasin magasin;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "responsableId")
 	private Employe responsableDocument;
 
@@ -58,17 +59,14 @@ public abstract class Document extends Entite {
 	private SensOperation sensOperation;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "bmqId")
 	private Bmq bmq;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "inventaireId")
 	private Inventaire inventaire;
 
 	@OneToMany(mappedBy = "document")
-	@JsonManagedReference
 	private Collection<LigneDeDocument> ligneDocuments;
 
 	@Enumerated(EnumType.STRING)

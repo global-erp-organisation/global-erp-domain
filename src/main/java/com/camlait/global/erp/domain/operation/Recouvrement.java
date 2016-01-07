@@ -7,12 +7,14 @@ import javax.persistence.ManyToOne;
 import com.camlait.global.erp.domain.bmq.Bmq;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Recouvrement extends Operation {
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "bmqId")
 	private Bmq bmq;
 

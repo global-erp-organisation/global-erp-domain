@@ -17,10 +17,11 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.Portee;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class CategorieProduit extends Entite {
 
 	@Id
@@ -29,7 +30,6 @@ public class CategorieProduit extends Entite {
 
 	@ManyToOne
 	@JoinColumn(name = "categorieParentId")
-    @JsonBackReference
 	private CategorieProduit categorieParent;
 
 	@Column(name = "codeCategorieProduit", unique = true)
@@ -49,11 +49,9 @@ public class CategorieProduit extends Entite {
 	private Date derniereMiseAJour;
 
 	@OneToMany(mappedBy = "categorie")
-	@JsonManagedReference
 	private Collection<Produit> produits;
 
 	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	private Collection<CategorieProduitTaxe> categorieProduitTaxes;
 
 	public Long getCategorieProduitId() {

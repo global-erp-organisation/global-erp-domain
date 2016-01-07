@@ -18,9 +18,12 @@ import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Operation extends Entite {
     
     @Id
@@ -41,12 +44,10 @@ public class Operation extends Entite {
     private double montantOperation;
     
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "responsableId")
     private Employe responsable;
     
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "partenaireId")
     private Partenaire partenaire;
     

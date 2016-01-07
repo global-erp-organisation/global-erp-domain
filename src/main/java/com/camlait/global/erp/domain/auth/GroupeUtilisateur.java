@@ -9,8 +9,11 @@ import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class GroupeUtilisateur extends Entite {
 
 	@Id
@@ -18,12 +21,10 @@ public class GroupeUtilisateur extends Entite {
 	private Long groupeUtilissateurId;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "groupeId")
 	private Groupe groupe;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "utilisateurId")
 	private Utilisateur utilsateur;
 

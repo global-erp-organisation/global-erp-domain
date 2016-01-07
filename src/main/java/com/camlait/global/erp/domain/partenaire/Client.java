@@ -9,26 +9,22 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
-import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.organisation.Zone;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Client extends Partenaire {
     
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "zoneId")
     private Zone zone;
     
     @OneToMany(mappedBy = "client")
-    @JsonManagedReference
     private Collection<DocumentDeVente> documentDeVentes;
-    
-    @OneToMany(mappedBy = "immobilisation")
-    @JsonManagedReference
-    private Collection<PartenaireImmobilisation> partenaireImmobilisations;
     
     private String description;
     
@@ -42,14 +38,6 @@ public class Client extends Partenaire {
     
     public void setZone(Zone zone) {
         this.zone = zone;
-    }
-    
-    public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
-        return partenaireImmobilisations;
-    }
-    
-    public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
-        this.partenaireImmobilisations = partenaireImmobilisations;
     }
     
     public Collection<DocumentDeVente> getDocumentDeVentes() {

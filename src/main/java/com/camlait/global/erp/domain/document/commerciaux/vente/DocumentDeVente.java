@@ -10,17 +10,18 @@ import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.organisation.Zone;
 import com.camlait.global.erp.domain.partenaire.Client;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public abstract class DocumentDeVente extends DocumentCommerciaux {
     
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "clientId")
     private Client client;
     
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "zoneId")
     private Zone zone;
     

@@ -6,12 +6,14 @@ import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.operation.Operation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class OperationDeCaisse extends Operation {
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "journalId")
 	private JournalCaisse journal;
 

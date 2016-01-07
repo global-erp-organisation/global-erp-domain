@@ -17,9 +17,12 @@ import javax.persistence.ManyToOne;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Magasin extends Entite {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +34,6 @@ public class Magasin extends Entite {
     private String descriptionMagasin;
     
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "entrepotId")
     private Entrepot entrepot;
     

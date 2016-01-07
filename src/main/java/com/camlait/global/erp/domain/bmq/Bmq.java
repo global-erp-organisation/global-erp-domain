@@ -19,9 +19,12 @@ import com.camlait.global.erp.domain.operation.Recouvrement;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Bmq extends Entite {
 
 	@Id
@@ -34,25 +37,20 @@ public class Bmq extends Entite {
 	private Date dateBmq;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "vendeurId")
 	private Vendeur vendeur;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "magasinId")
 	private Magasin magasin;
 
 	@OneToMany(mappedBy = "bmq")
-	@JsonManagedReference
 	private Collection<Document> documents;
 
 	@OneToMany(mappedBy = "bmq")
-	@JsonManagedReference
 	private Collection<Recouvrement> recouvrements;
 
 	@OneToMany(mappedBy = "bmq")
-	@JsonManagedReference
 	private Collection<LigneBmq> ligneBmqs;
 
 	private Date dateDeCreation;

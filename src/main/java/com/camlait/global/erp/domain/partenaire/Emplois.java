@@ -10,9 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Emplois extends Entite {
     
     @Id
@@ -24,7 +27,6 @@ public class Emplois extends Entite {
     private String descriptionEmplois;
     
     @OneToMany(mappedBy = "emplois")
-    @JsonManagedReference
     private Collection<Employe> employes;
     
     public Long getEmploisId() {

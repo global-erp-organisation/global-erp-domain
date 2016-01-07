@@ -16,9 +16,12 @@ import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.produit.Produit;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class LigneBmq extends Entite {
 
 	@Id
@@ -26,7 +29,6 @@ public class LigneBmq extends Entite {
 	private Long ligneBmqId;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "produitId")
 	private Produit produit;
 
@@ -35,7 +37,6 @@ public class LigneBmq extends Entite {
 	private double prixUnitaireLigne;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "bmqId")
 	private Bmq bmq;
 
@@ -44,12 +45,10 @@ public class LigneBmq extends Entite {
 	private Date derniereMiseAJour;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "documentId")
 	private Document document;
 
 	@OneToMany(mappedBy = "ligneBmq", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	private Collection<LigneBmqTaxe> ligneBmqTaxes;
 
 	public Long getLigneBmqId() {

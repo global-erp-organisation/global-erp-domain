@@ -7,13 +7,15 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Magasinier extends Employe {
 
 	@OneToMany(mappedBy="magasinierSortant")
-	@JsonManagedReference
     private Collection<Inventaire> inventaires;
 
     public Collection<Inventaire> getInventaires() {

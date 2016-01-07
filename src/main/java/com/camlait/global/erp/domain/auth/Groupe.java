@@ -9,9 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Groupe extends Entite {
 
 	@Id
@@ -21,7 +24,6 @@ public class Groupe extends Entite {
 	private String descriptionGroupe;
 
 	@OneToMany(mappedBy = "groupe")
-	@JsonManagedReference
 	private Collection<GroupeUtilisateur> groupeUtilisateurs;
 
 	public Long getGroupeId() {

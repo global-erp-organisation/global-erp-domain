@@ -14,9 +14,12 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class JournalCaisse extends Entite {
 
 	@Id
@@ -33,12 +36,10 @@ public class JournalCaisse extends Entite {
 	private Date dateFinJournal;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "caisseId")
 	private Caisse caisse;
 
 	@OneToMany(mappedBy = "journal")
-	@JsonManagedReference
 	private Collection<OperationDeCaisse> opreations;
 
 	private Date dateDeCreation;

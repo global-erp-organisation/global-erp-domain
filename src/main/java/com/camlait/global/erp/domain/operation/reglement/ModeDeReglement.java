@@ -11,9 +11,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import com.camlait.global.erp.domain.Entite;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class ModeDeReglement extends Entite {
     
     @Id

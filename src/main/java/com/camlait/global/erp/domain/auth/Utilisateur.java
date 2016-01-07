@@ -10,9 +10,12 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.partenaire.Employe;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Utilisateur extends Entite {
 	@Id
 	private String codeUtilisateur;
@@ -27,7 +30,6 @@ public class Utilisateur extends Entite {
 	private Date derniereMiseAJour;
 
 	@OneToMany(mappedBy = "utilisateur")
-	@JsonManagedReference
 	private Collection<Employe> employes;
 
 	public String getCodeUtilisateur() {

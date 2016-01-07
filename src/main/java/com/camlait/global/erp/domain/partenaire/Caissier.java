@@ -7,12 +7,14 @@ import javax.persistence.ManyToOne;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.operation.caisse.Caisse;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Caissier extends Employe {
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "caisseId",updatable=false,insertable=false)
 	private Caisse caisse;
 

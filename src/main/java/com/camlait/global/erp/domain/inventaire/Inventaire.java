@@ -17,9 +17,12 @@ import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.partenaire.Magasinier;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Inventaire extends Entite {
 
 	@Id
@@ -35,28 +38,23 @@ public class Inventaire extends Entite {
 	private String note;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "magasinId")
 	private Magasin magasin;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "magasinierSortantId")
 	private Magasinier magasinierSortant;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "magasinierEntrantId")
 	private Magasinier magasinierEntrant;
 
 	private boolean inventaireClos;
 
 	@OneToMany(mappedBy = "inventaire")
-	@JsonManagedReference
 	private Collection<Document> documents;
 
 	@OneToMany(mappedBy = "inventaire")
-	@JsonManagedReference
 	private Collection<LigneInventaire> ligneInventaires;
 
 	private Date dateDeCreation;

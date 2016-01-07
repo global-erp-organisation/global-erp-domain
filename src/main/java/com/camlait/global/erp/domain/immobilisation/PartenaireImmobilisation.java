@@ -12,8 +12,11 @@ import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.partenaire.Partenaire;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class PartenaireImmobilisation {
 
 	@Id
@@ -21,12 +24,10 @@ public class PartenaireImmobilisation {
 	private Long clientImmoId;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "partenaireId")
 	private Partenaire partenaire;
 
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name = "immoId")
 	private Immobilisation immobilisation;
 
