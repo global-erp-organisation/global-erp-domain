@@ -8,7 +8,6 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity

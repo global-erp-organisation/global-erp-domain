@@ -10,9 +10,7 @@ import javax.persistence.OneToMany;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.operation.manquant.ManquantFinancier;
 import com.camlait.global.erp.domain.organisation.Zone;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity

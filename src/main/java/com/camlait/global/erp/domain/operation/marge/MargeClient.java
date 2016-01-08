@@ -6,7 +6,6 @@ import javax.persistence.ManyToOne;
 
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.partenaire.ClientAmarge;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 

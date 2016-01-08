@@ -22,9 +22,7 @@ import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.organisation.Centre;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity

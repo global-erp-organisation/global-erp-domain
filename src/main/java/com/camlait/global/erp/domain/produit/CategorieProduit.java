@@ -17,7 +17,10 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.Portee;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -49,6 +52,7 @@ public class CategorieProduit extends Entite {
 	private Date derniereMiseAJour;
 
 	@OneToMany(mappedBy = "categorie")
+	@JsonManagedReference
 	private Collection<Produit> produits;
 
 	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
@@ -145,14 +149,13 @@ public class CategorieProduit extends Entite {
 
 	@Override
 	public String toString() {
-		return "[" + codeCategorieProduit + "] " + descriptionCategorie;
+		return "[" + categorieProduitId + "]-[" + codeCategorieProduit + "] " + descriptionCategorie;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((categorieParent == null) ? 0 : categorieParent.hashCode());
 		result = prime * result + ((categorieProduitId == null) ? 0 : categorieProduitId.hashCode());
 		return result;
 	}
@@ -166,11 +169,6 @@ public class CategorieProduit extends Entite {
 		if (getClass() != obj.getClass())
 			return false;
 		CategorieProduit other = (CategorieProduit) obj;
-		if (categorieParent == null) {
-			if (other.categorieParent != null)
-				return false;
-		} else if (!categorieParent.equals(other.categorieParent))
-			return false;
 		if (categorieProduitId == null) {
 			if (other.categorieProduitId != null)
 				return false;

@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClient;
 import com.camlait.global.erp.domain.operation.reglement.Reglement;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 

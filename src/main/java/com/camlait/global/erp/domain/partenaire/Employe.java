@@ -13,7 +13,6 @@ import javax.persistence.OneToOne;
 import com.camlait.global.erp.domain.auth.Utilisateur;
 import com.camlait.global.erp.domain.enumeration.Sexe;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
