@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.auth;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +29,10 @@ public class GroupeUtilisateur extends Entite {
 	@JoinColumn(name = "utilisateurId")
 	private Utilisateur utilsateur;
 
+	private Date dateDeCreation;
+
+	private Date derniereMiseAJour;
+
 	public Long getGroupeUtilissateurId() {
 		return groupeUtilissateurId;
 	}
@@ -49,6 +55,23 @@ public class GroupeUtilisateur extends Entite {
 
 	public void setUtilsateur(Utilisateur utilsateur) {
 		this.utilsateur = utilsateur;
+	}
+
+	
+	public Date getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(Date dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public Date getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(Date derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
 	}
 
 	@Override
@@ -77,6 +100,7 @@ public class GroupeUtilisateur extends Entite {
 	}
 
 	public GroupeUtilisateur() {
-		super();
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

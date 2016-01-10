@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.auth;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,6 +35,10 @@ public class RessourceUtilisateur extends Entite {
 	@Enumerated(EnumType.STRING)
 	private Etat etat;
 
+	private Date dateDeCreation;
+
+	private Date derniereMiseAJour;
+
 	public Long getRessourceUtilisateurId() {
 		return ressourceUtilisateurId;
 	}
@@ -65,6 +71,22 @@ public class RessourceUtilisateur extends Entite {
 		this.etat = etat;
 	}
 
+	public Date getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(Date dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public Date getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(Date derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
 	public RessourceUtilisateur(Utilisateur utilisateur, Ressource ressource, Etat etat) {
 		super();
 		this.utilisateur = utilisateur;
@@ -73,6 +95,7 @@ public class RessourceUtilisateur extends Entite {
 	}
 
 	public RessourceUtilisateur() {
-		super();
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

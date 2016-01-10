@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.auth;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +29,10 @@ public class RessourceGroupe extends Entite {
 	@JoinColumn(name = "ressourceId")
 	private Ressource ressource;
 
+	private Date dateDeCreation;
+
+	private Date derniereMiseAJour;
+
 	public Long getResourceGroupeId() {
 		return resourceGroupeId;
 	}
@@ -49,6 +55,23 @@ public class RessourceGroupe extends Entite {
 
 	public void setRessource(Ressource ressource) {
 		this.ressource = ressource;
+	}
+
+	
+	public Date getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(Date dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public Date getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(Date derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
 	}
 
 	@Override
@@ -77,6 +100,7 @@ public class RessourceGroupe extends Entite {
 	}
 
 	public RessourceGroupe() {
-		super();
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

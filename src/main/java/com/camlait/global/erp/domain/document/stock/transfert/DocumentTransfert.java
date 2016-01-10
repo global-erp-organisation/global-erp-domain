@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.document.stock.virement;
+package com.camlait.global.erp.domain.document.stock.transfert;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-public class DocumentVirement extends DocumentDeStock {
+public class DocumentTransfert extends DocumentDeStock {
     
     @ManyToOne
     @JoinColumn(name = "magasinDestinationId")
@@ -27,7 +27,7 @@ public class DocumentVirement extends DocumentDeStock {
         this.magasinDestination = magasinDestination;
     }
     
-    public DocumentVirement() {
+    public DocumentTransfert() {
         setSensOperation(SensOperation.VIREMENT);
         setTypeDocument(TypeDocuments.TRANSFERT);
     }

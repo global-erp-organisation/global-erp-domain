@@ -1,5 +1,8 @@
 package com.camlait.global.erp.domain.auth;
 
+import java.util.Collection;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -27,6 +31,17 @@ public class Ressource extends Entite {
 	private Ressource ressourceParent;
 
 	private String descriptionRessource;
+
+	private Date dateDeCreation;
+
+	private Date derniereMiseAJour;
+
+	private String classeIcon;
+
+	private String appLocalisation;
+
+	@OneToMany(mappedBy="ressourceParent")
+	private Collection<Ressource> ressourceFilles;
 
 	public Long getRessourceId() {
 		return ressourceId;
@@ -60,6 +75,46 @@ public class Ressource extends Entite {
 		this.descriptionRessource = descriptionMenu;
 	}
 
+	public Date getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(Date dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public Date getDerniereMiseAJour() {
+		return derniereMiseAJour;
+	}
+
+	public void setDerniereMiseAJour(Date derniereMiseAJour) {
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
+	public String getClasseIcon() {
+		return classeIcon;
+	}
+
+	public void setClasseIcon(String classeIcon) {
+		this.classeIcon = classeIcon;
+	}
+
+	public String getAppLocalisation() {
+		return appLocalisation;
+	}
+
+	public void setAppLocalisation(String appLocalisation) {
+		this.appLocalisation = appLocalisation;
+	}
+
+	public Collection<Ressource> getRessourceFilles() {
+		return ressourceFilles;
+	}
+
+	public void setRessourceFilles(Collection<Ressource> ressourceFils) {
+		this.ressourceFilles = ressourceFils;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,6 +138,11 @@ public class Ressource extends Entite {
 		} else if (!ressourceId.equals(other.ressourceId))
 			return false;
 		return true;
+	}
+
+	public Ressource() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 
 	public Ressource(String codeMenu, String descriptionMenu) {

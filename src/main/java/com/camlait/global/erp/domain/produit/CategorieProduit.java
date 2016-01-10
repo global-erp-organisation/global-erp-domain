@@ -17,9 +17,7 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.Portee;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -51,8 +49,10 @@ public class CategorieProduit extends Entite {
 
 	private Date derniereMiseAJour;
 
+	@OneToMany(mappedBy = "categorieParent")
+	private Collection<CategorieProduit> categorieFilles;
+
 	@OneToMany(mappedBy = "categorie")
-	@JsonManagedReference
 	private Collection<Produit> produits;
 
 	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
@@ -145,6 +145,14 @@ public class CategorieProduit extends Entite {
 
 	public void setSuiviEnStock(boolean suiviEnStock) {
 		this.suiviEnStock = suiviEnStock;
+	}
+
+	public Collection<CategorieProduit> getCategorieFilles() {
+		return categorieFilles;
+	}
+
+	public void setCategorieFilles(Collection<CategorieProduit> categorieFilles) {
+		this.categorieFilles = categorieFilles;
 	}
 
 	@Override

@@ -36,7 +36,10 @@ public class GlobalAppConstants {
 	public final static String OPERATION_DAO_BASE_PACKAGE = ROOT_PACKAGE + DAO_BASE_PACKAGE + ".operation";
 	public final static String PARTNER_DAO_BASE_PACKAGE = ROOT_PACKAGE + DAO_BASE_PACKAGE + ".partenaire";
 	public final static String BMQ_DAO_BASE_PACKAGE = ROOT_PACKAGE + DAO_BASE_PACKAGE + ".bmq";
-
+	
+	public final static String HASH_ALGORITHM="SHA1PRNG";
+	
+	
 	public static void verifyIllegalArgumentException(Object fieldValue, String fieldName) {
 		if (fieldValue == null) {
 			throw new IllegalArgumentException(buildIllegalArgumentMessage(fieldName));
