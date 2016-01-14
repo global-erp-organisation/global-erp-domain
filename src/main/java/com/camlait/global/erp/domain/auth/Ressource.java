@@ -23,6 +23,7 @@ public class Ressource extends Entite {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long ressourceId;
+	
 	@Column(unique = true, nullable = false)
 	private String codeRessource;
 
@@ -39,6 +40,7 @@ public class Ressource extends Entite {
 	private String classeIcon;
 
 	private String appLocalisation;
+	
 
 	@OneToMany(mappedBy="ressourceParent")
 	private Collection<Ressource> ressourceFilles;
