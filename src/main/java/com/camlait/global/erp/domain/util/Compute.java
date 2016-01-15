@@ -4,6 +4,8 @@ public class Compute {
 
 	private double value;
 
+	private boolean test;
+	
 	public void cummuler(double nextValue) {
 		value += nextValue;
 	}
@@ -12,4 +14,13 @@ public class Compute {
 		return value;
 	}
 
+	public boolean isTest() {
+		return test;
+	}
+
+	public void setTest(boolean test) {
+		this.test = test;
+	}
+
+	
 }
