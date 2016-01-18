@@ -31,6 +31,12 @@ public class Utilisateur extends Entite {
 	@OneToMany(mappedBy = "utilisateur")
 	private Collection<Employe> employes;
 
+	@OneToMany(mappedBy = "utilisateur")
+	private Collection<RessourceUtilisateur> ressourceUtilisateurs;
+
+	//@OneToMany(mappedBy = "utilisateur")
+	//private Collection<GroupeUtilisateur> groupeUtilisateurs;
+
 	public String getCodeUtilisateur() {
 		return codeUtilisateur;
 	}
@@ -79,6 +85,13 @@ public class Utilisateur extends Entite {
 		this.employes = employes;
 	}
 
+	public Collection<RessourceUtilisateur> getRessourceUtilisateurs() {
+		return ressourceUtilisateurs;
+	}
+
+	public void setRessourceUtilisateurs(Collection<RessourceUtilisateur> ressourceUtilisateurs) {
+		this.ressourceUtilisateurs = ressourceUtilisateurs;
+	}
 
 	@Override
 	public int hashCode() {

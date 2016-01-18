@@ -1,10 +1,12 @@
 package com.camlait.global.erp.domain.auth;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,9 +26,6 @@ public class Ressource extends Entite {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long ressourceId;
 	
-	@Column(unique = true, nullable = false)
-	private String codeRessource;
-
 	@ManyToOne
 	@JoinColumn(name = "ressourceParentId")
 	private Ressource ressourceParent;
@@ -41,8 +40,8 @@ public class Ressource extends Entite {
 
 	private String appLocalisation;
 	
-
-	@OneToMany(mappedBy="ressourceParent")
+	
+	@OneToMany(mappedBy="ressourceParent",fetch=FetchType.EAGER)
 	private Collection<Ressource> ressourceFilles;
 
 	public Long getRessourceId() {
@@ -51,14 +50,6 @@ public class Ressource extends Entite {
 
 	public void setRessourceId(Long meduId) {
 		this.ressourceId = meduId;
-	}
-
-	public String getCodeRessource() {
-		return codeRessource;
-	}
-
-	public void setCodeRessource(String codeMenu) {
-		this.codeRessource = codeMenu;
 	}
 
 	public Ressource getRessourceParent() {
@@ -147,15 +138,12 @@ public class Ressource extends Entite {
 		setDerniereMiseAJour(new Date());
 	}
 
-	public Ressource(String codeMenu, String descriptionMenu) {
-		super();
-		this.codeRessource = codeMenu;
+	public Ressource(String descriptionMenu) {
 		this.descriptionRessource = descriptionMenu;
 	}
 
-	public Ressource(String codeMenu, String descriptionMenu, Ressource menuParent) {
+	public Ressource(String descriptionMenu, Ressource menuParent) {
 		super();
-		this.codeRessource = codeMenu;
 		this.descriptionRessource = descriptionMenu;
 		this.ressourceParent = menuParent;
 	}

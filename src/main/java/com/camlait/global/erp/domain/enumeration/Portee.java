@@ -23,7 +23,7 @@ public enum Portee {
 	}
 
 	public static Portee retrouverPortee(String description) {
-		return Stream.of(values()).filter((p) -> p.getDescriptionPortee().equals(description)).findFirst()
+		return Stream.of(values()).filter((p) -> p.getDescriptionPortee().equalsIgnoreCase(description)).findFirst()
 				.orElse(DETAIL);
 	}
 }

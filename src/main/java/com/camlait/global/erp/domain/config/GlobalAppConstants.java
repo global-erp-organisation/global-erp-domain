@@ -8,6 +8,10 @@ public class GlobalAppConstants {
 
 	}
 
+	public final static String UL_MENU="ul";
+	public final static String LI_MENU="li";
+	
+	
 	public final static String ROOT_PACKAGE = "com.camlait.global.erp";
 
 	public final static String DAO_BASE_PACKAGE = ROOT_PACKAGE + ".dao";
