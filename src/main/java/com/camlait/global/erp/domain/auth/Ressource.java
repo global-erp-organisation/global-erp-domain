@@ -1,10 +1,8 @@
 package com.camlait.global.erp.domain.auth;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,34 +13,38 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Ressource extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long ressourceId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ressourceParentId")
+	@JsonManagedReference
 	private Ressource ressourceParent;
 
-	private String descriptionRessource;
+	private String title;
 
 	private Date dateDeCreation;
 
 	private Date derniereMiseAJour;
 
-	private String classeIcon;
+	private String icon;
 
-	private String appLocalisation;
-	
-	
-	@OneToMany(mappedBy="ressourceParent",fetch=FetchType.EAGER)
-	private Collection<Ressource> ressourceFilles;
+	private String sref;
+
+	private String href;
+
+	@JsonBackReference
+	@OneToMany(mappedBy = "ressourceParent", fetch = FetchType.EAGER)
+	private Collection<Ressource> items;
 
 	public Long getRessourceId() {
 		return ressourceId;
@@ -60,12 +62,12 @@ public class Ressource extends Entite {
 		this.ressourceParent = menuParent;
 	}
 
-	public String getDescriptionRessource() {
-		return descriptionRessource;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setDescriptionRessource(String descriptionMenu) {
-		this.descriptionRessource = descriptionMenu;
+	public void setTitle(String descriptionMenu) {
+		this.title = descriptionMenu;
 	}
 
 	public Date getDateDeCreation() {
@@ -84,28 +86,36 @@ public class Ressource extends Entite {
 		this.derniereMiseAJour = derniereMiseAJour;
 	}
 
-	public String getClasseIcon() {
-		return classeIcon;
+	public String getIcon() {
+		return icon;
 	}
 
-	public void setClasseIcon(String classeIcon) {
-		this.classeIcon = classeIcon;
+	public void setIcon(String classeIcon) {
+		this.icon = classeIcon;
 	}
 
-	public String getAppLocalisation() {
-		return appLocalisation;
+	public String getSref() {
+		return sref;
 	}
 
-	public void setAppLocalisation(String appLocalisation) {
-		this.appLocalisation = appLocalisation;
+	public void setSref(String appLocalisation) {
+		this.sref = appLocalisation;
 	}
 
-	public Collection<Ressource> getRessourceFilles() {
-		return ressourceFilles;
+	public Collection<Ressource> getItems() {
+		return items;
 	}
 
-	public void setRessourceFilles(Collection<Ressource> ressourceFils) {
-		this.ressourceFilles = ressourceFils;
+	public void setItems(Collection<Ressource> ressourceFils) {
+		this.items = ressourceFils;
+	}
+
+	public String getHref() {
+		return href;
+	}
+
+	public void setHref(String href) {
+		this.href = href;
 	}
 
 	@Override
@@ -139,12 +149,12 @@ public class Ressource extends Entite {
 	}
 
 	public Ressource(String descriptionMenu) {
-		this.descriptionRessource = descriptionMenu;
+		this.title = descriptionMenu;
 	}
 
 	public Ressource(String descriptionMenu, Ressource menuParent) {
 		super();
-		this.descriptionRessource = descriptionMenu;
+		this.title = descriptionMenu;
 		this.ressourceParent = menuParent;
 	}
 }

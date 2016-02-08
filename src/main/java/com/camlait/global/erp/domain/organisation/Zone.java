@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.partenaire.Client;
+import com.camlait.global.erp.domain.produit.Tarification;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -27,6 +28,9 @@ public class Zone extends Localisation {
     @OneToMany(mappedBy = "zone")
     private Collection<Client> clients;
 
+    @OneToMany(mappedBy="zone")
+    private Collection<Tarification> tarifications;
+    
     public Secteur getSecteur() {
         return secteur;
     }
@@ -51,7 +55,17 @@ public class Zone extends Localisation {
         this.clients = clients;
     }
 
-    public Zone() {
+    
+    public Collection<Tarification> getTarifications() {
+		return tarifications;
+	}
+
+	public void setTarifications(Collection<Tarification> tarifications) {
+		this.tarifications = tarifications;
+	}
+
+	public Zone() {
         setTypeLocal(AutreEnum.ZONE);
     }
+    
 }

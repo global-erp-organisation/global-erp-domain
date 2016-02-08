@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.inventaire.FicheDeStock;
+import com.camlait.global.erp.domain.inventaire.Stock;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -50,6 +52,15 @@ public class Produit extends Entite {
 
 	private boolean suiviEnStock;
 
+	@OneToMany(mappedBy = "produit")
+	private Collection<Stock> stocks;
+
+	@OneToMany(mappedBy = "produit")
+	private Collection<FicheDeStock> ficheDeStocks;
+
+	@OneToMany(mappedBy="produit")
+	private Collection<Tarification> tarifications;
+	
 	public String getCodeProduit() {
 		return codeProduit;
 	}
@@ -137,6 +148,30 @@ public class Produit extends Entite {
 
 	public void setSuiviEnStock(boolean suiviEnStock) {
 		this.suiviEnStock = suiviEnStock;
+	}
+
+	public Collection<Stock> getStocks() {
+		return stocks;
+	}
+
+	public void setStocks(Collection<Stock> stocks) {
+		this.stocks = stocks;
+	}
+
+	public Collection<FicheDeStock> getFicheDeStocks() {
+		return ficheDeStocks;
+	}
+
+	public void setFicheDeStocks(Collection<FicheDeStock> ficheDeStocks) {
+		this.ficheDeStocks = ficheDeStocks;
+	}
+	
+	public Collection<Tarification> getTarifications() {
+		return tarifications;
+	}
+
+	public void setTarifications(Collection<Tarification> tarifications) {
+		this.tarifications = tarifications;
 	}
 
 	@Override

@@ -1,9 +1,12 @@
 package com.camlait.global.erp.domain.util;
 
+import java.util.stream.Collectors;
+
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.auth.Ressource;
 import com.camlait.global.erp.domain.bmq.Bmq;
 import com.camlait.global.erp.domain.document.Document;
+import com.camlait.global.erp.domain.document.LigneDeDocument;
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClient;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClientComptant;
@@ -39,6 +42,7 @@ import com.camlait.global.erp.domain.partenaire.Magasinier;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
 import com.camlait.global.erp.domain.produit.CategorieProduit;
+import com.camlait.global.erp.domain.produit.Produit;
 
 public final class Utility {
 
@@ -63,11 +67,21 @@ public final class Utility {
 	}
 
 	public static boolean possedeDetails(Ressource r) {
-		return (!r.getRessourceFilles().isEmpty());
+		return (!r.getItems().isEmpty());
 	}
 
 	public static boolean isTotal(CategorieProduit categorie) {
 		return categorie.getPortee() == Portee.TOTAL;
+	}
+
+	public static boolean isDisponible(LigneDeDocument ligne) {
+		return (quantiteDisponible(ligne.getProduit(), ligne.getDocument().getMagasin())
+				- ligne.getQuantiteLigne()) > 0;
+	}
+
+	public static Long quantiteDisponible(Produit p, Magasin m) {
+		return p.getStocks().stream().filter(s -> s.getMagasin().getMagasinId().equals(m.getMagasinId()))
+				.collect(Collectors.toList()).get(0).getQuantiteDisponible();
 	}
 
 	public static EnumTypeEntite obtenirPrefixe(Entite entite) throws IllegalArgumentException {

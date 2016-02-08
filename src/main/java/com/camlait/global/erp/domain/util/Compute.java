@@ -20,7 +20,5 @@ public class Compute {
 
 	public void setTest(boolean test) {
 		this.test = test;
-	}
-
-	
+	}	
 }
