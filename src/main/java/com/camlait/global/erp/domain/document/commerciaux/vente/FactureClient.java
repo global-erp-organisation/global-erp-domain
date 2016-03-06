@@ -10,8 +10,13 @@ import com.camlait.global.erp.domain.operation.reglement.lettrage.FactureRegleme
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class FactureClient extends DocumentDeVente {
 
 	@OneToMany(mappedBy = "facture")

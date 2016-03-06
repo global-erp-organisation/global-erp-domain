@@ -13,7 +13,14 @@ import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.produit.Produit;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class FicheDeStock extends Entite {
 
 	@Id
@@ -29,64 +36,16 @@ public class FicheDeStock extends Entite {
 	@JoinColumn(name = "produitId")
 	private Produit produit;
 
-	public Long getFicheId() {
-		return ficheId;
-	}
-
-	public void setFicheId(Long ficheId) {
-		this.ficheId = ficheId;
-	}
-
-	public Date getDateFiche() {
-		return dateFiche;
-	}
-
-	public void setDateFiche(Date dateFiche) {
-		this.dateFiche = dateFiche;
-	}
-
-	public Magasin getMagasin() {
-		return magasin;
-	}
-
-	public void setMagasin(Magasin magasin) {
-		this.magasin = magasin;
-	}
-
-	public Produit getProduit() {
-		return produit;
-	}
-
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((ficheId == null) ? 0 : ficheId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FicheDeStock other = (FicheDeStock) obj;
-		if (ficheId == null) {
-			if (other.ficheId != null)
-				return false;
-		} else if (!ficheId.equals(other.ficheId))
-			return false;
-		return true;
-	}
-
 	public FicheDeStock() {
 		super();
 	}
+
+	public FicheDeStock(Long ficheId, Date dateFiche, Magasin magasin, Produit produit) {
+		super();
+		this.ficheId = ficheId;
+		this.dateFiche = dateFiche;
+		this.magasin = magasin;
+		this.produit = produit;
+	}
+	
 }

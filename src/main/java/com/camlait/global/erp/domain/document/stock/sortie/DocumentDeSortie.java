@@ -6,7 +6,12 @@ import com.camlait.global.erp.domain.document.stock.DocumentDeStock;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class DocumentDeSortie extends DocumentDeStock {
 
 	public DocumentDeSortie() {

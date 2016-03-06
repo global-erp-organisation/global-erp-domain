@@ -20,8 +20,15 @@ import com.camlait.global.erp.domain.inventaire.Stock;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "produitId")
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class Produit extends Entite {
 
 	@Id
@@ -58,151 +65,12 @@ public class Produit extends Entite {
 	@OneToMany(mappedBy = "produit")
 	private Collection<FicheDeStock> ficheDeStocks;
 
-	@OneToMany(mappedBy="produit")
+	@OneToMany(mappedBy = "produit")
 	private Collection<Tarification> tarifications;
-	
-	public String getCodeProduit() {
-		return codeProduit;
-	}
-
-	public void setCodeProduit(String codeProduit) {
-		this.codeProduit = codeProduit;
-	}
-
-	public String getDescriptionProduit() {
-		return descriptionProduit;
-	}
-
-	public void setDescriptionProduit(String descriptionProduit) {
-		this.descriptionProduit = descriptionProduit;
-	}
-
-	public double getPrixUnitaireProduit() {
-		return prixUnitaireProduit;
-	}
-
-	public void setPrixUnitaireProduit(double prixUnitaireProduit) {
-		this.prixUnitaireProduit = prixUnitaireProduit;
-	}
-
-	public CategorieProduit getCategorie() {
-		return categorie;
-	}
 
 	public void setCategorie(CategorieProduit categorie) {
 		this.categorie = categorie;
 		copieCategorieProduitTaxe();
-	}
-
-	public boolean isProduitTaxable() {
-		return produitTaxable;
-	}
-
-	public void setProduitTaxable(boolean produitTaxable) {
-		this.produitTaxable = produitTaxable;
-	}
-
-	public Long getProduitId() {
-		return produitId;
-	}
-
-	public void setProduitId(Long produitId) {
-		this.produitId = produitId;
-	}
-
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	public Collection<ProduitTaxe> getProduitTaxes() {
-		return produitTaxes;
-	}
-
-	public void setProduitTaxes(Collection<ProduitTaxe> produitTaxes) {
-		this.produitTaxes = produitTaxes;
-	}
-
-	public double getPrixUnitaireMarge() {
-		return prixUnitaireMarge;
-	}
-
-	public void setPrixUnitaireMarge(double prixUnitaireMarge) {
-		this.prixUnitaireMarge = prixUnitaireMarge;
-	}
-
-	public boolean isSuiviEnStock() {
-		return suiviEnStock;
-	}
-
-	public void setSuiviEnStock(boolean suiviEnStock) {
-		this.suiviEnStock = suiviEnStock;
-	}
-
-	public Collection<Stock> getStocks() {
-		return stocks;
-	}
-
-	public void setStocks(Collection<Stock> stocks) {
-		this.stocks = stocks;
-	}
-
-	public Collection<FicheDeStock> getFicheDeStocks() {
-		return ficheDeStocks;
-	}
-
-	public void setFicheDeStocks(Collection<FicheDeStock> ficheDeStocks) {
-		this.ficheDeStocks = ficheDeStocks;
-	}
-	
-	public Collection<Tarification> getTarifications() {
-		return tarifications;
-	}
-
-	public void setTarifications(Collection<Tarification> tarifications) {
-		this.tarifications = tarifications;
-	}
-
-	@Override
-	public String toString() {
-		return "[" + produitId + "]-[" + codeProduit + "] " + descriptionProduit + " [pu]=" + prixUnitaireProduit
-				+ " [pm]=" + prixUnitaireMarge;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((produitId == null) ? 0 : produitId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Produit other = (Produit) obj;
-		if (produitId == null) {
-			if (other.produitId != null)
-				return false;
-		} else if (!produitId.equals(other.produitId))
-			return false;
-		return true;
 	}
 
 	public Produit() {
@@ -225,4 +93,26 @@ public class Produit extends Entite {
 			}
 		}
 	}
+
+	public Produit(Long produitId, String codeProduit, String descriptionProduit, double prixUnitaireProduit,
+			double prixUnitaireMarge, CategorieProduit categorie, boolean produitTaxable,
+			Collection<ProduitTaxe> produitTaxes, Date dateDeCreation, Date derniereMiseAJour, boolean suiviEnStock,
+			Collection<Stock> stocks, Collection<FicheDeStock> ficheDeStocks, Collection<Tarification> tarifications) {
+		super();
+		this.produitId = produitId;
+		this.codeProduit = codeProduit;
+		this.descriptionProduit = descriptionProduit;
+		this.prixUnitaireProduit = prixUnitaireProduit;
+		this.prixUnitaireMarge = prixUnitaireMarge;
+		this.categorie = categorie;
+		this.produitTaxable = produitTaxable;
+		this.produitTaxes = produitTaxes;
+		this.dateDeCreation = dateDeCreation;
+		this.derniereMiseAJour = derniereMiseAJour;
+		this.suiviEnStock = suiviEnStock;
+		this.stocks = stocks;
+		this.ficheDeStocks = ficheDeStocks;
+		this.tarifications = tarifications;
+	}
+
 }

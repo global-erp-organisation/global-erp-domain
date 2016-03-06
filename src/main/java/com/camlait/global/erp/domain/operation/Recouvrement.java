@@ -9,21 +9,18 @@ import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Recouvrement extends Operation {
 
 	@ManyToOne
 	@JoinColumn(name = "bmqId")
 	private Bmq bmq;
-
-	public Bmq getBmq() {
-		return bmq;
-	}
-
-	public void setBmq(Bmq bmq) {
-		this.bmq = bmq;
-	}
 
 	public Recouvrement() {
 		setSensOperation(SensOperation.ENTREE);

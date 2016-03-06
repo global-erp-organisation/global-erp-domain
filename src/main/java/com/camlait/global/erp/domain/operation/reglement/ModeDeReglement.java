@@ -14,98 +14,44 @@ import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class ModeDeReglement extends Entite {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long modeDeReglementId;
-    
-    @Column(name = "codeModeReglement", nullable = false, unique = true)
-    private String codeModeReglement;
-    
-    private String descriptionModeReglement;
-    
-    private Date dateDeCreation;
-    
-    private Date derniereMiseAJour;
-    
-      
-    public String getCodeModeReglement() {
-        return codeModeReglement;
-    }
-    
-    public void setCodeModeReglement(String codeModeReglement) {
-        this.codeModeReglement = codeModeReglement;
-    }
-    
-    public String getDescriptionModeReglement() {
-        return descriptionModeReglement;
-    }
-    
-    public void setDescriptionModeReglement(String descriptionModeReglement) {
-        this.descriptionModeReglement = descriptionModeReglement;
-    }
-    
-    public Long getModeDeReglementId() {
-        return modeDeReglementId;
-    }
-    
-    public void setModeDeReglementId(Long id) {
-        this.modeDeReglementId = id;
-    }
-    
-    public Date getDateDeCreation() {
-        return dateDeCreation;
-    }
-    
-    public void setDateDeCreation(Date dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
-    
-    public Date getDerniereMiseAJour() {
-        return derniereMiseAJour;
-    }
-    
-    public void setDerniereMiseAJour(Date derniereMiseAJour) {
-        this.derniereMiseAJour = derniereMiseAJour;
-    }
-    
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((codeModeReglement == null) ? 0 : codeModeReglement.hashCode());
-        result = prime * result + ((modeDeReglementId == null) ? 0 : modeDeReglementId.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ModeDeReglement other = (ModeDeReglement) obj;
-        if (codeModeReglement == null) {
-            if (other.codeModeReglement != null)
-                return false;
-        } else if (!codeModeReglement.equals(other.codeModeReglement))
-            return false;
-        if (modeDeReglementId == null) {
-            if (other.modeDeReglementId != null)
-                return false;
-        } else if (!modeDeReglementId.equals(other.modeDeReglementId))
-            return false;
-        return true;
-    }
-    
-    public ModeDeReglement() {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long modeDeReglementId;
+
+	@Column(name = "codeModeReglement", nullable = false, unique = true)
+	private String codeModeReglement;
+
+	private String descriptionModeReglement;
+
+	private Date dateDeCreation;
+
+	private Date derniereMiseAJour;
+
+	public ModeDeReglement() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
-    }
+	}
+
+	public ModeDeReglement(Long modeDeReglementId, String codeModeReglement, String descriptionModeReglement,
+			Date dateDeCreation, Date derniereMiseAJour) {
+		super();
+		this.modeDeReglementId = modeDeReglementId;
+		this.codeModeReglement = codeModeReglement;
+		this.descriptionModeReglement = descriptionModeReglement;
+		this.dateDeCreation = dateDeCreation;
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
 }

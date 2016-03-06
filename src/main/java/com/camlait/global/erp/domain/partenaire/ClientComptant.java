@@ -4,7 +4,12 @@ import javax.persistence.Entity;
 
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class ClientComptant extends Client {
 
 	public ClientComptant() {

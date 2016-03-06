@@ -16,8 +16,13 @@ import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Employe extends Partenaire {
     
     @Column(unique = true, nullable = false)
@@ -40,68 +45,7 @@ public class Employe extends Partenaire {
     
     @Enumerated(EnumType.STRING)
     private Sexe sexe;
-    
-    public String getMatricule() {
-        return matricule;
-    }
-    
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
-    
-    public String getNom() {
-        return nom;
-    }
-    
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-    
-    public String getPrenom() {
-        return prenom;
-    }
-    
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-    
-    public Date getDateDeNaissance() {
-        return dateDeNaissance;
-    }
-    
-    public void setDateDeNaissance(Date dateDeNaissance) {
-        this.dateDeNaissance = dateDeNaissance;
-    }
-    
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
-    }
-    
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
-    
-    public Emplois getEmplois() {
-        return emplois;
-    }
-    
-    public void setEmplois(Emplois emplois) {
-        this.emplois = emplois;
-    }
-    
-    public Sexe getSexe() {
-        return sexe;
-    }
-    
-    public void setSexe(Sexe sexe) {
-        this.sexe = sexe;
-    }
-    
-    @Override
-    public String toString() {
-        return "[" + matricule + "] " + prenom + " " + nom+""+sexe.getType()+" "+emplois.getDescriptionEmplois();
-    }
-    
+        
     public Employe() {
         setTypePartenaire(TypePartenaire.EMPLOYE);
     }

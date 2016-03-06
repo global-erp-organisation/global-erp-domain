@@ -10,8 +10,15 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class TermeLangue {
 
 	@Id
@@ -28,38 +35,6 @@ public class TermeLangue {
 
 	private String value;
 	
-	public Long getTermeLangueId() {
-		return termeLangueId;
-	}
-
-	public void setTermeLangueId(Long termeLangueId) {
-		this.termeLangueId = termeLangueId;
-	}
-
-	public Terme getTerme() {
-		return terme;
-	}
-
-	public void setTerme(Terme terme) {
-		this.terme = terme;
-	}
-
-	public Langue getLangue() {
-		return langue;
-	}
-
-	public void setLangue(Langue langue) {
-		this.langue = langue;
-	}
-	
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
 	public TermeLangue() {
 		super();
 	}
@@ -69,5 +44,14 @@ public class TermeLangue {
 		this.terme = terme;
 		this.langue = langue;
 		this.value = value;
-	}		
+	}
+
+	public TermeLangue(Long termeLangueId, Terme terme, Langue langue, String value) {
+		super();
+		this.termeLangueId = termeLangueId;
+		this.terme = terme;
+		this.langue = langue;
+		this.value = value;
+	}
+	
 }

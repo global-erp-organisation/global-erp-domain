@@ -12,8 +12,13 @@ import com.camlait.global.erp.domain.operation.reglement.lettrage.FactureRegleme
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Reglement extends Operation {
 
 	@OneToMany(mappedBy = "reglement")
@@ -22,21 +27,5 @@ public class Reglement extends Operation {
 	@ManyToOne
 	@JoinColumn(name = "modeDeReglementId")
 	private ModeDeReglement modeDeReglement;
-
-	public Collection<FactureReglement> getFactureReglements() {
-		return factureReglements;
-	}
-
-	public void setFactureReglements(Collection<FactureReglement> factureReglements) {
-		this.factureReglements = factureReglements;
-	}
-
-	public ModeDeReglement getModeDeReglement() {
-		return modeDeReglement;
-	}
-
-	public void setModeDeReglement(ModeDeReglement modeDeReglement) {
-		this.modeDeReglement = modeDeReglement;
-	}
 
 }

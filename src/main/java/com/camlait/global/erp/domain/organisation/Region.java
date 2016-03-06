@@ -12,35 +12,24 @@ import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Region extends Localisation {
 
-    @ManyToOne
-    @JoinColumn(name = "centreId")
-    private Centre centre;
+	@ManyToOne
+	@JoinColumn(name = "centreId")
+	private Centre centre;
 
-    @OneToMany(mappedBy="region",fetch=FetchType.EAGER)
-    private Collection<Secteur> secteurs;
+	@OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
+	private Collection<Secteur> secteurs;
 
-    public Centre getCentre() {
-        return centre;
-    }
-
-    public void setCentre(Centre centre) {
-        this.centre = centre;
-    }
-
-    public Collection<Secteur> getSecteurs() {
-        return secteurs;
-    }
-
-    public void setSecteurs(Collection<Secteur> secteurs) {
-        this.secteurs = secteurs;
-    }
-
-    public Region() {
-        setTypeLocal(AutreEnum.REGION);
-    }
+	public Region() {
+		setTypeLocal(AutreEnum.REGION);
+	}
 
 }

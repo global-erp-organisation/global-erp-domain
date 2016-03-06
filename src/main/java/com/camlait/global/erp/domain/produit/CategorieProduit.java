@@ -20,8 +20,15 @@ import com.camlait.global.erp.domain.enumeration.Portee;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper=false)
+@Builder
 public class CategorieProduit extends Entite {
 
 	@Id
@@ -57,131 +64,9 @@ public class CategorieProduit extends Entite {
 	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
 	private Collection<CategorieProduitTaxe> categorieProduitTaxes;
 
-	public Long getCategorieProduitId() {
-		return categorieProduitId;
-	}
-
-	public void setCategorieProduitId(Long categorieProduitId) {
-		this.categorieProduitId = categorieProduitId;
-	}
-
-	public CategorieProduit getCategorieParent() {
-		return categorieParent;
-	}
-
 	public void setCategorieParent(CategorieProduit categorieParent) {
 		this.categorieParent = categorieParent;
 		copierCategorieProduitTaxeParent(categorieParent);
-	}
-
-	public String getCodeCategorieProduit() {
-		return codeCategorieProduit;
-	}
-
-	public void setCodeCategorieProduit(String codeCategorieProduit) {
-		this.codeCategorieProduit = codeCategorieProduit;
-	}
-
-	public String getDescriptionCategorie() {
-		return descriptionCategorie;
-	}
-
-	public void setDescriptionCategorie(String descriptionCategorie) {
-		this.descriptionCategorie = descriptionCategorie;
-	}
-
-	public Portee getPortee() {
-		return portee;
-	}
-
-	public void setPortee(Portee portee) {
-		this.portee = portee;
-	}
-
-	public boolean isCategorieTaxable() {
-		return categorieTaxable;
-	}
-
-	public void setCategorieTaxable(boolean categorieTaxable) {
-		this.categorieTaxable = categorieTaxable;
-	}
-
-	public Collection<Produit> getProduits() {
-		return produits;
-	}
-
-	public void setProduits(Collection<Produit> produits) {
-		this.produits = produits;
-	}
-
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	public Collection<CategorieProduitTaxe> getCategorieProduitTaxes() {
-		return categorieProduitTaxes;
-	}
-
-	public void setCategorieProduitTaxes(Collection<CategorieProduitTaxe> categorieProduitTaxes) {
-		this.categorieProduitTaxes = categorieProduitTaxes;
-	}
-
-	public boolean isSuiviEnStock() {
-		return suiviEnStock;
-	}
-
-	public void setSuiviEnStock(boolean suiviEnStock) {
-		this.suiviEnStock = suiviEnStock;
-	}
-
-	public Collection<CategorieProduit> getCategorieFilles() {
-		return categorieFilles;
-	}
-
-	public void setCategorieFilles(Collection<CategorieProduit> categorieFilles) {
-		this.categorieFilles = categorieFilles;
-	}
-
-	@Override
-	public String toString() {
-		return "[" + categorieProduitId + "]-[" + codeCategorieProduit + "] " + descriptionCategorie;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((categorieProduitId == null) ? 0 : categorieProduitId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CategorieProduit other = (CategorieProduit) obj;
-		if (categorieProduitId == null) {
-			if (other.categorieProduitId != null)
-				return false;
-		} else if (!categorieProduitId.equals(other.categorieProduitId))
-			return false;
-		return true;
 	}
 
 	public CategorieProduit() {
@@ -195,4 +80,22 @@ public class CategorieProduit extends Entite {
 		}
 	}
 
+	public CategorieProduit(Long categorieProduitId, CategorieProduit categorieParent, String codeCategorieProduit,
+			String descriptionCategorie, Portee portee, boolean categorieTaxable, boolean suiviEnStock,
+			Date dateDeCreation, Date derniereMiseAJour, Collection<CategorieProduit> categorieFilles,
+			Collection<Produit> produits, Collection<CategorieProduitTaxe> categorieProduitTaxes) {
+		super();
+		this.categorieProduitId = categorieProduitId;
+		this.categorieParent = categorieParent;
+		this.codeCategorieProduit = codeCategorieProduit;
+		this.descriptionCategorie = descriptionCategorie;
+		this.portee = portee;
+		this.categorieTaxable = categorieTaxable;
+		this.suiviEnStock = suiviEnStock;
+		this.dateDeCreation = dateDeCreation;
+		this.derniereMiseAJour = derniereMiseAJour;
+		this.categorieFilles = categorieFilles;
+		this.produits = produits;
+		this.categorieProduitTaxes = categorieProduitTaxes;
+	}
 }

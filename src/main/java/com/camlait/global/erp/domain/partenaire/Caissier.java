@@ -9,8 +9,13 @@ import com.camlait.global.erp.domain.operation.caisse.Caisse;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper=true)
 public class Caissier extends Employe {
 
 	@ManyToOne
@@ -18,22 +23,6 @@ public class Caissier extends Employe {
 	private Caisse caisse;
 
 	private String motDePasse;
-
-	public Caisse getCaisse() {
-		return caisse;
-	}
-
-	public void setCaisse(Caisse caisse) {
-		this.caisse = caisse;
-	}
-
-	public String getMotDePasse() {
-		return motDePasse;
-	}
-
-	public void setMotDePasse(String motDePasse) {
-		this.motDePasse = motDePasse;
-	}
 
 	public Caissier() {
 		setTypePartenaire(TypePartenaire.CAISSIER);

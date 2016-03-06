@@ -12,8 +12,13 @@ import com.camlait.global.erp.domain.partenaire.Client;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public abstract class DocumentDeVente extends DocumentCommerciaux {
     
     @ManyToOne

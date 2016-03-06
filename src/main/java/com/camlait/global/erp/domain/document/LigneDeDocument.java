@@ -20,8 +20,15 @@ import com.camlait.global.erp.domain.produit.Produit;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class LigneDeDocument extends Entite {
     
     @Id
@@ -49,107 +56,25 @@ public class LigneDeDocument extends Entite {
     
     @OneToMany(mappedBy = "ligneDeDocument", fetch=FetchType.EAGER)
     private Collection<LigneDeDocumentTaxe> ligneDeDocumentTaxes;
-    
-    public Long getLigneDeDocumentId() {
-        return ligneDeDocumentId;
-    }
-    
-    public void setLigneDeDocumentId(Long ligneDeDocumentId) {
-        this.ligneDeDocumentId = ligneDeDocumentId;
-    }
-    
-    public Produit getProduit() {
-        return produit;
-    }
-    
-    public void setProduit(Produit produit) {
-        this.produit = produit;
-    }
-    
-    public Long getQuantiteLigne() {
-        return quantiteLigne;
-    }
-    
-    public void setQuantiteLigne(Long quantiteLigne) {
-        this.quantiteLigne = quantiteLigne;
-    }
-    
-    public double getPrixunitaiteLigne() {
-        return prixunitaiteLigne;
-    }
-    
-    public void setPrixunitaiteLigne(double prixunitaiteLigne) {
-        this.prixunitaiteLigne = prixunitaiteLigne;
-    }
-    
-    public Document getDocument() {
-        return document;
-    }
-    
-    public void setDocument(Document document) {
-        this.document = document;
-    }
-    
-    public Date getDateDeCreation() {
-        return dateDeCreation;
-    }
-    
-    public void setDateDeCreation(Date dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
-    
-    public Date getDerniereMiseAJour() {
-        return derniereMiseAJour;
-    }
-    
-    public void setDerniereMiseAJour(Date derniereMiseAJour) {
-        this.derniereMiseAJour = derniereMiseAJour;
-    }
-    
-    public SensOperation getSensOperation() {
-        return sensOperation;
-    }
-    
-    public void setSensOperation(SensOperation sensOperation) {
-        this.sensOperation = sensOperation;
-    }
-    
-    public Collection<LigneDeDocumentTaxe> getLigneDeDocumentTaxes() {
-        return ligneDeDocumentTaxes;
-    }
-    
-    public void setLigneDeDocumentTaxes(Collection<LigneDeDocumentTaxe> ligneDeDocumentTaxes) {
-        this.ligneDeDocumentTaxes = ligneDeDocumentTaxes;
-    }
-    
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((ligneDeDocumentId == null) ? 0 : ligneDeDocumentId.hashCode());
-        return result;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        LigneDeDocument other = (LigneDeDocument) obj;
-        if (ligneDeDocumentId == null) {
-            if (other.ligneDeDocumentId != null)
-                return false;
-        } else if (!ligneDeDocumentId.equals(other.ligneDeDocumentId))
-            return false;
-        return true;
-    }
-    
+        
     public LigneDeDocument() {
         setDateDeCreation(new Date());
         setDerniereMiseAJour(new Date());
         
     }
+
+	public LigneDeDocument(Long ligneDeDocumentId, Produit produit, Long quantiteLigne, double prixunitaiteLigne,
+			Document document, Date dateDeCreation, Date derniereMiseAJour, SensOperation sensOperation,
+			Collection<LigneDeDocumentTaxe> ligneDeDocumentTaxes) {
+		super();
+		this.ligneDeDocumentId = ligneDeDocumentId;
+		this.produit = produit;
+		this.quantiteLigne = quantiteLigne;
+		this.prixunitaiteLigne = prixunitaiteLigne;
+		this.document = document;
+		this.dateDeCreation = dateDeCreation;
+		this.derniereMiseAJour = derniereMiseAJour;
+		this.sensOperation = sensOperation;
+		this.ligneDeDocumentTaxes = ligneDeDocumentTaxes;
+	}
 }

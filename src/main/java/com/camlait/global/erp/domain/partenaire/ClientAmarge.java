@@ -10,22 +10,19 @@ import com.camlait.global.erp.domain.operation.marge.MargeClient;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class ClientAmarge extends Client {
 
 	@OneToMany(mappedBy = "client")
 	private Collection<MargeClient> margeClients;
 
-	public Collection<MargeClient> getMargeClients() {
-		return margeClients;
-	}
-
-	public void setMargeClients(Collection<MargeClient> margeClients) {
-		this.margeClients = margeClients;
-	}
-	
-	public ClientAmarge(){
+	public ClientAmarge() {
 		setTypePartenaire(TypePartenaire.CLIENT_A_MARGE);
 	}
 }

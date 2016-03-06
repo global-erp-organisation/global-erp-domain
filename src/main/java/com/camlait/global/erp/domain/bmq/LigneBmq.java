@@ -18,8 +18,15 @@ import com.camlait.global.erp.domain.produit.Produit;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
 public class LigneBmq extends Entite {
 
 	@Id
@@ -49,106 +56,22 @@ public class LigneBmq extends Entite {
 	@OneToMany(mappedBy = "ligneBmq", cascade = CascadeType.ALL)
 	private Collection<LigneBmqTaxe> ligneBmqTaxes;
 
-	public Long getLigneBmqId() {
-		return ligneBmqId;
-	}
-
-	public void setLigneBmqId(Long ligneBmqId) {
-		this.ligneBmqId = ligneBmqId;
-	}
-
-	public Produit getProduit() {
-		return produit;
-	}
-
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
-
-	public Long getQuantiteLigne() {
-		return quantiteLigne;
-	}
-
-	public void setQuantiteLigne(Long quantiteLigne) {
-		this.quantiteLigne = quantiteLigne;
-	}
-
-	public double getPrixUnitaireLigne() {
-		return prixUnitaireLigne;
-	}
-
-	public void setPrixUnitaireLigne(double prixUnitaireLigne) {
-		this.prixUnitaireLigne = prixUnitaireLigne;
-	}
-
-	public Bmq getBmq() {
-		return bmq;
-	}
-
-	public void setBmq(Bmq bmq) {
-		this.bmq = bmq;
-	}
-
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	public Document getDocument() {
-		return document;
-	}
-
-	public void setDocument(Document document) {
-		this.document = document;
-	}
-
-	public Collection<LigneBmqTaxe> getLigneBmqTaxes() {
-		return ligneBmqTaxes;
-	}
-
-	public void setLigneBmqTaxes(Collection<LigneBmqTaxe> ligneBmqTaxes) {
-		this.ligneBmqTaxes = ligneBmqTaxes;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((ligneBmqId == null) ? 0 : ligneBmqId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LigneBmq other = (LigneBmq) obj;
-		if (ligneBmqId == null) {
-			if (other.ligneBmqId != null)
-				return false;
-		} else if (!ligneBmqId.equals(other.ligneBmqId))
-			return false;
-		return true;
-	}
-
 	public LigneBmq() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
 
+	public LigneBmq(Long ligneBmqId, Produit produit, Long quantiteLigne, double prixUnitaireLigne, Bmq bmq,
+			Date dateDeCreation, Date derniereMiseAJour, Document document, Collection<LigneBmqTaxe> ligneBmqTaxes) {
+		super();
+		this.ligneBmqId = ligneBmqId;
+		this.produit = produit;
+		this.quantiteLigne = quantiteLigne;
+		this.prixUnitaireLigne = prixUnitaireLigne;
+		this.bmq = bmq;
+		this.dateDeCreation = dateDeCreation;
+		this.derniereMiseAJour = derniereMiseAJour;
+		this.document = document;
+		this.ligneBmqTaxes = ligneBmqTaxes;
+	}
 }

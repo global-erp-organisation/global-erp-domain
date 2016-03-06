@@ -13,54 +13,27 @@ import com.camlait.global.erp.domain.organisation.Zone;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Vendeur extends Employe {
-    
-    @ManyToOne
-    @JoinColumn(name = "zoneId")
-    private Zone zoneDeVente;
-    
-    @OneToMany(mappedBy = "vendeur")
-    private Collection<ManquantFinancier> manquantFinanciers;
-    
-    private boolean recoisDesCommission;
-    
-    private double tauxDeCommission;
-    
-    public Zone getZoneDeVente() {
-        return zoneDeVente;
-    }
-    
-    public void setZoneDeVente(Zone zoneDeVente) {
-        this.zoneDeVente = zoneDeVente;
-    }
-    
-    public Collection<ManquantFinancier> getManquantFinanciers() {
-        return manquantFinanciers;
-    }
-    
-    public void setManquantFinanciers(Collection<ManquantFinancier> manquantFinanciers) {
-        this.manquantFinanciers = manquantFinanciers;
-    }
-    
-    public boolean isRecoisDesCommission() {
-        return recoisDesCommission;
-    }
-    
-    public void setRecoisDesCommission(boolean recoisDesCommission) {
-        this.recoisDesCommission = recoisDesCommission;
-    }
-    
-    public double getTauxDeCommission() {
-        return tauxDeCommission;
-    }
-    
-    public void setTauxDeCommission(double tauxDeCommission) {
-        this.tauxDeCommission = tauxDeCommission;
-    }
-    
-    public Vendeur() {
-        setTypePartenaire(TypePartenaire.VENDEUR);
-    }
+
+	@ManyToOne
+	@JoinColumn(name = "zoneId")
+	private Zone zoneDeVente;
+
+	@OneToMany(mappedBy = "vendeur")
+	private Collection<ManquantFinancier> manquantFinanciers;
+
+	private boolean recoisDesCommission;
+
+	private double tauxDeCommission;
+
+	public Vendeur() {
+		setTypePartenaire(TypePartenaire.VENDEUR);
+	}
 }

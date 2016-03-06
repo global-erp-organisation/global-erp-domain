@@ -12,8 +12,15 @@ import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
 public class Taxe extends Entite {
 
 	@Id
@@ -89,4 +96,16 @@ public class Taxe extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
+
+	public Taxe(Long taxeId, String codeTaxe, String taxeDescription, double valeurPourcentage, Date dateDeCreation,
+			Date derniereMiseAJour) {
+		super();
+		this.taxeId = taxeId;
+		this.codeTaxe = codeTaxe;
+		this.taxeDescription = taxeDescription;
+		this.valeurPourcentage = valeurPourcentage;
+		this.dateDeCreation = dateDeCreation;
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
 }

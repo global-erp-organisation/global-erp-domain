@@ -13,8 +13,15 @@ import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class Langue extends Entite {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,48 +37,6 @@ public class Langue extends Entite {
 	@OneToMany(mappedBy="langue")
 	private Collection<TermeLangue> termeLangues;
 	
-
-	public Long getLangId() {
-		return langId;
-	}
-
-	public void setLangId(Long langId) {
-		this.langId = langId;
-	}
-
-	public String getCodeLangue() {
-		return codeLangue;
-	}
-
-	public void setCodeLangue(String codeLangue) {
-		this.codeLangue = codeLangue;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String descriptionLangue) {
-		this.title = descriptionLangue;
-	}
-
-	public String getAlt() {
-		return alt;
-	}
-
-	public void setAlt(String alt) {
-		this.alt = alt;
-	}
-
-	
-	public Collection<TermeLangue> getTermeLangues() {
-		return termeLangues;
-	}
-
-	public void setTermeLangues(Collection<TermeLangue> termeLangues) {
-		this.termeLangues = termeLangues;
-	}
-
 	public Langue(String key, String title, String alt) {
 		super();
 		this.codeLangue = key;
@@ -80,4 +45,13 @@ public class Langue extends Entite {
 	}
 	public Langue() {
 	}
+	public Langue(Long langId, String codeLangue, String title, String alt, Collection<TermeLangue> termeLangues) {
+		super();
+		this.langId = langId;
+		this.codeLangue = codeLangue;
+		this.title = title;
+		this.alt = alt;
+		this.termeLangues = termeLangues;
+	}
+	
 }

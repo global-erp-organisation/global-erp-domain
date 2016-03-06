@@ -10,21 +10,17 @@ import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Magasinier extends Employe {
 
 	@OneToMany(mappedBy="magasinierSortant")
     private Collection<Inventaire> inventaires;
-
-    public Collection<Inventaire> getInventaires() {
-        return inventaires;
-    }
-
-    public void setInventaires(Collection<Inventaire> inventaires) {
-        this.inventaires = inventaires;
-    }
-
     public Magasinier() {
     	setTypePartenaire(TypePartenaire.MAGASINIER);
     }

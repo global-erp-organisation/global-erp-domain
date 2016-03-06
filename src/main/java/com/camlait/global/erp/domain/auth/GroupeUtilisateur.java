@@ -13,8 +13,15 @@ import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class GroupeUtilisateur extends Entite {
 
 	@Id
@@ -33,74 +40,19 @@ public class GroupeUtilisateur extends Entite {
 
 	private Date derniereMiseAJour;
 
-	public Long getGroupeUtilissateurId() {
-		return groupeUtilissateurId;
-	}
-
-	public void setGroupeUtilissateurId(Long groupeUtilissateurId) {
-		this.groupeUtilissateurId = groupeUtilissateurId;
-	}
-
-	public Groupe getGroupe() {
-		return groupe;
-	}
-
-	public void setGroupe(Groupe groupe) {
-		this.groupe = groupe;
-	}
-
-	public Utilisateur getUtilsateur() {
-		return utilsateur;
-	}
-
-	public void setUtilsateur(Utilisateur utilsateur) {
-		this.utilsateur = utilsateur;
-	}
-
-	
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((groupeUtilissateurId == null) ? 0 : groupeUtilissateurId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		GroupeUtilisateur other = (GroupeUtilisateur) obj;
-		if (groupeUtilissateurId == null) {
-			if (other.groupeUtilissateurId != null)
-				return false;
-		} else if (!groupeUtilissateurId.equals(other.groupeUtilissateurId))
-			return false;
-		return true;
-	}
-
 	public GroupeUtilisateur() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
+
+	public GroupeUtilisateur(Long groupeUtilissateurId, Groupe groupe, Utilisateur utilsateur, Date dateDeCreation,
+			Date derniereMiseAJour) {
+		super();
+		this.groupeUtilissateurId = groupeUtilissateurId;
+		this.groupe = groupe;
+		this.utilsateur = utilsateur;
+		this.dateDeCreation = dateDeCreation;
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+	
 }

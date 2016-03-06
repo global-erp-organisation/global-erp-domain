@@ -14,8 +14,15 @@ import com.camlait.global.erp.domain.produit.Produit;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class LigneInventaire extends Entite {
 
 	@Id
@@ -42,106 +49,24 @@ public class LigneInventaire extends Entite {
 
 	private Date derniereMiseAJour;
 
-	public Long getLigneInventaireId() {
-		return ligneInventaireId;
-	}
-
-	public void setLigneInventaireId(Long ligneInventaireId) {
-		this.ligneInventaireId = ligneInventaireId;
-	}
-
-	public Inventaire getInventaire() {
-		return inventaire;
-	}
-
-	public void setInventaire(Inventaire inventaire) {
-		this.inventaire = inventaire;
-	}
-
-	public Produit getProduit() {
-		return produit;
-	}
-
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
-
-	public Long getQuantiteReelle() {
-		return quantiteReelle;
-	}
-
-	public void setQuantiteReelle(Long quantiteReelle) {
-		this.quantiteReelle = quantiteReelle;
-	}
-
-	public Long getQuantiteAjustee() {
-		return quantiteAjustee;
-	}
-
-	public void setQuantiteAjustee(Long quantiteAjustee) {
-		this.quantiteAjustee = quantiteAjustee;
-	}
-
-	public double getPrixUnitaireReelle() {
-		return prixUnitaireReelle;
-	}
-
-	public void setPrixUnitaireReelle(double prixUnitaireReelle) {
-		this.prixUnitaireReelle = prixUnitaireReelle;
-	}
-
-	public double getPrixUnitaireAjustee() {
-		return prixUnitaireAjustee;
-	}
-
-	public void setPrixUnitaireAjustee(double prixUnitaireAjustee) {
-		this.prixUnitaireAjustee = prixUnitaireAjustee;
-	}
-
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((ligneInventaireId == null) ? 0 : ligneInventaireId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LigneInventaire other = (LigneInventaire) obj;
-		if (ligneInventaireId == null) {
-			if (other.ligneInventaireId != null)
-				return false;
-		} else if (!ligneInventaireId.equals(other.ligneInventaireId))
-			return false;
-		return true;
-	}
-
 	public LigneInventaire() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
+	}
+
+	public LigneInventaire(Long ligneInventaireId, Inventaire inventaire, Produit produit, Long quantiteReelle,
+			Long quantiteAjustee, double prixUnitaireReelle, double prixUnitaireAjustee, Date dateDeCreation,
+			Date derniereMiseAJour) {
+		super();
+		this.ligneInventaireId = ligneInventaireId;
+		this.inventaire = inventaire;
+		this.produit = produit;
+		this.quantiteReelle = quantiteReelle;
+		this.quantiteAjustee = quantiteAjustee;
+		this.prixUnitaireReelle = prixUnitaireReelle;
+		this.prixUnitaireAjustee = prixUnitaireAjustee;
+		this.dateDeCreation = dateDeCreation;
+		this.derniereMiseAJour = derniereMiseAJour;
 	}
 
 }

@@ -15,8 +15,15 @@ import com.camlait.global.erp.domain.produit.Produit;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class Stock extends Entite {
 
 	@Id
@@ -37,81 +44,20 @@ public class Stock extends Entite {
 
 	private Date derniereMiseAJour;
 
-	public Produit getProduit() {
-		return produit;
-	}
-
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
-
-	public Magasin getMagasin() {
-		return magasin;
-	}
-
-	public void setMagasin(Magasin magasin) {
-		this.magasin = magasin;
-	}
-
-	public Long getQuantiteDisponible() {
-		return quantiteDisponible;
-	}
-
-	public void setQuantiteDisponible(Long quantiteDisponible) {
-		this.quantiteDisponible = quantiteDisponible;
-	}
-
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	public Long getStockId() {
-		return stockId;
-	}
-
-	public void setStockId(Long stockId) {
-		this.stockId = stockId;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((stockId == null) ? 0 : stockId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Stock other = (Stock) obj;
-		if (stockId == null) {
-			if (other.stockId != null)
-				return false;
-		} else if (!stockId.equals(other.stockId))
-			return false;
-		return true;
-	}
-
 	public Stock() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
+
+	public Stock(Long stockId, Produit produit, Magasin magasin, Long quantiteDisponible, Date dateDeCreation,
+			Date derniereMiseAJour) {
+		super();
+		this.stockId = stockId;
+		this.produit = produit;
+		this.magasin = magasin;
+		this.quantiteDisponible = quantiteDisponible;
+		this.dateDeCreation = dateDeCreation;
+		this.derniereMiseAJour = derniereMiseAJour;
+	}
+
 }
