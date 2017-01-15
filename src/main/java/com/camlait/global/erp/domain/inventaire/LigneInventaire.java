@@ -8,18 +8,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.produit.Produit;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -29,10 +30,18 @@ public class LigneInventaire extends Entite {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long ligneInventaireId;
 
+	@Transient
+	private Long inventaireId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "inventaireId")
 	private Inventaire inventaire;
 
+	@Transient
+	private Long produitId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "produitId")
 	private Produit produit;
@@ -53,20 +62,4 @@ public class LigneInventaire extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-
-	public LigneInventaire(Long ligneInventaireId, Inventaire inventaire, Produit produit, Long quantiteReelle,
-			Long quantiteAjustee, double prixUnitaireReelle, double prixUnitaireAjustee, Date dateDeCreation,
-			Date derniereMiseAJour) {
-		super();
-		this.ligneInventaireId = ligneInventaireId;
-		this.inventaire = inventaire;
-		this.produit = produit;
-		this.quantiteReelle = quantiteReelle;
-		this.quantiteAjustee = quantiteAjustee;
-		this.prixUnitaireReelle = prixUnitaireReelle;
-		this.prixUnitaireAjustee = prixUnitaireAjustee;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
 }

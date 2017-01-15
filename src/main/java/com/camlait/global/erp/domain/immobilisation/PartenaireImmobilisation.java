@@ -9,17 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.partenaire.Partenaire;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -29,10 +30,18 @@ public class PartenaireImmobilisation {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long clientImmoId;
 
+	@Transient
+	private Long partenaireId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "partenaireId")
 	private Partenaire partenaire;
 
+	@Transient
+	private Long immoId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "immoId")
 	private Immobilisation immobilisation;
@@ -50,17 +59,4 @@ public class PartenaireImmobilisation {
 		setDerniereMiseAJour(new Date());
 
 	}
-
-	public PartenaireImmobilisation(Long clientImmoId, Partenaire partenaire, Immobilisation immobilisation,
-			Date dateAllocation, boolean actif, Date dateDeCreation, Date derniereMiseAJour) {
-		super();
-		this.clientImmoId = clientImmoId;
-		this.partenaire = partenaire;
-		this.immobilisation = immobilisation;
-		this.dateAllocation = dateAllocation;
-		this.actif = actif;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
 }

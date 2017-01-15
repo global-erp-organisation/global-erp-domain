@@ -10,16 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Data
+@AllArgsConstructor(suppressConstructorProperties=true)
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class Langue extends Entite {
@@ -34,8 +35,9 @@ public class Langue extends Entite {
 
 	private String alt;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="langue")
-	private Collection<TermeLangue> termeLangues;
+	private Collection<TermeLangue> termeLangues = Lists.newArrayList();
 	
 	public Langue(String key, String title, String alt) {
 		super();
@@ -44,14 +46,5 @@ public class Langue extends Entite {
 		this.alt = alt;
 	}
 	public Langue() {
-	}
-	public Langue(Long langId, String codeLangue, String title, String alt, Collection<TermeLangue> termeLangues) {
-		super();
-		this.langId = langId;
-		this.codeLangue = codeLangue;
-		this.title = title;
-		this.alt = alt;
-		this.termeLangues = termeLangues;
-	}
-	
+	}	
 }

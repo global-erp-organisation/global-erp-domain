@@ -7,31 +7,24 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.operation.reglement.lettrage.FactureReglement;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class FactureClient extends DocumentDeVente {
 
-	@OneToMany(mappedBy = "facture")
-	private Collection<FactureReglement> factureReglements;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "facture")
+    private Collection<FactureReglement> factureReglements = Lists.newArrayList();
 
-	public Collection<FactureReglement> getFactureReglements() {
-		return factureReglements;
-	}
-
-	public void setFactureReglements(Collection<FactureReglement> factureReglements) {
-		this.factureReglements = factureReglements;
-	}
-
-
-	public FactureClient() {
-		setTypeDocument(TypeDocuments.FACTURE_CLIENT);
-	}
+    public FactureClient() {
+        setTypeDocument(TypeDocuments.FACTURE_CLIENT);
+    }
 }

@@ -15,21 +15,24 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.inventaire.FicheDeStock;
 import com.camlait.global.erp.domain.inventaire.Stock;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -43,6 +46,10 @@ public class Magasin extends Entite {
 
 	private String descriptionMagasin;
 
+	@Transient
+	private Long entrepotId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "entrepotId")
 	private Entrepot entrepot;
@@ -54,30 +61,16 @@ public class Magasin extends Entite {
 	@Enumerated(EnumType.STRING)
 	private AutreEnum typeMagasin;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "magasin")
-	private Collection<Stock> stocks;
+	private Collection<Stock> stocks = Lists.newArrayList();
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "magasin")
-	private Collection<FicheDeStock> ficheDeStocks;
+	private Collection<FicheDeStock> ficheDeStocks = Lists.newArrayList();
 
 	public Magasin() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-
-	public Magasin(Long magasinId, String codeMagasin, String descriptionMagasin, Entrepot entrepot,
-			Date dateDeCreation, Date derniereMiseAJour, AutreEnum typeMagasin, Collection<Stock> stocks,
-			Collection<FicheDeStock> ficheDeStocks) {
-		super();
-		this.magasinId = magasinId;
-		this.codeMagasin = codeMagasin;
-		this.descriptionMagasin = descriptionMagasin;
-		this.entrepot = entrepot;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.typeMagasin = typeMagasin;
-		this.stocks = stocks;
-		this.ficheDeStocks = ficheDeStocks;
-	}
-
 }

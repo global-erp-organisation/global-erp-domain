@@ -8,56 +8,53 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.produit.Produit;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class Stock extends Entite {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long stockId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long stockId;
 
-	@ManyToOne
-	@JoinColumn(name = "produitId")
-	private Produit produit;
+    @Transient
+    private Long produitId;
 
-	@ManyToOne
-	@JoinColumn(name = "magasinId")
-	private Magasin magasin;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "produitId")
+    private Produit produit;
 
-	private Long quantiteDisponible;
+    @Transient
+    private Long magasinId;
 
-	private Date dateDeCreation;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinId")
+    private Magasin magasin;
 
-	private Date derniereMiseAJour;
+    private Long quantiteDisponible;
 
-	public Stock() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    private Date dateDeCreation;
 
-	public Stock(Long stockId, Produit produit, Magasin magasin, Long quantiteDisponible, Date dateDeCreation,
-			Date derniereMiseAJour) {
-		super();
-		this.stockId = stockId;
-		this.produit = produit;
-		this.magasin = magasin;
-		this.quantiteDisponible = quantiteDisponible;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
+    private Date derniereMiseAJour;
 
+    public Stock() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 }

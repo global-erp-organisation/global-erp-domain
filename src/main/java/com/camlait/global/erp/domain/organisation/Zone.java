@@ -6,38 +6,48 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.partenaire.Client;
 import com.camlait.global.erp.domain.produit.Tarification;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Zone extends Localisation {
 
-	@ManyToOne
-	@JoinColumn(name = "secteurId")
-	private Secteur secteur;
+    @Transient
+    private Long secteurId;
 
-	@OneToMany(mappedBy = "zone")
-	private Collection<DocumentDeVente> documents;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "secteurId")
+    private Secteur secteur;
 
-	@OneToMany(mappedBy = "zone")
-	private Collection<Client> clients;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "zone")
+    private Collection<DocumentDeVente> documents = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "zone")
-	private Collection<Tarification> tarifications;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "zone")
+    private Collection<Client> clients = Lists.newArrayList();
 
-	public Zone() {
-		setTypeLocal(AutreEnum.ZONE);
-	}
+    @JsonManagedReference
+    @OneToMany(mappedBy = "zone")
+    private Collection<Tarification> tarifications = Lists.newArrayList();
+
+    public Zone() {
+        setTypeLocal(AutreEnum.ZONE);
+    }
 
 }

@@ -15,6 +15,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
@@ -24,87 +25,84 @@ import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.reglement.ModeleDeReglement;
 import com.camlait.global.erp.domain.organisation.Centre;
 import com.camlait.global.erp.domain.produit.Tarif;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public  class Partenaire extends Entite {
+public class Partenaire extends Entite {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long partenaireId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long partenaireId;
 
-	@Column(name = "codePartenaire", nullable = false, unique = true)
-	private String codePartenaire;
+    @Column(name = "codePartenaire", nullable = false, unique = true)
+    private String codePartenaire;
 
-	@Column(length = 512)
-	private String adresse;
+    @Column(length = 512)
+    private String adresse;
 
-	private String telephone;
+    private String telephone;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	@Enumerated(EnumType.STRING)
-	private TypePartenaire typePartenaire;
+    @Enumerated(EnumType.STRING)
+    private TypePartenaire typePartenaire;
 
-	@ManyToOne
-	@JoinColumn(name = "centreId")
-	private Centre centre;
+    @Transient
+    private Long centreId;
 
-	@OneToMany(mappedBy = "client")
-	private Collection<DocumentDeVente> documents;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "centreId")
+    private Centre centre;
 
-	@OneToMany(mappedBy = "immobilisation")
-	private Collection<PartenaireImmobilisation> partenaireImmobilisations;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "client")
+    private Collection<DocumentDeVente> documents = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "partenaire")
-	private Collection<Operation> operations;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "immobilisation")
+    private Collection<PartenaireImmobilisation> partenaireImmobilisations = Lists.newArrayList();
 
-	@ManyToOne
-	@JoinColumn(name = "groupePartenaireId")
-	private GroupePartenaire groupePartenaire;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "partenaire")
+    private Collection<Operation> operations = Lists.newArrayList();
 
-	@ManyToOne
-	@JoinColumn(name = "tarifId")
-	private Tarif tarif;
+    @Transient
+    private Long groupePartenaireId;
 
-	@OneToMany(mappedBy = "partenaire")
-	private Collection<ModeleDeReglement> modeleDeReglements;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "groupePartenaireId")
+    private GroupePartenaire groupePartenaire;
 
-	public Partenaire() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @Transient
+    private Long tarifId;
 
-	public Partenaire(Long partenaireId, String codePartenaire, String adresse, String telephone, Date dateDeCreation,
-			Date derniereMiseAJour, TypePartenaire typePartenaire, Centre centre, Collection<DocumentDeVente> documents,
-			Collection<PartenaireImmobilisation> partenaireImmobilisations, Collection<Operation> operations,
-			GroupePartenaire groupePartenaire, Tarif tarif, Collection<ModeleDeReglement> modeleDeReglements) {
-		super();
-		this.partenaireId = partenaireId;
-		this.codePartenaire = codePartenaire;
-		this.adresse = adresse;
-		this.telephone = telephone;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.typePartenaire = typePartenaire;
-		this.centre = centre;
-		this.documents = documents;
-		this.partenaireImmobilisations = partenaireImmobilisations;
-		this.operations = operations;
-		this.groupePartenaire = groupePartenaire;
-		this.tarif = tarif;
-		this.modeleDeReglements = modeleDeReglements;
-	}
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "tarifId")
+    private Tarif tarif;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "partenaire")
+    private Collection<ModeleDeReglement> modeleDeReglements = Lists.newArrayList();
+
+    public Partenaire() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 }

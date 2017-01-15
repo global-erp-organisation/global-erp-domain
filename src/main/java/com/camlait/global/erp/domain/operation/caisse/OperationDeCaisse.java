@@ -3,21 +3,29 @@ package com.camlait.global.erp.domain.operation.caisse;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.operation.Operation;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OperationDeCaisse extends Operation {
 
-	@ManyToOne
-	@JoinColumn(name = "journalId")
-	private JournalCaisse journal;
+    @Transient
+    private Long journalId;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "journalId")
+    private JournalCaisse journal;
+    
+    public OperationDeCaisse(){
+    }
 }

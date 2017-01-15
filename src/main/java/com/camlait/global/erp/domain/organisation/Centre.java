@@ -7,20 +7,22 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Centre extends Localisation {
 
-    @OneToMany(mappedBy = "centre",fetch=FetchType.EAGER)
-    private Collection<Region> regions;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "centre", fetch = FetchType.EAGER)
+    private Collection<Region> regions = Lists.newArrayList();
 
     public Centre() {
         setTypeLocal(AutreEnum.CENTRE);

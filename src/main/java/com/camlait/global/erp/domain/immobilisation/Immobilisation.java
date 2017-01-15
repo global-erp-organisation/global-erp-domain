@@ -11,16 +11,15 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import com.camlait.global.erp.domain.Entite;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -47,17 +46,4 @@ public class Immobilisation extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-
-	public Immobilisation(Long immoId, String codeImmo, Date dateAcquisition, Date dateMiseEnService,
-			Date dateDeCreation, Date derniereMiseAJour, String descriptionImmo) {
-		super();
-		this.immoId = immoId;
-		this.codeImmo = codeImmo;
-		this.dateAcquisition = dateAcquisition;
-		this.dateMiseEnService = dateMiseEnService;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.descriptionImmo = descriptionImmo;
-	}
-
 }

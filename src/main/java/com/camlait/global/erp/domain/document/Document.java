@@ -15,6 +15,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.bmq.Bmq;
@@ -23,16 +24,18 @@ import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -48,10 +51,18 @@ public class Document extends Entite {
 
 	private Date dateDocument;
 
+	@Transient
+	private Long magasinId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "magasinId")
 	private Magasin magasin;
 
+	@Transient
+	private Long responsableId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "responsableId")
 	private Employe responsableDocument;
@@ -63,16 +74,25 @@ public class Document extends Entite {
 	@Enumerated(EnumType.STRING)
 	private SensOperation sensOperation;
 
+	@Transient
+	private Long BmqId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "bmqId")
 	private Bmq bmq;
 
+	@Transient
+	private Long inventaireId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "inventaireId")
 	private Inventaire inventaire;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "document")
-	private Collection<LigneDeDocument> ligneDocuments;
+	private Collection<LigneDeDocument> ligneDocuments = Lists.newArrayList();
 
 	@Enumerated(EnumType.STRING)
 	private TypeDocuments typeDocument;
@@ -81,23 +101,4 @@ public class Document extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-
-	public Document(Long documentId, String codeDocument, Date dateDocument, Magasin magasin,
-			Employe responsableDocument, Date dateDeCreation, Date derniereMiseAJour, SensOperation sensOperation,
-			Bmq bmq, Inventaire inventaire, Collection<LigneDeDocument> ligneDocuments, TypeDocuments typeDocument) {
-		super();
-		this.documentId = documentId;
-		this.codeDocument = codeDocument;
-		this.dateDocument = dateDocument;
-		this.magasin = magasin;
-		this.responsableDocument = responsableDocument;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.sensOperation = sensOperation;
-		this.bmq = bmq;
-		this.inventaire = inventaire;
-		this.ligneDocuments = ligneDocuments;
-		this.typeDocument = typeDocument;
-	}
-
 }

@@ -6,10 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +20,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
 public class PartenaireModeDeReglement extends Entite {
 
@@ -24,10 +28,18 @@ public class PartenaireModeDeReglement extends Entite {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long partenaireModeleId;
 
+	@Transient
+	private Long modeleId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "modeleId")
 	private ModeleDeReglement modeleDeReglement;
 
+	@Transient
+	private Long partenaireId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "partenaireId")
 	private Partenaire partenaire;
@@ -35,13 +47,4 @@ public class PartenaireModeDeReglement extends Entite {
 	public PartenaireModeDeReglement() {
 		super();
 	}
-
-	public PartenaireModeDeReglement(Long partenaireModeleId, ModeleDeReglement modeleDeReglement,
-			Partenaire partenaire) {
-		super();
-		this.partenaireModeleId = partenaireModeleId;
-		this.modeleDeReglement = modeleDeReglement;
-		this.partenaire = partenaire;
-	}
-
 }

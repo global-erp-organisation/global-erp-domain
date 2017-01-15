@@ -13,19 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.produit.Produit;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -35,6 +38,10 @@ public class LigneDeDocument extends Entite {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ligneDeDocumentId;
     
+    @Transient
+    private Long produitId;
+    
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "produitId")
     private Produit produit;
@@ -42,7 +49,10 @@ public class LigneDeDocument extends Entite {
     private Long quantiteLigne;
     
     private double prixunitaiteLigne;
+    @Transient
+    private Long documenId;
     
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "documentId")
     private Document document;
@@ -54,8 +64,9 @@ public class LigneDeDocument extends Entite {
     @Enumerated(EnumType.STRING)
     private SensOperation sensOperation;
     
+    @JsonManagedReference
     @OneToMany(mappedBy = "ligneDeDocument", fetch=FetchType.EAGER)
-    private Collection<LigneDeDocumentTaxe> ligneDeDocumentTaxes;
+    private Collection<LigneDeDocumentTaxe> ligneDeDocumentTaxes = Lists.newArrayList();
         
     public LigneDeDocument() {
         setDateDeCreation(new Date());
@@ -63,18 +74,4 @@ public class LigneDeDocument extends Entite {
         
     }
 
-	public LigneDeDocument(Long ligneDeDocumentId, Produit produit, Long quantiteLigne, double prixunitaiteLigne,
-			Document document, Date dateDeCreation, Date derniereMiseAJour, SensOperation sensOperation,
-			Collection<LigneDeDocumentTaxe> ligneDeDocumentTaxes) {
-		super();
-		this.ligneDeDocumentId = ligneDeDocumentId;
-		this.produit = produit;
-		this.quantiteLigne = quantiteLigne;
-		this.prixunitaiteLigne = prixunitaiteLigne;
-		this.document = document;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.sensOperation = sensOperation;
-		this.ligneDeDocumentTaxes = ligneDeDocumentTaxes;
-	}
 }

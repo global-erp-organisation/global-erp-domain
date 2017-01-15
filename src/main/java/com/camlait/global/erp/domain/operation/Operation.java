@@ -12,69 +12,62 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class Operation extends Entite {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long operationId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long operationId;
 
-	private Date dateOperation;
+    private Date dateOperation;
 
-	@Enumerated(EnumType.STRING)
-	private SensOperation sensOperation;
+    @Enumerated(EnumType.STRING)
+    private SensOperation sensOperation;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	private String libelleOperation;
+    private String libelleOperation;
 
-	private double montantOperation;
+    private double montantOperation;
 
-	@ManyToOne
-	@JoinColumn(name = "responsableId")
-	private Employe responsable;
+    @Transient
+    private Long responsableId;
 
-	@ManyToOne
-	@JoinColumn(name = "partenaireId")
-	private Partenaire partenaire;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "responsableId")
+    private Employe responsable;
 
-	public Operation() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @Transient
+    private Long partenaireId;
 
-	public Operation(Long operationId, Date dateOperation, SensOperation sensOperation, Date dateDeCreation,
-			Date derniereMiseAJour, String libelleOperation, double montantOperation, Employe responsable,
-			Partenaire partenaire) {
-		super();
-		this.operationId = operationId;
-		this.dateOperation = dateOperation;
-		this.sensOperation = sensOperation;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.libelleOperation = libelleOperation;
-		this.montantOperation = montantOperation;
-		this.responsable = responsable;
-		this.partenaire = partenaire;
-	}
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "partenaireId")
+    private Partenaire partenaire;
 
+    public Operation() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 }

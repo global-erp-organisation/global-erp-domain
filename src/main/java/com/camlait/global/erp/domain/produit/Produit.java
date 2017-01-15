@@ -13,19 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.inventaire.FicheDeStock;
 import com.camlait.global.erp.domain.inventaire.Stock;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "produitId")
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -44,14 +47,19 @@ public class Produit extends Entite {
 
 	private double prixUnitaireMarge;
 
+	@Transient
+	private Long categorieProduitId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "categorieProduitId")
 	private CategorieProduit categorie;
 
 	private boolean produitTaxable;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
-	private Collection<ProduitTaxe> produitTaxes;
+	private Collection<ProduitTaxe> produitTaxes = Lists.newArrayList();
 
 	private Date dateDeCreation;
 
@@ -59,14 +67,17 @@ public class Produit extends Entite {
 
 	private boolean suiviEnStock;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "produit")
-	private Collection<Stock> stocks;
+	private Collection<Stock> stocks = Lists.newArrayList();
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "produit")
-	private Collection<FicheDeStock> ficheDeStocks;
+	private Collection<FicheDeStock> ficheDeStocks = Lists.newArrayList();
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "produit")
-	private Collection<Tarification> tarifications;
+	private Collection<Tarification> tarifications = Lists.newArrayList();
 
 	public void setCategorie(CategorieProduit categorie) {
 		this.categorie = categorie;
@@ -93,26 +104,4 @@ public class Produit extends Entite {
 			}
 		}
 	}
-
-	public Produit(Long produitId, String codeProduit, String descriptionProduit, double prixUnitaireProduit,
-			double prixUnitaireMarge, CategorieProduit categorie, boolean produitTaxable,
-			Collection<ProduitTaxe> produitTaxes, Date dateDeCreation, Date derniereMiseAJour, boolean suiviEnStock,
-			Collection<Stock> stocks, Collection<FicheDeStock> ficheDeStocks, Collection<Tarification> tarifications) {
-		super();
-		this.produitId = produitId;
-		this.codeProduit = codeProduit;
-		this.descriptionProduit = descriptionProduit;
-		this.prixUnitaireProduit = prixUnitaireProduit;
-		this.prixUnitaireMarge = prixUnitaireMarge;
-		this.categorie = categorie;
-		this.produitTaxable = produitTaxable;
-		this.produitTaxes = produitTaxes;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.suiviEnStock = suiviEnStock;
-		this.stocks = stocks;
-		this.ficheDeStocks = ficheDeStocks;
-		this.tarifications = tarifications;
-	}
-
 }

@@ -10,15 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -32,19 +33,11 @@ public class Emplois extends Entite {
 	private String codeEmplois;
 	private String descriptionEmplois;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "emplois")
-	private Collection<Employe> employes;
+	private Collection<Employe> employes = Lists.newArrayList();
 
 	public Emplois() {
 		super();
 	}
-
-	public Emplois(Long emploisId, String codeEmplois, String descriptionEmplois, Collection<Employe> employes) {
-		super();
-		this.emploisId = emploisId;
-		this.codeEmplois = codeEmplois;
-		this.descriptionEmplois = descriptionEmplois;
-		this.employes = employes;
-	}
-
 }

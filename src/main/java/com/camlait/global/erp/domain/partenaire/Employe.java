@@ -9,18 +9,19 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.auth.Utilisateur;
 import com.camlait.global.erp.domain.enumeration.Sexe;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Employe extends Partenaire {
@@ -35,10 +36,18 @@ public class Employe extends Partenaire {
     
     private Date dateDeNaissance;
     
+    @Transient
+    private String codeUtilisateur;
+    
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "codeUtilisateur")
     private Utilisateur utilisateur;
     
+    @Transient
+    private Long emploisId;
+    
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "emploisId")
     private Emplois emplois;

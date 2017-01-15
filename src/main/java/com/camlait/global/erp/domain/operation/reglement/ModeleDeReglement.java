@@ -8,12 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.ConditionReglement;
 import com.camlait.global.erp.domain.enumeration.ModeleEvaluation;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +24,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
 public class ModeleDeReglement extends Entite {
 	@Id
@@ -35,10 +39,18 @@ public class ModeleDeReglement extends Entite {
 	@Enumerated(EnumType.ORDINAL)
 	private ConditionReglement conditionReglement;
 
+	@Transient
+	private Long modeleDeReglementId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "modeleDeReglementId")
 	private ModeDeReglement modeDeReglement;
 
+	@Transient
+	private Long partenaireId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "partenaireId")
 	private Partenaire partenaire;
@@ -46,17 +58,4 @@ public class ModeleDeReglement extends Entite {
 	public ModeleDeReglement() {
 		super();
 	}
-
-	public ModeleDeReglement(Long modeleId, ModeleEvaluation modeEvaluation, double valeur, int nombreDeJour,
-			ConditionReglement conditionReglement, ModeDeReglement modeDeReglement, Partenaire partenaire) {
-		super();
-		this.modeleId = modeleId;
-		this.modeEvaluation = modeEvaluation;
-		this.valeur = valeur;
-		this.nombreDeJour = nombreDeJour;
-		this.conditionReglement = conditionReglement;
-		this.modeDeReglement = modeDeReglement;
-		this.partenaire = partenaire;
-	}
-
 }

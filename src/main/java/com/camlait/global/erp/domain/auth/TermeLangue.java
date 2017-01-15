@@ -6,16 +6,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -25,10 +26,18 @@ public class TermeLangue {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long termeLangueId;
 	
+	@Transient
+	private Long termeId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="termeId")
 	private Terme terme;
 	
+	@Transient
+	private Long langueId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="langueId")
 	private Langue langue;
@@ -52,6 +61,13 @@ public class TermeLangue {
 		this.terme = terme;
 		this.langue = langue;
 		this.value = value;
+	}
+	
+	public void setTermeId(){
+	    setTermeId(getTerme().getTermeId());
+	}
+	public void setLangueId(){
+	    setLangueId(getLangue().getLangId());
 	}
 	
 }

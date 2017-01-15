@@ -11,16 +11,15 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import com.camlait.global.erp.domain.Entite;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -43,15 +42,4 @@ public class ModeDeReglement extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-
-	public ModeDeReglement(Long modeDeReglementId, String codeModeReglement, String descriptionModeReglement,
-			Date dateDeCreation, Date derniereMiseAJour) {
-		super();
-		this.modeDeReglementId = modeDeReglementId;
-		this.codeModeReglement = codeModeReglement;
-		this.descriptionModeReglement = descriptionModeReglement;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
 }

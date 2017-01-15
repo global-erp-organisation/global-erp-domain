@@ -8,51 +8,57 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class GroupeUtilisateur extends Entite {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long groupeUtilissateurId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long groupeUtilissateurId;
 
-	@ManyToOne
-	@JoinColumn(name = "groupeId")
-	private Groupe groupe;
+    @Transient
+    private Long groupeId;
 
-	@ManyToOne
-	@JoinColumn(name = "utilisateurId")
-	private Utilisateur utilsateur;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "groupeId")
+    private Groupe groupe;
 
-	private Date dateDeCreation;
+    @Transient
+    private String utilisateurId;
 
-	private Date derniereMiseAJour;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "utilisateurId")
+    private Utilisateur utilsateur;
 
-	public GroupeUtilisateur() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    private Date dateDeCreation;
 
-	public GroupeUtilisateur(Long groupeUtilissateurId, Groupe groupe, Utilisateur utilsateur, Date dateDeCreation,
-			Date derniereMiseAJour) {
-		super();
-		this.groupeUtilissateurId = groupeUtilissateurId;
-		this.groupe = groupe;
-		this.utilsateur = utilsateur;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-	
+    private Date derniereMiseAJour;
+
+    public GroupeUtilisateur() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
+
+    public void setUtilisateurId() {
+        setUtilisateurId(getUtilsateur().getCodeUtilisateur());
+    }
+
+    public void setGroupeId() {
+        setGroupeId(getGroupe().getGroupeId());
+    }
 }

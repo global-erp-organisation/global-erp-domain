@@ -9,18 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.partenaire.Employe;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -34,6 +35,10 @@ public class Caisse extends Entite {
 
 	private String descriptionCaisse;
 
+	@Transient
+	private Long responsableId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "responsableId")
 	private Employe responsable;
@@ -46,16 +51,4 @@ public class Caisse extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-
-	public Caisse(Long caisseId, String codeCaisse, String descriptionCaisse, Employe responsable, Date dateDeCreation,
-			Date derniereMiseAJour) {
-		super();
-		this.caisseId = caisseId;
-		this.codeCaisse = codeCaisse;
-		this.descriptionCaisse = descriptionCaisse;
-		this.responsable = responsable;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
 }

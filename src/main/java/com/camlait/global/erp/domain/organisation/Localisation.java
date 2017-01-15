@@ -14,16 +14,15 @@ import javax.persistence.InheritanceType;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -49,16 +48,4 @@ public class Localisation extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-
-	public Localisation(Long localId, String code, String descriptionLocal, Date dateDeCreation, Date derniereMiseAJour,
-			AutreEnum typeLocal) {
-		super();
-		this.localId = localId;
-		this.code = code;
-		this.descriptionLocal = descriptionLocal;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.typeLocal = typeLocal;
-	}
-
 }

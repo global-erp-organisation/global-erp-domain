@@ -14,18 +14,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.Portee;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Builder
@@ -35,6 +38,10 @@ public class CategorieProduit extends Entite {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long categorieProduitId;
 
+	@Transient
+	private Long categorieParentId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "categorieParentId")
 	private CategorieProduit categorieParent;
@@ -55,14 +62,17 @@ public class CategorieProduit extends Entite {
 
 	private Date derniereMiseAJour;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "categorieParent")
-	private Collection<CategorieProduit> categorieFilles;
+	private Collection<CategorieProduit> categorieFilles= Lists.newArrayList();
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "categorie")
-	private Collection<Produit> produits;
+	private Collection<Produit> produits = Lists.newArrayList();
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
-	private Collection<CategorieProduitTaxe> categorieProduitTaxes;
+	private Collection<CategorieProduitTaxe> categorieProduitTaxes = Lists.newArrayList();
 
 	public void setCategorieParent(CategorieProduit categorieParent) {
 		this.categorieParent = categorieParent;
@@ -78,24 +88,5 @@ public class CategorieProduit extends Entite {
 		if ((parent != null) && ((categorieProduitTaxes) != null) && (categorieProduitTaxes.isEmpty())) {
 			setCategorieProduitTaxes(parent.getCategorieProduitTaxes());
 		}
-	}
-
-	public CategorieProduit(Long categorieProduitId, CategorieProduit categorieParent, String codeCategorieProduit,
-			String descriptionCategorie, Portee portee, boolean categorieTaxable, boolean suiviEnStock,
-			Date dateDeCreation, Date derniereMiseAJour, Collection<CategorieProduit> categorieFilles,
-			Collection<Produit> produits, Collection<CategorieProduitTaxe> categorieProduitTaxes) {
-		super();
-		this.categorieProduitId = categorieProduitId;
-		this.categorieParent = categorieParent;
-		this.codeCategorieProduit = codeCategorieProduit;
-		this.descriptionCategorie = descriptionCategorie;
-		this.portee = portee;
-		this.categorieTaxable = categorieTaxable;
-		this.suiviEnStock = suiviEnStock;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.categorieFilles = categorieFilles;
-		this.produits = produits;
-		this.categorieProduitTaxes = categorieProduitTaxes;
 	}
 }

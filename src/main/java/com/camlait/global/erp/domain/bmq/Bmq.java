@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.Document;
@@ -19,75 +20,79 @@ import com.camlait.global.erp.domain.operation.Recouvrement;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class Bmq extends Entite {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long bmqId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long bmqId;
 
-	@Column(nullable = false, unique = true)
-	private String codeBmq;
+    @Column(nullable = false, unique = true)
+    private String codeBmq;
 
-	private Date dateBmq;
+    private Date dateBmq;
 
-	@ManyToOne
-	@JoinColumn(name = "vendeurId")
-	private Vendeur vendeur;
+    @Transient
+    private Long vendeurId;
 
-	@ManyToOne
-	@JoinColumn(name = "magasinId")
-	private Magasin magasin;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "vendeurId")
+    private Vendeur vendeur;
 
-	@OneToMany(mappedBy = "bmq")
-	private Collection<Document> documents;
+    @Transient
+    private Long magasinId;
 
-	@OneToMany(mappedBy = "bmq")
-	private Collection<Recouvrement> recouvrements;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinId")
+    private Magasin magasin;
 
-	@OneToMany(mappedBy = "bmq")
-	private Collection<LigneBmq> ligneBmqs;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "bmq")
+    private Collection<Document> documents = Lists.newArrayList();
 
-	private Date dateDeCreation;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "bmq")
+    private Collection<Recouvrement> recouvrements = Lists.newArrayList();
 
-	private Date derniereMiseAJour;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "bmq")
+    private Collection<LigneBmq> ligneBmqs = Lists.newArrayList();
 
-	private boolean bmqClos;
+    private Date dateDeCreation;
 
-	@ManyToOne
-	@JsonBackReference
-	@JoinColumn(name = "responsableId")
-	private Employe responsable;
-	public Bmq() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
-	public Bmq(Long bmqId, String codeBmq, Date dateBmq, Vendeur vendeur, Magasin magasin,
-			Collection<Document> documents, Collection<Recouvrement> recouvrements, Collection<LigneBmq> ligneBmqs,
-			Date dateDeCreation, Date derniereMiseAJour, boolean bmqClos, Employe responsable) {
-		super();
-		this.bmqId = bmqId;
-		this.codeBmq = codeBmq;
-		this.dateBmq = dateBmq;
-		this.vendeur = vendeur;
-		this.magasin = magasin;
-		this.documents = documents;
-		this.recouvrements = recouvrements;
-		this.ligneBmqs = ligneBmqs;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.bmqClos = bmqClos;
-		this.responsable = responsable;
-	}	
+    private Date derniereMiseAJour;
+
+    private boolean bmqClos;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "responsableId")
+    private Employe responsable;
+
+    public Bmq() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
+
+    public void setvendeurId() {
+        setVendeurId(getVendeur().getPartenaireId());
+    }
+
+    public void setMagasinId() {
+        setMagasinId(getMagasin().getMagasinId());
+    }
 }

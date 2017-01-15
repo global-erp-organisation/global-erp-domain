@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +20,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
 public class GroupePartenaire extends Entite {
 
@@ -26,8 +30,9 @@ public class GroupePartenaire extends Entite {
 
 	private String descriptionGroupePartenaire;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "groupePartenaire")
-	private Collection<Partenaire> partenaires;
+	private Collection<Partenaire> partenaires = Lists.newArrayList();
 
 	public GroupePartenaire(String descriptionGroupePartenaire) {
 		super();
@@ -38,13 +43,4 @@ public class GroupePartenaire extends Entite {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public GroupePartenaire(Long groupePartenaireId, String descriptionGroupePartenaire,
-			Collection<Partenaire> partenaires) {
-		super();
-		this.groupePartenaireId = groupePartenaireId;
-		this.descriptionGroupePartenaire = descriptionGroupePartenaire;
-		this.partenaires = partenaires;
-	}
-
 }

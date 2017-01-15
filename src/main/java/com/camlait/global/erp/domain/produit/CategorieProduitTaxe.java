@@ -8,18 +8,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.Taxe;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -29,10 +30,18 @@ public class CategorieProduitTaxe extends Entite {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long categorieProduitTaxeId;
 
+	@Transient
+	private Long categorieProduitId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "categorieProduitId")
 	private CategorieProduit categorie;
 
+	@Transient
+	private Long taxeId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "taxeId")
 	private Taxe taxe;
@@ -45,15 +54,4 @@ public class CategorieProduitTaxe extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-
-	public CategorieProduitTaxe(Long categorieProduitTaxeId, CategorieProduit categorie, Taxe taxe, Date dateDeCreation,
-			Date derniereMiseAJour) {
-		super();
-		this.categorieProduitTaxeId = categorieProduitTaxeId;
-		this.categorie = categorie;
-		this.taxe = taxe;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
 }
