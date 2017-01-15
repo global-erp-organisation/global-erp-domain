@@ -2,7 +2,7 @@ package com.camlait.global.erp.domain.produit;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,74 +34,70 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class Produit extends Entite {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long produitId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long produitId;
 
-	@Column(name = "codeProduit", unique = true, nullable = false)
-	private String codeProduit;
+    @Column(name = "codeProduit", unique = true, nullable = false)
+    private String codeProduit;
 
-	private String descriptionProduit;
+    private String descriptionProduit;
 
-	private double prixUnitaireProduit;
+    private double prixUnitaireProduit;
 
-	private double prixUnitaireMarge;
+    private double prixUnitaireMarge;
 
-	@Transient
-	private Long categorieProduitId;
-	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "categorieProduitId")
-	private CategorieProduit categorie;
+    @Transient
+    private Long categorieProduitId;
 
-	private boolean produitTaxable;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "categorieProduitId")
+    private CategorieProduit categorie;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
-	private Collection<ProduitTaxe> produitTaxes = Lists.newArrayList();
+    private boolean produitTaxable;
 
-	private Date dateDeCreation;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
+    private Collection<ProduitTaxe> produitTaxes = Lists.newArrayList();
 
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
 
-	private boolean suiviEnStock;
+    private Date derniereMiseAJour;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "produit")
-	private Collection<Stock> stocks = Lists.newArrayList();
+    private boolean suiviEnStock;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "produit")
-	private Collection<FicheDeStock> ficheDeStocks = Lists.newArrayList();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "produit")
+    private Collection<Stock> stocks = Lists.newArrayList();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "produit")
-	private Collection<Tarification> tarifications = Lists.newArrayList();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "produit")
+    private Collection<FicheDeStock> ficheDeStocks = Lists.newArrayList();
 
-	public void setCategorie(CategorieProduit categorie) {
-		this.categorie = categorie;
-		copieCategorieProduitTaxe();
-	}
+    @JsonManagedReference
+    @OneToMany(mappedBy = "produit")
+    private Collection<Tarification> tarifications = Lists.newArrayList();
 
-	public Produit() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    public void setCategorie(CategorieProduit categorie) {
+        this.categorie = categorie;
+        copieCategorieProduitTaxe();
+    }
 
-	private void copieCategorieProduitTaxe() {
-		final Collection<ProduitTaxe> taxes = new HashSet<>();
-		if (categorie != null) {
-			final Collection<CategorieProduitTaxe> ctaxes = categorie.getCategorieProduitTaxes();
-			if ((ctaxes != null) && (!ctaxes.isEmpty())) {
-				ctaxes.stream().forEach(c -> {
-					ProduitTaxe pt = new ProduitTaxe();
-					pt.setProduit(this);
-					pt.setTaxe(c.getTaxe());
-					taxes.add(pt);
-				});
-				setProduitTaxes(taxes);
-			}
-		}
-	}
+    public Produit() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
+
+    private void copieCategorieProduitTaxe() {
+        if (categorie != null) {
+            final Collection<CategorieProduitTaxe> ctaxes = categorie.getCategorieProduitTaxes();
+            if ((ctaxes != null) && (!ctaxes.isEmpty())) {
+                final Collection<ProduitTaxe> taxes = ctaxes.parallelStream().map(c -> {
+                    return ProduitTaxe.builder().produit(this).taxe(c.getTaxe()).build();
+                }).collect(Collectors.toList());
+                setProduitTaxes(taxes);
+            }
+        }
+    }
 }
