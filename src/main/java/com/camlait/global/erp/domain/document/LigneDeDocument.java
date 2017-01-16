@@ -20,7 +20,7 @@ import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.produit.Produit;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,45 +33,49 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class LigneDeDocument extends Entite {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ligneDeDocumentId;
-    
-    @Transient
-    private Long produitId;
-    
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "produitId")
-    private Produit produit;
-    
-    private Long quantiteLigne;
-    
-    private double prixunitaiteLigne;
-    @Transient
-    private Long documenId;
-    
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "documentId")
-    private Document document;
-    
-    private Date dateDeCreation;
-    
-    private Date derniereMiseAJour;
-    
-    @Enumerated(EnumType.STRING)
-    private SensOperation sensOperation;
-    
-    @JsonManagedReference
-    @OneToMany(mappedBy = "ligneDeDocument", fetch=FetchType.EAGER)
-    private Collection<LigneDeDocumentTaxe> ligneDeDocumentTaxes = Lists.newArrayList();
-        
-    public LigneDeDocument() {
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
-        
-    }
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long ligneDeDocumentId;
+
+	@Transient
+	private Long produitId;
+
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "produitId")
+	private Produit produit;
+
+	private Long quantiteLigne;
+
+	private double prixunitaiteLigne;
+	@Transient
+	private Long documenId;
+
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "documentId")
+	private Document document;
+
+	private Date dateDeCreation;
+
+	private Date derniereMiseAJour;
+
+	@Enumerated(EnumType.STRING)
+	private SensOperation sensOperation;
+
+	@JsonManagedReference
+	@OneToMany(mappedBy = "ligneDeDocument", fetch = FetchType.EAGER)
+	private Collection<LigneDeDocumentTaxe> ligneDeDocumentTaxes = Sets.newHashSet();
+
+	public LigneDeDocument() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+
+	}
+
+	public boolean isDisponible(LigneDeDocument ligne) {
+		return this.getProduit().quantiteDisponible(this.getDocument().getMagasin()) - this.getQuantiteLigne() > 0;
+	}
 
 }

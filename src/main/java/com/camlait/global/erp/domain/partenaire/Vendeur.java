@@ -13,7 +13,7 @@ import com.camlait.global.erp.domain.operation.manquant.ManquantFinancier;
 import com.camlait.global.erp.domain.organisation.Zone;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,7 +35,7 @@ public class Vendeur extends Employe {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "vendeur")
-	private Collection<ManquantFinancier> manquantFinanciers = Lists.newArrayList();
+	private Collection<ManquantFinancier> manquantFinanciers = Sets.newHashSet();
 
 	private boolean recoisDesCommission;
 

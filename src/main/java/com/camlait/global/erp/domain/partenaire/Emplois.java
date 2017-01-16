@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +35,7 @@ public class Emplois extends Entite {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "emplois")
-	private Collection<Employe> employes = Lists.newArrayList();
+	private Collection<Employe> employes = Sets.newHashSet();
 
 	public Emplois() {
 		super();

@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +37,7 @@ public class Langue extends Entite {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="langue")
-	private Collection<TermeLangue> termeLangues = Lists.newArrayList();
+	private Collection<TermeLangue> termeLangues = Sets.newHashSet();
 	
 	public Langue(String key, String title, String alt) {
 		super();

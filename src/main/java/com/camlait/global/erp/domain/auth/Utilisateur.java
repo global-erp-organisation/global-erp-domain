@@ -10,15 +10,16 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.partenaire.Employe;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Sets;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -35,28 +36,16 @@ public class Utilisateur extends Entite {
 
 	private Date derniereMiseAJour;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "utilisateur")
-	private Collection<Employe> employes;
+	private Collection<Employe> employes = Sets.newHashSet();
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "utilisateur")
-	private Collection<RessourceUtilisateur> ressourceUtilisateurs;
+	private Collection<RessourceUtilisateur> ressourceUtilisateurs = Sets.newHashSet();
 
 	public Utilisateur() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
-	}
-
-	public Utilisateur(String codeUtilisateur, String courriel, String motDePasse, Date dateDeCreation,
-			Date derniereMiseAJour, Collection<Employe> employes,
-			Collection<RessourceUtilisateur> ressourceUtilisateurs) {
-		super();
-		this.codeUtilisateur = codeUtilisateur;
-		this.courriel = courriel;
-		this.motDePasse = motDePasse;
-		this.dateDeCreation = dateDeCreation;
-		this.derniereMiseAJour = derniereMiseAJour;
-		this.employes = employes;
-		this.ressourceUtilisateurs = ressourceUtilisateurs;
-	}
-	
+	}	
 }

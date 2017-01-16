@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,7 +53,7 @@ public class JournalCaisse extends Entite {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "journal")
-    private Collection<OperationDeCaisse> opreations = Lists.newArrayList();
+    private Collection<OperationDeCaisse> opreations = Sets.newHashSet();
 
     private Date dateDeCreation;
 

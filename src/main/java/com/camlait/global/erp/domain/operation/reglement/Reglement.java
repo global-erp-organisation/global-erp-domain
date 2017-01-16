@@ -12,7 +12,7 @@ import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.reglement.lettrage.FactureReglement;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +26,7 @@ public class Reglement extends Operation {
 
     @JsonManagedReference
 	@OneToMany(mappedBy = "reglement")
-	private Collection<FactureReglement> factureReglements = Lists.newArrayList();
+	private Collection<FactureReglement> factureReglements = Sets.newHashSet();
 
     @Transient
     private Long modeleDeReglementId;

@@ -27,7 +27,7 @@ import com.camlait.global.erp.domain.organisation.Centre;
 import com.camlait.global.erp.domain.produit.Tarif;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -71,15 +71,15 @@ public class Partenaire extends Entite {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "client")
-    private Collection<DocumentDeVente> documents = Lists.newArrayList();
+    private Collection<DocumentDeVente> documents = Sets.newHashSet();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "immobilisation")
-    private Collection<PartenaireImmobilisation> partenaireImmobilisations = Lists.newArrayList();
+    private Collection<PartenaireImmobilisation> partenaireImmobilisations = Sets.newHashSet();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "partenaire")
-    private Collection<Operation> operations = Lists.newArrayList();
+    private Collection<Operation> operations = Sets.newHashSet();
 
     @Transient
     private Long groupePartenaireId;
@@ -99,7 +99,7 @@ public class Partenaire extends Entite {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "partenaire")
-    private Collection<ModeleDeReglement> modeleDeReglements = Lists.newArrayList();
+    private Collection<ModeleDeReglement> modeleDeReglements = Sets.newHashSet();
 
     public Partenaire() {
         setDateDeCreation(new Date());

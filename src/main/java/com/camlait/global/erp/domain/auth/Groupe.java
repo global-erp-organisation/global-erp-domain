@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +37,7 @@ public class Groupe extends Entite {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "groupe")
-    private Collection<GroupeUtilisateur> groupeUtilisateurs = Lists.newArrayList();
+    private Collection<GroupeUtilisateur> groupeUtilisateurs = Sets.newHashSet();
 
     public Groupe() {
         setDateDeCreation(new Date());

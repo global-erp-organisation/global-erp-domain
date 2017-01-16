@@ -20,7 +20,7 @@ import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.Portee;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +30,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Builder
 public class CategorieProduit extends Entite {
 
@@ -40,7 +40,7 @@ public class CategorieProduit extends Entite {
 
 	@Transient
 	private Long categorieParentId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "categorieParentId")
@@ -64,15 +64,15 @@ public class CategorieProduit extends Entite {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "categorieParent")
-	private Collection<CategorieProduit> categorieFilles= Lists.newArrayList();
+	private Collection<CategorieProduit> categorieFilles = Sets.newHashSet();
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "categorie")
-	private Collection<Produit> produits = Lists.newArrayList();
+	private Collection<Produit> produits = Sets.newHashSet();
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
-	private Collection<CategorieProduitTaxe> categorieProduitTaxes = Lists.newArrayList();
+	private Collection<CategorieProduitTaxe> categorieProduitTaxes = Sets.newHashSet();
 
 	public void setCategorieParent(CategorieProduit categorieParent) {
 		this.categorieParent = categorieParent;
@@ -82,6 +82,14 @@ public class CategorieProduit extends Entite {
 	public CategorieProduit() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
+	}
+
+	public boolean isDetail() {
+		return this.getPortee() == Portee.DETAIL;
+	}
+
+	public boolean isTotal(CategorieProduit categorie) {
+		return !isDetail();
 	}
 
 	private void copierCategorieProduitTaxeParent(CategorieProduit parent) {

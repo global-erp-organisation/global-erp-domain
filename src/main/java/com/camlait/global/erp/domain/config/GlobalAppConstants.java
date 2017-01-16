@@ -5,7 +5,6 @@ import java.util.function.Function;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.LigneDeDocument;
 import com.camlait.global.erp.domain.exception.GlobalErpServiceException;
-import com.camlait.global.erp.domain.util.Utility;
 
 public class GlobalAppConstants {
 
@@ -69,7 +68,7 @@ public class GlobalAppConstants {
 	public static String produitIndiponibleMessage(LigneDeDocument ligne) {
 		String message = "";
 		message = "Le produit " + ligne.getProduit().getDescriptionProduit() + " est indisponible." + " Seulement "
-				+ Utility.quantiteDisponible(ligne.getProduit(), ligne.getDocument().getMagasin()) + " disponible";
+				+ ligne.getProduit().quantiteDisponible(ligne.getDocument().getMagasin()) + " disponible";
 		return message;
 	}
 

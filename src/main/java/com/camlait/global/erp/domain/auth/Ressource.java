@@ -15,6 +15,8 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,51 +30,57 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 public class Ressource extends Entite {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ressourceId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long ressourceId;
 
-    @Transient
-    private Long ressourceParentId;
-    
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "ressourceParentId")
-    private Ressource ressourceParent;
+	@Transient
+	private Long ressourceParentId;
 
-    private String title;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "ressourceParentId")
+	private Ressource ressourceParent;
 
-    private Date dateDeCreation;
+	private String title;
 
-    private Date derniereMiseAJour;
+	private Date dateDeCreation;
 
-    private String icon;
+	private Date derniereMiseAJour;
 
-    private String sref;
+	private String icon;
 
-    private String href;
+	private String sref;
 
-    private Integer ordre;
+	private String href;
 
-    @OneToMany(mappedBy = "ressourceParent", fetch = FetchType.EAGER)
-    private Collection<Ressource> items;
+	private Integer ordre;
 
-    public Ressource() {
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
-    }
+	@JsonManagedReference
+	@OneToMany(mappedBy = "ressourceParent", fetch = FetchType.EAGER)
+	private Collection<Ressource> items = Sets.newHashSet();
 
-    public Ressource(String descriptionMenu) {
-        this.title = descriptionMenu;
-    }
+	public Ressource() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
 
-    public Ressource(String descriptionMenu, Ressource menuParent) {
-        super();
-        this.title = descriptionMenu;
-        this.ressourceParent = menuParent;
-    }
-    
-    public void setRessourceParentId(){
-        setRessourceParentId(getRessourceParent().getRessourceId());
-    }
+	public Ressource(String descriptionMenu) {
+		this.title = descriptionMenu;
+	}
+
+	public Ressource(String descriptionMenu, Ressource menuParent) {
+		super();
+		this.title = descriptionMenu;
+		this.ressourceParent = menuParent;
+	}
+
+	public void setRessourceParentId() {
+		setRessourceParentId(getRessourceParent().getRessourceId());
+	}
+
+	public boolean possedeDetails() {
+		return (!this.getItems().isEmpty());
+	}
+
 }

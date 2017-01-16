@@ -8,7 +8,7 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class Centre extends Localisation {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "centre", fetch = FetchType.EAGER)
-    private Collection<Region> regions = Lists.newArrayList();
+    private Collection<Region> regions = Sets.newHashSet();
 
     public Centre() {
         setTypeLocal(AutreEnum.CENTRE);

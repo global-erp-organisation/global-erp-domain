@@ -21,7 +21,7 @@ import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -62,15 +62,15 @@ public class Bmq extends Entite {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "bmq")
-    private Collection<Document> documents = Lists.newArrayList();
+    private Collection<Document> documents = Sets.newHashSet();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "bmq")
-    private Collection<Recouvrement> recouvrements = Lists.newArrayList();
+    private Collection<Recouvrement> recouvrements = Sets.newHashSet();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "bmq")
-    private Collection<LigneBmq> ligneBmqs = Lists.newArrayList();
+    private Collection<LigneBmq> ligneBmqs = Sets.newHashSet();
 
     private Date dateDeCreation;
 

@@ -8,7 +8,7 @@ import javax.persistence.OneToMany;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class Magasinier extends Employe {
 
     @JsonManagedReference
 	@OneToMany(mappedBy="magasinierSortant")
-    private Collection<Inventaire> inventaires = Lists.newArrayList();
+    private Collection<Inventaire> inventaires = Sets.newHashSet();
     public Magasinier() {
     	setTypePartenaire(TypePartenaire.MAGASINIER);
     }

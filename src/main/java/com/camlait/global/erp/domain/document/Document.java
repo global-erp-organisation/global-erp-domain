@@ -19,6 +19,10 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.bmq.Bmq;
+import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
+import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClient;
+import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClientComptant;
+import com.camlait.global.erp.domain.document.commerciaux.vente.FactureMarge;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
@@ -26,7 +30,7 @@ import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,7 +57,7 @@ public class Document extends Entite {
 
 	@Transient
 	private Long magasinId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "magasinId")
@@ -61,7 +65,7 @@ public class Document extends Entite {
 
 	@Transient
 	private Long responsableId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "responsableId")
@@ -76,7 +80,7 @@ public class Document extends Entite {
 
 	@Transient
 	private Long BmqId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "bmqId")
@@ -84,7 +88,7 @@ public class Document extends Entite {
 
 	@Transient
 	private Long inventaireId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "inventaireId")
@@ -92,7 +96,7 @@ public class Document extends Entite {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "document")
-	private Collection<LigneDeDocument> ligneDocuments = Lists.newArrayList();
+	private Collection<LigneDeDocument> ligneDocuments = Sets.newHashSet();
 
 	@Enumerated(EnumType.STRING)
 	private TypeDocuments typeDocument;
@@ -100,5 +104,21 @@ public class Document extends Entite {
 	public Document() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
+	}
+
+	public boolean isFactureClient() {
+		return this instanceof FactureClient;
+	}
+
+	public boolean isFactureComptant() {
+		return this instanceof FactureClientComptant;
+	}
+
+	public boolean isFactureMarge() {
+		return this instanceof FactureMarge;
+	}
+
+	public boolean isDocumentDeVente() {
+		return this instanceof DocumentDeVente;
 	}
 }

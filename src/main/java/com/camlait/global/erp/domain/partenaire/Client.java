@@ -13,7 +13,7 @@ import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.organisation.Zone;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,7 +35,7 @@ public class Client extends Partenaire {
 
     @JsonManagedReference
 	@OneToMany(mappedBy = "client")
-	private Collection<DocumentDeVente> documentDeVentes = Lists.newArrayList();
+	private Collection<DocumentDeVente> documentDeVentes = Sets.newHashSet();
 
 	private String description;
 

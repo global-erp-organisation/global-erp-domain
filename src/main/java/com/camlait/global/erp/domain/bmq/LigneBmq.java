@@ -18,7 +18,7 @@ import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.produit.Produit;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,7 +69,7 @@ public class LigneBmq extends Entite {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "ligneBmq", cascade = CascadeType.ALL)
-    private Collection<LigneBmqTaxe> ligneBmqTaxes = Lists.newArrayList();
+    private Collection<LigneBmqTaxe> ligneBmqTaxes = Sets.newHashSet();
 
     public LigneBmq() {
         setDateDeCreation(new Date());

@@ -23,7 +23,7 @@ import com.camlait.global.erp.domain.inventaire.FicheDeStock;
 import com.camlait.global.erp.domain.inventaire.Stock;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,11 +63,11 @@ public class Magasin extends Entite {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "magasin")
-	private Collection<Stock> stocks = Lists.newArrayList();
+	private Collection<Stock> stocks = Sets.newHashSet();
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "magasin")
-	private Collection<FicheDeStock> ficheDeStocks = Lists.newArrayList();
+	private Collection<FicheDeStock> ficheDeStocks = Sets.newHashSet();
 
 	public Magasin() {
 		setDateDeCreation(new Date());

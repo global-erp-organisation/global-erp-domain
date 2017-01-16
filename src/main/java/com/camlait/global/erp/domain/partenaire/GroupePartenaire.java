@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +32,7 @@ public class GroupePartenaire extends Entite {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "groupePartenaire")
-	private Collection<Partenaire> partenaires = Lists.newArrayList();
+	private Collection<Partenaire> partenaires = Sets.newHashSet();
 
 	public GroupePartenaire(String descriptionGroupePartenaire) {
 		super();

@@ -1,12 +1,8 @@
 package com.camlait.global.erp.domain.util;
 
-import java.util.stream.Collectors;
-
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.auth.Ressource;
 import com.camlait.global.erp.domain.bmq.Bmq;
 import com.camlait.global.erp.domain.document.Document;
-import com.camlait.global.erp.domain.document.LigneDeDocument;
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClient;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClientComptant;
@@ -25,7 +21,6 @@ import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.entrepot.MagasinMobile;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntite;
-import com.camlait.global.erp.domain.enumeration.Portee;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
@@ -41,48 +36,8 @@ import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Magasinier;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
-import com.camlait.global.erp.domain.produit.CategorieProduit;
-import com.camlait.global.erp.domain.produit.Produit;
 
 public final class Utility {
-
-	public static boolean isFactureClient(Document document) {
-		return document instanceof FactureClient;
-	}
-
-	public static boolean isFactureComptant(Document document) {
-		return document instanceof FactureClientComptant;
-	}
-
-	public static boolean isFactureMarge(Document document) {
-		return document instanceof FactureMarge;
-	}
-
-	public static boolean isDocumentDeVente(Document document) {
-		return document instanceof DocumentDeVente;
-	}
-
-	public static boolean isDetail(CategorieProduit categorie) {
-		return categorie.getPortee() == Portee.DETAIL;
-	}
-
-	public static boolean possedeDetails(Ressource r) {
-		return (!r.getItems().isEmpty());
-	}
-
-	public static boolean isTotal(CategorieProduit categorie) {
-		return categorie.getPortee() == Portee.TOTAL;
-	}
-
-	public static boolean isDisponible(LigneDeDocument ligne) {
-		return (quantiteDisponible(ligne.getProduit(), ligne.getDocument().getMagasin())
-				- ligne.getQuantiteLigne()) > 0;
-	}
-
-	public static Long quantiteDisponible(Produit p, Magasin m) {
-		return p.getStocks().stream().filter(s -> s.getMagasin().getMagasinId().equals(m.getMagasinId()))
-				.collect(Collectors.toList()).get(0).getQuantiteDisponible();
-	}
 
 	public static EnumTypeEntite obtenirPrefixe(Entite entite) throws IllegalArgumentException {
 		if (entite instanceof Bmq)

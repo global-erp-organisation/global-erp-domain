@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.util;
 
+import com.camlait.global.erp.domain.exception.SerializeException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -26,8 +27,8 @@ public final class JSONUtils {
         try {
             return OBJECT_MAPPER.writeValueAsString(toSerialize);
         } catch (JsonProcessingException e) {
-            LOG.error("Unable to serialize tagging to JSON. Moderation={}", toSerialize.toString());
-            throw new RuntimeException("Unable to serialize the provided object", e);
+            LOG.error("Unable to serialize the provided object to JSON. Provided Object={}", toSerialize.toString());
+            throw new SerializeException("Unable to serialize the provided object", e);
         }
     }
 
@@ -46,7 +47,7 @@ public final class JSONUtils {
             return OBJECT_MAPPER.readValue(message.getBytes(), clazz);
         } catch (IOException e) {
             LOG.error("Unable to parse message=[{}]", message, e);
-            throw new RuntimeException("Unable to parse the provided message", e);
+            throw new SerializeException("Unable to parse the provided message", e);
         }
     }
 
