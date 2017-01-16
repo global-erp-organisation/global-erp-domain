@@ -9,20 +9,39 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.partenaire.Partenaire;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class PartenaireImmobilisation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long clientImmoId;
 
+	@Transient
+	private Long partenaireId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "partenaireId")
 	private Partenaire partenaire;
 
+	@Transient
+	private Long immoId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "immoId")
 	private Immobilisation immobilisation;
@@ -32,69 +51,12 @@ public class PartenaireImmobilisation {
 	@Column(name = "actif")
 	private boolean actif;
 
-	public Long getClientImmoId() {
-		return clientImmoId;
-	}
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
 
-	public void setClientImmoId(Long clientImmoId) {
-		this.clientImmoId = clientImmoId;
-	}
+	public PartenaireImmobilisation() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 
-	public Partenaire getPartenaire() {
-		return partenaire;
 	}
-
-	public void setPartenaire(Partenaire partenaire) {
-		this.partenaire = partenaire;
-	}
-
-	public Immobilisation getImmobilisation() {
-		return immobilisation;
-	}
-
-	public void setImmobilisation(Immobilisation immobilisation) {
-		this.immobilisation = immobilisation;
-	}
-
-	public Date getDateAllocation() {
-		return dateAllocation;
-	}
-
-	public void setDateAllocation(Date dateAllocation) {
-		this.dateAllocation = dateAllocation;
-	}
-
-	public boolean isActif() {
-		return actif;
-	}
-
-	public void setActif(boolean actif) {
-		this.actif = actif;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((clientImmoId == null) ? 0 : clientImmoId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PartenaireImmobilisation other = (PartenaireImmobilisation) obj;
-		if (clientImmoId == null) {
-			if (other.clientImmoId != null)
-				return false;
-		} else if (!clientImmoId.equals(other.clientImmoId))
-			return false;
-		return true;
-	}
-
 }

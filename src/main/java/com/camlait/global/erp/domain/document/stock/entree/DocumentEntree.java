@@ -8,9 +8,9 @@ import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 
 @Entity
 public class DocumentEntree extends DocumentDeStock {
-    
-    public DocumentEntree() {
-        setSensOperation(SensOperation.ENTREE);
-        setTypeDocument(TypeDocuments.DOCUMENT_ENTREE);
-    }
+
+	public DocumentEntree() {
+		setSensOperation(SensOperation.ENTREE);
+		setTypeDocument(TypeDocuments.DOCUMENT_ENTREE);
+	}
 }

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.bmq.Bmq;
@@ -21,9 +24,21 @@ import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class Document extends Entite {
 
 	@Id
@@ -36,10 +51,18 @@ public class Document extends Entite {
 
 	private Date dateDocument;
 
+	@Transient
+	private Long magasinId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "magasinId")
 	private Magasin magasin;
 
+	@Transient
+	private Long responsableId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "responsableId")
 	private Employe responsableDocument;
@@ -48,149 +71,34 @@ public class Document extends Entite {
 
 	private Date derniereMiseAJour;
 
+	@Enumerated(EnumType.STRING)
 	private SensOperation sensOperation;
 
+	@Transient
+	private Long BmqId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "bmqId")
 	private Bmq bmq;
 
+	@Transient
+	private Long inventaireId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "inventaireId")
 	private Inventaire inventaire;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "document")
-	private Collection<LigneDeDocument> ligneDocuments;
+	private Collection<LigneDeDocument> ligneDocuments = Lists.newArrayList();
 
+	@Enumerated(EnumType.STRING)
 	private TypeDocuments typeDocument;
 
-	public Long getDocumentId() {
-		return documentId;
-	}
-
-	public void setDocumentId(Long documentId) {
-		this.documentId = documentId;
-	}
-
-	public String getCodeDocument() {
-		return codeDocument;
-	}
-
-	public void setCodeDocument(String codeDocument) {
-		this.codeDocument = codeDocument;
-	}
-
-	public Magasin getMagasin() {
-		return magasin;
-	}
-
-	public void setMagasin(Magasin magasin) {
-		this.magasin = magasin;
-	}
-
-	public Employe getResponsableDocument() {
-		return responsableDocument;
-	}
-
-	public void setResponsableDocument(Employe responsableDocument) {
-		this.responsableDocument = responsableDocument;
-	}
-
-	public Date getDateDocument() {
-		return dateDocument;
-	}
-
-	public void setDateDocument(Date dateDocument) {
-		this.dateDocument = dateDocument;
-	}
-
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	public SensOperation getSensOperation() {
-		return sensOperation;
-	}
-
-	public Bmq getBmq() {
-		return bmq;
-	}
-
-	public void setBmq(Bmq bmq) {
-		this.bmq = bmq;
-	}
-
-	public void setSensOperation(SensOperation sensOperation) {
-		this.sensOperation = sensOperation;
-	}
-
-	public Inventaire getInventaire() {
-		return inventaire;
-	}
-
-	public void setInventaire(Inventaire inventaire) {
-		this.inventaire = inventaire;
-	}
-
-	public Collection<LigneDeDocument> getLigneDocuments() {
-		return ligneDocuments;
-	}
-
-	public void setLigneDocuments(Collection<LigneDeDocument> ligneDocuments) {
-		this.ligneDocuments = ligneDocuments;
-	}
-
-	public TypeDocuments getTypeDocument() {
-		return typeDocument;
-	}
-
-	public void setTypeDocument(TypeDocuments typeDocument) {
-		this.typeDocument = typeDocument;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((documentId == null) ? 0 : documentId.hashCode());
-		result = prime * result + ((codeDocument == null) ? 0 : codeDocument.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Document other = (Document) obj;
-		if (documentId == null) {
-			if (other.documentId != null)
-				return false;
-		} else if (!documentId.equals(other.documentId))
-			return false;
-		if (codeDocument == null) {
-			if (other.codeDocument != null)
-				return false;
-		} else if (!codeDocument.equals(other.codeDocument))
-			return false;
-		return true;
-	}
-
 	public Document() {
-		//
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
 }

@@ -6,34 +6,42 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
-import com.camlait.global.erp.domain.localisation.Zone;
+import com.camlait.global.erp.domain.enumeration.TypePartenaire;
+import com.camlait.global.erp.domain.operation.manquant.ManquantFinancier;
+import com.camlait.global.erp.domain.organisation.Zone;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Vendeur extends Employe {
 
+    @Transient
+    private Long zoneId;
+    
+    @JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "zoneIdd")
+	@JoinColumn(name = "zoneId")
 	private Zone zoneDeVente;
 
-	@OneToMany(mappedBy = "immobilisation")
-	private Collection<PartenaireImmobilisation> partenaireImmobilisations;
+	@JsonManagedReference
+	@OneToMany(mappedBy = "vendeur")
+	private Collection<ManquantFinancier> manquantFinanciers = Lists.newArrayList();
 
-	public Zone getZoneDeVente() {
-		return zoneDeVente;
+	private boolean recoisDesCommission;
+
+	private double tauxDeCommission;
+
+	public Vendeur() {
+		setTypePartenaire(TypePartenaire.VENDEUR);
 	}
-
-	public void setZoneDeVente(Zone zoneDeVente) {
-		this.zoneDeVente = zoneDeVente;
-	}
-
-	public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
-		return partenaireImmobilisations;
-	}
-
-	public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
-		this.partenaireImmobilisations = partenaireImmobilisations;
-	}
-
 }

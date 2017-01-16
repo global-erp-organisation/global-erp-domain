@@ -11,179 +11,80 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.partenaire.Magasinier;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class Inventaire extends Entite {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long inventaireId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long inventaireId;
 
-	@Column(name = "codeInventaire", nullable = false, unique = true)
-	private String codeInventaire;
+    @Column(name = "codeInventaire", nullable = false, unique = true)
+    private String codeInventaire;
 
-	@Column(name = "dateInventaire", nullable = false)
-	private Date dateInventaire;
+    @Column(name = "dateInventaire", nullable = false)
+    private Date dateInventaire;
 
-	private String note;
+    private String note;
 
-	@ManyToOne
-	@JoinColumn(name = "magasinId")
-	private Magasin magasin;
+    @Transient
+    private Long magasinId;
 
-	@ManyToOne
-	@JoinColumn(name = "magasinierSortantId")
-	private Magasinier magasinierSortant;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinId")
+    private Magasin magasin;
 
-	@ManyToOne
-	@JoinColumn(name = "magasinierEntrantId")
-	private Magasinier magasinierEntrant;
+    @Transient
+    private Long magasinierSortantId;
 
-	private boolean inventaireClos;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinierSortantId")
+    private Magasinier magasinierSortant;
 
-	@OneToMany(mappedBy = "inventaire")
-	private Collection<Document> documents;
+    @Transient
+    private Long magasinierEntrantId;
 
-	@OneToMany(mappedBy = "inventaire")
-	private Collection<LigneInventaire> ligneInventaires;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinierEntrantId")
+    private Magasinier magasinierEntrant;
 
-	private Date dateDeCreation;
+    private boolean inventaireClos;
 
-	private Date derniereMiseAJour;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "inventaire")
+    private Collection<Document> documents = Lists.newArrayList();
 
-	public Magasinier getMagasinierEntrant() {
-		return magasinierEntrant;
-	}
+    @JsonManagedReference
+    @OneToMany(mappedBy = "inventaire")
+    private Collection<LigneInventaire> ligneInventaires = Lists.newArrayList();
 
-	public void setMagasinierEntrant(Magasinier magasinierEntrant) {
-		this.magasinierEntrant = magasinierEntrant;
-	}
+    private Date dateDeCreation;
 
-	public String getCodeInventaire() {
-		return codeInventaire;
-	}
+    private Date derniereMiseAJour;
 
-	public void setCodeInventaire(String codeInventaire) {
-		this.codeInventaire = codeInventaire;
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
-	public Magasin getMagasin() {
-		return magasin;
-	}
-
-	public void setMagasin(Magasin magasin) {
-		this.magasin = magasin;
-	}
-
-	public Magasinier getMagasinierSortant() {
-		return magasinierSortant;
-	}
-
-	public void setMagasinierSortant(Magasinier magasinier) {
-		this.magasinierSortant = magasinier;
-	}
-
-	public boolean isInventaireClos() {
-		return inventaireClos;
-	}
-
-	public void setInventaireClos(boolean inventaireClos) {
-		this.inventaireClos = inventaireClos;
-	}
-
-	public Collection<Document> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Collection<Document> documents) {
-		this.documents = documents;
-	}
-
-	public Collection<LigneInventaire> getLigneInventaires() {
-		return ligneInventaires;
-	}
-
-	public void setLigneInventaires(Collection<LigneInventaire> ligneInventaires) {
-		this.ligneInventaires = ligneInventaires;
-	}
-
-	public Long getInventaireId() {
-		return inventaireId;
-	}
-
-	public void setInventaireId(Long id) {
-		this.inventaireId = id;
-	}
-
-	public Date getDateInventaire() {
-		return dateInventaire;
-	}
-
-	public void setDateInventaire(Date dateInventaire) {
-		this.dateInventaire = dateInventaire;
-	}
-
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codeInventaire == null) ? 0 : codeInventaire.hashCode());
-		result = prime * result + ((inventaireId == null) ? 0 : inventaireId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Inventaire other = (Inventaire) obj;
-		if (codeInventaire == null) {
-			if (other.codeInventaire != null)
-				return false;
-		} else if (!codeInventaire.equals(other.codeInventaire))
-			return false;
-		if (inventaireId == null) {
-			if (other.inventaireId != null)
-				return false;
-		} else if (!inventaireId.equals(other.inventaireId))
-			return false;
-		return true;
-	}
-
-	public Inventaire() {
-
-	}
+    public Inventaire() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 }

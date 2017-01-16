@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.produit;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,17 +14,34 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.Portee;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Data
+@EqualsAndHashCode(callSuper=false)
+@Builder
 public class CategorieProduit extends Entite {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long categorieProduitId;
 
+	@Transient
+	private Long categorieParentId;
+	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "categorieParentId")
 	private CategorieProduit categorieParent;
@@ -38,122 +56,37 @@ public class CategorieProduit extends Entite {
 
 	private boolean categorieTaxable;
 
+	private boolean suiviEnStock;
+
 	private Date dateDeCreation;
 
 	private Date derniereMiseAJour;
 
+	@JsonManagedReference
+	@OneToMany(mappedBy = "categorieParent")
+	private Collection<CategorieProduit> categorieFilles= Lists.newArrayList();
+
+	@JsonManagedReference
 	@OneToMany(mappedBy = "categorie")
-	private Collection<Produit> produits;
+	private Collection<Produit> produits = Lists.newArrayList();
 
-	public Long getCategorieProduitId() {
-		return categorieProduitId;
-	}
-
-	public void setCategorieProduitId(Long categorieProduitId) {
-		this.categorieProduitId = categorieProduitId;
-	}
-
-	public CategorieProduit getCategorieParent() {
-		return categorieParent;
-	}
+	@JsonManagedReference
+	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
+	private Collection<CategorieProduitTaxe> categorieProduitTaxes = Lists.newArrayList();
 
 	public void setCategorieParent(CategorieProduit categorieParent) {
 		this.categorieParent = categorieParent;
-	}
-
-	public String getCodeCategorieProduit() {
-		return codeCategorieProduit;
-	}
-
-	public void setCodeCategorieProduit(String codeCategorieProduit) {
-		this.codeCategorieProduit = codeCategorieProduit;
-	}
-
-	public String getDescriptionCategorie() {
-		return descriptionCategorie;
-	}
-
-	public void setDescriptionCategorie(String descriptionCategorie) {
-		this.descriptionCategorie = descriptionCategorie;
-	}
-
-	public Portee getPortee() {
-		return portee;
-	}
-
-	public void setPortee(Portee portee) {
-		this.portee = portee;
-	}
-
-	public boolean isCategorieTaxable() {
-		return categorieTaxable;
-	}
-
-	public void setCategorieTaxable(boolean categorieTaxable) {
-		this.categorieTaxable = categorieTaxable;
-	}
-
-	public Collection<Produit> getProduits() {
-		return produits;
-	}
-
-	public void setProduits(Collection<Produit> produits) {
-		this.produits = produits;
-	}
-
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	@Override
-	public String toString() {
-		return "[" + codeCategorieProduit + "] " + descriptionCategorie;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((categorieParent == null) ? 0 : categorieParent.hashCode());
-		result = prime * result + ((categorieProduitId == null) ? 0 : categorieProduitId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CategorieProduit other = (CategorieProduit) obj;
-		if (categorieParent == null) {
-			if (other.categorieParent != null)
-				return false;
-		} else if (!categorieParent.equals(other.categorieParent))
-			return false;
-		if (categorieProduitId == null) {
-			if (other.categorieProduitId != null)
-				return false;
-		} else if (!categorieProduitId.equals(other.categorieProduitId))
-			return false;
-		return true;
+		copierCategorieProduitTaxeParent(categorieParent);
 	}
 
 	public CategorieProduit() {
-		//
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	private void copierCategorieProduitTaxeParent(CategorieProduit parent) {
+		if ((parent != null) && ((categorieProduitTaxes) != null) && (categorieProduitTaxes.isEmpty())) {
+			setCategorieProduitTaxes(parent.getCategorieProduitTaxes());
+		}
 	}
 }

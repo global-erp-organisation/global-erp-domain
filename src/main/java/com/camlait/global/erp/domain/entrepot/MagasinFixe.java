@@ -2,17 +2,19 @@ package com.camlait.global.erp.domain.entrepot;
 
 import javax.persistence.Entity;
 
+import com.camlait.global.erp.domain.enumeration.AutreEnum;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class MagasinFixe extends Magasin {
     
     private String adresse;
-    
-    public String getAdresse() {
-        return adresse;
+        
+    public MagasinFixe(){
+        setTypeMagasin(AutreEnum.MAGASIN_FIXE);
     }
-    
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-    
 }

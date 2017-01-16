@@ -6,46 +6,45 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
-import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
-import com.camlait.global.erp.domain.localisation.Zone;
+import com.camlait.global.erp.domain.enumeration.TypePartenaire;
+import com.camlait.global.erp.domain.organisation.Zone;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class Client extends Partenaire {
 
+    @Transient
+    private Long zoneId;
+    
+    @JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "zoneId")
 	private Zone zone;
 
+    @JsonManagedReference
 	@OneToMany(mappedBy = "client")
-	private Collection<DocumentDeVente> documentDeVentes;
+	private Collection<DocumentDeVente> documentDeVentes = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "immobilisation")
-	private Collection<PartenaireImmobilisation> partenaireImmobilisations;
+	private String description;
 
-	public Zone getZone() {
-		return zone;
-	}
+	private boolean clientAristourne;
 
-	public void setZone(Zone zone) {
-		this.zone = zone;
-	}
+	private double ristourne;
 
-	public Collection<PartenaireImmobilisation> getPartenaireImmobilisations() {
-		return partenaireImmobilisations;
-	}
-
-	public void setPartenaireImmobilisations(Collection<PartenaireImmobilisation> partenaireImmobilisations) {
-		this.partenaireImmobilisations = partenaireImmobilisations;
-	}
-
-	public Collection<DocumentDeVente> getDocumentDeVentes() {
-		return documentDeVentes;
-	}
-
-	public void setDocumentDeVentes(Collection<DocumentDeVente> documentDeVentes) {
-		this.documentDeVentes = documentDeVentes;
+	public Client() {
+		setTypePartenaire(TypePartenaire.CLIENT);
 	}
 
 }

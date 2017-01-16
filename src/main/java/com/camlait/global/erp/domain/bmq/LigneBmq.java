@@ -1,136 +1,91 @@
 package com.camlait.global.erp.domain.bmq;
 
+import java.util.Collection;
+import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.joda.time.DateTime;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.produit.Produit;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Builder
 public class LigneBmq extends Entite {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long ligneBmqId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long ligneBmqId;
 
-	@ManyToOne
-	@JoinColumn(name = "produitId")
-	private Produit produit;
+    @Transient
+    private Long produitId;
 
-	private Long quantiteLigne;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "produitId")
+    private Produit produit;
 
-	private double prixUnitaireLigne;
+    private Long quantiteLigne;
+    private double prixUnitaireLigne;
 
-	@ManyToOne
-	@JoinColumn(name = "bmqId")
-	private Bmq bmq;
+    @Transient
+    private Long bmqId;
 
-	private DateTime dateDeCreation;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "bmqId")
+    private Bmq bmq;
 
-	private DateTime derniereMiseAJour;
+    private Date dateDeCreation;
 
-	@ManyToOne
-	@JoinColumn(name = "documentId")
-	private Document document;
+    private Date derniereMiseAJour;
 
-	public Long getLigneBmqId() {
-		return ligneBmqId;
-	}
+    @Transient
+    private Long documentId;
 
-	public void setLigneBmqId(Long ligneBmqId) {
-		this.ligneBmqId = ligneBmqId;
-	}
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "documentId")
+    private Document document;
 
-	public Produit getProduit() {
-		return produit;
-	}
+    @JsonManagedReference
+    @OneToMany(mappedBy = "ligneBmq", cascade = CascadeType.ALL)
+    private Collection<LigneBmqTaxe> ligneBmqTaxes = Lists.newArrayList();
 
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
+    public LigneBmq() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	public Long getQuantiteLigne() {
-		return quantiteLigne;
-	}
+    public void setProduitId() {
+        setProduitId(getProduit().getProduitId());
+    }
 
-	public void setQuantiteLigne(Long quantiteLigne) {
-		this.quantiteLigne = quantiteLigne;
-	}
+    public void setBmqId() {
+        setBmqId(getBmq().getBmqId());
+    }
 
-	public double getPrixUnitaireLigne() {
-		return prixUnitaireLigne;
-	}
-
-	public void setPrixUnitaireLigne(double prixUnitaireLigne) {
-		this.prixUnitaireLigne = prixUnitaireLigne;
-	}
-
-	public Bmq getBmq() {
-		return bmq;
-	}
-
-	public void setBmq(Bmq bmq) {
-		this.bmq = bmq;
-	}
-
-	public DateTime getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(DateTime dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public DateTime getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(DateTime derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	public Document getDocument() {
-		return document;
-	}
-
-	public void setDocument(Document document) {
-		this.document = document;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((ligneBmqId == null) ? 0 : ligneBmqId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LigneBmq other = (LigneBmq) obj;
-		if (ligneBmqId == null) {
-			if (other.ligneBmqId != null)
-				return false;
-		} else if (!ligneBmqId.equals(other.ligneBmqId))
-			return false;
-		return true;
-	}
-
-	public LigneBmq() {
-
-	}
+    public void setDocumentId() {
+        setDocumentId(getDocument().getDocumentId());
+    }
 
 }

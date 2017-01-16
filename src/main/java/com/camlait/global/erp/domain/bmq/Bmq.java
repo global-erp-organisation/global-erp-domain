@@ -11,166 +11,88 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.operation.Recouvrement;
+import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Lists;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
+@AllArgsConstructor(suppressConstructorProperties = true)
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Builder
 public class Bmq extends Entite {
 
-	// @EmbeddedId
-	// private PKBmq bmqId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long bmqId;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long bmqId;
+    @Column(nullable = false, unique = true)
+    private String codeBmq;
 
-	@Column(nullable = false, unique = true)
-	private String codeBmq;
+    private Date dateBmq;
 
-	@Column(insertable = false, updatable = false)
-	private Date dateBmq;
+    @Transient
+    private Long vendeurId;
 
-	@ManyToOne
-	@JoinColumn(name = "vendeurId")
-	private Vendeur vendeur;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "vendeurId")
+    private Vendeur vendeur;
 
-	@ManyToOne
-	@JoinColumn(name = "magasinid")
-	private Magasin magasin;
+    @Transient
+    private Long magasinId;
 
-	@OneToMany(mappedBy = "bmq")
-	private Collection<Document> documents;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinId")
+    private Magasin magasin;
 
-	@OneToMany(mappedBy = "bmq")
-	private Collection<Recouvrement> recouvrements;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "bmq")
+    private Collection<Document> documents = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "bmq")
-	private Collection<LigneBmq> ligneBmqs;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "bmq")
+    private Collection<Recouvrement> recouvrements = Lists.newArrayList();
 
-	private Date dateDeCreation;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "bmq")
+    private Collection<LigneBmq> ligneBmqs = Lists.newArrayList();
 
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
 
-	private boolean bmqClos;
+    private Date derniereMiseAJour;
 
-	public Long getBmqId() {
-		return bmqId;
-	}
+    private boolean bmqClos;
 
-	public void setBmqId(Long bmqId) {
-		this.bmqId = bmqId;
-	}
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "responsableId")
+    private Employe responsable;
 
-	public String getCodeBmq() {
-		return codeBmq;
-	}
+    public Bmq() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	public void setCodeBmq(String codeBmq) {
-		this.codeBmq = codeBmq;
-	}
+    public void setvendeurId() {
+        setVendeurId(getVendeur().getPartenaireId());
+    }
 
-	public Date getDateBmq() {
-		return dateBmq;
-	}
-
-	public void setDateBmq(Date dateBmq) {
-		this.dateBmq = dateBmq;
-	}
-
-	public Vendeur getVendeur() {
-		return vendeur;
-	}
-
-	public void setVendeur(Vendeur vendeur) {
-		this.vendeur = vendeur;
-	}
-
-	public Magasin getMagasin() {
-		return magasin;
-	}
-
-	public void setMagasin(Magasin magasin) {
-		this.magasin = magasin;
-	}
-
-	public Collection<Document> getDocuments() {
-		return documents;
-	}
-
-	public void setDocuments(Collection<Document> documents) {
-		this.documents = documents;
-	}
-
-	public Collection<Recouvrement> getRecouvrements() {
-		return recouvrements;
-	}
-
-	public void setRecouvrements(Collection<Recouvrement> recouvrements) {
-		this.recouvrements = recouvrements;
-	}
-
-	public Date getDateDeCreation() {
-		return dateDeCreation;
-	}
-
-	public void setDateDeCreation(Date dateDeCreation) {
-		this.dateDeCreation = dateDeCreation;
-	}
-
-	public Date getDerniereMiseAJour() {
-		return derniereMiseAJour;
-	}
-
-	public void setDerniereMiseAJour(Date derniereMiseAJour) {
-		this.derniereMiseAJour = derniereMiseAJour;
-	}
-
-	public Collection<LigneBmq> getLigneBmqs() {
-		return ligneBmqs;
-	}
-
-	public void setLigneBmqs(Collection<LigneBmq> ligneBmqs) {
-		this.ligneBmqs = ligneBmqs;
-	}
-
-	public boolean isBmqClos() {
-		return bmqClos;
-	}
-
-	public void setBmqClos(boolean bmqClos) {
-		this.bmqClos = bmqClos;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((bmqId == null) ? 0 : bmqId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Bmq other = (Bmq) obj;
-		if (bmqId == null) {
-			if (other.bmqId != null)
-				return false;
-		} else if (!bmqId.equals(other.bmqId))
-			return false;
-		return true;
-	}
-
-	public Bmq() {
-		// Fait rien
-	}
+    public void setMagasinId() {
+        setMagasinId(getMagasin().getMagasinId());
+    }
 }
