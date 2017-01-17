@@ -5,17 +5,17 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.produit.Produit;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -33,11 +33,10 @@ import lombok.EqualsAndHashCode;
 public class LigneBmq extends Entite {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ligneBmqId;
+    private String ligneBmqId;
 
     @Transient
-    private Long produitId;
+    private String produitId;
 
     @JsonBackReference
     @ManyToOne
@@ -48,7 +47,7 @@ public class LigneBmq extends Entite {
     private double prixUnitaireLigne;
 
     @Transient
-    private Long bmqId;
+    private String bmqId;
 
     @JsonBackReference
     @ManyToOne
@@ -60,7 +59,7 @@ public class LigneBmq extends Entite {
     private Date derniereMiseAJour;
 
     @Transient
-    private Long documentId;
+    private String documentId;
 
     @JsonBackReference
     @ManyToOne
@@ -87,5 +86,11 @@ public class LigneBmq extends Entite {
     public void setDocumentId() {
         setDocumentId(getDocument().getDocumentId());
     }
+    
+	@PrePersist
+	private void setKey() {
+		setLigneBmqId(Utility.getUid());
+	}
+
 
 }

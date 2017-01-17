@@ -7,17 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.produit.Produit;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -35,11 +35,10 @@ import lombok.EqualsAndHashCode;
 public class LigneDeDocument extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long ligneDeDocumentId;
+	private String ligneDeDocumentId;
 
 	@Transient
-	private Long produitId;
+	private String produitId;
 
 	@JsonBackReference
 	@ManyToOne
@@ -50,7 +49,7 @@ public class LigneDeDocument extends Entite {
 
 	private double prixunitaiteLigne;
 	@Transient
-	private Long documenId;
+	private String documenId;
 
 	@JsonBackReference
 	@ManyToOne
@@ -77,5 +76,9 @@ public class LigneDeDocument extends Entite {
 	public boolean isDisponible(LigneDeDocument ligne) {
 		return this.getProduit().quantiteDisponible(this.getDocument().getMagasin()) - this.getQuantiteLigne() > 0;
 	}
-
+	
+	@PrePersist
+	private void setKey() {
+		setLigneDeDocumentId(Utility.getUid());
+	}
 }

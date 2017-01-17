@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.util;
 
+import java.util.UUID;
+
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.bmq.Bmq;
 import com.camlait.global.erp.domain.document.Document;
@@ -38,6 +40,10 @@ import com.camlait.global.erp.domain.partenaire.Partenaire;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
 
 public final class Utility {
+
+	public static String getUid() {
+		return UUID.randomUUID().toString();
+	}
 
 	public static EnumTypeEntite obtenirPrefixe(Entite entite) throws IllegalArgumentException {
 		if (entite instanceof Bmq)

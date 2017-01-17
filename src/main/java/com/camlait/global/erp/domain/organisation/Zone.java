@@ -27,7 +27,7 @@ import lombok.EqualsAndHashCode;
 public class Zone extends Localisation {
 
     @Transient
-    private Long secteurId;
+    private String secteurId;
 
     @JsonBackReference
     @ManyToOne

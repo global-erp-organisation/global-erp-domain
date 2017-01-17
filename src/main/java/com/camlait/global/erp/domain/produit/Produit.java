@@ -7,18 +7,18 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.inventaire.FicheDeStock;
 import com.camlait.global.erp.domain.inventaire.Stock;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -36,8 +36,7 @@ import lombok.EqualsAndHashCode;
 public class Produit extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long produitId;
+	private String produitId;
 
 	@Column(name = "codeProduit", unique = true, nullable = false)
 	private String codeProduit;
@@ -49,7 +48,7 @@ public class Produit extends Entite {
 	private double prixUnitaireMarge;
 
 	@Transient
-	private Long categorieProduitId;
+	private String categorieProduitId;
 
 	@JsonBackReference
 	@ManyToOne
@@ -100,11 +99,17 @@ public class Produit extends Entite {
 			final Collection<CategorieProduitTaxe> ctaxes = categorie.getCategorieProduitTaxes();
 			if ((ctaxes != null) && (!ctaxes.isEmpty())) {
 				final Collection<ProduitTaxe> taxes = ctaxes.parallelStream().map(c -> {
-					return ProduitTaxe.builder().produit(this).produictId(this.getProduitId()).taxe(c.getTaxe())
+					return ProduitTaxe.builder().produit(this).produitId(this.getProduitId()).taxe(c.getTaxe())
 							.build();
 				}).collect(Collectors.toList());
 				setProduitTaxes(taxes);
 			}
 		}
 	}
+	
+	@PrePersist
+	private void setKey() {
+		setProduitId(Utility.getUid());
+	}
+
 }

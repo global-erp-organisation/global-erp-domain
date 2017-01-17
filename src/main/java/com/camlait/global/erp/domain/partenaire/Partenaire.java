@@ -7,14 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
@@ -25,6 +24,7 @@ import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.reglement.ModeleDeReglement;
 import com.camlait.global.erp.domain.organisation.Centre;
 import com.camlait.global.erp.domain.produit.Tarif;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -43,8 +43,7 @@ import lombok.EqualsAndHashCode;
 public class Partenaire extends Entite {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long partenaireId;
+    private String partenaireId;
 
     @Column(name = "codePartenaire", nullable = false, unique = true)
     private String codePartenaire;
@@ -62,7 +61,7 @@ public class Partenaire extends Entite {
     private TypePartenaire typePartenaire;
 
     @Transient
-    private Long centreId;
+    private String centreId;
 
     @JsonBackReference
     @ManyToOne
@@ -82,7 +81,7 @@ public class Partenaire extends Entite {
     private Collection<Operation> operations = Sets.newHashSet();
 
     @Transient
-    private Long groupePartenaireId;
+    private String groupePartenaireId;
 
     @JsonBackReference
     @ManyToOne
@@ -90,7 +89,7 @@ public class Partenaire extends Entite {
     private GroupePartenaire groupePartenaire;
 
     @Transient
-    private Long tarifId;
+    private String tarifId;
 
     @JsonBackReference
     @ManyToOne
@@ -105,4 +104,10 @@ public class Partenaire extends Entite {
         setDateDeCreation(new Date());
         setDerniereMiseAJour(new Date());
     }
+    
+	@PrePersist
+	private void setKey() {
+		setPartenaireId(Utility.getUid());
+	}
+
 }

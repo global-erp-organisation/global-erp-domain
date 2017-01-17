@@ -4,12 +4,12 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -25,22 +25,26 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class Groupe extends Entite {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long groupeId;
+	@Id
+	private String groupeId;
 
-    private String descriptionGroupe;
+	private String descriptionGroupe;
 
-    private Date dateDeCreation;
+	private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
+	private Date derniereMiseAJour;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "groupe")
-    private Collection<GroupeUtilisateur> groupeUtilisateurs = Sets.newHashSet();
+	@JsonManagedReference
+	@OneToMany(mappedBy = "groupe")
+	private Collection<GroupeUtilisateur> groupeUtilisateurs = Sets.newHashSet();
 
-    public Groupe() {
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
-    }
+	public Groupe() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PrePersist
+	private void setKey() {
+		setGroupeId(Utility.getUid());
+	}
 }

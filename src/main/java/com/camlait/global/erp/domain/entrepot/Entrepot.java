@@ -5,17 +5,17 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.organisation.Centre;
 import com.camlait.global.erp.domain.partenaire.Employe;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -33,8 +33,7 @@ import lombok.EqualsAndHashCode;
 public class Entrepot extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long entrepotId;
+	private String entrepotId;
 
 	@Column(name = "codeEntrepot", nullable = false, unique = true)
 	private String codeEntrepot;
@@ -42,7 +41,7 @@ public class Entrepot extends Entite {
 	private String descriptionEntrepot;
 
 	@Transient
-	private Long centreId;
+	private String centreId;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -54,7 +53,7 @@ public class Entrepot extends Entite {
 	private Date derniereMiseAJour;
 
 	@Transient
-	private Long responsableId;
+	private String responsableId;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -69,5 +68,11 @@ public class Entrepot extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
+	
+	@PrePersist
+	private void setKey() {
+		setEntrepotId(Utility.getUid());
+	}
+
 
 }

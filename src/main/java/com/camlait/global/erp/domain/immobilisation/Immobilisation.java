@@ -4,13 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.PrePersist;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +26,7 @@ import lombok.EqualsAndHashCode;
 public class Immobilisation extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long immoId;
+	private String immoId;
 
 	@Column(name = "codeImmo", nullable = false, unique = true)
 	private String codeImmo;
@@ -46,4 +45,10 @@ public class Immobilisation extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
+	
+	@PrePersist
+	private void setKey() {
+		setImmoId(Utility.getUid());
+	}
+
 }

@@ -9,10 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.Taxe;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -27,11 +29,10 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class LigneBmqTaxe extends Entite {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ligneBmqTaxeId;
+    private String ligneBmqTaxeId;
 
     @Transient
-    private Long ligneBmqId;
+    private String ligneBmqId;
 
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
@@ -39,7 +40,7 @@ public class LigneBmqTaxe extends Entite {
     private LigneBmq ligneBmq;
 
     @Transient
-    private Long taxeId;
+    private String taxeId;
 
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -64,4 +65,9 @@ public class LigneBmqTaxe extends Entite {
     public void setTaxeId() {
         setTaxeId(getTaxe().getTaxeId());
     }
+    
+	@PrePersist
+	private void setKey() {
+		setLigneBmqTaxeId(Utility.getUid());
+	}
 }

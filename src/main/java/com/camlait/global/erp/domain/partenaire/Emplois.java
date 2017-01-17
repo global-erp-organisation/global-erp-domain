@@ -4,12 +4,12 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -26,8 +26,7 @@ import lombok.EqualsAndHashCode;
 public class Emplois extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long emploisId;
+	private String emploisId;
 
 	@Column(unique = true, nullable = false)
 	private String codeEmplois;
@@ -40,4 +39,10 @@ public class Emplois extends Entite {
 	public Emplois() {
 		super();
 	}
+	
+	@PrePersist
+	private void setKey() {
+		setEmploisId(Utility.getUid());
+	}
+
 }

@@ -3,7 +3,7 @@ package com.camlait.global.erp.domain;
 import com.camlait.global.erp.domain.util.MergeBeanUtilsBean;
 
 public abstract class Entite {
-    final MergeBeanUtilsBean bean = new MergeBeanUtilsBean();
+    private final MergeBeanUtilsBean bean = new MergeBeanUtilsBean();
 
     /**
      * Merge the current entity with the given one.

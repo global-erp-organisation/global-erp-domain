@@ -1,15 +1,15 @@
 package com.camlait.global.erp.domain.produit;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.organisation.Zone;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -25,11 +25,10 @@ import lombok.EqualsAndHashCode;
 public class Tarification extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long tarificationId;
+	private String tarificationId;
 
 	@Transient
-	private Long zoneId;
+	private String zoneId;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -37,7 +36,7 @@ public class Tarification extends Entite {
 	private Zone zone;
 
 	@Transient
-	private Long produitId;
+	private String produitId;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -45,7 +44,7 @@ public class Tarification extends Entite {
 	private Produit produit;
 
 	@Transient
-	private long tarifId;
+	private String tarifId;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -56,5 +55,10 @@ public class Tarification extends Entite {
 	private double prixUnitaireMarge;
 
 	public Tarification() {
+	}
+	
+	@PrePersist
+	private void setKey() {
+		setTarificationId(Utility.getUid());
 	}
 }

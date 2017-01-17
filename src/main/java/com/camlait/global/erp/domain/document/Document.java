@@ -7,14 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
@@ -28,6 +27,7 @@ import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -46,9 +46,7 @@ import lombok.EqualsAndHashCode;
 public class Document extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-
-	private Long documentId;
+	private String documentId;
 
 	@Column(name = "codeDocument", unique = true, nullable = false)
 	private String codeDocument;
@@ -56,7 +54,7 @@ public class Document extends Entite {
 	private Date dateDocument;
 
 	@Transient
-	private Long magasinId;
+	private String magasinId;
 
 	@JsonBackReference
 	@ManyToOne
@@ -64,7 +62,7 @@ public class Document extends Entite {
 	private Magasin magasin;
 
 	@Transient
-	private Long responsableId;
+	private String responsableId;
 
 	@JsonBackReference
 	@ManyToOne
@@ -79,7 +77,7 @@ public class Document extends Entite {
 	private SensOperation sensOperation;
 
 	@Transient
-	private Long BmqId;
+	private String BmqId;
 
 	@JsonBackReference
 	@ManyToOne
@@ -87,7 +85,7 @@ public class Document extends Entite {
 	private Bmq bmq;
 
 	@Transient
-	private Long inventaireId;
+	private String inventaireId;
 
 	@JsonBackReference
 	@ManyToOne
@@ -120,5 +118,10 @@ public class Document extends Entite {
 
 	public boolean isDocumentDeVente() {
 		return this instanceof DocumentDeVente;
+	}
+	
+	@PrePersist
+	private void setKey() {
+		setDocumentId(Utility.getUid());
 	}
 }

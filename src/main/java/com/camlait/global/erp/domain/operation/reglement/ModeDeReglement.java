@@ -4,13 +4,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.PrePersist;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +26,7 @@ import lombok.EqualsAndHashCode;
 public class ModeDeReglement extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long modeDeReglementId;
+	private String modeDeReglementId;
 
 	@Column(name = "codeModeReglement", nullable = false, unique = true)
 	private String codeModeReglement;
@@ -41,5 +40,10 @@ public class ModeDeReglement extends Entite {
 	public ModeDeReglement() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
+	}
+	
+	@PrePersist
+	private void setKey() {
+		setModeDeReglementId(Utility.getUid());
 	}
 }

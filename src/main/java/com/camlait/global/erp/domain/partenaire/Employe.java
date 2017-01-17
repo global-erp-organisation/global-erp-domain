@@ -45,7 +45,7 @@ public class Employe extends Partenaire {
     private Utilisateur utilisateur;
     
     @Transient
-    private Long emploisId;
+    private String emploisId;
     
     @JsonBackReference
     @ManyToOne

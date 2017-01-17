@@ -2,9 +2,10 @@ package com.camlait.global.erp.domain.auth;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+
+import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,8 +20,7 @@ import lombok.EqualsAndHashCode;
 public class Terme {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long termeId;
+	private String termeId;
 
 	@Column(unique = true, nullable = false)
 	private String descriptionTerme;
@@ -33,5 +33,11 @@ public class Terme {
 	public Terme() {
 		super();
 	}	
+	
+	@PrePersist
+	private void setKey() {
+		setTermeId(Utility.getUid());
+	}
+
 	
 }

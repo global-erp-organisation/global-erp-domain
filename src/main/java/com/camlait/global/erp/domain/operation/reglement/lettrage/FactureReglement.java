@@ -3,16 +3,16 @@ package com.camlait.global.erp.domain.operation.reglement.lettrage;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClient;
 import com.camlait.global.erp.domain.operation.reglement.Reglement;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -28,11 +28,10 @@ import lombok.EqualsAndHashCode;
 public class FactureReglement extends Entite {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long factureReglementId;
+    private String factureReglementId;
 
     @Transient
-    private Long documentId;
+    private String documentId;
 
     @JsonBackReference
     @ManyToOne
@@ -40,7 +39,7 @@ public class FactureReglement extends Entite {
     private FactureClient facture;
 
     @Transient
-    private Long reglementId;
+    private String reglementId;
 
     @JsonBackReference
     
@@ -58,4 +57,9 @@ public class FactureReglement extends Entite {
         setDateDeCreation(new Date());
         setDerniereMiseAJour(new Date());
     }
+    
+	@PrePersist
+	private void setKey() {
+		setFactureReglementId(Utility.getUid());
+	}
 }

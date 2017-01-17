@@ -4,11 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +23,7 @@ import lombok.EqualsAndHashCode;
 public class Taxe extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long taxeId;
+	private String taxeId;
 
 	@Column(name = "codeTaxe", unique = true, nullable = false)
 	private String codeTaxe;
@@ -37,7 +36,7 @@ public class Taxe extends Entite {
 
 	private Date derniereMiseAJour;
 
-	public Taxe(Long taxeId, String codeTaxe) {
+	public Taxe(String taxeId, String codeTaxe) {
 		super();
 		this.taxeId = taxeId;
 		this.codeTaxe = codeTaxe;
@@ -47,5 +46,11 @@ public class Taxe extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
+	
+	@PrePersist
+	private void setKey() {
+		setTaxeId(Utility.getUid());
+	}
+
 
 }

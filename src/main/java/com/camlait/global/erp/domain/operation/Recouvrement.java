@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 public class Recouvrement extends Operation {
 
     @Transient
-    private Long bmqId;
+    private String bmqId;
     
     @JsonBackReference
 	@ManyToOne

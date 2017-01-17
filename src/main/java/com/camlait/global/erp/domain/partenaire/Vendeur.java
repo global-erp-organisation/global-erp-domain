@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
 public class Vendeur extends Employe {
 
     @Transient
-    private Long zoneId;
+    private String zoneId;
     
     @JsonBackReference
 	@ManyToOne

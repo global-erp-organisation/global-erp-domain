@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 public class MargeClient extends Operation {
 
     @Transient
-    private Long clientMargeId;
+    private String clientMargeId;
 
     @JsonBackReference
     @ManyToOne

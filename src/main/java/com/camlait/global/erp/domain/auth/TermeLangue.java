@@ -6,8 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -24,10 +26,10 @@ public class TermeLangue {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long termeLangueId;
+	private String termeLangueId;
 	
 	@Transient
-	private Long termeId;
+	private String termeId;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -35,7 +37,7 @@ public class TermeLangue {
 	private Terme terme;
 	
 	@Transient
-	private Long langueId;
+	private String langueId;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -55,7 +57,7 @@ public class TermeLangue {
 		this.value = value;
 	}
 
-	public TermeLangue(Long termeLangueId, Terme terme, Langue langue, String value) {
+	public TermeLangue(String termeLangueId, Terme terme, Langue langue, String value) {
 		super();
 		this.termeLangueId = termeLangueId;
 		this.terme = terme;
@@ -70,4 +72,8 @@ public class TermeLangue {
 	    setLangueId(getLangue().getLangId());
 	}
 	
+	@PrePersist
+	private void setKey() {
+		setTermeLangueId(Utility.getUid());
+	}
 }

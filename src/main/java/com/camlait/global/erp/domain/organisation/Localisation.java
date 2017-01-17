@@ -6,14 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.PrePersist;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,8 +29,7 @@ import lombok.EqualsAndHashCode;
 public class Localisation extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long localId;
+	private String localId;
 
 	@Column(nullable = false, unique = true)
 	private String code;
@@ -47,5 +46,10 @@ public class Localisation extends Entite {
 	public Localisation() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
+	}
+
+	@PrePersist
+	private void setKey() {
+		setLocalId(Utility.getUid());
 	}
 }

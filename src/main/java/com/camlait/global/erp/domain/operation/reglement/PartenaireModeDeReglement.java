@@ -1,15 +1,15 @@
 package com.camlait.global.erp.domain.operation.reglement;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -25,11 +25,10 @@ import lombok.EqualsAndHashCode;
 public class PartenaireModeDeReglement extends Entite {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long partenaireModeleId;
+	private String partenaireModeleId;
 
 	@Transient
-	private Long modeleId;
+	private String modeleId;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -37,7 +36,7 @@ public class PartenaireModeDeReglement extends Entite {
 	private ModeleDeReglement modeleDeReglement;
 
 	@Transient
-	private Long partenaireId;
+	private String partenaireId;
 	
 	@JsonBackReference
 	@ManyToOne
@@ -46,5 +45,10 @@ public class PartenaireModeDeReglement extends Entite {
 
 	public PartenaireModeDeReglement() {
 		super();
+	}
+	
+	@PrePersist
+	private void setKey() {
+		setPartenaireModeleId(Utility.getUid());
 	}
 }

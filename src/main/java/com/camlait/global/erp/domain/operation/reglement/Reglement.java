@@ -29,15 +29,14 @@ public class Reglement extends Operation {
 	private Collection<FactureReglement> factureReglements = Sets.newHashSet();
 
     @Transient
-    private Long modeleDeReglementId;
+    private String modeleDeReglementId;
     
     @JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "modeDeReglementId")
 	private ModeDeReglement modeDeReglement;
     
-    public Reglement(){
-        
+    public Reglement(){        
     }
 
 }

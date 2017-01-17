@@ -3,16 +3,16 @@ package com.camlait.global.erp.domain.inventaire;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.produit.Produit;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -28,11 +28,10 @@ import lombok.EqualsAndHashCode;
 public class Stock extends Entite {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long stockId;
+    private String stockId;
 
     @Transient
-    private Long produitId;
+    private String produitId;
 
     @JsonBackReference
     @ManyToOne
@@ -40,7 +39,7 @@ public class Stock extends Entite {
     private Produit produit;
 
     @Transient
-    private Long magasinId;
+    private String magasinId;
 
     @JsonBackReference
     @ManyToOne
@@ -57,4 +56,9 @@ public class Stock extends Entite {
         setDateDeCreation(new Date());
         setDerniereMiseAJour(new Date());
     }
+    
+	@PrePersist
+	private void setKey() {
+		setStockId(Utility.getUid());
+	}
 }

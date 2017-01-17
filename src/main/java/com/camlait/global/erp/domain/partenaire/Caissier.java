@@ -16,15 +16,15 @@ import lombok.EqualsAndHashCode;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 public class Caissier extends Employe {
 
-    @Transient
-    private Long caisseId;
-    
-    @JsonBackReference
+	@Transient
+	private String caisseId;
+
+	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "caisseId",updatable=false,insertable=false)
+	@JoinColumn(name = "caisseId", updatable = false, insertable = false)
 	private Caisse caisse;
 
 	private String motDePasse;

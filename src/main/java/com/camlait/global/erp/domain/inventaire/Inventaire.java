@@ -5,18 +5,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.partenaire.Magasinier;
+import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -34,8 +34,7 @@ import lombok.EqualsAndHashCode;
 public class Inventaire extends Entite {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long inventaireId;
+    private String inventaireId;
 
     @Column(name = "codeInventaire", nullable = false, unique = true)
     private String codeInventaire;
@@ -46,7 +45,7 @@ public class Inventaire extends Entite {
     private String note;
 
     @Transient
-    private Long magasinId;
+    private String magasinId;
 
     @JsonBackReference
     @ManyToOne
@@ -54,7 +53,7 @@ public class Inventaire extends Entite {
     private Magasin magasin;
 
     @Transient
-    private Long magasinierSortantId;
+    private String magasinierSortantId;
 
     @JsonBackReference
     @ManyToOne
@@ -62,7 +61,7 @@ public class Inventaire extends Entite {
     private Magasinier magasinierSortant;
 
     @Transient
-    private Long magasinierEntrantId;
+    private String magasinierEntrantId;
 
     @JsonBackReference
     @ManyToOne
@@ -87,4 +86,9 @@ public class Inventaire extends Entite {
         setDateDeCreation(new Date());
         setDerniereMiseAJour(new Date());
     }
+    
+	@PrePersist
+	private void setKey() {
+		setInventaireId(Utility.getUid());
+	}
 }

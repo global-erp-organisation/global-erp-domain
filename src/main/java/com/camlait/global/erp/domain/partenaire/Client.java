@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
 public class Client extends Partenaire {
 
     @Transient
-    private Long zoneId;
+    private String zoneId;
     
     @JsonBackReference
 	@ManyToOne

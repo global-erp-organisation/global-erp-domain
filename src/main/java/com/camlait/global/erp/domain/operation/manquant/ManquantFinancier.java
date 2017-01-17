@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 public class ManquantFinancier extends Operation {
 
     @Transient
-    private Long vendeurId;
+    private String vendeurId;
     
     @JsonBackReference
 	@ManyToOne

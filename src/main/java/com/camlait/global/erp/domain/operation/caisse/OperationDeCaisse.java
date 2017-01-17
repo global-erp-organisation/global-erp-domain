@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 public class OperationDeCaisse extends Operation {
 
     @Transient
-    private Long journalId;
+    private String journalId;
 
     @JsonBackReference
     @ManyToOne
