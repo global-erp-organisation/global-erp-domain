@@ -78,4 +78,10 @@ public class TermeLangue extends Entite{
 	private void setKey() {
 		setTermeLangueId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setLangueId(langue.getLangId());
+		setTermeId(terme.getTermeId());
+	}
 }

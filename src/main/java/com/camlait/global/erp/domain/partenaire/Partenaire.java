@@ -111,4 +111,10 @@ public class Partenaire extends Entite {
 		setPartenaireId(Utility.getUid());
 	}
 
+	@Override
+	public void postConstructOperation() {
+		setCentreId(centre.getLocalId());
+		setGroupePartenaireId(groupePartenaire.getGroupePartenaireId());
+		setTarifId(tarif.getTarifId());
+	}
 }

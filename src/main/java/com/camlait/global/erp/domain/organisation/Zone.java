@@ -50,4 +50,10 @@ public class Zone extends Localisation {
     public Zone() {
         setTypeLocal(AutreEnum.ZONE);
     }
+    
+	@Override
+	public void postConstructOperation() {
+		setSecteurId(secteur.getLocalId());
+	}
+
 }

@@ -36,4 +36,8 @@ public class Tarif extends Entite {
 	private void setKey() {
 		setTarifId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+	}
 }

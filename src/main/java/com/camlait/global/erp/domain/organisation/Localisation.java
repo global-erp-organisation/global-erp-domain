@@ -53,4 +53,8 @@ public class Localisation extends Entite {
 	private void setKey() {
 		setLocalId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+	}
 }

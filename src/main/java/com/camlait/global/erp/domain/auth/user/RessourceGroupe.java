@@ -68,4 +68,10 @@ public class RessourceGroupe extends Entite {
 	private void setKey() {
 		setRessourceId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setGroupId(groupe.getGroupeId());
+		setRessourceId(ressource.getRessourceId());
+	}
 }

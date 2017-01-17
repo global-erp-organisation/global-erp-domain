@@ -41,11 +41,14 @@ public class GroupePartenaire extends Entite {
 
 	public GroupePartenaire() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	@PrePersist
 	private void setKey() {
 		setGroupePartenaireId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
 	}
 }

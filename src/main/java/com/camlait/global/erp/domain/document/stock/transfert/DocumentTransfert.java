@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 public class DocumentTransfert extends DocumentDeStock {
     
     @Transient
-    private Long magasinDestinationId;
+    private String magasinDestinationId;
     
     @JsonBackReference
     @ManyToOne
@@ -34,4 +34,13 @@ public class DocumentTransfert extends DocumentDeStock {
         setSensOperation(SensOperation.VIREMENT);
         setTypeDocument(TypeDocuments.TRANSFERT);
     }
+    
+	@Override
+	public void postConstructOperation() {
+		setMagasinId(getMagasin().getMagasinId());
+		setResponsableId(getResponsableDocument().getPartenaireId());
+		setBmqId(getBmq() != null ? getBmq().getBmqId() : null);
+		setInventaireId(getInventaire() != null ? getInventaire().getInventaireId() : null);
+		setMagasinDestinationId(magasinDestination.getMagasinId());
+	}
 }

@@ -92,4 +92,11 @@ public class Inventaire extends Entite {
 	private void setKey() {
 		setInventaireId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setMagasinId(magasin.getMagasinId());
+		setMagasinierEntrantId(magasinierEntrant.getPartenaireId());
+		setMagasinierSortantId(magasinierSortant.getPartenaireId());
+	}
 }

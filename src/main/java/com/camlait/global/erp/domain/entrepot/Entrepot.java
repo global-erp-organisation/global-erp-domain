@@ -75,5 +75,9 @@ public class Entrepot extends Entite {
 		setEntrepotId(Utility.getUid());
 	}
 
-
+	@Override
+	public void postConstructOperation() {
+		setCentreId(centre.getLocalId());
+		setResponsableId(responsable.getPartenaireId());
+	}
 }

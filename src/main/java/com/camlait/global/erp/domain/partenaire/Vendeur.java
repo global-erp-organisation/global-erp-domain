@@ -45,4 +45,14 @@ public class Vendeur extends Employe {
 	public Vendeur() {
 		setTypePartenaire(TypePartenaire.VENDEUR);
 	}
+	
+	@Override
+	public void postConstructOperation() {
+		setCentreId(getCentre().getLocalId());
+		setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
+		setTarifId(getTarif().getTarifId());
+		setEmploisId(getEmplois().getEmploisId());
+		setUtilisateurId(getUtilisateur() != null ? getUtilisateur().getUtilisateurId() : null);
+		setZoneId(zoneDeVente.getLocalId());
+	}
 }

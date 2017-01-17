@@ -52,4 +52,10 @@ public class PartenaireModeDeReglement extends Entite {
 	private void setKey() {
 		setPartenaireModeleId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setModeleId(modeleDeReglement.getModeleId());
+		setPartenaireId(partenaire.getPartenaireId());
+	}
 }

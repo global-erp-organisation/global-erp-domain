@@ -62,4 +62,10 @@ public class Stock extends Entite {
 	private void setKey() {
 		setStockId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setMagasinId(magasin.getMagasinId());
+		setProduitId(produit.getProduitId());
+	}
 }

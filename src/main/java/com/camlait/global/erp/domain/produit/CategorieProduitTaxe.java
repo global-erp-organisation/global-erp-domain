@@ -59,4 +59,10 @@ public class CategorieProduitTaxe extends Entite {
 	private void setKey() {
 		setCategorieProduitTaxeId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setCategorieProduitId(categorie.getCategorieProduitId());
+		setTaxeId(taxe.getTaxeId());
+	}
 }

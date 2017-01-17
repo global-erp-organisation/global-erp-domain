@@ -26,38 +26,44 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class LigneDeDocumentTaxe extends Entite {
-    @Id
-    private String ligneDeDocumentTaxeId;
+	@Id
+	private String ligneDeDocumentTaxeId;
 
-    @Transient
-    private String ligneDeDocumentId;
+	@Transient
+	private String ligneDeDocumentId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "ligneDeDocumentId")
-    private LigneDeDocument ligneDeDocument;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "ligneDeDocumentId")
+	private LigneDeDocument ligneDeDocument;
 
-    @Transient
-    private String taxeId;
+	@Transient
+	private String taxeId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "taxeId")
-    private Taxe taxe;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "taxeId")
+	private Taxe taxe;
 
-    private double tauxDeTaxe;
+	private double tauxDeTaxe;
 
-    private Date dateDeCreation;
+	private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
+	private Date derniereMiseAJour;
 
-    public LigneDeDocumentTaxe() {
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
-    }
-    
+	public LigneDeDocumentTaxe() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
 	@PrePersist
 	private void setKey() {
 		setLigneDeDocumentTaxeId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setLigneDeDocumentId(ligneDeDocument.getLigneDeDocumentId());
+		setTaxeId(taxe.getTaxeId());
 	}
 }

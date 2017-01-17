@@ -40,5 +40,9 @@ public class Region extends Localisation {
 	public Region() {
 		setTypeLocal(AutreEnum.REGION);
 	}
-
+	
+	@Override
+	public void postConstructOperation() {
+		setCentreId(centre.getLocalId());
+	}
 }

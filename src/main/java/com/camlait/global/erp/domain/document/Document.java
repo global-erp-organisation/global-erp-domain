@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.document;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.amazonaws.util.CollectionUtils;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.bmq.Bmq;
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
@@ -25,6 +27,7 @@ import com.camlait.global.erp.domain.document.commerciaux.vente.FactureMarge;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
+import com.camlait.global.erp.domain.exception.DataStorageExcetion;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.util.Utility;
@@ -94,7 +97,7 @@ public class Document extends Entite {
 	private Inventaire inventaire;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "document")
+	@OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
 	private Collection<LigneDeDocument> ligneDocuments = Sets.newHashSet();
 
 	@Enumerated(EnumType.STRING)
@@ -120,9 +123,21 @@ public class Document extends Entite {
 	public boolean isDocumentDeVente() {
 		return this instanceof DocumentDeVente;
 	}
-	
+
 	@PrePersist
 	private void setKey() {
-		setDocumentId(Utility.getUid());
+		if (!CollectionUtils.isNullOrEmpty(ligneDocuments)) {
+			setDocumentId(Utility.getUid());
+		} else {
+			throw new DataStorageExcetion("Unable to store a document with no detail.");
+		}
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setMagasinId(magasin.getMagasinId());
+		setResponsableId(responsableDocument.getPartenaireId());
+		setBmqId(bmq != null ? bmq.getBmqId() : null);
+		setInventaireId(inventaire != null ? inventaire.getInventaireId() : null);
 	}
 }

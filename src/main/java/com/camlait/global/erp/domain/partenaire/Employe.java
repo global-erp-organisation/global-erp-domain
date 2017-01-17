@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.auth.ressource.Utilisateur;
+import com.camlait.global.erp.domain.auth.user.Utilisateur;
 import com.camlait.global.erp.domain.enumeration.Sexe;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -26,37 +26,46 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Employe extends Partenaire {
-    
-    @Column(unique = true, nullable = false)
-    private String matricule;
-    
-    @Column(nullable = false)
-    private String nom;
-    
-    private String prenom;
-    
-    private Date dateDeNaissance;
-    
-    @Transient
-    private String codeUtilisateur;
-    
-    @JsonBackReference
-    @OneToOne
-    @JoinColumn(name = "codeUtilisateur")
-    private Utilisateur utilisateur;
-    
-    @Transient
-    private String emploisId;
-    
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "emploisId")
-    private Emplois emplois;
-    
-    @Enumerated(EnumType.STRING)
-    private Sexe sexe;
-        
-    public Employe() {
-        setTypePartenaire(TypePartenaire.EMPLOYE);
-    }
+
+	@Column(unique = true, nullable = false)
+	private String matricule;
+
+	@Column(nullable = false)
+	private String nom;
+
+	private String prenom;
+
+	private Date dateDeNaissance;
+
+	@Transient
+	private String utilisateurId;
+
+	@JsonBackReference
+	@OneToOne
+	@JoinColumn(name = "utilisateurId")
+	private Utilisateur utilisateur;
+
+	@Transient
+	private String emploisId;
+
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "emploisId")
+	private Emplois emplois;
+
+	@Enumerated(EnumType.STRING)
+	private Sexe sexe;
+
+	public Employe() {
+		setTypePartenaire(TypePartenaire.EMPLOYE);
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setCentreId(getCentre().getLocalId());
+		setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
+		setTarifId(getTarif().getTarifId());
+		setEmploisId(emplois.getEmploisId());
+		setUtilisateurId(utilisateur != null ? utilisateur.getUtilisateurId() : null);
+	}
 }

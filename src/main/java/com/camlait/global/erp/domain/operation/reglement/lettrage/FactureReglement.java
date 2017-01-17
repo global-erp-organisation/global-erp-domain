@@ -65,4 +65,10 @@ public class FactureReglement extends Entite {
 	private void setKey() {
 		setFactureReglementId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setDocumentId(facture.getDocumentId());
+		setReglementId(reglement.getOperationId());
+	}
 }

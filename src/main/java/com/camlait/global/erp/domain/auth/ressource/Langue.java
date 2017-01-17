@@ -52,5 +52,10 @@ public class Langue extends Entite {
 	private void setKey() {
 		setLangId(Utility.getUid());
 	}
+	
+	@Override
+	public void postConstructOperation() {
+		// TODO Auto-generated method stub	
+	}
 
 }

@@ -1,10 +1,9 @@
-package com.camlait.global.erp.domain.auth.ressource;
+package com.camlait.global.erp.domain.auth.user;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.auth.user.Groupe;
-import com.camlait.global.erp.domain.auth.user.RessourceUtilisateur;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -65,14 +62,18 @@ public class Utilisateur extends Entite {
 		setDerniereMiseAJour(new Date());
 	}
 
-	@PostConstruct
+	@Override
+	public void postConstructOperation() {
+		ressourceGroupCopy();
+	}
+	
 	private void ressourceGroupCopy() {
 		if (groupes != null && !groupes.isEmpty()) {
 			groupes.stream().forEach(g -> {
 				Collection<RessourceUtilisateur> ru = g.getRessourceGroupes().stream().map(rg -> {
 					return RessourceUtilisateur.builder().dateDeCreation(new Date()).derniereMiseAJour(new Date())
 							.etat(rg.getEtat()).ressource(rg.getRessource()).ressourceId(rg.getRessourceId())
-							.utilisateur(this).utilisateId(this.getUtilisateurId()).build();
+							.utilisateur(this).utilisateurId(this.getUtilisateurId()).build();
 
 				}).collect(Collectors.toList());
 				ressourceUtilisateurs.addAll(ru);

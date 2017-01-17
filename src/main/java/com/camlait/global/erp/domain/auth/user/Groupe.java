@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.auth.ressource.Utilisateur;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -64,5 +63,9 @@ public class Groupe extends Entite {
 	@PrePersist
 	private void setKey() {
 		setGroupeId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
 	}
 }

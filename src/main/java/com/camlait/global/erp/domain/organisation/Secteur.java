@@ -40,4 +40,10 @@ public class Secteur extends Localisation {
 	public Secteur() {
 		setTypeLocal(AutreEnum.SECTEUR);
 	}
+	
+	@Override
+	public void postConstructOperation() {
+		setRegionId(region.getLocalId());
+	}
+
 }

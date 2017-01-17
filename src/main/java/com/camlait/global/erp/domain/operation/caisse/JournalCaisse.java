@@ -68,4 +68,9 @@ public class JournalCaisse extends Entite {
 	private void setKey() {
 		setJournalId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setCaisseId(caisse.getCaisseId());
+	}
 }

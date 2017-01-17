@@ -56,4 +56,9 @@ public class Caisse extends Entite {
 	private void setKey() {
 		setCaisseId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setResponsableId(responsable.getPartenaireId());
+	}
 }

@@ -65,10 +65,10 @@ public class GlobalAppConstants {
 		return "L'Objet " + object + " ne peut pas etre null";
 	}
 
-	public static String produitIndiponibleMessage(LigneDeDocument ligne) {
+	public static String unavailableProductMessage(LigneDeDocument ligne) {
 		String message = "";
-		message = "Le produit " + ligne.getProduit().getDescriptionProduit() + " est indisponible." + " Seulement "
-				+ ligne.getProduit().quantiteDisponible(ligne.getDocument().getMagasin()) + " disponible";
+		message = "The product " + ligne.getProduit().getDescriptionProduit() + " is not available." + " Only "
+				+ ligne.getProduit().availableQuantity(ligne.getDocument().getMagasin()) + " is available";
 		return message;
 	}
 

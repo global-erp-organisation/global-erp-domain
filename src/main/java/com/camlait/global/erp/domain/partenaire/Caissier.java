@@ -33,4 +33,14 @@ public class Caissier extends Employe {
 	public Caissier() {
 		setTypePartenaire(TypePartenaire.CAISSIER);
 	}
+	
+	
+	@Override
+	public void postConstructOperation() {
+		setCentreId(getCentre().getLocalId());
+		setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
+		setTarifId(getTarif().getTarifId());
+		setCaisseId(caisse.getCaisseId());
+	}
+
 }

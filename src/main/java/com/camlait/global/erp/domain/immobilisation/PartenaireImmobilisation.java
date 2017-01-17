@@ -58,11 +58,16 @@ public class PartenaireImmobilisation extends Entite{
 	public PartenaireImmobilisation() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
-
 	}
 	
 	@PrePersist
 	private void setKey() {
 		setClientImmoId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setPartenaireId(partenaire.getPartenaireId());
+		setImmoId(immobilisation.getImmoId());
 	}
 }

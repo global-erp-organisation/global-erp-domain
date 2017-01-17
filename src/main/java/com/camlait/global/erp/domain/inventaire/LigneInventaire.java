@@ -32,7 +32,7 @@ public class LigneInventaire extends Entite {
 
 	@Transient
 	private String inventaireId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "inventaireId")
@@ -40,7 +40,7 @@ public class LigneInventaire extends Entite {
 
 	@Transient
 	private String produitId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "produitId")
@@ -62,10 +62,16 @@ public class LigneInventaire extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setLigneInventaireId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setInventaireId(inventaire.getInventaireId());
+		setProduitId(produit.getProduitId());
 	}
 
 }

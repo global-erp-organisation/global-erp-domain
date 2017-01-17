@@ -56,4 +56,10 @@ public class FicheDeStock extends Entite {
 	private void setKey() {
 		setFicheId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setMagasinId(magasin.getMagasinId());
+		setProduitId(produit.getProduitId());
+	}
 }

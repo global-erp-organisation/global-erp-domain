@@ -10,7 +10,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.auth.ressource.Utilisateur;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -27,44 +26,42 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class GroupeUtilisateur extends Entite {
 
-    @Id
-    private String groupeUtilissateurId;
+	@Id
+	private String groupeUtilissateurId;
 
-    @Transient
-    private String groupeId;
+	@Transient
+	private String groupeId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "groupeId")
-    private Groupe groupe;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "groupeId")
+	private Groupe groupe;
 
-    @Transient
-    private String utilisateurId;
+	@Transient
+	private String utilisateurId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "utilisateurId")
-    private Utilisateur utilsateur;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "utilisateurId")
+	private Utilisateur utilisateur;
 
-    private Date dateDeCreation;
+	private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
+	private Date derniereMiseAJour;
 
-    public GroupeUtilisateur() {
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
-    }
+	public GroupeUtilisateur() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
 
-    public void setUtilisateurId() {
-        setUtilisateurId(getUtilsateur().getUtilisateurId());
-    }
-
-    public void setGroupeId() {
-        setGroupeId(getGroupe().getGroupeId());
-    }
-    
 	@PrePersist
 	private void setKey() {
 		setGroupeUtilissateurId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setGroupeId(groupe.getGroupeId());
+		setUtilisateurId(utilisateur.getUtilisateurId());
 	}
 }

@@ -65,14 +65,11 @@ public class Produit extends Entite {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
 	private Collection<ProduitTaxe> produitTaxes = Sets.newHashSet();
-	
+
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "produits", cascade = CascadeType.ALL)
-	@JoinTable(name = "produit_taxe", 
-	joinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "taxe_id"), 
-	inverseJoinColumns = @JoinColumn(name = "taxe_id", referencedColumnName = "produit_id"))
+	@JoinTable(name = "produit_taxe", joinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "taxe_id"), inverseJoinColumns = @JoinColumn(name = "taxe_id", referencedColumnName = "produit_id"))
 	private Collection<Taxe> taxes = Sets.newHashSet();
-
 
 	private Date dateDeCreation;
 
@@ -101,28 +98,35 @@ public class Produit extends Entite {
 		setDerniereMiseAJour(new Date());
 	}
 
-	public Long quantiteDisponible(Magasin m) {
+	public Long availableQuantity(Magasin m) {
 		return this.getStocks().stream().filter(s -> s.getMagasin().getMagasinId().equals(m.getMagasinId()))
 				.mapToLong(s -> s.getQuantiteDisponible()).sum();
 	}
 
+	public Boolean isAvailable(Magasin m, Long quantiteVoulue) {
+		return availableQuantity(m) >= quantiteVoulue;
+	}
+
 	@PostConstruct
-	private void copieCategorieProduitTaxe() {
+	public void copieCategorieProduitTaxe() {
 		if (categorie != null) {
 			final Collection<CategorieProduitTaxe> ctaxes = categorie.getCategorieProduitTaxes();
 			if ((ctaxes != null) && (!ctaxes.isEmpty())) {
 				final Collection<ProduitTaxe> taxes = ctaxes.parallelStream().map(c -> {
-					return ProduitTaxe.builder().produit(this).produitId(this.getProduitId()).taxe(c.getTaxe())
-							.build();
+					return ProduitTaxe.builder().produit(this).produitId(this.getProduitId()).taxe(c.getTaxe()).build();
 				}).collect(Collectors.toList());
 				setProduitTaxes(taxes);
 			}
 		}
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setProduitId(Utility.getUid());
 	}
 
+	@Override
+	public void postConstructOperation() {
+		setCategorieProduitId(categorie.getCategorieProduitId());
+	}
 }

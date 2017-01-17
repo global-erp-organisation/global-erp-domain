@@ -77,5 +77,9 @@ public class Taxe extends Entite {
 		setTaxeId(Utility.getUid());
 	}
 
+	@Override
+	public void postConstructOperation() {
+	}
+
 
 }

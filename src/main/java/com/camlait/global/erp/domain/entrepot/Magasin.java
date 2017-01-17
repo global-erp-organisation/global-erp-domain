@@ -78,4 +78,9 @@ public class Magasin extends Entite {
 	private void setKey() {
 		setMagasinId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setEntrepotId(entrepot.getEntrepotId());
+	}
 }

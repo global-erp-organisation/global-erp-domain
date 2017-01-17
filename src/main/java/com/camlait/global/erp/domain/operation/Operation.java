@@ -76,4 +76,9 @@ public class Operation extends Entite {
 		setOperationId(Utility.getUid());
 	}
 
+	@Override
+	public void postConstructOperation() {
+		setResponsableId(responsable.getPartenaireId());
+		setPartenaireId(partenaire.getPartenaireId());
+	}
 }

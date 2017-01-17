@@ -41,5 +41,9 @@ public class Terme extends Entite{
 		setTermeId(Utility.getUid());
 	}
 
+	@Override
+	public void postConstructOperation() {
+	}
+
 	
 }

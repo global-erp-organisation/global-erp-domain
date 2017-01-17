@@ -40,4 +40,10 @@ public class Reglement extends Operation {
     public Reglement(){        
     }
 
+	@Override
+	public void postConstructOperation() {
+		setResponsableId(getResponsable().getPartenaireId());
+		setPartenaireId(getPartenaire().getPartenaireId());
+		setModeleDeReglementId(modeDeReglement.getModeDeReglementId());
+	}
 }

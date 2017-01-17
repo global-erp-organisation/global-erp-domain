@@ -30,7 +30,7 @@ public class Tarification extends Entite {
 
 	@Transient
 	private String zoneId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "zoneId")
@@ -38,7 +38,7 @@ public class Tarification extends Entite {
 
 	@Transient
 	private String produitId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "produitId")
@@ -46,7 +46,7 @@ public class Tarification extends Entite {
 
 	@Transient
 	private String tarifId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "tarifId")
@@ -57,9 +57,16 @@ public class Tarification extends Entite {
 
 	public Tarification() {
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setTarificationId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setProduitId(produit.getProduitId());
+		setZoneId(zone.getLocalId());
+		setTarifId(tarif.getTarifId());
 	}
 }

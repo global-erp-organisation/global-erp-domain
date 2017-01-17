@@ -12,7 +12,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.auth.ressource.Utilisateur;
 import com.camlait.global.erp.domain.enumeration.Etat;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -34,7 +33,7 @@ public class RessourceUtilisateur extends Entite {
 	private String ressourceUtilisateurId;
 
 	@Transient
-	private String utilisateId;
+	private String utilisateurId;
 
 	@JsonBackReference
 	@ManyToOne
@@ -68,16 +67,14 @@ public class RessourceUtilisateur extends Entite {
 		setDerniereMiseAJour(new Date());
 	}
 
-	public void setRessourceId() {
-		setRessourceId(getRessource().getRessourceId());
-	}
-
-	public void setUtilisateurId() {
-		setUtilisateId(getUtilisateur().getUtilisateurId());
-	}
-
 	@PrePersist
 	private void setKey() {
 		setRessourceUtilisateurId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setRessourceId(ressource.getRessourceId());
+		setUtilisateurId(utilisateur.getUtilisateurId());
 	}
 }

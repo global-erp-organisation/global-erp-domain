@@ -47,5 +47,12 @@ public class Client extends Partenaire {
 	public Client() {
 		setTypePartenaire(TypePartenaire.CLIENT);
 	}
-
+	
+	@Override
+	public void postConstructOperation() {
+		setCentreId(getCentre().getLocalId());
+		setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
+		setTarifId(getTarif().getTarifId());
+		setZoneId(zone.getLocalId());
+	}
 }

@@ -65,6 +65,12 @@ public class LigneBmqTaxe extends Entite {
         setTaxeId(getTaxe().getTaxeId());
     }
     
+	@Override
+	public void postConstructOperation() {
+		setLigneBmqId(ligneBmq.getLigneBmqId());
+		setTaxeId(taxe.getTaxeId());
+	}
+	
 	@PrePersist
 	private void setKey() {
 		setLigneBmqTaxeId(Utility.getUid());

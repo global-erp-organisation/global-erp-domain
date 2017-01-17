@@ -20,10 +20,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Recouvrement extends Operation {
 
-    @Transient
-    private String bmqId;
-    
-    @JsonBackReference
+	@Transient
+	private String bmqId;
+
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "bmqId")
 	private Bmq bmq;
@@ -31,4 +31,12 @@ public class Recouvrement extends Operation {
 	public Recouvrement() {
 		setSensOperation(SensOperation.ENTREE);
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setResponsableId(getResponsable().getPartenaireId());
+		setPartenaireId(getPartenaire().getPartenaireId());
+		setBmqId(bmq != null ? bmq.getBmqId() : null);
+	}
+
 }

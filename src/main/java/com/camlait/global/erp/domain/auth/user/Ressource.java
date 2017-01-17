@@ -16,7 +16,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.auth.ressource.Utilisateur;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -65,7 +64,7 @@ public class Ressource extends Entite {
 	private Collection<Ressource> items = Sets.newHashSet();
 
 	@JsonManagedReference
-	@ManyToMany(mappedBy = "ressources")
+	@ManyToMany(mappedBy = "ressources", cascade = CascadeType.ALL)
 	@JoinTable(name = "ressource_groupe", joinColumns = @JoinColumn(name = "ressource_id", referencedColumnName = "groupe_id"), inverseJoinColumns = @JoinColumn(name = "groupe_id", referencedColumnName = "ressourcee_id"))
 	private Collection<Groupe> groupes = Sets.newHashSet();
 
@@ -105,5 +104,10 @@ public class Ressource extends Entite {
 	@PrePersist
 	private void setKey() {
 		setRessourceId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setRessourceParentId(ressourceParent.getRessourceId());
 	}
 }

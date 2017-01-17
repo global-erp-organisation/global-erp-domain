@@ -40,11 +40,11 @@ public class ModeleDeReglement extends Entite {
 	private ConditionReglement conditionReglement;
 
 	@Transient
-	private String modeleDeReglementId;
+	private String modeDeReglementId;
 	
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "modeleDeReglementId")
+	@JoinColumn(name = "modeDeReglementId")
 	private ModeDeReglement modeDeReglement;
 
 	@Transient
@@ -61,6 +61,11 @@ public class ModeleDeReglement extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setModeleDeReglementId(Utility.getUid());
+		setModeleId(Utility.getUid());
+	}
+
+	@Override
+	public void postConstructOperation() {
+		setModeDeReglementId(modeDeReglement.getModeDeReglementId());
 	}
 }

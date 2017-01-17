@@ -30,4 +30,11 @@ public class ManquantFinancier extends Operation {
     
     public ManquantFinancier(){        
     }
+    
+	@Override
+	public void postConstructOperation() {
+		setResponsableId(getResponsable().getPartenaireId());
+		setPartenaireId(getPartenaire().getPartenaireId());
+		setVendeurId(vendeur.getPartenaireId());
+	}
 }

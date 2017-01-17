@@ -2,6 +2,8 @@ package com.camlait.global.erp.domain;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
+
 import com.camlait.global.erp.domain.util.MergeBeanUtilsBean;
 
 @SuppressWarnings("serial")
@@ -15,4 +17,7 @@ public abstract class Entite implements Serializable {
 	public Entite merge(Entite from) {
 		return MergeBeanUtilsBean.mergeDefault(from, this);
 	}
+	
+	@PostConstruct
+	public abstract void postConstructOperation();
 }

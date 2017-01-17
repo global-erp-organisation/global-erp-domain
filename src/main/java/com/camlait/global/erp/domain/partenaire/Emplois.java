@@ -46,4 +46,8 @@ public class Emplois extends Entite {
 		setEmploisId(Utility.getUid());
 	}
 
+	@Override
+	public void postConstructOperation() {
+	}
+
 }

@@ -29,4 +29,11 @@ public class OperationDeCaisse extends Operation {
     
     public OperationDeCaisse(){
     }
+    
+	@Override
+	public void postConstructOperation() {
+		setResponsableId(getResponsable().getPartenaireId());
+		setPartenaireId(getPartenaire().getPartenaireId());
+		setJournalId(journal.getJournalId());
+	}
 }

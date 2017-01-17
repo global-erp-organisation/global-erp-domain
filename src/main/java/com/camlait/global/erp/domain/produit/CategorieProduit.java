@@ -113,4 +113,9 @@ public class CategorieProduit extends Entite {
 	private void setKey() {
 		setCategorieParentId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+		setCategorieParentId(categorieParent.getCategorieParentId());
+	}
 }

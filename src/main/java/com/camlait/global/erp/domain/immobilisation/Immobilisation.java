@@ -52,4 +52,7 @@ public class Immobilisation extends Entite {
 		setImmoId(Utility.getUid());
 	}
 
+	@Override
+	public void postConstructOperation() {
+	}
 }

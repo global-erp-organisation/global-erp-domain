@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 public abstract class DocumentDeVente extends DocumentCommerciaux {
     
     @Transient
-    private Long clientId;
+    private String clientId;
     
     @JsonBackReference
     @ManyToOne
@@ -32,7 +32,7 @@ public abstract class DocumentDeVente extends DocumentCommerciaux {
     private Client client;
     
     @Transient
-    private Long zoneId;
+    private String zoneId;
     
     @JsonBackReference
     @ManyToOne
@@ -44,5 +44,16 @@ public abstract class DocumentDeVente extends DocumentCommerciaux {
     public DocumentDeVente() {
         setSensOperation(SensOperation.SORTIE);
         setTypeDocument(TypeDocuments.DOCUMENT_DE_VENTE);
-    }    
+    } 
+    
+	@Override
+	public void postConstructOperation() {
+		setMagasinId(getMagasin().getMagasinId());
+		setResponsableId(getResponsableDocument().getPartenaireId());
+		setBmqId(getBmq() != null ? getBmq().getBmqId() : null);
+		setInventaireId(getInventaire() != null ? getInventaire().getInventaireId() : null);
+		setClientId(client.getPartenaireId());
+		setZoneId(zone.getLocalId());
+	}
+
 }

@@ -47,4 +47,8 @@ public class ModeDeReglement extends Entite {
 	private void setKey() {
 		setModeDeReglementId(Utility.getUid());
 	}
+
+	@Override
+	public void postConstructOperation() {
+	}
 }
