@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.auth;
+package com.camlait.global.erp.domain.auth.ressource;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -17,12 +18,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class TermeLangue {
+public class TermeLangue extends Entite{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

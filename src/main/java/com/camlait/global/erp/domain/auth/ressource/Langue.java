@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.auth;
+package com.camlait.global.erp.domain.auth.ressource;
 
 import java.util.Collection;
 
@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @Data
 @AllArgsConstructor(suppressConstructorProperties=true)

@@ -20,6 +20,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)

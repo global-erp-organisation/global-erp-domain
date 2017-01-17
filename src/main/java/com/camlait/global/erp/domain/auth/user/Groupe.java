@@ -1,14 +1,19 @@
-package com.camlait.global.erp.domain.auth;
+package com.camlait.global.erp.domain.auth.user;
 
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.auth.ressource.Utilisateur;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -18,6 +23,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -37,6 +43,18 @@ public class Groupe extends Entite {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "groupe")
 	private Collection<GroupeUtilisateur> groupeUtilisateurs = Sets.newHashSet();
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "groupe")
+	private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
+
+	
+	@JsonManagedReference
+	@ManyToMany(mappedBy = "groupes", cascade = CascadeType.ALL)
+	@JoinTable(name = "groupe_utilisateur", 
+	joinColumns = @JoinColumn(name = "groupe_id", referencedColumnName = "utilisateur_id"), 
+	inverseJoinColumns = @JoinColumn(name = "utilisateur_id", referencedColumnName = "groupe_id"))
+	private Collection<Utilisateur> utilisateurs = Sets.newHashSet();
 
 	public Groupe() {
 		setDateDeCreation(new Date());

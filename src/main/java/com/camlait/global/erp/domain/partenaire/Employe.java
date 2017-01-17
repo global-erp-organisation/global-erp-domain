@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.auth.Utilisateur;
+import com.camlait.global.erp.domain.auth.ressource.Utilisateur;
 import com.camlait.global.erp.domain.enumeration.Sexe;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data

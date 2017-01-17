@@ -1,8 +1,11 @@
 package com.camlait.global.erp.domain;
 
+import java.io.Serializable;
+
 import com.camlait.global.erp.domain.util.MergeBeanUtilsBean;
 
-public abstract class Entite {
+@SuppressWarnings("serial")
+public abstract class Entite implements Serializable{
     private final MergeBeanUtilsBean bean = new MergeBeanUtilsBean();
 
     /**

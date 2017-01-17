@@ -19,6 +19,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data

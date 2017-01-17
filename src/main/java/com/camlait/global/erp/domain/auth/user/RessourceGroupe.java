@@ -1,8 +1,10 @@
-package com.camlait.global.erp.domain.auth;
+package com.camlait.global.erp.domain.auth.user;
 
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,6 +12,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.enumeration.Etat;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -18,8 +21,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties=true)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -30,7 +34,7 @@ public class RessourceGroupe extends Entite {
 
 	@Transient
 	private String groupId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "groupeId")
@@ -38,11 +42,14 @@ public class RessourceGroupe extends Entite {
 
 	@Transient
 	private String ressourceId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "ressourceId")
 	private Ressource ressource;
+
+	@Enumerated(EnumType.STRING)
+	private Etat etat;
 
 	private Date dateDeCreation;
 
@@ -52,11 +59,11 @@ public class RessourceGroupe extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-	
-	public void setRessourceId(){
-	    setRessourceId(getRessource().getRessourceId());
+
+	public void setRessourceId() {
+		setRessourceId(getRessource().getRessourceId());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setRessourceId(Utility.getUid());

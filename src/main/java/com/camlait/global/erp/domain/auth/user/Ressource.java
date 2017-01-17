@@ -1,18 +1,22 @@
-package com.camlait.global.erp.domain.auth;
+package com.camlait.global.erp.domain.auth.user;
 
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.auth.ressource.Utilisateur;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -23,6 +27,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -59,6 +64,16 @@ public class Ressource extends Entite {
 	@OneToMany(mappedBy = "ressourceParent", fetch = FetchType.EAGER)
 	private Collection<Ressource> items = Sets.newHashSet();
 
+	@JsonManagedReference
+	@ManyToMany(mappedBy = "ressources")
+	@JoinTable(name = "ressource_groupe", joinColumns = @JoinColumn(name = "ressource_id", referencedColumnName = "groupe_id"), inverseJoinColumns = @JoinColumn(name = "groupe_id", referencedColumnName = "ressourcee_id"))
+	private Collection<Groupe> groupes = Sets.newHashSet();
+
+	@JsonManagedReference
+	@ManyToMany(mappedBy = "ressources", cascade = CascadeType.ALL)
+	@JoinTable(name = "ressource_utilisateur", joinColumns = @JoinColumn(name = "ressource_id", referencedColumnName = "code_utilisateur"), inverseJoinColumns = @JoinColumn(name = "code_utilisateur", referencedColumnName = "ressource_id"))
+	private Collection<Utilisateur> utilisateurs = Sets.newHashSet();
+
 	public Ressource() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
@@ -66,6 +81,11 @@ public class Ressource extends Entite {
 
 	public Ressource(String descriptionMenu) {
 		this.title = descriptionMenu;
+	}
+
+	public Ressource(Collection<Groupe> groupes, Collection<Utilisateur> utilisateurs) {
+		this.utilisateurs = utilisateurs;
+		this.groupes = groupes;
 	}
 
 	public Ressource(String descriptionMenu, Ressource menuParent) {
@@ -81,7 +101,7 @@ public class Ressource extends Entite {
 	public boolean possedeDetails() {
 		return (!this.getItems().isEmpty());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setRessourceId(Utility.getUid());

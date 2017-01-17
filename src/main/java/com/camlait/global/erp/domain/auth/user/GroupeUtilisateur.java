@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.auth;
+package com.camlait.global.erp.domain.auth.user;
 
 import java.util.Date;
 
@@ -10,6 +10,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.auth.ressource.Utilisateur;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -18,6 +19,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
@@ -54,7 +56,7 @@ public class GroupeUtilisateur extends Entite {
     }
 
     public void setUtilisateurId() {
-        setUtilisateurId(getUtilsateur().getCodeUtilisateur());
+        setUtilisateurId(getUtilsateur().getUtilisateurId());
     }
 
     public void setGroupeId() {

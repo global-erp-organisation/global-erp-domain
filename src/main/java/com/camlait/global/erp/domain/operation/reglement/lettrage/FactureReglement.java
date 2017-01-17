@@ -20,6 +20,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
@@ -48,6 +49,8 @@ public class FactureReglement extends Entite {
     private Reglement reglement;
 
     private Date dateDeVentilation;
+    
+    private Double montantVentile;
 
     private Date dateDeCreation;
 

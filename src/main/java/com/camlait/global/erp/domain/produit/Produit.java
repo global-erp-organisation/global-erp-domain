@@ -4,17 +4,21 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.document.commerciaux.Taxe;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.inventaire.FicheDeStock;
 import com.camlait.global.erp.domain.inventaire.Stock;
@@ -28,6 +32,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
@@ -60,6 +65,14 @@ public class Produit extends Entite {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
 	private Collection<ProduitTaxe> produitTaxes = Sets.newHashSet();
+	
+	@JsonManagedReference
+	@ManyToMany(mappedBy = "produits", cascade = CascadeType.ALL)
+	@JoinTable(name = "produit_taxe", 
+	joinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "taxe_id"), 
+	inverseJoinColumns = @JoinColumn(name = "taxe_id", referencedColumnName = "produit_id"))
+	private Collection<Taxe> taxes = Sets.newHashSet();
+
 
 	private Date dateDeCreation;
 
@@ -81,7 +94,6 @@ public class Produit extends Entite {
 
 	public void setCategorie(CategorieProduit categorie) {
 		this.categorie = categorie;
-		copieCategorieProduitTaxe();
 	}
 
 	public Produit() {
@@ -94,6 +106,7 @@ public class Produit extends Entite {
 				.mapToLong(s -> s.getQuantiteDisponible()).sum();
 	}
 
+	@PostConstruct
 	private void copieCategorieProduitTaxe() {
 		if (categorie != null) {
 			final Collection<CategorieProduitTaxe> ctaxes = categorie.getCategorieProduitTaxes();

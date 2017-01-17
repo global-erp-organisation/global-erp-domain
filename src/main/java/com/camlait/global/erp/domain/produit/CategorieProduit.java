@@ -10,12 +10,15 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.document.commerciaux.Taxe;
 import com.camlait.global.erp.domain.enumeration.Portee;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -27,6 +30,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
@@ -72,6 +76,14 @@ public class CategorieProduit extends Entite {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
 	private Collection<CategorieProduitTaxe> categorieProduitTaxes = Sets.newHashSet();
+	
+	@JsonManagedReference
+	@ManyToMany(mappedBy = "categorieProduits", cascade = CascadeType.ALL)
+	@JoinTable(name = "categorie_produit_taxe", 
+	joinColumns = @JoinColumn(name = "categorie_produit_id", referencedColumnName = "taxe_id"), 
+	inverseJoinColumns = @JoinColumn(name = "taxe_id", referencedColumnName = "categorie_produit_id"))
+	private Collection<Taxe> taxes = Sets.newHashSet();
+
 
 	public void setCategorieParent(CategorieProduit categorieParent) {
 		this.categorieParent = categorieParent;

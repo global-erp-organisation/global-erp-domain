@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.partenaire.Partenaire;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -19,12 +20,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class PartenaireImmobilisation {
+public class PartenaireImmobilisation extends Entite{
 
 	@Id
 	private String clientImmoId;

@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
@@ -49,5 +50,4 @@ public class Zone extends Localisation {
     public Zone() {
         setTypeLocal(AutreEnum.ZONE);
     }
-
 }
