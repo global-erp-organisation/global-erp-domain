@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.camlait.global.erp.domain.partenaire.Client;
-import com.camlait.global.erp.domain.produit.Tarification;
+import com.camlait.global.erp.domain.prix.Tarification;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;

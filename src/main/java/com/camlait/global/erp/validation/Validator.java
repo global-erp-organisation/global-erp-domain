@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Object validator interface.
  * 
- * @author msigne
+ * @author Martin Blaise Signe
  *
  * @param <T>
  */

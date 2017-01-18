@@ -77,10 +77,9 @@ public class LigneBmq extends Entite {
 		setDerniereMiseAJour(new Date());
 	}
 
-	@PrePersist
 	public void setTaxe() {
-		if (this.getDocument() != null) {
-			this.getDocument().getLigneDocuments().parallelStream().forEach(ld -> {
+		if (document != null && document.isDocumentCommerciaux()) {
+			document.getLigneDocuments().parallelStream().forEach(ld -> {
 				final Collection<LigneBmqTaxe> taxes = ld.getLigneDeDocumentTaxes().stream().map(lt->{
 					return LigneBmqTaxe.builder()
 							.dateDeCreation(new Date())
@@ -107,5 +106,6 @@ public class LigneBmq extends Entite {
 	@PrePersist
 	private void setKey() {
 		setLigneBmqId(Utility.getUid());
+		setTaxe();
 	}
 }

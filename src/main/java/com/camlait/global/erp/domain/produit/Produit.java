@@ -2,7 +2,6 @@ package com.camlait.global.erp.domain.produit;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
@@ -17,11 +16,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.amazonaws.util.CollectionUtils;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.Taxe;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.inventaire.FicheDeStock;
 import com.camlait.global.erp.domain.inventaire.Stock;
+import com.camlait.global.erp.domain.prix.Tarification;
+import com.camlait.global.erp.domain.prix.UnitPrice;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -48,10 +50,10 @@ public class Produit extends Entite {
 
 	private String descriptionProduit;
 
-	private double prixUnitaireProduit;
-
-	private double prixUnitaireMarge;
-
+	@JsonManagedReference
+	@OneToMany(mappedBy = "produit")
+	private Collection<UnitPrice> unitPrices = Sets.newHashSet();
+	
 	@Transient
 	private String categorieProduitId;
 
@@ -63,12 +65,10 @@ public class Produit extends Entite {
 	private boolean produitTaxable;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
-	private Collection<ProduitTaxe> produitTaxes = Sets.newHashSet();
-
-	@JsonManagedReference
 	@ManyToMany(mappedBy = "produits", cascade = CascadeType.ALL)
-	@JoinTable(name = "produit_taxe", joinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "taxe_id"), inverseJoinColumns = @JoinColumn(name = "taxe_id", referencedColumnName = "produit_id"))
+	@JoinTable(name = "produit_taxe", 
+	joinColumns = @JoinColumn(name = "produitId", referencedColumnName = "taxeId"), 
+	inverseJoinColumns = @JoinColumn(name = "taxeId", referencedColumnName = "produitId"))
 	private Collection<Taxe> taxes = Sets.newHashSet();
 
 	private Date dateDeCreation;
@@ -110,12 +110,9 @@ public class Produit extends Entite {
 	@PostConstruct
 	public void copieCategorieProduitTaxe() {
 		if (categorie != null) {
-			final Collection<CategorieProduitTaxe> ctaxes = categorie.getCategorieProduitTaxes();
-			if ((ctaxes != null) && (!ctaxes.isEmpty())) {
-				final Collection<ProduitTaxe> taxes = ctaxes.parallelStream().map(c -> {
-					return ProduitTaxe.builder().produit(this).produitId(this.getProduitId()).taxe(c.getTaxe()).build();
-				}).collect(Collectors.toList());
-				setProduitTaxes(taxes);
+			final Collection<Taxe> ctaxes = categorie.getTaxes();
+			if (!CollectionUtils.isNullOrEmpty(ctaxes) && CollectionUtils.isNullOrEmpty(taxes)) {
+				setTaxes(taxes);
 			}
 		}
 	}

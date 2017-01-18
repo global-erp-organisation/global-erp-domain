@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
+import com.amazonaws.util.CollectionUtils;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.Taxe;
 import com.camlait.global.erp.domain.enumeration.Portee;
@@ -74,20 +75,15 @@ public class CategorieProduit extends Entite {
 	private Collection<Produit> produits = Sets.newHashSet();
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
-	private Collection<CategorieProduitTaxe> categorieProduitTaxes = Sets.newHashSet();
-	
-	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorieProduits", cascade = CascadeType.ALL)
 	@JoinTable(name = "categorie_produit_taxe", 
-	joinColumns = @JoinColumn(name = "categorie_produit_id", referencedColumnName = "taxe_id"), 
-	inverseJoinColumns = @JoinColumn(name = "taxe_id", referencedColumnName = "categorie_produit_id"))
+	joinColumns = @JoinColumn(name = "categorieProduitId", referencedColumnName = "taxeId"), 
+	inverseJoinColumns = @JoinColumn(name = "taxeId", referencedColumnName = "categorieProduitId"))
 	private Collection<Taxe> taxes = Sets.newHashSet();
-
 
 	public void setCategorieParent(CategorieProduit categorieParent) {
 		this.categorieParent = categorieParent;
-		copierCategorieProduitTaxeParent(categorieParent);
+		copierTaxeParent(categorieParent);
 	}
 
 	public CategorieProduit() {
@@ -103,12 +99,13 @@ public class CategorieProduit extends Entite {
 		return !isDetail();
 	}
 
-	private void copierCategorieProduitTaxeParent(CategorieProduit parent) {
-		if ((parent != null) && ((categorieProduitTaxes) != null) && (categorieProduitTaxes.isEmpty())) {
-			setCategorieProduitTaxes(parent.getCategorieProduitTaxes());
+	private void copierTaxeParent(CategorieProduit categorieParent) {
+		final Collection<Taxe> parentTaxes = categorieParent != null ? categorieParent.getTaxes() : null;
+		if (!CollectionUtils.isNullOrEmpty(parentTaxes) && (taxes.isEmpty())) {
+			setTaxes(parentTaxes);
 		}
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setCategorieParentId(Utility.getUid());

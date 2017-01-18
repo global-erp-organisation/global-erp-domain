@@ -1,16 +1,16 @@
-package com.camlait.global.erp.domain.produit;
-
-import java.util.Date;
+package com.camlait.global.erp.domain.prix;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.document.commerciaux.Taxe;
+import com.camlait.global.erp.domain.produit.Produit;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -20,49 +20,57 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
+@Builder
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Builder
-public class ProduitTaxe extends Entite {
+public class UnitPrice extends Entite {
 
 	@Id
-	private String produitTaxeId;
+	private String unitPriceId;
+	
+	private Double value;
 
 	@Transient
 	private String produitId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "produitId")
 	private Produit produit;
-
-	@Transient
-	private String taxeId;
 	
+	@Transient
+	private String priceTypeId;
+
 	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "taxeId")
-	private Taxe taxe;
+	@JoinColumn(name = "priceTypeId")
+	private PriceType priceType;
 
-	private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+	@Transient
+	private String tarificationId;
 
-	public ProduitTaxe() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
-	
-	@PrePersist
-	private void setKey() {
-		setProduitTaxeId(Utility.getUid());
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "tarificationId")
+	private Tarification tarification;
+
+	public UnitPrice() {
 	}
 
 	@Override
 	public void postConstructOperation() {
 		setProduitId(produit.getProduitId());
-		setTaxeId(taxe.getTaxeId());
+		setTarificationId(tarification.getTarificationId());
+		setPriceTypeId(priceType.getPriceTypeId());
+		
+	}
+
+	@PrePersist
+	private void setKey() {
+		setUnitPriceId(Utility.getUid());
 	}
 }

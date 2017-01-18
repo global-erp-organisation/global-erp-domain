@@ -65,12 +65,16 @@ public class Ressource extends Entite {
 
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "ressources", cascade = CascadeType.ALL)
-	@JoinTable(name = "ressource_groupe", joinColumns = @JoinColumn(name = "ressource_id", referencedColumnName = "groupe_id"), inverseJoinColumns = @JoinColumn(name = "groupe_id", referencedColumnName = "ressourcee_id"))
+	@JoinTable(name = "ressource_groupe", 
+	joinColumns = @JoinColumn(name = "ressourceId", referencedColumnName = "groupeId"), 
+	inverseJoinColumns = @JoinColumn(name = "groupeId", referencedColumnName = "ressourceeId"))
 	private Collection<Groupe> groupes = Sets.newHashSet();
 
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "ressources", cascade = CascadeType.ALL)
-	@JoinTable(name = "ressource_utilisateur", joinColumns = @JoinColumn(name = "ressource_id", referencedColumnName = "code_utilisateur"), inverseJoinColumns = @JoinColumn(name = "code_utilisateur", referencedColumnName = "ressource_id"))
+	@JoinTable(name = "ressource_utilisateur", 
+	joinColumns = @JoinColumn(name = "ressourceId", referencedColumnName = "utilisateurId"), 
+	inverseJoinColumns = @JoinColumn(name = "utilisateurId", referencedColumnName = "ressourceId"))
 	private Collection<Utilisateur> utilisateurs = Sets.newHashSet();
 
 	public Ressource() {

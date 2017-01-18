@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.produit;
+package com.camlait.global.erp.domain.prix;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +7,7 @@ import javax.persistence.PrePersist;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.util.Utility;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,6 +16,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper=false)
+@AllArgsConstructor
 @Builder
 public class Tarif extends Entite {
 
@@ -22,14 +24,7 @@ public class Tarif extends Entite {
 	private String tarifId;
 	private String descriptionTarif;
 
-	public Tarif(String descriptionTarif) {
-		this.descriptionTarif = descriptionTarif;
-	}
-
-	public Tarif(String tarifId, String descriptionTarif) {
-		super();
-		this.tarifId = tarifId;
-		this.descriptionTarif = descriptionTarif;
+	public Tarif() {
 	}
 	
 	@PrePersist

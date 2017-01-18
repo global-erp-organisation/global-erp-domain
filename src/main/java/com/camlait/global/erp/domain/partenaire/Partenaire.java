@@ -23,7 +23,7 @@ import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.reglement.ModeleDeReglement;
 import com.camlait.global.erp.domain.organisation.Centre;
-import com.camlait.global.erp.domain.produit.Tarif;
+import com.camlait.global.erp.domain.prix.Tarif;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

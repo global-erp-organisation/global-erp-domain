@@ -6,6 +6,12 @@ import javax.annotation.PostConstruct;
 
 import com.camlait.global.erp.domain.util.MergeBeanUtilsBean;
 
+/**
+ * Entity bas class
+ * 
+ * @author Martin Blaise Signe
+ *
+ */
 @SuppressWarnings("serial")
 public abstract class Entite implements Serializable {
 	/**
@@ -17,7 +23,10 @@ public abstract class Entite implements Serializable {
 	public Entite merge(Entite from) {
 		return MergeBeanUtilsBean.mergeDefault(from, this);
 	}
-	
+
+	/**
+	 * Help to perform all the post constructor operations.
+	 */
 	@PostConstruct
 	public abstract void postConstructOperation();
 }

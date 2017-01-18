@@ -20,10 +20,12 @@ import javax.persistence.Transient;
 import com.amazonaws.util.CollectionUtils;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.bmq.Bmq;
+import com.camlait.global.erp.domain.document.commerciaux.DocumentCommerciaux;
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClient;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClientComptant;
 import com.camlait.global.erp.domain.document.commerciaux.vente.FactureMarge;
+import com.camlait.global.erp.domain.document.stock.DocumentDeStock;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
@@ -72,6 +74,7 @@ public class Document extends Entite {
 	@ManyToOne
 	@JoinColumn(name = "responsableId")
 	private Employe responsableDocument;
+	
 
 	private Date dateDeCreation;
 
@@ -123,6 +126,15 @@ public class Document extends Entite {
 	public boolean isDocumentDeVente() {
 		return this instanceof DocumentDeVente;
 	}
+	
+	public boolean isDocumentCommerciaux() {
+		return this instanceof DocumentCommerciaux;
+	}
+	
+	public boolean stockAffects() {
+		return (this instanceof DocumentDeStock) || (this instanceof FactureClient);
+	}
+
 
 	@PrePersist
 	private void setKey() {

@@ -1,7 +1,8 @@
 package com.camlait.global.erp.domain.exception;
 
 /**
- * Generic exception for data starage.
+ * Generic runtime exception that occurs when something goes wrong during the
+ * storage process.
  * 
  * @author Martin Blaise Signe
  *

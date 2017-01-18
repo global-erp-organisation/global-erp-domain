@@ -49,15 +49,15 @@ public class Taxe extends Entite {
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "taxes", cascade = CascadeType.ALL)
 	@JoinTable(name = "produit_taxe", 
-	joinColumns = @JoinColumn(name = "taxe_id", referencedColumnName = "produit_id"), 
-	inverseJoinColumns = @JoinColumn(name = "produit_id", referencedColumnName = "taxe_id"))
+	joinColumns = @JoinColumn(name = "taxeId", referencedColumnName = "produitId"), 
+	inverseJoinColumns = @JoinColumn(name = "produitId", referencedColumnName = "taxeId"))
 	private Collection<Produit> produits = Sets.newHashSet();
 	
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "taxes", cascade = CascadeType.ALL)
 	@JoinTable(name = "categorie_produit_taxe", 
-	joinColumns = @JoinColumn(name = "taxe_id", referencedColumnName = "categorie_produit_id"), 
-	inverseJoinColumns = @JoinColumn(name = "categorie_produit_id", referencedColumnName = "taxe_id"))
+	joinColumns = @JoinColumn(name = "taxeId", referencedColumnName = "categorieProduitId"), 
+	inverseJoinColumns = @JoinColumn(name = "categorieProduitId", referencedColumnName = "taxeId"))
 	private Collection<CategorieProduit> categorieProduits = Sets.newHashSet();
 
 

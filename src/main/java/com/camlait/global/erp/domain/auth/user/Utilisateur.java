@@ -53,8 +53,8 @@ public class Utilisateur extends Entite {
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "utilisateurs", cascade = CascadeType.ALL)
 	@JoinTable(name = "groupe_utilisateur", 
-	joinColumns = @JoinColumn(name = "utilisateur_id", referencedColumnName = "groupe_id"), 
-	inverseJoinColumns = @JoinColumn(name = "groupe_id", referencedColumnName = "utilisateur_id"))
+	joinColumns = @JoinColumn(name = "utilisateurId", referencedColumnName = "groupeId"), 
+	inverseJoinColumns = @JoinColumn(name = "groupeId", referencedColumnName = "utilisateurId"))
 	private Collection<Groupe> groupes = Sets.newHashSet();
 	
 	public Utilisateur() {

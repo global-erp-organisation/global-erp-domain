@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 
@@ -55,7 +56,7 @@ public class LigneDeDocument extends Entite {
 	private Long quantiteLigne;
 
 	private double prixunitaiteLigne;
-	
+
 	@Transient
 	private String documenId;
 
@@ -63,6 +64,7 @@ public class LigneDeDocument extends Entite {
 	@ManyToOne
 	@JoinColumn(name = "documentId")
 	private Document document;
+	
 
 	private Date dateDeCreation;
 
@@ -88,34 +90,48 @@ public class LigneDeDocument extends Entite {
 	@PrePersist
 	private void setKey() {
 		setLigneDeDocumentId(Utility.getUid());
+		setTaxe();
+	}
+	
+	@PostPersist
+	public void updateStock(){
+		if(document.stockAffects()){
+			if(document.getSensOperation().equals(SensOperation.ENTREE)){
+				
+			}
+			if(document.getSensOperation().equals(SensOperation.SORTIE)){
+				
+			}
+		}
 	}
 
-	@PrePersist
 	public void setTaxe() {
-		if(isStorable()){
-			final Collection<Taxe> taxes = this.getProduit().getTaxes();
-			if (CollectionUtils.isNullOrEmpty(taxes)) {
-				final Collection<LigneDeDocumentTaxe> lt = taxes.parallelStream().map(t->{
-					return LigneDeDocumentTaxe.builder()
-					.dateDeCreation(new Date())
-					.derniereMiseAJour(new Date())
-					.ligneDeDocument(this)
-					.ligneDeDocumentId(this.getLigneDeDocumentId())
-					.tauxDeTaxe(t.getValeurPourcentage())
-					.taxe(t)
-					.taxeId(t.getTaxeId())
-					.build();
-				}).collect(Collectors.toList());
-				setLigneDeDocumentTaxes(lt);
+		if (document != null && document.isDocumentCommerciaux()) {
+			if(isStorable()){
+				final Collection<Taxe> taxes = this.getProduit().getTaxes();
+				if (CollectionUtils.isNullOrEmpty(taxes)) {
+					final Collection<LigneDeDocumentTaxe> lt = taxes.parallelStream().map(t->{
+						return LigneDeDocumentTaxe.builder()
+						.dateDeCreation(new Date())
+						.derniereMiseAJour(new Date())
+						.ligneDeDocument(this)
+						.ligneDeDocumentId(this.getLigneDeDocumentId())
+						.tauxDeTaxe(t.getValeurPourcentage())
+						.taxe(t)
+						.taxeId(t.getTaxeId())
+						.build();
+					}).collect(Collectors.toList());
+					setLigneDeDocumentTaxes(lt);
+				}
+			}else{
+				throw new DataStorageExcetion(unavailableProductMessage(this));
 			}
-		}else{
-			throw new DataStorageExcetion(unavailableProductMessage(this));
 		}
 	}
 
 	@Override
 	public void postConstructOperation() {
 		setProduitId(produit.getProduitId());
-		setDocumenId(document.getDocumentId());		
+		setDocumenId(document.getDocumentId());
 	}
 }
