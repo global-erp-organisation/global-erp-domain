@@ -43,69 +43,69 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class Partenaire extends Entite {
 
-    @Id
-    private String partenaireId;
+	@Id
+	private String partenaireId;
 
-    @Column(name = "codePartenaire", nullable = false, unique = true)
-    private String codePartenaire;
+	@Column(name = "codePartenaire", nullable = false, unique = true)
+	private String codePartenaire;
 
-    @Column(length = 512)
-    private String adresse;
+	@Column(length = 512)
+	private String adresse;
 
-    private String telephone;
+	private String telephone;
 
-    private Date dateDeCreation;
+	private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
+	private Date derniereMiseAJour;
 
-    @Enumerated(EnumType.STRING)
-    private TypePartenaire typePartenaire;
+	@Enumerated(EnumType.STRING)
+	private TypePartenaire typePartenaire;
 
-    @Transient
-    private String centreId;
+	@Transient
+	private String centreId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "centreId")
-    private Centre centre;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "centreId")
+	private Centre centre;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "client")
-    private Collection<DocumentDeVente> documents = Sets.newHashSet();
+	@JsonManagedReference
+	@OneToMany(mappedBy = "client")
+	private Collection<DocumentDeVente> documents = Sets.newHashSet();
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "immobilisation")
-    private Collection<PartenaireImmobilisation> partenaireImmobilisations = Sets.newHashSet();
+	@JsonManagedReference
+	@OneToMany(mappedBy = "immobilisation")
+	private Collection<PartenaireImmobilisation> partenaireImmobilisations = Sets.newHashSet();
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "partenaire")
-    private Collection<Operation> operations = Sets.newHashSet();
+	@JsonManagedReference
+	@OneToMany(mappedBy = "partenaire")
+	private Collection<Operation> operations = Sets.newHashSet();
 
-    @Transient
-    private String groupePartenaireId;
+	@Transient
+	private String groupePartenaireId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "groupePartenaireId")
-    private GroupePartenaire groupePartenaire;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "groupePartenaireId")
+	private GroupePartenaire groupePartenaire;
 
-    @Transient
-    private String tarifId;
+	@Transient
+	private String tarifId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "tarifId")
-    private Tarif tarif;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "tarifId")
+	private Tarif tarif;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "partenaire")
-    private Collection<ModeleDeReglement> modeleDeReglements = Sets.newHashSet();
+	@JsonManagedReference
+	@OneToMany(mappedBy = "partenaire")
+	private Collection<ModeleDeReglement> modeleDeReglements = Sets.newHashSet();
 
-    public Partenaire() {
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
-    }
-    
+	public Partenaire() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
 	@PrePersist
 	private void setKey() {
 		setPartenaireId(Utility.getUid());
@@ -116,5 +116,13 @@ public class Partenaire extends Entite {
 		setCentreId(centre.getLocalId());
 		setGroupePartenaireId(groupePartenaire.getGroupePartenaireId());
 		setTarifId(tarif.getTarifId());
+	}
+
+	public Boolean isEmployee() {
+		return this instanceof Employe;
+	}
+
+	public Boolean isClient() {
+		return this instanceof Client;
 	}
 }

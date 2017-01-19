@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.produit;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
@@ -22,6 +23,7 @@ import com.camlait.global.erp.domain.document.commerciaux.Taxe;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.inventaire.FicheDeStock;
 import com.camlait.global.erp.domain.inventaire.Stock;
+import com.camlait.global.erp.domain.prix.PriceType;
 import com.camlait.global.erp.domain.prix.Tarification;
 import com.camlait.global.erp.domain.prix.UnitPrice;
 import com.camlait.global.erp.domain.util.Utility;
@@ -53,7 +55,7 @@ public class Produit extends Entite {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "produit")
 	private Collection<UnitPrice> unitPrices = Sets.newHashSet();
-	
+
 	@Transient
 	private String categorieProduitId;
 
@@ -63,6 +65,8 @@ public class Produit extends Entite {
 	private CategorieProduit categorie;
 
 	private boolean produitTaxable;
+
+	private Double defaultUnitprice;
 
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "produits", cascade = CascadeType.ALL)
@@ -125,5 +129,24 @@ public class Produit extends Entite {
 	@Override
 	public void postConstructOperation() {
 		setCategorieProduitId(categorie.getCategorieProduitId());
+	}
+
+	/**
+	 * Retrieve the unit price of the current product based on the given price
+	 * type.
+	 * 
+	 * @param type
+	 *            Provide price type.
+	 * @return The unit price that belongs to the given type or the default unit
+	 *         price if no record found for the given price type.
+	 */
+	public Double getUnitPriceByType(PriceType type) {
+		final Optional<UnitPrice> p = unitPrices.stream()
+				.filter(u -> type.getPriceTypeId().equals(u.getPriceTypeId()))
+				.findFirst();
+		if (p.isPresent()) {
+			return p.get().getValue();
+		}
+		return defaultUnitprice;
 	}
 }

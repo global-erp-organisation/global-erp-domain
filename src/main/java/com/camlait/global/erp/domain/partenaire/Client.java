@@ -26,15 +26,15 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Client extends Partenaire {
 
-    @Transient
-    private String zoneId;
-    
-    @JsonBackReference
+	@Transient
+	private String zoneId;
+
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "zoneId")
 	private Zone zone;
 
-    @JsonManagedReference
+	@JsonManagedReference
 	@OneToMany(mappedBy = "client")
 	private Collection<DocumentDeVente> documentDeVentes = Sets.newHashSet();
 
@@ -47,12 +47,20 @@ public class Client extends Partenaire {
 	public Client() {
 		setTypePartenaire(TypePartenaire.CLIENT);
 	}
-	
+
 	@Override
 	public void postConstructOperation() {
 		setCentreId(getCentre().getLocalId());
 		setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
 		setTarifId(getTarif().getTarifId());
 		setZoneId(zone.getLocalId());
+	}
+
+	public Boolean isMarginClient() {
+		return this instanceof ClientAmarge;
+	}
+
+	public Boolean isCashSalesClient() {
+		return this instanceof ClientComptant;
 	}
 }

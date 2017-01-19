@@ -68,4 +68,12 @@ public class Employe extends Partenaire {
 		setEmploisId(emplois.getEmploisId());
 		setUtilisateurId(utilisateur != null ? utilisateur.getUtilisateurId() : null);
 	}
+
+	public Boolean isSeller() {
+		return this instanceof Vendeur;
+	}
+
+	public Boolean isStorer() {
+		return this instanceof Magasinier;
+	}
 }

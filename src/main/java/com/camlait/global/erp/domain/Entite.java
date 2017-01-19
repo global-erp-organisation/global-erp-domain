@@ -20,8 +20,9 @@ public abstract class Entite implements Serializable {
 	 * @param from
 	 * @return
 	 */
-	public Entite merge(Entite from) {
-		return MergeBeanUtilsBean.mergeDefault(from, this);
+	@SuppressWarnings("unchecked")
+	public <T> T merge(T from) {
+		return (T) MergeBeanUtilsBean.mergeDefault(from, this);
 	}
 
 	/**

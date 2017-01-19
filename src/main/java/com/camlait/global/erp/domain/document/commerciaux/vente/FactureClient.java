@@ -28,4 +28,5 @@ public class FactureClient extends DocumentDeVente {
     public FactureClient() {
         setTypeDocument(TypeDocuments.FACTURE_CLIENT);
     }
+    
 }

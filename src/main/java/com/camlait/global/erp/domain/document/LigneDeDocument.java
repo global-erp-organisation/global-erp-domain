@@ -105,7 +105,7 @@ public class LigneDeDocument extends Entite {
 		}
 	}
 
-	public void setTaxe() {
+	public LigneDeDocument setTaxe() {
 		if (document != null && document.isDocumentCommerciaux()) {
 			if(isStorable()){
 				final Collection<Taxe> taxes = this.getProduit().getTaxes();
@@ -127,6 +127,7 @@ public class LigneDeDocument extends Entite {
 				throw new DataStorageExcetion(unavailableProductMessage(this));
 			}
 		}
+		return this;
 	}
 
 	@Override

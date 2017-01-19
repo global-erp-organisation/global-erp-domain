@@ -26,7 +26,7 @@ public class PriceType extends Entite {
 	private String priceTypeId;
 
 	private String description;
-	
+
 	@JsonManagedReference
 	@OneToMany(mappedBy = "priceType")
 	private Collection<UnitPrice> unitPrices = Sets.newHashSet();
@@ -37,4 +37,5 @@ public class PriceType extends Entite {
 	@Override
 	public void postConstructOperation() {
 	}
+
 }
