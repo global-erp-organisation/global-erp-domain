@@ -30,7 +30,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true,exclude="ligneBmqTaxes")
 @Builder
 public class LigneBmq extends Entite {
 
@@ -105,7 +105,7 @@ public class LigneBmq extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setLigneBmqId(Utility.getUid());
+		setLigneBmqId(Utility.getUidFor(ligneBmqId));
 		setTaxe();
 	}
 }

@@ -45,7 +45,7 @@ public class GroupePartenaire extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setGroupePartenaireId(Utility.getUid());
+		setGroupePartenaireId(Utility.getUidFor(groupePartenaireId));
 	}
 
 	@Override

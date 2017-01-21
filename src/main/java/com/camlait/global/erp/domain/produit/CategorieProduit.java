@@ -10,7 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -30,12 +29,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude={"taxes","categorieFilles","produits"})
+@ToString(exclude={"taxes","categorieFilles","produits"})
 @Builder
 public class CategorieProduit extends Entite {
 
@@ -76,9 +77,6 @@ public class CategorieProduit extends Entite {
 
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorieProduits", cascade = CascadeType.ALL)
-	@JoinTable(name = "categorie_produit_taxe", 
-	joinColumns = @JoinColumn(name = "categorieProduitId", referencedColumnName = "taxeId"), 
-	inverseJoinColumns = @JoinColumn(name = "taxeId", referencedColumnName = "categorieProduitId"))
 	private Collection<Taxe> taxes = Sets.newHashSet();
 
 	public void setCategorieParent(CategorieProduit categorieParent) {
@@ -108,7 +106,7 @@ public class CategorieProduit extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setCategorieParentId(Utility.getUid());
+		setCategorieParentId(Utility.getUidFor(categorieProduitId));
 	}
 
 	@Override

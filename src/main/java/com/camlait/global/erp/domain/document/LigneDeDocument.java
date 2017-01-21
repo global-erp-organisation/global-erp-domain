@@ -33,12 +33,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false,exclude="ligneDeDocumentTaxes")
+@ToString(exclude="ligneDeDocumentTaxes")
 @Builder
 public class LigneDeDocument extends Entite {
 
@@ -89,7 +91,7 @@ public class LigneDeDocument extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setLigneDeDocumentId(Utility.getUid());
+		setLigneDeDocumentId(Utility.getUidFor(ligneDeDocumentId));
 		setTaxe();
 	}
 	

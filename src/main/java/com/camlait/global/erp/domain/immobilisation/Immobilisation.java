@@ -49,7 +49,7 @@ public class Immobilisation extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setImmoId(Utility.getUid());
+		setImmoId(Utility.getUidFor(immoId));
 	}
 
 	@Override

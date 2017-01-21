@@ -29,13 +29,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = { "ficheDeStocks", "stocks" })
+@ToString(exclude = { "ficheDeStocks", "stocks" })
 @Builder
 public class Magasin extends Entite {
 	@Id
@@ -48,7 +50,7 @@ public class Magasin extends Entite {
 
 	@Transient
 	private String entrepotId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "entrepotId")
@@ -73,10 +75,10 @@ public class Magasin extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
-		setMagasinId(Utility.getUid());
+		setMagasinId(Utility.getUidFor(magasinId));
 	}
 
 	@Override

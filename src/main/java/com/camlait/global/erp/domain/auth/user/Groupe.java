@@ -6,8 +6,6 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -21,11 +19,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = { "ressourceGroupes", "utilisateurs" })
+@ToString(exclude = { "ressourceGroupes", "utilisateurs" })
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
 public class Groupe extends Entite {
@@ -40,19 +40,11 @@ public class Groupe extends Entite {
 	private Date derniereMiseAJour;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "groupe")
-	private Collection<GroupeUtilisateur> groupeUtilisateurs = Sets.newHashSet();
-	
-	@JsonManagedReference
-	@OneToMany(mappedBy = "groupe")
+	@OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL)
 	private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
 
-	
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "groupes", cascade = CascadeType.ALL)
-	@JoinTable(name = "groupe_utilisateur", 
-	joinColumns = @JoinColumn(name = "groupeId", referencedColumnName = "utilisateurId"), 
-	inverseJoinColumns = @JoinColumn(name = "utilisateurId", referencedColumnName = "groupeId"))
 	private Collection<Utilisateur> utilisateurs = Sets.newHashSet();
 
 	public Groupe() {
@@ -62,7 +54,7 @@ public class Groupe extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setGroupeId(Utility.getUid());
+		setGroupeId(Utility.getUidFor(groupeId));
 	}
 
 	@Override

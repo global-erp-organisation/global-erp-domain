@@ -41,8 +41,8 @@ import com.camlait.global.erp.domain.partenaire.Vendeur;
 
 public final class Utility {
 
-	public static String getUid() {
-		return UUID.randomUUID().toString();
+	public static String getUidFor(String currentKey) {
+		return currentKey == null ? UUID.randomUUID().toString() : currentKey;
 	}
 
 	public static EnumTypeEntite obtenirPrefixe(Entite entite) throws IllegalArgumentException {

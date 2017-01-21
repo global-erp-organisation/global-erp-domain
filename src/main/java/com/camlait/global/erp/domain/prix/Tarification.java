@@ -67,7 +67,7 @@ public class Tarification extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setTarificationId(Utility.getUid());
+		setTarificationId(Utility.getUidFor(tarificationId));
 	}
 
 	@Override

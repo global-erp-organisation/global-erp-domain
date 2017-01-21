@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.auth.ressource;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,12 +18,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @Data
-@AllArgsConstructor(suppressConstructorProperties=true)
-@EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor(suppressConstructorProperties = true)
+@EqualsAndHashCode(callSuper = false, exclude="termeLangues")
+@ToString(exclude="termeLangues")
 @Builder
 public class Langue extends Entite {
 	@Id
@@ -34,28 +37,29 @@ public class Langue extends Entite {
 	private String title;
 
 	private String alt;
-	
+
 	@JsonManagedReference
-	@OneToMany(mappedBy="langue")
+	@OneToMany(mappedBy = "langue", cascade=CascadeType.ALL)
 	private Collection<TermeLangue> termeLangues = Sets.newHashSet();
-	
+
 	public Langue(String key, String title, String alt) {
 		super();
 		this.codeLangue = key;
 		this.title = title;
 		this.alt = alt;
 	}
+
 	public Langue() {
-	}	
-	
+	}
+
 	@PrePersist
 	private void setKey() {
-		setLangId(Utility.getUid());
+		setLangId(Utility.getUidFor(langId));
 	}
-	
+
 	@Override
 	public void postConstructOperation() {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
 	}
 
 }

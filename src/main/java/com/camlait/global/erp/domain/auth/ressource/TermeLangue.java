@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.auth.ressource;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,30 +25,29 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class TermeLangue extends Entite{
+public class TermeLangue extends Entite {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String termeLangueId;
-	
+
 	@Transient
 	private String termeId;
-	
+
 	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name="termeId")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "termeId")
 	private Terme terme;
-	
+
 	@Transient
 	private String langueId;
-	
+
 	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name="langueId")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "langueId")
 	private Langue langue;
 
 	private String value;
-	
+
 	public TermeLangue() {
 		super();
 	}
@@ -66,17 +66,18 @@ public class TermeLangue extends Entite{
 		this.langue = langue;
 		this.value = value;
 	}
-	
-	public void setTermeId(){
-	    setTermeId(getTerme().getTermeId());
+
+	public void setTermeId() {
+		setTermeId(getTerme().getTermeId());
 	}
-	public void setLangueId(){
-	    setLangueId(getLangue().getLangId());
+
+	public void setLangueId() {
+		setLangueId(getLangue().getLangId());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
-		setTermeLangueId(Utility.getUid());
+		setTermeLangueId(Utility.getUidFor(termeLangueId));
 	}
 
 	@Override

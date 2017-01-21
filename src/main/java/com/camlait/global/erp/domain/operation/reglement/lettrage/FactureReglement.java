@@ -63,7 +63,7 @@ public class FactureReglement extends Entite {
     
 	@PrePersist
 	private void setKey() {
-		setFactureReglementId(Utility.getUid());
+		setFactureReglementId(Utility.getUidFor(factureReglementId));
 	}
 
 	@Override

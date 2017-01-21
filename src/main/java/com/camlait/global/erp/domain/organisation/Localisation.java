@@ -51,7 +51,7 @@ public class Localisation extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setLocalId(Utility.getUid());
+		setLocalId(Utility.getUidFor(localId));
 	}
 
 	@Override

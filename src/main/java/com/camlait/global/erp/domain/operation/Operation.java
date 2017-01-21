@@ -73,7 +73,7 @@ public class Operation extends Entite {
     
 	@PrePersist
 	private void setKey() {
-		setOperationId(Utility.getUid());
+		setOperationId(Utility.getUidFor(operationId));
 	}
 
 	@Override

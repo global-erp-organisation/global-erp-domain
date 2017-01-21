@@ -1,9 +1,10 @@
 package com.camlait.global.erp.domain.util;
 
 import static org.apache.commons.lang.reflect.FieldUtils.readField;
-import static com.camlait.global.erp.domain.util.JSONUtils.copy;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.BiFunction;
+
 import org.apache.commons.beanutils.BeanUtilsBean;
 
 /**
@@ -87,9 +88,8 @@ public class MergeBeanUtilsBean extends BeanUtilsBean {
 	 * @throws IllegalAccessException
 	 */
 	public <T> T merge(T from, T to) throws IllegalAccessException, InvocationTargetException {
-		final T toMerge = copy(to);
-		this.copyProperties(toMerge, from);
-		return toMerge;
+		this.copyProperties(to, from);
+		return to;
 	}
 
 	/**

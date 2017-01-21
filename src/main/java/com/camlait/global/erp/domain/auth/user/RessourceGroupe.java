@@ -66,7 +66,7 @@ public class RessourceGroupe extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setRessourceId(Utility.getUid());
+		setRessourceId(Utility.getUidFor(resourceGroupeId));
 	}
 
 	@Override

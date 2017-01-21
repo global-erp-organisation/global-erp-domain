@@ -61,7 +61,7 @@ public class ModeleDeReglement extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setModeleId(Utility.getUid());
+		setModeleId(Utility.getUidFor(modeleId));
 	}
 
 	@Override

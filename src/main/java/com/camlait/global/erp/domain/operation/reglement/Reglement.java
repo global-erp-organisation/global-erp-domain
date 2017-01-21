@@ -17,28 +17,30 @@ import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = "factureReglements")
+@ToString(exclude = "factureReglements")
 public class Reglement extends Operation {
 
-    @JsonManagedReference
+	@JsonManagedReference
 	@OneToMany(mappedBy = "reglement")
 	private Collection<FactureReglement> factureReglements = Sets.newHashSet();
 
-    @Transient
-    private String modeleDeReglementId;
-    
-    @JsonBackReference
+	@Transient
+	private String modeleDeReglementId;
+
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "modeDeReglementId")
 	private ModeDeReglement modeDeReglement;
-    
-    public Reglement(){        
-    }
+
+	public Reglement() {
+	}
 
 	@Override
 	public void postConstructOperation() {

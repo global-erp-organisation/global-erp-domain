@@ -45,7 +45,7 @@ public class ModeDeReglement extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setModeDeReglementId(Utility.getUid());
+		setModeDeReglementId(Utility.getUidFor(modeDeReglementId));
 	}
 
 	@Override

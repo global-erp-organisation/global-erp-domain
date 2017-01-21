@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,11 +24,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude={"items","ressourceGroupes","ressourceUtilisateurs"})
+@ToString(exclude={"items","ressourceGroupes","ressourceUtilisateurs"})
 @Builder
 @AllArgsConstructor(suppressConstructorProperties = true)
 public class Ressource extends Entite {
@@ -64,18 +65,12 @@ public class Ressource extends Entite {
 	private Collection<Ressource> items = Sets.newHashSet();
 
 	@JsonManagedReference
-	@ManyToMany(mappedBy = "ressources", cascade = CascadeType.ALL)
-	@JoinTable(name = "ressource_groupe", 
-	joinColumns = @JoinColumn(name = "ressourceId", referencedColumnName = "groupeId"), 
-	inverseJoinColumns = @JoinColumn(name = "groupeId", referencedColumnName = "ressourceeId"))
-	private Collection<Groupe> groupes = Sets.newHashSet();
+	@ManyToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
+	private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
 
 	@JsonManagedReference
-	@ManyToMany(mappedBy = "ressources", cascade = CascadeType.ALL)
-	@JoinTable(name = "ressource_utilisateur", 
-	joinColumns = @JoinColumn(name = "ressourceId", referencedColumnName = "utilisateurId"), 
-	inverseJoinColumns = @JoinColumn(name = "utilisateurId", referencedColumnName = "ressourceId"))
-	private Collection<Utilisateur> utilisateurs = Sets.newHashSet();
+	@OneToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
+	private Collection<RessourceUtilisateur> ressourceUtilisateurs = Sets.newHashSet();
 
 	public Ressource() {
 		setDateDeCreation(new Date());
@@ -84,11 +79,6 @@ public class Ressource extends Entite {
 
 	public Ressource(String descriptionMenu) {
 		this.title = descriptionMenu;
-	}
-
-	public Ressource(Collection<Groupe> groupes, Collection<Utilisateur> utilisateurs) {
-		this.utilisateurs = utilisateurs;
-		this.groupes = groupes;
 	}
 
 	public Ressource(String descriptionMenu, Ressource menuParent) {
@@ -107,7 +97,7 @@ public class Ressource extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setRessourceId(Utility.getUid());
+		setRessourceId(Utility.getUidFor(ressourceId));
 	}
 
 	@Override

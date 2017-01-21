@@ -62,7 +62,7 @@ public class PartenaireImmobilisation extends Entite{
 	
 	@PrePersist
 	private void setKey() {
-		setClientImmoId(Utility.getUid());
+		setClientImmoId(Utility.getUidFor(clientImmoId));
 	}
 
 	@Override

@@ -21,7 +21,6 @@ import com.camlait.global.erp.domain.operation.Recouvrement;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.partenaire.Vendeur;
 import com.camlait.global.erp.domain.util.Utility;
-import com.camlait.global.erp.validation.Validator;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.base.Joiner;
@@ -32,12 +31,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false,exclude={"documents","recouvrements","ligneBmqs"})
+@ToString(exclude={"documents","recouvrements","ligneBmqs"})
 @Builder
 public class Bmq extends Entite {
 
@@ -88,7 +89,6 @@ public class Bmq extends Entite {
 	@JoinColumn(name = "responsableId")
 	private Employe responsable;
 
-	private final Validator<Bmq> validator = new BmqValidator();
 
 	public Bmq() {
 		setDateDeCreation(new Date());
@@ -97,8 +97,8 @@ public class Bmq extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setBmqId(Utility.getUid());
-		final List<String> errors = validator.validate(this);
+		setBmqId(Utility.getUidFor(bmqId));
+		final List<String> errors=Lists.newArrayList();
 		if (!errors.isEmpty()) {
 			throw new DataValidationException(Joiner.on("\n").join(errors));
 		}
@@ -110,17 +110,4 @@ public class Bmq extends Entite {
 		setVendeurId(vendeur.getPartenaireId());
 	}
 
-	/**
-	 * 
-	 * @author Martin Blaise Signe
-	 *
-	 */
-	private class BmqValidator implements Validator<Bmq> {
-
-		@Override
-		public List<String> validate(Bmq toValidate) {
-			List<String> errors = Lists.newArrayList();
-			return errors;
-		}
-	}
 }

@@ -22,51 +22,53 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = "opreations")
+@ToString(exclude = "opreations")
 @Builder
 public class JournalCaisse extends Entite {
 
-    @Id
-    private String journalId;
+	@Id
+	private String journalId;
 
-    @Column(name = "codeJournal", unique = true, nullable = false)
-    private String codeJournal;
+	@Column(name = "codeJournal", unique = true, nullable = false)
+	private String codeJournal;
 
-    private String description;
+	private String description;
 
-    private Date dateDebutJournal;
+	private Date dateDebutJournal;
 
-    private Date dateFinJournal;
+	private Date dateFinJournal;
 
-    @Transient
-    private String caisseId;
+	@Transient
+	private String caisseId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "caisseId")
-    private Caisse caisse;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "caisseId")
+	private Caisse caisse;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "journal")
-    private Collection<OperationDeCaisse> opreations = Sets.newHashSet();
+	@JsonManagedReference
+	@OneToMany(mappedBy = "journal")
+	private Collection<OperationDeCaisse> opreations = Sets.newHashSet();
 
-    private Date dateDeCreation;
+	private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
+	private Date derniereMiseAJour;
 
-    public JournalCaisse() {
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
-    }
-    
+	public JournalCaisse() {
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
 	@PrePersist
 	private void setKey() {
-		setJournalId(Utility.getUid());
+		setJournalId(Utility.getUidFor(journalId));
 	}
 
 	@Override

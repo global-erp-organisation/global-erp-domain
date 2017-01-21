@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.prix;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -37,7 +38,7 @@ public class UnitPrice extends Entite {
 	private String produitId;
 
 	@JsonBackReference
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "produitId")
 	private Produit produit;
 	
@@ -71,6 +72,6 @@ public class UnitPrice extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setUnitPriceId(Utility.getUid());
+		setUnitPriceId(Utility.getUidFor(unitPriceId));
 	}
 }

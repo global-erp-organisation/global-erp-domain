@@ -54,7 +54,7 @@ public class Caisse extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setCaisseId(Utility.getUid());
+		setCaisseId(Utility.getUidFor(caisseId));
 	}
 
 	@Override

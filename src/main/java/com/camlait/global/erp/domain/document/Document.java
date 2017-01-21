@@ -41,13 +41,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false,exclude="ligneDocuments")
+@ToString(exclude="ligneDocuments")
 @Builder
 public class Document extends Entite {
 
@@ -139,7 +141,7 @@ public class Document extends Entite {
 	@PrePersist
 	private void setKey() {
 		if (!CollectionUtils.isNullOrEmpty(ligneDocuments)) {
-			setDocumentId(Utility.getUid());
+			setDocumentId(Utility.getUidFor(documentId));
 		} else {
 			throw new DataStorageExcetion("Unable to store a document with no detail.");
 		}

@@ -108,7 +108,7 @@ public class Partenaire extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setPartenaireId(Utility.getUid());
+		setPartenaireId(Utility.getUidFor(partenaireId));
 	}
 
 	@Override

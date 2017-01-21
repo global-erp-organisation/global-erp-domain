@@ -24,12 +24,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude="magasins")
+@ToString(exclude="magasins")
 @Builder
 public class Entrepot extends Entite {
 
@@ -72,7 +74,7 @@ public class Entrepot extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setEntrepotId(Utility.getUid());
+		setEntrepotId(Utility.getUidFor(entrepotId));
 	}
 
 	@Override

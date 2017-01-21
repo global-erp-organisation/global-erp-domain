@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -35,12 +34,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = { "unitPrices", "taxes", "stocks", "ficheDeStocks", "tarifications" })
+@ToString(exclude = { "unitPrices", "taxes", "stocks", "ficheDeStocks", "tarifications" })
 @Builder
 public class Produit extends Entite {
 
@@ -70,9 +71,6 @@ public class Produit extends Entite {
 
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "produits", cascade = CascadeType.ALL)
-	@JoinTable(name = "produit_taxe", 
-	joinColumns = @JoinColumn(name = "produitId", referencedColumnName = "taxeId"), 
-	inverseJoinColumns = @JoinColumn(name = "taxeId", referencedColumnName = "produitId"))
 	private Collection<Taxe> taxes = Sets.newHashSet();
 
 	private Date dateDeCreation;
@@ -123,7 +121,7 @@ public class Produit extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setProduitId(Utility.getUid());
+		setProduitId(Utility.getUidFor(produitId));
 	}
 
 	@Override
@@ -141,8 +139,7 @@ public class Produit extends Entite {
 	 *         price if no record found for the given price type.
 	 */
 	public Double getUnitPriceByType(PriceType type) {
-		final Optional<UnitPrice> p = unitPrices.stream()
-				.filter(u -> type.getPriceTypeId().equals(u.getPriceTypeId()))
+		final Optional<UnitPrice> p = unitPrices.stream().filter(u -> type.getPriceTypeId().equals(u.getPriceTypeId()))
 				.findFirst();
 		if (p.isPresent()) {
 			return p.get().getValue();

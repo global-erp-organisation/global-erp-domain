@@ -42,7 +42,7 @@ public class LigneBmqTaxe extends Entite {
     private String taxeId;
 
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "taxeId")
     private Taxe taxe;
 
@@ -73,6 +73,6 @@ public class LigneBmqTaxe extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setLigneBmqTaxeId(Utility.getUid());
+		setLigneBmqTaxeId(Utility.getUidFor(ligneBmqTaxeId));
 	}
 }

@@ -58,7 +58,7 @@ public class LigneDeDocumentTaxe extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setLigneDeDocumentTaxeId(Utility.getUid());
+		setLigneDeDocumentTaxeId(Utility.getUidFor(ligneDeDocumentTaxeId));
 	}
 
 	@Override

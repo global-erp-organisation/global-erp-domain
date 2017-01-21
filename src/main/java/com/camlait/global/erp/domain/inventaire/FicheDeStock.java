@@ -54,7 +54,7 @@ public class FicheDeStock extends Entite {
     
 	@PrePersist
 	private void setKey() {
-		setFicheId(Utility.getUid());
+		setFicheId(Utility.getUidFor(ficheId));
 	}
 
 	@Override

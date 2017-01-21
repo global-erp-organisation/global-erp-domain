@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 
@@ -23,12 +21,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = { "produits", "categorieProduits" })
+@ToString(exclude = { "produits", "categorieProduits" })
 @Builder
 public class Taxe extends Entite {
 
@@ -45,21 +45,14 @@ public class Taxe extends Entite {
 	private Date dateDeCreation;
 
 	private Date derniereMiseAJour;
-	
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "taxes", cascade = CascadeType.ALL)
-	@JoinTable(name = "produit_taxe", 
-	joinColumns = @JoinColumn(name = "taxeId", referencedColumnName = "produitId"), 
-	inverseJoinColumns = @JoinColumn(name = "produitId", referencedColumnName = "taxeId"))
-	private Collection<Produit> produits = Sets.newHashSet();
-	
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "taxes", cascade = CascadeType.ALL)
-	@JoinTable(name = "categorie_produit_taxe", 
-	joinColumns = @JoinColumn(name = "taxeId", referencedColumnName = "categorieProduitId"), 
-	inverseJoinColumns = @JoinColumn(name = "categorieProduitId", referencedColumnName = "taxeId"))
-	private Collection<CategorieProduit> categorieProduits = Sets.newHashSet();
 
+	@JsonManagedReference
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Collection<Produit> produits = Sets.newHashSet();
+
+	@JsonManagedReference
+	@ManyToMany(cascade = CascadeType.ALL)
+	private Collection<CategorieProduit> categorieProduits = Sets.newHashSet();
 
 	public Taxe(String taxeId, String codeTaxe) {
 		super();
@@ -71,15 +64,14 @@ public class Taxe extends Entite {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
-		setTaxeId(Utility.getUid());
+		setTaxeId(Utility.getUidFor(taxeId));
 	}
 
 	@Override
 	public void postConstructOperation() {
 	}
-
 
 }

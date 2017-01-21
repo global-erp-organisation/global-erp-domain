@@ -29,7 +29,7 @@ public class Tarif extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setTarifId(Utility.getUid());
+		setTarifId(Utility.getUidFor(tarifId));
 	}
 
 	@Override

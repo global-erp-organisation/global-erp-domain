@@ -69,7 +69,7 @@ public class RessourceUtilisateur extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setRessourceUtilisateurId(Utility.getUid());
+		setRessourceUtilisateurId(Utility.getUidFor(ressourceUtilisateurId));
 	}
 
 	@Override

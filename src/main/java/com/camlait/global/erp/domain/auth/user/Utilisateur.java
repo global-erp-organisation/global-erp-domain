@@ -8,8 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -22,12 +20,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = { "employes", "ressourceUtilisateurs" })
+@ToString(exclude = { "employes", "ressourceUtilisateurs" })
 @Builder
 public class Utilisateur extends Entite {
 	@Id
@@ -51,12 +51,9 @@ public class Utilisateur extends Entite {
 	private Collection<RessourceUtilisateur> ressourceUtilisateurs = Sets.newHashSet();
 
 	@JsonManagedReference
-	@ManyToMany(mappedBy = "utilisateurs", cascade = CascadeType.ALL)
-	@JoinTable(name = "groupe_utilisateur", 
-	joinColumns = @JoinColumn(name = "utilisateurId", referencedColumnName = "groupeId"), 
-	inverseJoinColumns = @JoinColumn(name = "groupeId", referencedColumnName = "utilisateurId"))
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Groupe> groupes = Sets.newHashSet();
-	
+
 	public Utilisateur() {
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
@@ -66,7 +63,7 @@ public class Utilisateur extends Entite {
 	public void postConstructOperation() {
 		ressourceGroupCopy();
 	}
-	
+
 	private void ressourceGroupCopy() {
 		if (groupes != null && !groupes.isEmpty()) {
 			groupes.stream().forEach(g -> {

@@ -65,7 +65,7 @@ public class LigneInventaire extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setLigneInventaireId(Utility.getUid());
+		setLigneInventaireId(Utility.getUidFor(ligneInventaireId));
 	}
 
 	@Override

@@ -60,7 +60,7 @@ public class Stock extends Entite {
     
 	@PrePersist
 	private void setKey() {
-		setStockId(Utility.getUid());
+		setStockId(Utility.getUidFor(stockId));
 	}
 
 	@Override

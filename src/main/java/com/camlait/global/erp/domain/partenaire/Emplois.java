@@ -43,7 +43,7 @@ public class Emplois extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setEmploisId(Utility.getUid());
+		setEmploisId(Utility.getUidFor(emploisId));
 	}
 
 	@Override

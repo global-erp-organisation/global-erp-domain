@@ -3,7 +3,6 @@ package com.camlait.global.erp.domain.organisation;
 import java.util.Collection;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
@@ -22,7 +21,7 @@ import lombok.EqualsAndHashCode;
 public class Centre extends Localisation {
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "centre", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "centre")
     private Collection<Region> regions = Sets.newHashSet();
 
     public Centre() {

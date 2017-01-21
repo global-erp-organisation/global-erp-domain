@@ -50,7 +50,7 @@ public class PartenaireModeDeReglement extends Entite {
 	
 	@PrePersist
 	private void setKey() {
-		setPartenaireModeleId(Utility.getUid());
+		setPartenaireModeleId(Utility.getUidFor(partenaireModeleId));
 	}
 
 	@Override

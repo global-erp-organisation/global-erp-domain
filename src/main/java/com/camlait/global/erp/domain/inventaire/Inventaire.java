@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.inventaire;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,12 +26,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false,exclude={"documents","ligneInventaires"})
+@ToString(exclude={"documents","ligneInventaires"})
 @Builder
 public class Inventaire extends Entite {
 
@@ -72,11 +75,11 @@ public class Inventaire extends Entite {
     private boolean inventaireClos;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "inventaire")
+    @OneToMany(mappedBy = "inventaire", cascade=CascadeType.ALL)
     private Collection<Document> documents = Sets.newHashSet();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "inventaire")
+    @OneToMany(mappedBy = "inventaire",cascade=CascadeType.ALL)
     private Collection<LigneInventaire> ligneInventaires = Sets.newHashSet();
 
     private Date dateDeCreation;
@@ -90,7 +93,7 @@ public class Inventaire extends Entite {
     
 	@PrePersist
 	private void setKey() {
-		setInventaireId(Utility.getUid());
+		setInventaireId(Utility.getUidFor(inventaireId));
 	}
 
 	@Override

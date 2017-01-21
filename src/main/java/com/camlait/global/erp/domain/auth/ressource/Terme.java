@@ -38,7 +38,7 @@ public class Terme extends Entite{
 	
 	@PrePersist
 	private void setKey() {
-		setTermeId(Utility.getUid());
+		setTermeId(Utility.getUidFor(termeId));
 	}
 
 	@Override
