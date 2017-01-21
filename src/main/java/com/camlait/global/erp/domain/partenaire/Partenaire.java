@@ -14,16 +14,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.immobilisation.PartenaireImmobilisation;
+import com.camlait.global.erp.domain.localisation.Centre;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.reglement.ModeleDeReglement;
-import com.camlait.global.erp.domain.organisation.Centre;
-import com.camlait.global.erp.domain.prix.Tarif;
+import com.camlait.global.erp.domain.tarif.Tarif;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -41,6 +42,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
+@Table(name="`partenaire-partenaires`")
 public class Partenaire extends Entite {
 
 	@Id

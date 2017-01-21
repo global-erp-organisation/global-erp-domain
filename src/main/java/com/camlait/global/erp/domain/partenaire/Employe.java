@@ -9,9 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.auth.user.Utilisateur;
+import com.camlait.global.erp.domain.auth.Utilisateur;
 import com.camlait.global.erp.domain.enumeration.Sexe;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -25,6 +26,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`partenaire-employes`")
 public class Employe extends Partenaire {
 
 	@Column(unique = true, nullable = false)

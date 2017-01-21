@@ -3,11 +3,12 @@ package com.camlait.global.erp.domain.document.commerciaux;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
-import com.camlait.global.erp.domain.prix.PriceType;
+import com.camlait.global.erp.domain.tarif.PriceType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`doc-document-commerciaux`")
 public class DocumentCommerciaux extends Document {
 
 	@Transient

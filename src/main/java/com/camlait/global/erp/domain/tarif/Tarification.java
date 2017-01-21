@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.prix;
+package com.camlait.global.erp.domain.tarif;
 
 import java.util.Collection;
 
@@ -8,10 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.organisation.Zone;
+import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.produit.Produit;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -29,6 +30,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
+@Table(name="`tarif-tarifications`")
 public class Tarification extends Entite {
 
 	@Id

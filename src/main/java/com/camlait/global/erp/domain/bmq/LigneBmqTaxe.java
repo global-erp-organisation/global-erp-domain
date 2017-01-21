@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
@@ -26,6 +27,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
+@Table(name="`bmq-ligne-bmq-taxes`")
 public class LigneBmqTaxe extends Entite {
     @Id
     private String ligneBmqTaxeId;

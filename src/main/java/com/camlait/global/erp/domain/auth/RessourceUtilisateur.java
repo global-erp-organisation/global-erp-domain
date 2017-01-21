@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.auth.user;
+package com.camlait.global.erp.domain.auth;
 
 import java.util.Date;
 
@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
@@ -27,6 +28,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
+@Table(name="`auth-ressource-utilisateurs`")
 public class RessourceUtilisateur extends Entite {
 
 	@Id

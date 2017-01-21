@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.util.Utility;
@@ -23,6 +24,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
+@Table(name="`partenaire-groupe-partenaires`")
 public class GroupePartenaire extends Entite {
 
 	@Id

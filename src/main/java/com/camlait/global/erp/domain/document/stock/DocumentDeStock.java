@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.document.stock;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`doc-document-de-stocks`")
 public class DocumentDeStock extends Document {
 
 	public DocumentDeStock() {

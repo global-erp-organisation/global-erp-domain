@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.amazonaws.util.CollectionUtils;
@@ -38,6 +39,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude={"taxes","categorieFilles","produits"})
 @ToString(exclude={"taxes","categorieFilles","produits"})
 @Builder
+@Table(name="`produit-categorie-produits`")
 public class CategorieProduit extends Entite {
 
 	@Id

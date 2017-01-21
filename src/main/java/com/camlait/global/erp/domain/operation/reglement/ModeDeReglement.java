@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.util.Utility;
@@ -24,6 +25,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
+@Table(name="`reg-mode-de-reglements`")
 public class ModeDeReglement extends Entite {
 
 	@Id

@@ -3,12 +3,13 @@ package com.camlait.global.erp.domain.document.commerciaux.vente;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.document.commerciaux.DocumentCommerciaux;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
-import com.camlait.global.erp.domain.organisation.Zone;
+import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.partenaire.Client;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -21,6 +22,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`doc-document-de-ventes`")
 public abstract class DocumentDeVente extends DocumentCommerciaux {
     
     @Transient

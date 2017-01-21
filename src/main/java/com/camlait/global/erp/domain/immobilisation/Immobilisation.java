@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.util.Utility;
@@ -22,6 +23,7 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
+@Table(name="`immo-immobilisations`")
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class Immobilisation extends Entite {

@@ -7,8 +7,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.produit.CategorieProduit;
@@ -30,6 +32,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true, exclude = { "produits", "categorieProduits" })
 @ToString(exclude = { "produits", "categorieProduits" })
 @Builder
+@Table(name = "`taxe-taxes`")
 public class Taxe extends Entite {
 
 	@Id
@@ -48,10 +51,12 @@ public class Taxe extends Entite {
 
 	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "`produit-produit-taxe`")
 	private Collection<Produit> produits = Sets.newHashSet();
 
 	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "`produit-categorie-produit-taxe`")
 	private Collection<CategorieProduit> categorieProduits = Sets.newHashSet();
 
 	public Taxe(String taxeId, String codeTaxe) {

@@ -10,10 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.organisation.Centre;
+import com.camlait.global.erp.domain.localisation.Centre;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -33,6 +34,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude="magasins")
 @ToString(exclude="magasins")
 @Builder
+@Table(name="`ent-entrepots`")
 public class Entrepot extends Entite {
 
 	@Id

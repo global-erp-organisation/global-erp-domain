@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.partenaire;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
+@Table(name="`partenaire-caissiers`")
 @EqualsAndHashCode(callSuper = true)
 public class Caissier extends Employe {
 

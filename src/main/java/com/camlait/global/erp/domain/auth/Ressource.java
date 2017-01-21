@@ -1,17 +1,16 @@
-package com.camlait.global.erp.domain.auth.user;
+package com.camlait.global.erp.domain.auth;
 
 import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
@@ -33,6 +32,7 @@ import lombok.ToString;
 @ToString(exclude={"items","ressourceGroupes","ressourceUtilisateurs"})
 @Builder
 @AllArgsConstructor(suppressConstructorProperties = true)
+@Table(name="`auth-ressources`")
 public class Ressource extends Entite {
 
 	@Id
@@ -61,11 +61,11 @@ public class Ressource extends Entite {
 	private Integer ordre;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "ressourceParent", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "ressourceParent")
 	private Collection<Ressource> items = Sets.newHashSet();
 
 	@JsonManagedReference
-	@ManyToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
 	private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
 
 	@JsonManagedReference

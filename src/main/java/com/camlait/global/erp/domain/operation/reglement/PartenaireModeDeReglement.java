@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
@@ -23,6 +24,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
+@Table(name="`reg-partenaire-mode-de-reglements`")
 public class PartenaireModeDeReglement extends Entite {
 
 	@Id

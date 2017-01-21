@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.document.stock.entree;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 
@@ -11,6 +12,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`doc-bon-de-retours`")
 public class BonDeRetour extends DocumentEntree {
 
 	public BonDeRetour() {

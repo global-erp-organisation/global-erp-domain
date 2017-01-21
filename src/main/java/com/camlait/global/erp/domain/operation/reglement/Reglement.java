@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.operation.Operation;
@@ -25,6 +26,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true, exclude = "factureReglements")
 @ToString(exclude = "factureReglements")
+@Table(name="`op-reglements`")
 public class Reglement extends Operation {
 
 	@JsonManagedReference

@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.auth.user;
+package com.camlait.global.erp.domain.auth;
 
 import java.util.Collection;
 import java.util.Date;
@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.util.Utility;
@@ -28,6 +29,7 @@ import lombok.ToString;
 @ToString(exclude = { "ressourceGroupes", "utilisateurs" })
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
+@Table(name="`auth-groupes`")
 public class Groupe extends Entite {
 
 	@Id
@@ -40,7 +42,7 @@ public class Groupe extends Entite {
 	private Date derniereMiseAJour;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "groupe")
 	private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
 
 	@JsonManagedReference

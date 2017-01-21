@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
@@ -39,6 +40,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = { "ficheDeStocks", "stocks" })
 @ToString(exclude = { "ficheDeStocks", "stocks" })
 @Builder
+@Table(name="`ent-magasins`")
 public class Magasin extends Entite {
 	@Id
 	private String magasinId;

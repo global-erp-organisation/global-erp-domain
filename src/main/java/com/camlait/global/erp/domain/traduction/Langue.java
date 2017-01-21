@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.auth.ressource;
+package com.camlait.global.erp.domain.traduction;
 
 import java.util.Collection;
 
@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.util.Utility;
@@ -27,6 +28,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude="termeLangues")
 @ToString(exclude="termeLangues")
 @Builder
+@Table(name="`trans-langue`")
 public class Langue extends Entite {
 	@Id
 	private String langId;

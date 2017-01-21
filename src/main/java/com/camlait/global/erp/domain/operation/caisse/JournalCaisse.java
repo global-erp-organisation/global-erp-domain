@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
@@ -31,6 +32,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = "opreations")
 @ToString(exclude = "opreations")
 @Builder
+@Table(name="`caisse-journal-caisses`")
 public class JournalCaisse extends Entite {
 
 	@Id

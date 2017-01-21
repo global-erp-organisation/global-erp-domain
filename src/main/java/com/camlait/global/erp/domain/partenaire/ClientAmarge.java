@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
 import com.camlait.global.erp.domain.operation.marge.MargeClient;
@@ -19,6 +20,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`partenaire-client-a-marges`")
 public class ClientAmarge extends Client {
 
     @JsonManagedReference

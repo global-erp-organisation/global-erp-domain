@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.operation.caisse;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 
@@ -11,6 +12,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`op-retraits`")
 public class Retrait extends OperationDeCaisse {
 
     public Retrait(){

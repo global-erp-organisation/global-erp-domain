@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.auth.user;
+package com.camlait.global.erp.domain.auth;
 
 import java.util.Collection;
 import java.util.Date;
@@ -8,8 +8,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.partenaire.Employe;
@@ -29,6 +31,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = { "employes", "ressourceUtilisateurs" })
 @ToString(exclude = { "employes", "ressourceUtilisateurs" })
 @Builder
+@Table(name="`auth-utilisateurs`")
 public class Utilisateur extends Entite {
 	@Id
 	private String utilisateurId;
@@ -52,6 +55,7 @@ public class Utilisateur extends Entite {
 
 	@JsonManagedReference
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "`auth-groupe-utilisateur`")
 	private Collection<Groupe> groupes = Sets.newHashSet();
 
 	public Utilisateur() {
@@ -68,9 +72,15 @@ public class Utilisateur extends Entite {
 		if (groupes != null && !groupes.isEmpty()) {
 			groupes.stream().forEach(g -> {
 				Collection<RessourceUtilisateur> ru = g.getRessourceGroupes().stream().map(rg -> {
-					return RessourceUtilisateur.builder().dateDeCreation(new Date()).derniereMiseAJour(new Date())
-							.etat(rg.getEtat()).ressource(rg.getRessource()).ressourceId(rg.getRessourceId())
-							.utilisateur(this).utilisateurId(this.getUtilisateurId()).build();
+					return RessourceUtilisateur.builder()
+							.dateDeCreation(new Date())
+							.derniereMiseAJour(new Date())
+							.etat(rg.getEtat())
+							.ressource(rg.getRessource())
+							.ressourceId(rg.getRessourceId())
+							.utilisateur(this)
+							.utilisateurId(this.getUtilisateurId())
+							.build();
 
 				}).collect(Collectors.toList());
 				ressourceUtilisateurs.addAll(ru);

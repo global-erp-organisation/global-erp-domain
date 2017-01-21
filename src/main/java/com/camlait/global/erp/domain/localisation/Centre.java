@@ -1,9 +1,10 @@
-package com.camlait.global.erp.domain.organisation;
+package com.camlait.global.erp.domain.localisation;
 
 import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -18,6 +19,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`loc-centres`")
 public class Centre extends Localisation {
 
     @JsonManagedReference

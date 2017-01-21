@@ -6,11 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
 import com.camlait.global.erp.domain.enumeration.TypePartenaire;
-import com.camlait.global.erp.domain.organisation.Zone;
+import com.camlait.global.erp.domain.localisation.Zone;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -24,6 +25,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`partenaire-clients`")
 public class Client extends Partenaire {
 
 	@Transient

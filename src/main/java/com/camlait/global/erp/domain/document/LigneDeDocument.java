@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PostPersist;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.amazonaws.util.CollectionUtils;
@@ -42,6 +43,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false,exclude="ligneDeDocumentTaxes")
 @ToString(exclude="ligneDeDocumentTaxes")
 @Builder
+@Table(name="`doc-ligne-de-documents`")
 public class LigneDeDocument extends Entite {
 
 	@Id

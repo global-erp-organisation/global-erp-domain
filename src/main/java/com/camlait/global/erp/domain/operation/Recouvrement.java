@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.operation;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.bmq.Bmq;
@@ -18,6 +19,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`op-recouvrements`")
 public class Recouvrement extends Operation {
 
 	@Transient

@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 import com.camlait.global.erp.domain.operation.reglement.lettrage.FactureReglement;
@@ -22,6 +23,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true, exclude="factureReglements")
 @ToString(exclude="factureReglements")
+@Table(name="`doc-facture-clients`")
 public class FactureClient extends DocumentDeVente {
 
     @JsonManagedReference

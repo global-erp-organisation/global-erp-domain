@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.organisation;
+package com.camlait.global.erp.domain.localisation;
 
 import java.util.Collection;
 
@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
@@ -23,27 +24,27 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Secteur extends Localisation {
+@Table(name="`loc-regions`")
+public class Region extends Localisation {
 
     @Transient
-    private String regionId;
+    private String centreId;
     
     @JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "regionId")
-	private Region region;
+	@JoinColumn(name = "centreId")
+	private Centre centre;
 
     @JsonManagedReference
-	@OneToMany(mappedBy = "secteur", fetch = FetchType.EAGER)
-	private Collection<Zone> zones = Sets.newHashSet();
+	@OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
+	private Collection<Secteur> secteurs = Sets.newHashSet();
 
-	public Secteur() {
-		setTypeLocal(AutreEnum.SECTEUR);
+	public Region() {
+		setTypeLocal(AutreEnum.REGION);
 	}
 	
 	@Override
 	public void postConstructOperation() {
-		setRegionId(region.getLocalId());
+		setCentreId(centre.getLocalId());
 	}
-
 }

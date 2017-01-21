@@ -1,6 +1,7 @@
-package com.camlait.global.erp.domain.prix;
+package com.camlait.global.erp.domain.tarif;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,6 +10,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Table(name="`tarif-regular-unit-prices`")
 public class RegularUnitPrice extends UnitPrice {
 	
 	public RegularUnitPrice(){		

@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.amazonaws.util.CollectionUtils;
@@ -22,9 +23,9 @@ import com.camlait.global.erp.domain.document.commerciaux.Taxe;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.inventaire.FicheDeStock;
 import com.camlait.global.erp.domain.inventaire.Stock;
-import com.camlait.global.erp.domain.prix.PriceType;
-import com.camlait.global.erp.domain.prix.Tarification;
-import com.camlait.global.erp.domain.prix.UnitPrice;
+import com.camlait.global.erp.domain.tarif.PriceType;
+import com.camlait.global.erp.domain.tarif.Tarification;
+import com.camlait.global.erp.domain.tarif.UnitPrice;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -43,6 +44,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = { "unitPrices", "taxes", "stocks", "ficheDeStocks", "tarifications" })
 @ToString(exclude = { "unitPrices", "taxes", "stocks", "ficheDeStocks", "tarifications" })
 @Builder
+@Table(name="`produit-produits`")
 public class Produit extends Entite {
 
 	@Id
