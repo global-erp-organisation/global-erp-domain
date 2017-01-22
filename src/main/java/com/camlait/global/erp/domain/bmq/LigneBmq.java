@@ -2,15 +2,18 @@ package com.camlait.global.erp.domain.bmq;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -31,9 +34,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = true,exclude="ligneBmqTaxes")
+@EqualsAndHashCode(callSuper = true, exclude = "ligneBmqTaxes")
 @Builder
-@Table(name="`bmq-ligne-bmqs`")
+@Table(name = "`bmq-ligne-bmqs`")
 public class LigneBmq extends Entite {
 
 	@Id
@@ -71,27 +74,18 @@ public class LigneBmq extends Entite {
 	private Document document;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "ligneBmq", cascade = CascadeType.ALL)
-	private Collection<LigneBmqTaxe> ligneBmqTaxes = Sets.newHashSet();
+	@OneToMany(mappedBy = "ligneBmq", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<LigneBmqTaxe> ligneBmqTaxes = Sets.newHashSet();
 
 	public LigneBmq() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	public void setTaxe() {
 		if (document != null && document.isDocumentCommerciaux()) {
 			document.getLigneDocuments().parallelStream().forEach(ld -> {
-				final Collection<LigneBmqTaxe> taxes = ld.getLigneDeDocumentTaxes().stream().map(lt->{
-					return LigneBmqTaxe.builder()
-							.dateDeCreation(new Date())
-							.derniereMiseAJour(new Date())
-							.ligneBmq(this)
-							.ligneBmqId(this.getLigneBmqId())
-							.tauxDeTaxe(lt.getTauxDeTaxe())
-							.taxe(lt.getTaxe())
-							.taxeId(lt.getTaxeId())
-							.build();
+				final Collection<LigneBmqTaxe> taxes = ld.getLigneDeDocumentTaxes().stream().map(lt -> {
+					return LigneBmqTaxe.builder().ligneBmq(this).ligneBmqId(this.getLigneBmqId())
+							.tauxDeTaxe(lt.getTauxDeTaxe()).taxe(lt.getTaxe()).taxeId(lt.getTaxeId()).build();
 				}).collect(Collectors.toList());
 				ligneBmqTaxes.addAll(taxes);
 			});
@@ -102,12 +96,20 @@ public class LigneBmq extends Entite {
 	public void postConstructOperation() {
 		setProduitId(produit.getProduitId());
 		setBmqId(bmq.getBmqId());
-		setDocumentId(document.getDocumentId());		
+		setDocumentId(document.getDocumentId());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setLigneBmqId(Utility.getUidFor(ligneBmqId));
 		setTaxe();
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
+	}
+
 }

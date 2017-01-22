@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.operation.reglement;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -7,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -56,6 +59,9 @@ public class ModeleDeReglement extends Entite {
 	@ManyToOne
 	@JoinColumn(name = "partenaireId")
 	private Partenaire partenaire;
+	
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
 
 	public ModeleDeReglement() {
 		super();
@@ -64,7 +70,15 @@ public class ModeleDeReglement extends Entite {
 	@PrePersist
 	private void setKey() {
 		setModeleId(Utility.getUidFor(modeleId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
+	
+	@PreUpdate
+	private void preUpdate(){
+		setDerniereMiseAJour(new Date());
+	}
+
 
 	@Override
 	public void postConstructOperation() {

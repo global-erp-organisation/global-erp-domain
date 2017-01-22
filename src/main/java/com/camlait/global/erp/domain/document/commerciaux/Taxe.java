@@ -10,13 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.produit.CategorieProduit;
 import com.camlait.global.erp.domain.produit.Produit;
 import com.camlait.global.erp.domain.util.Utility;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
@@ -49,12 +50,12 @@ public class Taxe extends Entite {
 
 	private Date derniereMiseAJour;
 
-	@JsonManagedReference
+	@JsonBackReference
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "`produit-produit-taxe`")
 	private Collection<Produit> produits = Sets.newHashSet();
 
-	@JsonManagedReference
+	@JsonBackReference
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "`produit-categorie-produit-taxe`")
 	private Collection<CategorieProduit> categorieProduits = Sets.newHashSet();
@@ -66,13 +67,18 @@ public class Taxe extends Entite {
 	}
 
 	public Taxe() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	@PrePersist
 	private void setKey() {
 		setTaxeId(Utility.getUidFor(taxeId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

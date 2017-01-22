@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.produit;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -36,10 +38,10 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false, exclude={"taxes","categorieFilles","produits"})
-@ToString(exclude={"taxes","categorieFilles","produits"})
+@EqualsAndHashCode(callSuper = false, exclude = { "taxes", "categorieFilles", "produits" })
+@ToString(exclude = { "taxes", "categorieFilles", "produits" })
 @Builder
-@Table(name="`produit-categorie-produits`")
+@Table(name = "`produit-categorie-produits`")
 public class CategorieProduit extends Entite {
 
 	@Id
@@ -49,7 +51,7 @@ public class CategorieProduit extends Entite {
 	private String categorieParentId;
 
 	@JsonBackReference
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "categorieParentId")
 	private CategorieProduit categorieParent;
 
@@ -70,16 +72,16 @@ public class CategorieProduit extends Entite {
 	private Date derniereMiseAJour;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "categorieParent")
-	private Collection<CategorieProduit> categorieFilles = Sets.newHashSet();
+	@OneToMany(mappedBy = "categorieParent", cascade = CascadeType.ALL)
+	private Set<CategorieProduit> categorieFilles = Sets.newHashSet();
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "categorie")
-	private Collection<Produit> produits = Sets.newHashSet();
+	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
+	private Set<Produit> produits = Sets.newHashSet();
 
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorieProduits", cascade = CascadeType.ALL)
-	private Collection<Taxe> taxes = Sets.newHashSet();
+	private Set<Taxe> taxes = Sets.newHashSet();
 
 	public void setCategorieParent(CategorieProduit categorieParent) {
 		this.categorieParent = categorieParent;
@@ -87,8 +89,6 @@ public class CategorieProduit extends Entite {
 	}
 
 	public CategorieProduit() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	public boolean isDetail() {
@@ -100,7 +100,7 @@ public class CategorieProduit extends Entite {
 	}
 
 	private void copierTaxeParent(CategorieProduit categorieParent) {
-		final Collection<Taxe> parentTaxes = categorieParent != null ? categorieParent.getTaxes() : null;
+		final Set<Taxe> parentTaxes = categorieParent != null ? categorieParent.getTaxes() : null;
 		if (!CollectionUtils.isNullOrEmpty(parentTaxes) && (taxes.isEmpty())) {
 			setTaxes(parentTaxes);
 		}
@@ -108,7 +108,15 @@ public class CategorieProduit extends Entite {
 
 	@PrePersist
 	private void setKey() {
-		setCategorieParentId(Utility.getUidFor(categorieProduitId));
+		setCategorieProduitId(Utility.getUidFor(categorieProduitId));
+		setCategorieParentId(categorieParent != null ? categorieParent.categorieParentId : null);
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,36 +28,46 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
-@Table(name="`inv-fiche-de-stocks`")
+@Table(name = "`inv-fiche-de-stocks`")
 public class FicheDeStock extends Entite {
 
-    @Id
-    private String ficheId;
-    private Date dateFiche;
-    
-    @Transient
-    private String magasinId;
-    
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "magasinId")
-    private Magasin magasin;
+	@Id
+	private String ficheId;
+	private Date dateFiche;
 
-    @Transient
-    private String produitId;
-    
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "produitId")
-    private Produit produit;
+	@Transient
+	private String magasinId;
 
-    public FicheDeStock() {
-        super();
-    }
-    
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "magasinId")
+	private Magasin magasin;
+
+	@Transient
+	private String produitId;
+
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "produitId")
+	private Produit produit;
+
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
+
+	public FicheDeStock() {
+		super();
+	}
+
 	@PrePersist
 	private void setKey() {
 		setFicheId(Utility.getUidFor(ficheId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

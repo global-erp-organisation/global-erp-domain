@@ -36,18 +36,18 @@ public final class JSONUtils {
      *
      * De-Serializes the JSON message to an Object of the specified clazz.
      *
-     * @param message Serialized version of the JSON object
+     * @param jsonMessage Serialized version of the JSON object
      * @param clazz Target class to deserialize to
      *
      * @return Deserialized message into object
      *
      */
-    public static <T> T parseMessage(String message, Class<T> clazz) {
+    public static <T> T deserialized(String jsonMessage, Class<T> clazz) {
         try {
-            return OBJECT_MAPPER.readValue(message.getBytes(), clazz);
+            return OBJECT_MAPPER.readValue(jsonMessage.getBytes(), clazz);
         } catch (IOException e) {
-            LOG.error("Unable to parse message=[{}]", message, e);
-            throw new SerializeException("Unable to parse the provided message", e);
+            LOG.error("Unable to parse message=[{}]", jsonMessage, e);
+            throw new SerializeException("Unable to deserialized the provided message", e);
         }
     }
 
@@ -61,7 +61,7 @@ public final class JSONUtils {
      */
     @SuppressWarnings("unchecked")
     public static <T> T copy(T from) {
-        String serialized = JSONUtils.serializeToJson(from);
-        return parseMessage(serialized, (Class<T>) from.getClass());
+        String serialized = serializeToJson(from);
+        return deserialized(serialized, (Class<T>) from.getClass());
     }
 }

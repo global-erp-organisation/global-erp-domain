@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.traduction;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
@@ -25,10 +27,10 @@ import lombok.ToString;
 @Entity
 @Data
 @AllArgsConstructor(suppressConstructorProperties = true)
-@EqualsAndHashCode(callSuper = false, exclude="termeLangues")
-@ToString(exclude="termeLangues")
+@EqualsAndHashCode(callSuper = false, exclude = "termeLangues")
+@ToString(exclude = "termeLangues")
 @Builder
-@Table(name="`trans-langue`")
+@Table(name = "`trans-langue`")
 public class Langue extends Entite {
 	@Id
 	private String langId;
@@ -41,8 +43,11 @@ public class Langue extends Entite {
 	private String alt;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "langue", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "langue", cascade = CascadeType.ALL)
 	private Collection<TermeLangue> termeLangues = Sets.newHashSet();
+
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
 
 	public Langue(String key, String title, String alt) {
 		super();
@@ -57,6 +62,13 @@ public class Langue extends Entite {
 	@PrePersist
 	private void setKey() {
 		setLangId(Utility.getUidFor(langId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -38,10 +39,10 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false,exclude={"documents","recouvrements","ligneBmqs"})
-@ToString(exclude={"documents","recouvrements","ligneBmqs"})
+@EqualsAndHashCode(callSuper = false, exclude = { "documents", "recouvrements", "ligneBmqs" })
+@ToString(exclude = { "documents", "recouvrements", "ligneBmqs" })
 @Builder
-@Table(name="`bmq-bmqs`")
+@Table(name = "`bmq-bmqs`")
 public class Bmq extends Entite {
 
 	@Id
@@ -91,19 +92,23 @@ public class Bmq extends Entite {
 	@JoinColumn(name = "responsableId")
 	private Employe responsable;
 
-
 	public Bmq() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	@PrePersist
 	private void setKey() {
 		setBmqId(Utility.getUidFor(bmqId));
-		final List<String> errors=Lists.newArrayList();
+		final List<String> errors = Lists.newArrayList();
 		if (!errors.isEmpty()) {
 			throw new DataValidationException(Joiner.on("\n").join(errors));
 		}
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

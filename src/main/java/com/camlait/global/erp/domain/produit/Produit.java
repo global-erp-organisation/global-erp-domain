@@ -3,17 +3,20 @@ package com.camlait.global.erp.domain.produit;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -44,7 +47,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = { "unitPrices", "taxes", "stocks", "ficheDeStocks", "tarifications" })
 @ToString(exclude = { "unitPrices", "taxes", "stocks", "ficheDeStocks", "tarifications" })
 @Builder
-@Table(name="`produit-produits`")
+@Table(name = "`produit-produits`")
 public class Produit extends Entite {
 
 	@Id
@@ -56,14 +59,14 @@ public class Produit extends Entite {
 	private String descriptionProduit;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "produit")
+	@OneToMany(mappedBy = "produit", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Collection<UnitPrice> unitPrices = Sets.newHashSet();
 
 	@Transient
 	private String categorieProduitId;
 
 	@JsonBackReference
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "categorieProduitId")
 	private CategorieProduit categorie;
 
@@ -72,8 +75,8 @@ public class Produit extends Entite {
 	private Double defaultUnitprice;
 
 	@JsonManagedReference
-	@ManyToMany(mappedBy = "produits", cascade = CascadeType.ALL)
-	private Collection<Taxe> taxes = Sets.newHashSet();
+	@ManyToMany(mappedBy = "produits", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Taxe> taxes = Sets.newHashSet();
 
 	private Date dateDeCreation;
 
@@ -82,24 +85,22 @@ public class Produit extends Entite {
 	private boolean suiviEnStock;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "produit")
-	private Collection<Stock> stocks = Sets.newHashSet();
+	@OneToMany(mappedBy = "produit", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Stock> stocks = Sets.newHashSet();
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "produit")
-	private Collection<FicheDeStock> ficheDeStocks = Sets.newHashSet();
+	@OneToMany(mappedBy = "produit", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<FicheDeStock> ficheDeStocks = Sets.newHashSet();
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "produit")
-	private Collection<Tarification> tarifications = Sets.newHashSet();
+	@OneToMany(mappedBy = "produit", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Tarification> tarifications = Sets.newHashSet();
 
 	public void setCategorie(CategorieProduit categorie) {
 		this.categorie = categorie;
 	}
 
 	public Produit() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	public Long availableQuantity(Magasin m) {
@@ -124,6 +125,13 @@ public class Produit extends Entite {
 	@PrePersist
 	private void setKey() {
 		setProduitId(Utility.getUidFor(produitId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override
@@ -147,5 +155,17 @@ public class Produit extends Entite {
 			return p.get().getValue();
 		}
 		return defaultUnitprice;
+	}
+
+	/**
+	 * Retrieve the stock of the current product for a specific store.
+	 * 
+	 * @param m
+	 *            given store.
+	 * @return
+	 */
+	public Stock getStockByStore(Magasin m) {
+		return stocks.stream().filter(s -> m.getMagasinId().equals(s.getMagasin().getMagasinId())).findFirst()
+				.orElse(null);
 	}
 }

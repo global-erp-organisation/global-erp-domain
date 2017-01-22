@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.tarif;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -30,7 +32,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
-@Table(name="`tarif-tarifications`")
+@Table(name = "`tarif-tarifications`")
 public class Tarification extends Entite {
 
 	@Id
@@ -64,12 +66,22 @@ public class Tarification extends Entite {
 	@OneToMany(mappedBy = "produit")
 	private Collection<UnitPrice> unitPrices = Sets.newHashSet();
 
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
+
 	public Tarification() {
 	}
 
 	@PrePersist
 	private void setKey() {
 		setTarificationId(Utility.getUidFor(tarificationId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,15 +28,15 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`immo-partenaire-immos`")
-public class PartenaireImmobilisation extends Entite{
+@Table(name = "`immo-partenaire-immos`")
+public class PartenaireImmobilisation extends Entite {
 
 	@Id
 	private String clientImmoId;
 
 	@Transient
 	private String partenaireId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "partenaireId")
@@ -43,7 +44,7 @@ public class PartenaireImmobilisation extends Entite{
 
 	@Transient
 	private String immoId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "immoId")
@@ -58,13 +59,18 @@ public class PartenaireImmobilisation extends Entite{
 	private Date derniereMiseAJour;
 
 	public PartenaireImmobilisation() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setClientImmoId(Utility.getUidFor(clientImmoId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

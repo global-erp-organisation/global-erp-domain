@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -28,7 +29,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`auth-ressource-utilisateurs`")
+@Table(name = "`auth-ressource-utilisateurs`")
 public class RessourceUtilisateur extends Entite {
 
 	@Id
@@ -65,13 +66,18 @@ public class RessourceUtilisateur extends Entite {
 	}
 
 	public RessourceUtilisateur() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	@PrePersist
 	private void setKey() {
 		setRessourceUtilisateurId(Utility.getUidFor(ressourceUtilisateurId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

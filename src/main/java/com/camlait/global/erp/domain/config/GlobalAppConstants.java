@@ -16,6 +16,7 @@ public class GlobalAppConstants {
 
 	public final static String DAO_BASE_PACKAGE = ROOT_PACKAGE + ".dao";
 	public final static String DOMAIN_BASE_PACKAGE = ROOT_PACKAGE + ".domain";
+	public final static String SERVICE_BASE_PACKAGE = ROOT_PACKAGE + ".delegate";
 
 	// Domain base packages
 	public final static String PRODUCT_DOMAIN_BASE_PACKAGE = DOMAIN_BASE_PACKAGE + ".produit";

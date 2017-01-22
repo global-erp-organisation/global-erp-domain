@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -42,7 +43,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`partenaire-partenaires`")
+@Table(name = "`partenaire-partenaires`")
 public class Partenaire extends Entite {
 
 	@Id
@@ -104,13 +105,18 @@ public class Partenaire extends Entite {
 	private Collection<ModeleDeReglement> modeleDeReglements = Sets.newHashSet();
 
 	public Partenaire() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	@PrePersist
 	private void setKey() {
 		setPartenaireId(Utility.getUidFor(partenaireId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

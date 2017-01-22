@@ -8,17 +8,17 @@ package com.camlait.global.erp.domain.exception;
  *
  */
 @SuppressWarnings("serial")
-public class DataStorageExcetion extends RuntimeException {
+public class DataStorageException extends RuntimeException {
 
-	public DataStorageExcetion(String message) {
+	public DataStorageException(String message) {
 		super(message);
 	}
 
-	public DataStorageExcetion(String message, Throwable cause) {
+	public DataStorageException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public DataStorageExcetion(Throwable cause) {
+	public DataStorageException(Throwable cause) {
 		super(cause);
 	}
 }

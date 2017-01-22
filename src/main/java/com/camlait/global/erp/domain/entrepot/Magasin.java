@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.entrepot;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -40,7 +42,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = { "ficheDeStocks", "stocks" })
 @ToString(exclude = { "ficheDeStocks", "stocks" })
 @Builder
-@Table(name="`ent-magasins`")
+@Table(name = "`ent-magasins`")
 public class Magasin extends Entite {
 	@Id
 	private String magasinId;
@@ -54,7 +56,7 @@ public class Magasin extends Entite {
 	private String entrepotId;
 
 	@JsonBackReference
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "entrepotId")
 	private Entrepot entrepot;
 
@@ -66,21 +68,26 @@ public class Magasin extends Entite {
 	private AutreEnum typeMagasin;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "magasin")
+	@OneToMany(mappedBy = "magasin",cascade = CascadeType.ALL)
 	private Collection<Stock> stocks = Sets.newHashSet();
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "magasin")
+	@OneToMany(mappedBy = "magasin",cascade = CascadeType.ALL)
 	private Collection<FicheDeStock> ficheDeStocks = Sets.newHashSet();
 
 	public Magasin() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	@PrePersist
 	private void setKey() {
 		setMagasinId(Utility.getUidFor(magasinId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

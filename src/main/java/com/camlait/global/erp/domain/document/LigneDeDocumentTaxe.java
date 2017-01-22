@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -26,7 +27,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`doc-ligne-de-document-taxes`")
+@Table(name = "`doc-ligne-de-document-taxes`")
 public class LigneDeDocumentTaxe extends Entite {
 	@Id
 	private String ligneDeDocumentTaxeId;
@@ -54,13 +55,18 @@ public class LigneDeDocumentTaxe extends Entite {
 	private Date derniereMiseAJour;
 
 	public LigneDeDocumentTaxe() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	@PrePersist
 	private void setKey() {
 		setLigneDeDocumentTaxeId(Utility.getUidFor(ligneDeDocumentTaxeId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

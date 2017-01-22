@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -26,7 +27,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`inv-ligne-inventaires`")
+@Table(name = "`inv-ligne-inventaires`")
 public class LigneInventaire extends Entite {
 
 	@Id
@@ -61,13 +62,18 @@ public class LigneInventaire extends Entite {
 	private Date derniereMiseAJour;
 
 	public LigneInventaire() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	@PrePersist
 	private void setKey() {
 		setLigneInventaireId(Utility.getUidFor(ligneInventaireId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -30,7 +31,7 @@ import com.camlait.global.erp.domain.document.stock.DocumentDeStock;
 import com.camlait.global.erp.domain.entrepot.Magasin;
 import com.camlait.global.erp.domain.enumeration.SensOperation;
 import com.camlait.global.erp.domain.enumeration.TypeDocuments;
-import com.camlait.global.erp.domain.exception.DataStorageExcetion;
+import com.camlait.global.erp.domain.exception.DataStorageException;
 import com.camlait.global.erp.domain.inventaire.Inventaire;
 import com.camlait.global.erp.domain.partenaire.Employe;
 import com.camlait.global.erp.domain.util.Utility;
@@ -49,9 +50,9 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false,exclude="ligneDocuments")
-@Table(name="`doc-documents`")
-@ToString(exclude="ligneDocuments")
+@EqualsAndHashCode(callSuper = false, exclude = "ligneDocuments")
+@Table(name = "`doc-documents`")
+@ToString(exclude = "ligneDocuments")
 @Builder
 public class Document extends Entite {
 
@@ -78,7 +79,6 @@ public class Document extends Entite {
 	@ManyToOne
 	@JoinColumn(name = "responsableId")
 	private Employe responsableDocument;
-	
 
 	private Date dateDeCreation;
 
@@ -111,8 +111,6 @@ public class Document extends Entite {
 	private TypeDocuments typeDocument;
 
 	public Document() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	public boolean isFactureClient() {
@@ -130,23 +128,29 @@ public class Document extends Entite {
 	public boolean isDocumentDeVente() {
 		return this instanceof DocumentDeVente;
 	}
-	
+
 	public boolean isDocumentCommerciaux() {
 		return this instanceof DocumentCommerciaux;
 	}
-	
+
 	public boolean stockAffects() {
 		return (this instanceof DocumentDeStock) || (this instanceof FactureClient);
 	}
-
 
 	@PrePersist
 	private void setKey() {
 		if (!CollectionUtils.isNullOrEmpty(ligneDocuments)) {
 			setDocumentId(Utility.getUidFor(documentId));
 		} else {
-			throw new DataStorageExcetion("Unable to store a document with no detail.");
+			throw new DataStorageException("Unable to store a document with no detail.");
 		}
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

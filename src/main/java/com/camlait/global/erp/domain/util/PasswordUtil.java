@@ -1,9 +1,5 @@
 package com.camlait.global.erp.domain.util;
 
-/**
- * Sorce get from.
- * http://stackoverflow.com/questions/2860943/how-can-i-hash-a-password-in-java
- */
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -11,6 +7,11 @@ import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Base64;
 
 import com.camlait.global.erp.domain.config.GlobalAppConstants;
+
+/**
+ * Source get from.
+ * <a href="http://stackoverflow.com/questions/2860943/how-can-i-hash-a-password-in-java"> here </a>
+ */
 
 public final class PasswordUtil {
 	// The higher the number of ITERATIONS the more

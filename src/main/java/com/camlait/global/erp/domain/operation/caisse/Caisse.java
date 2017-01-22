@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,7 +28,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`caisse-caisses`")
+@Table(name = "`caisse-caisses`")
 public class Caisse extends Entite {
 	@Id
 	private String caisseId;
@@ -39,7 +40,7 @@ public class Caisse extends Entite {
 
 	@Transient
 	private String responsableId;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "responsableId")
@@ -50,13 +51,18 @@ public class Caisse extends Entite {
 	private Date derniereMiseAJour;
 
 	public Caisse() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setCaisseId(Utility.getUidFor(caisseId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

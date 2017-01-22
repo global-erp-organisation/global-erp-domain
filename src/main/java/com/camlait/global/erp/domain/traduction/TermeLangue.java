@@ -1,13 +1,14 @@
 package com.camlait.global.erp.domain.traduction;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -26,7 +27,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`trans-terme-langues`")
+@Table(name = "`trans-terme-langues`")
 public class TermeLangue extends Entite {
 
 	@Id
@@ -49,6 +50,8 @@ public class TermeLangue extends Entite {
 	private Langue langue;
 
 	private String value;
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
 
 	public TermeLangue() {
 		super();
@@ -80,6 +83,13 @@ public class TermeLangue extends Entite {
 	@PrePersist
 	private void setKey() {
 		setTermeLangueId(Utility.getUidFor(termeLangueId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

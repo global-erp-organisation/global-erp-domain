@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.tarif;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -8,6 +10,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,23 +30,23 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Table(name="`tarif-unit-prices`")
+@Table(name = "`tarif-unit-prices`")
 @EqualsAndHashCode(callSuper = false)
 public class UnitPrice extends Entite {
 
 	@Id
 	private String unitPriceId;
-	
+
 	private Double value;
 
 	@Transient
 	private String produitId;
 
 	@JsonBackReference
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "produitId")
 	private Produit produit;
-	
+
 	@Transient
 	private String priceTypeId;
 
@@ -51,7 +54,6 @@ public class UnitPrice extends Entite {
 	@ManyToOne
 	@JoinColumn(name = "priceTypeId")
 	private PriceType priceType;
-
 
 	@Transient
 	private String tarificationId;
@@ -61,6 +63,9 @@ public class UnitPrice extends Entite {
 	@JoinColumn(name = "tarificationId")
 	private Tarification tarification;
 
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
+
 	public UnitPrice() {
 	}
 
@@ -69,11 +74,19 @@ public class UnitPrice extends Entite {
 		setProduitId(produit.getProduitId());
 		setTarificationId(tarification.getTarificationId());
 		setPriceTypeId(priceType.getPriceTypeId());
-		
+
 	}
 
 	@PrePersist
 	private void setKey() {
 		setUnitPriceId(Utility.getUidFor(unitPriceId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
+	}
+
 }

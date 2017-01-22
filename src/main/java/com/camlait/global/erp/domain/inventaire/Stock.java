@@ -2,11 +2,13 @@ package com.camlait.global.erp.domain.inventaire;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,42 +29,47 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`inv-stocks`")
+@Table(name = "`inv-stocks`")
 public class Stock extends Entite {
 
-    @Id
-    private String stockId;
+	@Id
+	private String stockId;
 
-    @Transient
-    private String produitId;
+	@Transient
+	private String produitId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "produitId")
-    private Produit produit;
+	@JsonBackReference
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "produitId")
+	private Produit produit;
 
-    @Transient
-    private String magasinId;
+	@Transient
+	private String magasinId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "magasinId")
-    private Magasin magasin;
+	@JsonBackReference
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "magasinId")
+	private Magasin magasin;
 
-    private Long quantiteDisponible;
+	private Long quantiteDisponible;
 
-    private Date dateDeCreation;
+	private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
+	private Date derniereMiseAJour;
 
-    public Stock() {
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
-    }
-    
+	public Stock() {
+	}
+
 	@PrePersist
 	private void setKey() {
 		setStockId(Utility.getUidFor(stockId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

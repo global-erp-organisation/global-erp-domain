@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
@@ -23,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Table(name="`immo-immobilisations`")
+@Table(name = "`immo-immobilisations`")
 @EqualsAndHashCode(callSuper = false)
 @Builder
 public class Immobilisation extends Entite {
@@ -45,13 +46,18 @@ public class Immobilisation extends Entite {
 	private String descriptionImmo;
 
 	public Immobilisation() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setImmoId(Utility.getUidFor(immoId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

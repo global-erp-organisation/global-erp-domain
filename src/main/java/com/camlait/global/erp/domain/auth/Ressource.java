@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -73,8 +74,6 @@ public class Ressource extends Entite {
 	private Collection<RessourceUtilisateur> ressourceUtilisateurs = Sets.newHashSet();
 
 	public Ressource() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	public Ressource(String descriptionMenu) {
@@ -98,7 +97,15 @@ public class Ressource extends Entite {
 	@PrePersist
 	private void setKey() {
 		setRessourceId(Utility.getUidFor(ressourceId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
 	}
+	
+	@PreUpdate
+	private void preUpdate(){
+		setDerniereMiseAJour(new Date());
+	}
+
 
 	@Override
 	public void postConstructOperation() {

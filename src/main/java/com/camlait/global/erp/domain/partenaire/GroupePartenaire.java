@@ -1,11 +1,13 @@
 package com.camlait.global.erp.domain.partenaire;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
@@ -24,7 +26,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
-@Table(name="`partenaire-groupe-partenaires`")
+@Table(name = "`partenaire-groupe-partenaires`")
 public class GroupePartenaire extends Entite {
 
 	@Id
@@ -35,6 +37,9 @@ public class GroupePartenaire extends Entite {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "groupePartenaire")
 	private Collection<Partenaire> partenaires = Sets.newHashSet();
+	
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
 
 	public GroupePartenaire(String descriptionGroupePartenaire) {
 		super();
@@ -44,10 +49,17 @@ public class GroupePartenaire extends Entite {
 	public GroupePartenaire() {
 		super();
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setGroupePartenaireId(Utility.getUidFor(groupePartenaireId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

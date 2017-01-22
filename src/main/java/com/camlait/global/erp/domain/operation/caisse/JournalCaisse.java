@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -32,7 +33,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = "opreations")
 @ToString(exclude = "opreations")
 @Builder
-@Table(name="`caisse-journal-caisses`")
+@Table(name = "`caisse-journal-caisses`")
 public class JournalCaisse extends Entite {
 
 	@Id
@@ -64,13 +65,18 @@ public class JournalCaisse extends Entite {
 	private Date derniereMiseAJour;
 
 	public JournalCaisse() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	@PrePersist
 	private void setKey() {
 		setJournalId(Utility.getUidFor(journalId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

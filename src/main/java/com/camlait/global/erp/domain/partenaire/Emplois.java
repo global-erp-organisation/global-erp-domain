@@ -1,12 +1,14 @@
 package com.camlait.global.erp.domain.partenaire;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.util.Utility;
@@ -37,13 +39,23 @@ public class Emplois extends Entite {
 	@OneToMany(mappedBy = "emplois")
 	private Collection<Employe> employes = Sets.newHashSet();
 
+	private Date dateDeCreation;
+	private Date derniereMiseAJour;
+
 	public Emplois() {
 		super();
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setEmploisId(Utility.getUidFor(emploisId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

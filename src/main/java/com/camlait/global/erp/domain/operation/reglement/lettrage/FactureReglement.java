@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,45 +28,50 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`reg-facture-reglements`")
+@Table(name = "`reg-facture-reglements`")
 public class FactureReglement extends Entite {
 
-    @Id
-    private String factureReglementId;
+	@Id
+	private String factureReglementId;
 
-    @Transient
-    private String documentId;
+	@Transient
+	private String documentId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "documentId")
-    private FactureClient facture;
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "documentId")
+	private FactureClient facture;
 
-    @Transient
-    private String reglementId;
+	@Transient
+	private String reglementId;
 
-    @JsonBackReference
-    
-    @ManyToOne
-    @JoinColumn(name = "reglementId")
-    private Reglement reglement;
+	@JsonBackReference
 
-    private Date dateDeVentilation;
-    
-    private Double montantVentile;
+	@ManyToOne
+	@JoinColumn(name = "reglementId")
+	private Reglement reglement;
 
-    private Date dateDeCreation;
+	private Date dateDeVentilation;
 
-    private Date derniereMiseAJour;
+	private Double montantVentile;
 
-    public FactureReglement() {
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
-    }
-    
+	private Date dateDeCreation;
+
+	private Date derniereMiseAJour;
+
+	public FactureReglement() {
+	}
+
 	@PrePersist
 	private void setKey() {
 		setFactureReglementId(Utility.getUidFor(factureReglementId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

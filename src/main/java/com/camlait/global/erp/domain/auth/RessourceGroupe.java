@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -28,7 +29,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`auth-ressource-groupes`")
+@Table(name = "`auth-ressource-groupes`")
 public class RessourceGroupe extends Entite {
 
 	@Id
@@ -58,8 +59,6 @@ public class RessourceGroupe extends Entite {
 	private Date derniereMiseAJour;
 
 	public RessourceGroupe() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
 
 	public void setRessourceId() {
@@ -69,6 +68,13 @@ public class RessourceGroupe extends Entite {
 	@PrePersist
 	private void setKey() {
 		setRessourceId(Utility.getUidFor(resourceGroupeId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

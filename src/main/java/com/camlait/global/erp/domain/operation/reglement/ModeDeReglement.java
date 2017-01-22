@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
@@ -25,7 +26,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name="`reg-mode-de-reglements`")
+@Table(name = "`reg-mode-de-reglements`")
 public class ModeDeReglement extends Entite {
 
 	@Id
@@ -41,13 +42,18 @@ public class ModeDeReglement extends Entite {
 	private Date derniereMiseAJour;
 
 	public ModeDeReglement() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
 	}
-	
+
 	@PrePersist
 	private void setKey() {
 		setModeDeReglementId(Utility.getUidFor(modeDeReglementId));
+		setDateDeCreation(new Date());
+		setDerniereMiseAJour(new Date());
+	}
+
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override

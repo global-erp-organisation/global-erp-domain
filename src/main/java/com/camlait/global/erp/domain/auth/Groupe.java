@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
@@ -29,7 +30,7 @@ import lombok.ToString;
 @ToString(exclude = { "ressourceGroupes", "utilisateurs" })
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
-@Table(name="`auth-groupes`")
+@Table(name = "`auth-groupes`")
 public class Groupe extends Entite {
 
 	@Id
@@ -42,7 +43,7 @@ public class Groupe extends Entite {
 	private Date derniereMiseAJour;
 
 	@JsonManagedReference
-	@OneToMany(mappedBy = "groupe")
+	@OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL)
 	private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
 
 	@JsonManagedReference
@@ -50,13 +51,18 @@ public class Groupe extends Entite {
 	private Collection<Utilisateur> utilisateurs = Sets.newHashSet();
 
 	public Groupe() {
+	}
+
+	@PrePersist
+	private void prePersist() {
+		setGroupeId(Utility.getUidFor(groupeId));
 		setDateDeCreation(new Date());
 		setDerniereMiseAJour(new Date());
 	}
 
-	@PrePersist
-	private void setKey() {
-		setGroupeId(Utility.getUidFor(groupeId));
+	@PreUpdate
+	private void preUpdate() {
+		setDerniereMiseAJour(new Date());
 	}
 
 	@Override
