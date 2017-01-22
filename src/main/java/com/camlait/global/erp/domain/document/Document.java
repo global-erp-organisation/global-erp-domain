@@ -56,108 +56,108 @@ import lombok.ToString;
 @Builder
 public class Document extends Entite {
 
-	@Id
-	private String documentId;
+    @Id
+    private String documentId;
 
-	@Column(name = "codeDocument", unique = true, nullable = false)
-	private String codeDocument;
+    @Column(name = "codeDocument", unique = true, nullable = false)
+    private String codeDocument;
 
-	private Date dateDocument;
+    private Date dateDocument;
 
-	@Transient
-	private String magasinId;
+    @Transient
+    private String magasinId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "magasinId")
-	private Magasin magasin;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinId")
+    private Magasin magasin;
 
-	@Transient
-	private String responsableId;
+    @Transient
+    private String responsableId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "responsableId")
-	private Employe responsableDocument;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "responsableId")
+    private Employe responsableDocument;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	@Enumerated(EnumType.STRING)
-	private SensOperation sensOperation;
+    @Enumerated(EnumType.STRING)
+    private SensOperation sensOperation;
 
-	@Transient
-	private String BmqId;
+    @Transient
+    private String BmqId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "bmqId")
-	private Bmq bmq;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "bmqId")
+    private Bmq bmq;
 
-	@Transient
-	private String inventaireId;
+    @Transient
+    private String inventaireId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "inventaireId")
-	private Inventaire inventaire;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "inventaireId")
+    private Inventaire inventaire;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-	private Collection<LigneDeDocument> ligneDocuments = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+    private Collection<LigneDeDocument> ligneDocuments = Sets.newHashSet();
 
-	@Enumerated(EnumType.STRING)
-	private TypeDocuments typeDocument;
+    @Enumerated(EnumType.STRING)
+    private TypeDocuments typeDocument;
 
-	public Document() {
-	}
+    public Document() {
+    }
 
-	public boolean isFactureClient() {
-		return this instanceof FactureClient;
-	}
+    public boolean isFactureClient() {
+        return this instanceof FactureClient;
+    }
 
-	public boolean isFactureComptant() {
-		return this instanceof FactureClientComptant;
-	}
+    public boolean isFactureComptant() {
+        return this instanceof FactureClientComptant;
+    }
 
-	public boolean isFactureMarge() {
-		return this instanceof FactureMarge;
-	}
+    public boolean isFactureMarge() {
+        return this instanceof FactureMarge;
+    }
 
-	public boolean isDocumentDeVente() {
-		return this instanceof DocumentDeVente;
-	}
+    public boolean isDocumentDeVente() {
+        return this instanceof DocumentDeVente;
+    }
 
-	public boolean isDocumentCommerciaux() {
-		return this instanceof DocumentCommerciaux;
-	}
+    public boolean isDocumentCommerciaux() {
+        return this instanceof DocumentCommerciaux;
+    }
 
-	public boolean stockAffects() {
-		return (this instanceof DocumentDeStock) || (this instanceof FactureClient);
-	}
+    public boolean stockAffects() {
+        return (this instanceof DocumentDeStock) || (this instanceof FactureClient);
+    }
 
-	@PrePersist
-	private void setKey() {
-		if (!CollectionUtils.isNullOrEmpty(ligneDocuments)) {
-			setDocumentId(Utility.getUidFor(documentId));
-		} else {
-			throw new DataStorageException("Unable to store a document with no detail.");
-		}
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        if (!CollectionUtils.isNullOrEmpty(ligneDocuments)) {
+            setDocumentId(Utility.getUidFor(documentId));
+        } else {
+            throw new DataStorageException("Unable to store a document with no detail.");
+        }
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setMagasinId(magasin.getMagasinId());
-		setResponsableId(responsableDocument.getPartenaireId());
-		setBmqId(bmq != null ? bmq.getBmqId() : null);
-		setInventaireId(inventaire != null ? inventaire.getInventaireId() : null);
-	}
+    @Override
+    public void postConstructOperation() {
+        setMagasinId(magasin.getMagasinId());
+        setResponsableId(responsableDocument.getPartenaireId());
+        setBmqId(bmq != null ? bmq.getBmqId() : null);
+        setInventaireId(inventaire != null ? inventaire.getInventaireId() : null);
+    }
 }

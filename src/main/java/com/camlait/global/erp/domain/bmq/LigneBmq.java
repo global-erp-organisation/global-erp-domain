@@ -111,5 +111,4 @@ public class LigneBmq extends Entite {
 	private void preUpdate() {
 		setDerniereMiseAJour(new Date());
 	}
-
 }

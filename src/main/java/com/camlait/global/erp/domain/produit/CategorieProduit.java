@@ -1,6 +1,5 @@
 package com.camlait.global.erp.domain.produit;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 

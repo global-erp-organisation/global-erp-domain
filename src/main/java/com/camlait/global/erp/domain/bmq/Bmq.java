@@ -3,6 +3,8 @@ package com.camlait.global.erp.domain.bmq;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,82 +41,93 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "documents", "recouvrements", "ligneBmqs" })
-@ToString(exclude = { "documents", "recouvrements", "ligneBmqs" })
+@EqualsAndHashCode(callSuper = false, exclude = {"documents", "recouvrements", "ligneBmqs"})
+@ToString(exclude = {"documents", "recouvrements", "ligneBmqs"})
 @Builder
 @Table(name = "`bmq-bmqs`")
 public class Bmq extends Entite {
 
-	@Id
-	private String bmqId;
+    @Id
+    private String bmqId;
 
-	@Column(nullable = false, unique = true)
-	private String codeBmq;
+    @Column(nullable = false, unique = true)
+    private String codeBmq;
 
-	private Date dateBmq;
+    private Date dateBmq;
 
-	@Transient
-	private String vendeurId;
+    @Transient
+    private String vendeurId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "vendeurId")
-	private Vendeur vendeur;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "vendeurId")
+    private Vendeur vendeur;
 
-	@Transient
-	private String magasinId;
+    @Transient
+    private String magasinId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "magasinId")
-	private Magasin magasin;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinId")
+    private Magasin magasin;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "bmq")
-	private Collection<Document> documents = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "bmq")
+    private Collection<Document> documents = Sets.newHashSet();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "bmq")
-	private Collection<Recouvrement> recouvrements = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "bmq")
+    private Collection<Recouvrement> recouvrements = Sets.newHashSet();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "bmq")
-	private Collection<LigneBmq> ligneBmqs = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "bmq")
+    private Collection<LigneBmq> ligneBmqs = Sets.newHashSet();
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	private boolean bmqClos;
+    private boolean bmqClos;
 
-	@ManyToOne
-	@JsonBackReference
-	@JoinColumn(name = "responsableId")
-	private Employe responsable;
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "responsableId")
+    private Employe responsable;
 
-	public Bmq() {
-	}
+    public Bmq() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setBmqId(Utility.getUidFor(bmqId));
-		final List<String> errors = Lists.newArrayList();
-		if (!errors.isEmpty()) {
-			throw new DataValidationException(Joiner.on("\n").join(errors));
-		}
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setBmqId(Utility.getUidFor(bmqId));
+        final List<String> errors = Lists.newArrayList();
+        if (!errors.isEmpty()) {
+            throw new DataValidationException(Joiner.on("\n").join(errors));
+        }
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setMagasinId(magasin.getMagasinId());
-		setVendeurId(vendeur.getPartenaireId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setMagasinId(magasin.getMagasinId());
+        setVendeurId(vendeur.getPartenaireId());
+    }
 
-}
+    public Bmq buildLigne() {
+        Set<LigneBmq> lignes = this.getDocuments().parallelStream().map(d -> {
+            return d.getLigneDocuments().stream().map(l -> {
+                return LigneBmq.builder().bmq(d.getBmq()).bmqId(d.getBmq().getBmqId()).document(d).documentId(d.getDocumentId())
+                        .prixUnitaireLigne(l.getPrixunitaiteLigne()).produit(l.getProduit()).produitId(l.getProduit().getProduitId())
+                        .quantiteLigne(l.getQuantiteLigne()).build();
+            }).collect(Collectors.toSet());
+        }).findFirst().get();
+        setLigneBmqs(lignes);
+        return this;
+    }
+ }
