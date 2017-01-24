@@ -37,89 +37,89 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "taxes", "categorieFilles", "produits" })
-@ToString(exclude = { "taxes", "categorieFilles", "produits" })
+@EqualsAndHashCode(callSuper = false, exclude = {"taxes", "categorieFilles", "produits"})
+@ToString(exclude = {"taxes", "categorieFilles", "produits"})
 @Builder
 @Table(name = "`produit-categorie-produits`")
 public class CategorieProduit extends Entite {
 
-	@Id
-	private String categorieProduitId;
+    @Id
+    private String categorieProduitId;
 
-	@Transient
-	private String categorieParentId;
+    @Transient
+    private String categorieParentId;
 
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "categorieParentId")
-	private CategorieProduit categorieParent;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "categorieParentId")
+    private CategorieProduit categorieParent;
 
-	@Column(name = "codeCategorieProduit", unique = true)
-	private String codeCategorieProduit;
+    @Column(name = "codeCategorieProduit", unique = true)
+    private String codeCategorieProduit;
 
-	private String descriptionCategorie;
+    private String descriptionCategorie;
 
-	@Enumerated(EnumType.STRING)
-	private Portee portee;
+    @Enumerated(EnumType.STRING)
+    private Portee portee;
 
-	private boolean categorieTaxable;
+    private boolean categorieTaxable;
 
-	private boolean suiviEnStock;
+    private boolean suiviEnStock;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "categorieParent", cascade = CascadeType.ALL)
-	private Set<CategorieProduit> categorieFilles = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "categorieParent", cascade = CascadeType.ALL)
+    private Set<CategorieProduit> categorieFilles = Sets.newHashSet();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
-	private Set<Produit> produits = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
+    private Set<Produit> produits = Sets.newHashSet();
 
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "categorieProduits", cascade = CascadeType.ALL)
-	private Set<Taxe> taxes = Sets.newHashSet();
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "categorieProduits", cascade = CascadeType.ALL)
+    private Set<Taxe> taxes = Sets.newHashSet();
 
-	public void setCategorieParent(CategorieProduit categorieParent) {
-		this.categorieParent = categorieParent;
-		copierTaxeParent(categorieParent);
-	}
+    public void setCategorieParent(CategorieProduit categorieParent) {
+        this.categorieParent = categorieParent;
+        copierTaxeParent(categorieParent);
+    }
 
-	public CategorieProduit() {
-	}
+    public CategorieProduit() {
+    }
 
-	public boolean isDetail() {
-		return this.getPortee() == Portee.DETAIL;
-	}
+    public boolean isDetail() {
+        return this.getPortee() == Portee.DETAIL;
+    }
 
-	public boolean isTotal(CategorieProduit categorie) {
-		return !isDetail();
-	}
+    public boolean isTotal(CategorieProduit categorie) {
+        return !isDetail();
+    }
 
-	private void copierTaxeParent(CategorieProduit categorieParent) {
-		final Set<Taxe> parentTaxes = categorieParent != null ? categorieParent.getTaxes() : null;
-		if (!CollectionUtils.isNullOrEmpty(parentTaxes) && (taxes.isEmpty())) {
-			setTaxes(parentTaxes);
-		}
-	}
+    private void copierTaxeParent(CategorieProduit categorieParent) {
+        final Set<Taxe> parentTaxes = categorieParent != null ? categorieParent.getTaxes() : null;
+        if (!CollectionUtils.isNullOrEmpty(parentTaxes) && (taxes.isEmpty())) {
+            setTaxes(parentTaxes);
+        }
+    }
 
-	@PrePersist
-	private void setKey() {
-		setCategorieProduitId(Utility.getUidFor(categorieProduitId));
-		setCategorieParentId(categorieParent != null ? categorieParent.categorieParentId : null);
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setCategorieProduitId(Utility.getUidFor(categorieProduitId));
+        setCategorieParentId(categorieParent != null ? categorieParent.categorieParentId : null);
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setCategorieParentId(categorieParent.getCategorieParentId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setCategorieParentId(categorieParent.getCategorieParentId());
+    }
 }

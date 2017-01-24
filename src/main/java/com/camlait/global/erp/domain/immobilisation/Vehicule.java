@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`immo-vehicules`")
+@Table(name = "`immo-vehicules`")
 public class Vehicule extends Immobilisation {
 
     @Column(unique = true, nullable = false)

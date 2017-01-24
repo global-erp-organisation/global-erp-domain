@@ -30,43 +30,43 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`caisse-caisses`")
 public class Caisse extends Entite {
-	@Id
-	private String caisseId;
+    @Id
+    private String caisseId;
 
-	@Column(name = "codeCaisse", unique = true, nullable = false)
-	private String codeCaisse;
+    @Column(name = "codeCaisse", unique = true, nullable = false)
+    private String codeCaisse;
 
-	private String descriptionCaisse;
+    private String descriptionCaisse;
 
-	@Transient
-	private String responsableId;
+    @Transient
+    private String responsableId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "responsableId")
-	private Employe responsable;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "responsableId")
+    private Employe responsable;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	public Caisse() {
-	}
+    public Caisse() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setCaisseId(Utility.getUidFor(caisseId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setCaisseId(Utility.getUidFor(caisseId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setResponsableId(responsable.getPartenaireId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setResponsableId(responsable.getPartenaireId());
+    }
 }

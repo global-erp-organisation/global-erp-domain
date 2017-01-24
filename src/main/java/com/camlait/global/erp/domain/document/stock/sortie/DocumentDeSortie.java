@@ -14,11 +14,11 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`doc-document-de-sorties`")
+@Table(name = "`doc-document-de-sorties`")
 public class DocumentDeSortie extends DocumentDeStock {
 
-	public DocumentDeSortie() {
-		setSensOperation(SensOperation.SORTIE);
-		setTypeDocument(TypeDocuments.DOCUMENT_SORTIE);
-	}
+    public DocumentDeSortie() {
+        setSensOperation(SensOperation.SORTIE);
+        setTypeDocument(TypeDocuments.DOCUMENT_SORTIE);
+    }
 }

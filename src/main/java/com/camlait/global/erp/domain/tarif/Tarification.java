@@ -35,59 +35,59 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`tarif-tarifications`")
 public class Tarification extends Entite {
 
-	@Id
-	private String tarificationId;
+    @Id
+    private String tarificationId;
 
-	@Transient
-	private String zoneId;
+    @Transient
+    private String zoneId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "zoneId")
-	private Zone zone;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "zoneId")
+    private Zone zone;
 
-	@Transient
-	private String produitId;
+    @Transient
+    private String produitId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "produitId")
-	private Produit produit;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "produitId")
+    private Produit produit;
 
-	@Transient
-	private String tarifId;
+    @Transient
+    private String tarifId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "tarifId")
-	private Tarif tarif;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "tarifId")
+    private Tarif tarif;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "produit")
-	private Collection<UnitPrice> unitPrices = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "produit")
+    private Collection<UnitPrice> unitPrices = Sets.newHashSet();
 
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public Tarification() {
-	}
+    public Tarification() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setTarificationId(Utility.getUidFor(tarificationId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setTarificationId(Utility.getUidFor(tarificationId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setProduitId(produit.getProduitId());
-		setZoneId(zone.getLocalId());
-		setTarifId(tarif.getTarifId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setProduitId(produit.getProduitId());
+        setZoneId(zone.getLocalId());
+        setTarifId(tarif.getTarifId());
+    }
 }

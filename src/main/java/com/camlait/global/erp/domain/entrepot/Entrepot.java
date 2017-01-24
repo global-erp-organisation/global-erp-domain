@@ -39,56 +39,56 @@ import lombok.ToString;
 @Table(name = "`ent-entrepots`")
 public class Entrepot extends Entite {
 
-	@Id
-	private String entrepotId;
+    @Id
+    private String entrepotId;
 
-	@Column(name = "codeEntrepot", nullable = false, unique = true)
-	private String codeEntrepot;
+    @Column(name = "codeEntrepot", nullable = false, unique = true)
+    private String codeEntrepot;
 
-	private String descriptionEntrepot;
+    private String descriptionEntrepot;
 
-	@Transient
-	private String centreId;
+    @Transient
+    private String centreId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "centreId")
-	private Centre centre;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "centreId")
+    private Centre centre;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	@Transient
-	private String responsableId;
+    @Transient
+    private String responsableId;
 
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "responsableId")
-	private Employe responsable;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "responsableId")
+    private Employe responsable;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "entrepot", cascade = CascadeType.ALL)
-	private Collection<Magasin> magasins = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "entrepot", cascade = CascadeType.ALL)
+    private Collection<Magasin> magasins = Sets.newHashSet();
 
-	public Entrepot() {
-	}
+    public Entrepot() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setEntrepotId(Utility.getUidFor(entrepotId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setEntrepotId(Utility.getUidFor(entrepotId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setCentreId(centre.getLocalId());
-		setResponsableId(responsable.getPartenaireId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setCentreId(centre.getLocalId());
+        setResponsableId(responsable.getPartenaireId());
+    }
 }

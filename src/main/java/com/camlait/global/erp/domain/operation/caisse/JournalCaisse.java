@@ -36,51 +36,51 @@ import lombok.ToString;
 @Table(name = "`caisse-journal-caisses`")
 public class JournalCaisse extends Entite {
 
-	@Id
-	private String journalId;
+    @Id
+    private String journalId;
 
-	@Column(name = "codeJournal", unique = true, nullable = false)
-	private String codeJournal;
+    @Column(name = "codeJournal", unique = true, nullable = false)
+    private String codeJournal;
 
-	private String description;
+    private String description;
 
-	private Date dateDebutJournal;
+    private Date dateDebutJournal;
 
-	private Date dateFinJournal;
+    private Date dateFinJournal;
 
-	@Transient
-	private String caisseId;
+    @Transient
+    private String caisseId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "caisseId")
-	private Caisse caisse;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "caisseId")
+    private Caisse caisse;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "journal")
-	private Collection<OperationDeCaisse> opreations = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "journal")
+    private Collection<OperationDeCaisse> opreations = Sets.newHashSet();
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	public JournalCaisse() {
-	}
+    public JournalCaisse() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setJournalId(Utility.getUidFor(journalId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setJournalId(Utility.getUidFor(journalId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setCaisseId(caisse.getCaisseId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setCaisseId(caisse.getCaisseId());
+    }
 }

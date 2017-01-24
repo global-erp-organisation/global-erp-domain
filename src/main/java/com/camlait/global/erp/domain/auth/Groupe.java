@@ -26,46 +26,46 @@ import lombok.ToString;
 @SuppressWarnings("serial")
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "ressourceGroupes", "utilisateurs" })
-@ToString(exclude = { "ressourceGroupes", "utilisateurs" })
+@EqualsAndHashCode(callSuper = false, exclude = {"ressourceGroupes", "utilisateurs"})
+@ToString(exclude = {"ressourceGroupes", "utilisateurs"})
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
 @Table(name = "`auth-groupes`")
 public class Groupe extends Entite {
 
-	@Id
-	private String groupeId;
+    @Id
+    private String groupeId;
 
-	private String descriptionGroupe;
+    private String descriptionGroupe;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL)
-	private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL)
+    private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
 
-	@JsonManagedReference
-	@ManyToMany(mappedBy = "groupes", cascade = CascadeType.ALL)
-	private Collection<Utilisateur> utilisateurs = Sets.newHashSet();
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "groupes", cascade = CascadeType.ALL)
+    private Collection<Utilisateur> utilisateurs = Sets.newHashSet();
 
-	public Groupe() {
-	}
+    public Groupe() {
+    }
 
-	@PrePersist
-	private void prePersist() {
-		setGroupeId(Utility.getUidFor(groupeId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void prePersist() {
+        setGroupeId(Utility.getUidFor(groupeId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @Override
+    public void postConstructOperation() {
+    }
 }

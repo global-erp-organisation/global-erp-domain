@@ -11,15 +11,15 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`immo-refrigerateurs`")
+@Table(name = "`immo-refrigerateurs`")
 public class Refrigerateur extends Immobilisation {
 
-	@Column(name = "numeroDeSerie")
-	private String numeroDeSerie;
-	
-	private String marque;
+    @Column(name = "numeroDeSerie")
+    private String numeroDeSerie;
 
-	public Refrigerateur() {
+    private String marque;
 
-	}
+    public Refrigerateur() {
+
+    }
 }

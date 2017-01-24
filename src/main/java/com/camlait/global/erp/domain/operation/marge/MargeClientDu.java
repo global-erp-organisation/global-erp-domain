@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`op-marge-client-dus`")
+@Table(name = "`op-marge-client-dus`")
 public class MargeClientDu extends MargeClient {
 
     public MargeClientDu() {

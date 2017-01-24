@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`loc-zones`")
+@Table(name = "`loc-zones`")
 public class Zone extends Localisation {
 
     @Transient
@@ -52,10 +52,10 @@ public class Zone extends Localisation {
     public Zone() {
         setTypeLocal(AutreEnum.ZONE);
     }
-    
-	@Override
-	public void postConstructOperation() {
-		setSecteurId(secteur.getLocalId());
-	}
+
+    @Override
+    public void postConstructOperation() {
+        setSecteurId(secteur.getLocalId());
+    }
 
 }

@@ -31,57 +31,56 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
-@Table(name="`reg-modele-de-reglements`")
+@Table(name = "`reg-modele-de-reglements`")
 public class ModeleDeReglement extends Entite {
-	@Id
-	private String modeleId;
+    @Id
+    private String modeleId;
 
-	@Enumerated(EnumType.ORDINAL)
-	private ModeleEvaluation modeEvaluation;
-	private double valeur;
-	private int nombreDeJour;
+    @Enumerated(EnumType.ORDINAL)
+    private ModeleEvaluation modeEvaluation;
+    private double valeur;
+    private int nombreDeJour;
 
-	@Enumerated(EnumType.ORDINAL)
-	private ConditionReglement conditionReglement;
+    @Enumerated(EnumType.ORDINAL)
+    private ConditionReglement conditionReglement;
 
-	@Transient
-	private String modeDeReglementId;
-	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "modeDeReglementId")
-	private ModeDeReglement modeDeReglement;
+    @Transient
+    private String modeDeReglementId;
 
-	@Transient
-	private String partenaireId;
-	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "partenaireId")
-	private Partenaire partenaire;
-	
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "modeDeReglementId")
+    private ModeDeReglement modeDeReglement;
 
-	public ModeleDeReglement() {
-		super();
-	}
-	
-	@PrePersist
-	private void setKey() {
-		setModeleId(Utility.getUidFor(modeleId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
-	
-	@PreUpdate
-	private void preUpdate(){
-		setDerniereMiseAJour(new Date());
-	}
+    @Transient
+    private String partenaireId;
 
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "partenaireId")
+    private Partenaire partenaire;
 
-	@Override
-	public void postConstructOperation() {
-		setModeDeReglementId(modeDeReglement.getModeDeReglementId());
-	}
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
+
+    public ModeleDeReglement() {
+        super();
+    }
+
+    @PrePersist
+    private void setKey() {
+        setModeleId(Utility.getUidFor(modeleId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
+
+    @Override
+    public void postConstructOperation() {
+        setModeDeReglementId(modeDeReglement.getModeDeReglementId());
+    }
 }

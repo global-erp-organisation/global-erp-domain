@@ -31,51 +31,51 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`immo-partenaire-immos`")
 public class PartenaireImmobilisation extends Entite {
 
-	@Id
-	private String clientImmoId;
+    @Id
+    private String clientImmoId;
 
-	@Transient
-	private String partenaireId;
+    @Transient
+    private String partenaireId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "partenaireId")
-	private Partenaire partenaire;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "partenaireId")
+    private Partenaire partenaire;
 
-	@Transient
-	private String immoId;
+    @Transient
+    private String immoId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "immoId")
-	private Immobilisation immobilisation;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "immoId")
+    private Immobilisation immobilisation;
 
-	private Date dateAllocation;
+    private Date dateAllocation;
 
-	@Column(name = "actif")
-	private boolean actif;
+    @Column(name = "actif")
+    private boolean actif;
 
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public PartenaireImmobilisation() {
-	}
+    public PartenaireImmobilisation() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setClientImmoId(Utility.getUidFor(clientImmoId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setClientImmoId(Utility.getUidFor(clientImmoId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setPartenaireId(partenaire.getPartenaireId());
-		setImmoId(immobilisation.getImmoId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setPartenaireId(partenaire.getPartenaireId());
+        setImmoId(immobilisation.getImmoId());
+    }
 }

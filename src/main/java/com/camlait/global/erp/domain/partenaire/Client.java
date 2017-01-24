@@ -25,44 +25,44 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`partenaire-clients`")
+@Table(name = "`partenaire-clients`")
 public class Client extends Partenaire {
 
-	@Transient
-	private String zoneId;
+    @Transient
+    private String zoneId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "zoneId")
-	private Zone zone;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "zoneId")
+    private Zone zone;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "client")
-	private Collection<DocumentDeVente> documentDeVentes = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "client")
+    private Collection<DocumentDeVente> documentDeVentes = Sets.newHashSet();
 
-	private String description;
+    private String description;
 
-	private boolean clientAristourne;
+    private boolean clientAristourne;
 
-	private double ristourne;
+    private double ristourne;
 
-	public Client() {
-		setTypePartenaire(TypePartenaire.CLIENT);
-	}
+    public Client() {
+        setTypePartenaire(TypePartenaire.CLIENT);
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setCentreId(getCentre().getLocalId());
-		setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
-		setTarifId(getTarif().getTarifId());
-		setZoneId(zone.getLocalId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setCentreId(getCentre().getLocalId());
+        setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
+        setTarifId(getTarif().getTarifId());
+        setZoneId(zone.getLocalId());
+    }
 
-	public Boolean isMarginClient() {
-		return this instanceof ClientAmarge;
-	}
+    public Boolean isMarginClient() {
+        return this instanceof ClientAmarge;
+    }
 
-	public Boolean isCashSalesClient() {
-		return this instanceof ClientComptant;
-	}
+    public Boolean isCashSalesClient() {
+        return this instanceof ClientComptant;
+    }
 }

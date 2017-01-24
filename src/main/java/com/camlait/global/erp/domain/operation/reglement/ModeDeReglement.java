@@ -29,34 +29,34 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`reg-mode-de-reglements`")
 public class ModeDeReglement extends Entite {
 
-	@Id
-	private String modeDeReglementId;
+    @Id
+    private String modeDeReglementId;
 
-	@Column(name = "codeModeReglement", nullable = false, unique = true)
-	private String codeModeReglement;
+    @Column(name = "codeModeReglement", nullable = false, unique = true)
+    private String codeModeReglement;
 
-	private String descriptionModeReglement;
+    private String descriptionModeReglement;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	public ModeDeReglement() {
-	}
+    public ModeDeReglement() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setModeDeReglementId(Utility.getUidFor(modeDeReglementId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setModeDeReglementId(Utility.getUidFor(modeDeReglementId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @Override
+    public void postConstructOperation() {
+    }
 }

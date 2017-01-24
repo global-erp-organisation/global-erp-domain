@@ -29,86 +29,85 @@ import lombok.ToString;
 @SuppressWarnings("serial")
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false, exclude={"items","ressourceGroupes","ressourceUtilisateurs"})
-@ToString(exclude={"items","ressourceGroupes","ressourceUtilisateurs"})
+@EqualsAndHashCode(callSuper = false, exclude = {"items", "ressourceGroupes", "ressourceUtilisateurs"})
+@ToString(exclude = {"items", "ressourceGroupes", "ressourceUtilisateurs"})
 @Builder
 @AllArgsConstructor(suppressConstructorProperties = true)
-@Table(name="`auth-ressources`")
+@Table(name = "`auth-ressources`")
 public class Ressource extends Entite {
 
-	@Id
-	private String ressourceId;
+    @Id
+    private String ressourceId;
 
-	@Transient
-	private String ressourceParentId;
+    @Transient
+    private String ressourceParentId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "ressourceParentId")
-	private Ressource ressourceParent;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "ressourceParentId")
+    private Ressource ressourceParent;
 
-	private String title;
+    private String title;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	private String icon;
+    private String icon;
 
-	private String sref;
+    private String sref;
 
-	private String href;
+    private String href;
 
-	private Integer ordre;
+    private Integer ordre;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "ressourceParent")
-	private Collection<Ressource> items = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "ressourceParent")
+    private Collection<Ressource> items = Sets.newHashSet();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
-	private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
+    private Collection<RessourceGroupe> ressourceGroupes = Sets.newHashSet();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
-	private Collection<RessourceUtilisateur> ressourceUtilisateurs = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
+    private Collection<RessourceUtilisateur> ressourceUtilisateurs = Sets.newHashSet();
 
-	public Ressource() {
-	}
+    public Ressource() {
+    }
 
-	public Ressource(String descriptionMenu) {
-		this.title = descriptionMenu;
-	}
+    public Ressource(String descriptionMenu) {
+        this.title = descriptionMenu;
+    }
 
-	public Ressource(String descriptionMenu, Ressource menuParent) {
-		super();
-		this.title = descriptionMenu;
-		this.ressourceParent = menuParent;
-	}
+    public Ressource(String descriptionMenu, Ressource menuParent) {
+        super();
+        this.title = descriptionMenu;
+        this.ressourceParent = menuParent;
+    }
 
-	public void setRessourceParentId() {
-		setRessourceParentId(getRessourceParent().getRessourceId());
-	}
+    public void setRessourceParentId() {
+        setRessourceParentId(getRessourceParent().getRessourceId());
+    }
 
-	public boolean possedeDetails() {
-		return (!this.getItems().isEmpty());
-	}
+    public boolean possedeDetails() {
+        return (!this.getItems().isEmpty());
+    }
 
-	@PrePersist
-	private void setKey() {
-		setRessourceId(Utility.getUidFor(ressourceId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
-	
-	@PreUpdate
-	private void preUpdate(){
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setRessourceId(Utility.getUidFor(ressourceId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setRessourceParentId(ressourceParent.getRessourceId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setRessourceParentId(ressourceParent.getRessourceId());
+    }
 }

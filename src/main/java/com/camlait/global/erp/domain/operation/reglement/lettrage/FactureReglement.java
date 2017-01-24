@@ -31,52 +31,52 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`reg-facture-reglements`")
 public class FactureReglement extends Entite {
 
-	@Id
-	private String factureReglementId;
+    @Id
+    private String factureReglementId;
 
-	@Transient
-	private String documentId;
+    @Transient
+    private String documentId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "documentId")
-	private FactureClient facture;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "documentId")
+    private FactureClient facture;
 
-	@Transient
-	private String reglementId;
+    @Transient
+    private String reglementId;
 
-	@JsonBackReference
+    @JsonBackReference
 
-	@ManyToOne
-	@JoinColumn(name = "reglementId")
-	private Reglement reglement;
+    @ManyToOne
+    @JoinColumn(name = "reglementId")
+    private Reglement reglement;
 
-	private Date dateDeVentilation;
+    private Date dateDeVentilation;
 
-	private Double montantVentile;
+    private Double montantVentile;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	public FactureReglement() {
-	}
+    public FactureReglement() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setFactureReglementId(Utility.getUidFor(factureReglementId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setFactureReglementId(Utility.getUidFor(factureReglementId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setDocumentId(facture.getDocumentId());
-		setReglementId(reglement.getOperationId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setDocumentId(facture.getDocumentId());
+        setReglementId(reglement.getOperationId());
+    }
 }

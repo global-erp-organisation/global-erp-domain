@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`loc-centres`")
+@Table(name = "`loc-centres`")
 public class Centre extends Localisation {
 
     @JsonManagedReference

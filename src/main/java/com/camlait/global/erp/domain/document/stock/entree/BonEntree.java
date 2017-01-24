@@ -12,9 +12,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`doc-bon-entrees`")
+@Table(name = "`doc-bon-entrees`")
 public class BonEntree extends DocumentEntree {
-	public BonEntree(){
-		setTypeDocument(TypeDocuments.BON_ENTREE);
-	}
+    public BonEntree() {
+        setTypeDocument(TypeDocuments.BON_ENTREE);
+    }
 }

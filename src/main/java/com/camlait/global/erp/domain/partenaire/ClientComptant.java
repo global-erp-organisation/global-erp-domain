@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`partenaire-client-comptants`")
+@Table(name = "`partenaire-client-comptants`")
 public class ClientComptant extends Client {
 
-	public ClientComptant() {
-		setTypePartenaire(TypePartenaire.CLIENT_COMPTANT);
-	}
+    public ClientComptant() {
+        setTypePartenaire(TypePartenaire.CLIENT_COMPTANT);
+    }
 }

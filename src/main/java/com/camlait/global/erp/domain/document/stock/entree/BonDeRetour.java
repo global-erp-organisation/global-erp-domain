@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`doc-bon-de-retours`")
+@Table(name = "`doc-bon-de-retours`")
 public class BonDeRetour extends DocumentEntree {
 
-	public BonDeRetour() {
-		setTypeDocument(TypeDocuments.BON_DE_RETOUR);
-	}
+    public BonDeRetour() {
+        setTypeDocument(TypeDocuments.BON_DE_RETOUR);
+    }
 }

@@ -26,28 +26,28 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true, exclude = "factureReglements")
 @ToString(exclude = "factureReglements")
-@Table(name="`op-reglements`")
+@Table(name = "`op-reglements`")
 public class Reglement extends Operation {
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "reglement")
-	private Collection<FactureReglement> factureReglements = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "reglement")
+    private Collection<FactureReglement> factureReglements = Sets.newHashSet();
 
-	@Transient
-	private String modeleDeReglementId;
+    @Transient
+    private String modeleDeReglementId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "modeDeReglementId")
-	private ModeDeReglement modeDeReglement;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "modeDeReglementId")
+    private ModeDeReglement modeDeReglement;
 
-	public Reglement() {
-	}
+    public Reglement() {
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setResponsableId(getResponsable().getPartenaireId());
-		setPartenaireId(getPartenaire().getPartenaireId());
-		setModeleDeReglementId(modeDeReglement.getModeDeReglementId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setResponsableId(getResponsable().getPartenaireId());
+        setPartenaireId(getPartenaire().getPartenaireId());
+        setModeleDeReglementId(modeDeReglement.getModeDeReglementId());
+    }
 }

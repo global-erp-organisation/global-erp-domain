@@ -28,35 +28,35 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`tarif-price-types`")
 public class PriceType extends Entite {
-	@Id
-	private String priceTypeId;
+    @Id
+    private String priceTypeId;
 
-	private String description;
+    private String description;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "priceType")
-	private Collection<UnitPrice> unitPrices = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "priceType")
+    private Collection<UnitPrice> unitPrices = Sets.newHashSet();
 
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public PriceType() {
-	}
+    public PriceType() {
+    }
 
-	@PrePersist
-	private void prePersist() {
-		setPriceTypeId(Utility.getUidFor(priceTypeId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void prePersist() {
+        setPriceTypeId(Utility.getUidFor(priceTypeId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @Override
+    public void postConstructOperation() {
+    }
 
 }

@@ -29,38 +29,38 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class Immobilisation extends Entite {
 
-	@Id
-	private String immoId;
+    @Id
+    private String immoId;
 
-	@Column(name = "codeImmo", nullable = false, unique = true)
-	private String codeImmo;
+    @Column(name = "codeImmo", nullable = false, unique = true)
+    private String codeImmo;
 
-	private Date dateAcquisition;
+    private Date dateAcquisition;
 
-	private Date dateMiseEnService;
+    private Date dateMiseEnService;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	private String descriptionImmo;
+    private String descriptionImmo;
 
-	public Immobilisation() {
-	}
+    public Immobilisation() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setImmoId(Utility.getUidFor(immoId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setImmoId(Utility.getUidFor(immoId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @Override
+    public void postConstructOperation() {
+    }
 }

@@ -37,56 +37,56 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`op-operations`")
 public class Operation extends Entite {
 
-	@Id
-	private String operationId;
+    @Id
+    private String operationId;
 
-	private Date dateOperation;
+    private Date dateOperation;
 
-	@Enumerated(EnumType.STRING)
-	private SensOperation sensOperation;
+    @Enumerated(EnumType.STRING)
+    private SensOperation sensOperation;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	private String libelleOperation;
+    private String libelleOperation;
 
-	private double montantOperation;
+    private double montantOperation;
 
-	@Transient
-	private String responsableId;
+    @Transient
+    private String responsableId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "responsableId")
-	private Employe responsable;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "responsableId")
+    private Employe responsable;
 
-	@Transient
-	private String partenaireId;
+    @Transient
+    private String partenaireId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "partenaireId")
-	private Partenaire partenaire;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "partenaireId")
+    private Partenaire partenaire;
 
-	public Operation() {
-	}
+    public Operation() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setOperationId(Utility.getUidFor(operationId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setOperationId(Utility.getUidFor(operationId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setResponsableId(responsable.getPartenaireId());
-		setPartenaireId(partenaire.getPartenaireId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setResponsableId(responsable.getPartenaireId());
+        setPartenaireId(partenaire.getPartenaireId());
+    }
 }

@@ -18,31 +18,30 @@ import lombok.EqualsAndHashCode;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Table(name="`partenaire-caissiers`")
+@Table(name = "`partenaire-caissiers`")
 @EqualsAndHashCode(callSuper = true)
 public class Caissier extends Employe {
 
-	@Transient
-	private String caisseId;
+    @Transient
+    private String caisseId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "caisseId", updatable = false, insertable = false)
-	private Caisse caisse;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "caisseId", updatable = false, insertable = false)
+    private Caisse caisse;
 
-	private String motDePasse;
+    private String motDePasse;
 
-	public Caissier() {
-		setTypePartenaire(TypePartenaire.CAISSIER);
-	}
-	
-	
-	@Override
-	public void postConstructOperation() {
-		setCentreId(getCentre().getLocalId());
-		setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
-		setTarifId(getTarif().getTarifId());
-		setCaisseId(caisse.getCaisseId());
-	}
+    public Caissier() {
+        setTypePartenaire(TypePartenaire.CAISSIER);
+    }
+
+    @Override
+    public void postConstructOperation() {
+        setCentreId(getCentre().getLocalId());
+        setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
+        setTarifId(getTarif().getTarifId());
+        setCaisseId(caisse.getCaisseId());
+    }
 
 }

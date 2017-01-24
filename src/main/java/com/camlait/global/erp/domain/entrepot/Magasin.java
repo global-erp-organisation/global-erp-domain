@@ -39,59 +39,59 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "ficheDeStocks", "stocks" })
-@ToString(exclude = { "ficheDeStocks", "stocks" })
+@EqualsAndHashCode(callSuper = false, exclude = {"ficheDeStocks", "stocks"})
+@ToString(exclude = {"ficheDeStocks", "stocks"})
 @Builder
 @Table(name = "`ent-magasins`")
 public class Magasin extends Entite {
-	@Id
-	private String magasinId;
+    @Id
+    private String magasinId;
 
-	@Column(name = "codeMagasin", unique = true, nullable = false)
-	private String codeMagasin;
+    @Column(name = "codeMagasin", unique = true, nullable = false)
+    private String codeMagasin;
 
-	private String descriptionMagasin;
+    private String descriptionMagasin;
 
-	@Transient
-	private String entrepotId;
+    @Transient
+    private String entrepotId;
 
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "entrepotId")
-	private Entrepot entrepot;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "entrepotId")
+    private Entrepot entrepot;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	@Enumerated(EnumType.STRING)
-	private AutreEnum typeMagasin;
+    @Enumerated(EnumType.STRING)
+    private AutreEnum typeMagasin;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "magasin",cascade = CascadeType.ALL)
-	private Collection<Stock> stocks = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "magasin", cascade = CascadeType.ALL)
+    private Collection<Stock> stocks = Sets.newHashSet();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "magasin",cascade = CascadeType.ALL)
-	private Collection<FicheDeStock> ficheDeStocks = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "magasin", cascade = CascadeType.ALL)
+    private Collection<FicheDeStock> ficheDeStocks = Sets.newHashSet();
 
-	public Magasin() {
-	}
+    public Magasin() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setMagasinId(Utility.getUidFor(magasinId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setMagasinId(Utility.getUidFor(magasinId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setEntrepotId(entrepot.getEntrepotId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setEntrepotId(entrepot.getEntrepotId());
+    }
 }

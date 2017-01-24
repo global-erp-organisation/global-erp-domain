@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`doc-facture-marges`")
+@Table(name = "`doc-facture-marges`")
 public class FactureMarge extends FactureClient {
 
-	public FactureMarge() {
-		setTypeDocument(TypeDocuments.FACTURE_MARGE);
-	}
+    public FactureMarge() {
+        setTypeDocument(TypeDocuments.FACTURE_MARGE);
+    }
 }

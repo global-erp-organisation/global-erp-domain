@@ -34,59 +34,59 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class UnitPrice extends Entite {
 
-	@Id
-	private String unitPriceId;
+    @Id
+    private String unitPriceId;
 
-	private Double value;
+    private Double value;
 
-	@Transient
-	private String produitId;
+    @Transient
+    private String produitId;
 
-	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "produitId")
-	private Produit produit;
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "produitId")
+    private Produit produit;
 
-	@Transient
-	private String priceTypeId;
+    @Transient
+    private String priceTypeId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "priceTypeId")
-	private PriceType priceType;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "priceTypeId")
+    private PriceType priceType;
 
-	@Transient
-	private String tarificationId;
+    @Transient
+    private String tarificationId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "tarificationId")
-	private Tarification tarification;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "tarificationId")
+    private Tarification tarification;
 
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public UnitPrice() {
-	}
+    public UnitPrice() {
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setProduitId(produit.getProduitId());
-		setTarificationId(tarification.getTarificationId());
-		setPriceTypeId(priceType.getPriceTypeId());
+    @Override
+    public void postConstructOperation() {
+        setProduitId(produit.getProduitId());
+        setTarificationId(tarification.getTarificationId());
+        setPriceTypeId(priceType.getPriceTypeId());
 
-	}
+    }
 
-	@PrePersist
-	private void setKey() {
-		setUnitPriceId(Utility.getUidFor(unitPriceId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setUnitPriceId(Utility.getUidFor(unitPriceId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
 }

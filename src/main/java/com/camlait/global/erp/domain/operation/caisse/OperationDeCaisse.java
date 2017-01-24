@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Table(name="`op-operation-de-caisses`")
+@Table(name = "`op-operation-de-caisses`")
 @EqualsAndHashCode(callSuper = true)
 public class OperationDeCaisse extends Operation {
 
@@ -28,14 +28,14 @@ public class OperationDeCaisse extends Operation {
     @ManyToOne
     @JoinColumn(name = "journalId")
     private JournalCaisse journal;
-    
-    public OperationDeCaisse(){
+
+    public OperationDeCaisse() {
     }
-    
-	@Override
-	public void postConstructOperation() {
-		setResponsableId(getResponsable().getPartenaireId());
-		setPartenaireId(getPartenaire().getPartenaireId());
-		setJournalId(journal.getJournalId());
-	}
+
+    @Override
+    public void postConstructOperation() {
+        setResponsableId(getResponsable().getPartenaireId());
+        setPartenaireId(getPartenaire().getPartenaireId());
+        setJournalId(journal.getJournalId());
+    }
 }

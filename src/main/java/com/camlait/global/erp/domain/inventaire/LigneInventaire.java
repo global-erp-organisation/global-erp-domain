@@ -30,56 +30,56 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`inv-ligne-inventaires`")
 public class LigneInventaire extends Entite {
 
-	@Id
-	private String ligneInventaireId;
+    @Id
+    private String ligneInventaireId;
 
-	@Transient
-	private String inventaireId;
+    @Transient
+    private String inventaireId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "inventaireId")
-	private Inventaire inventaire;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "inventaireId")
+    private Inventaire inventaire;
 
-	@Transient
-	private String produitId;
+    @Transient
+    private String produitId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "produitId")
-	private Produit produit;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "produitId")
+    private Produit produit;
 
-	private Long quantiteReelle;
+    private Long quantiteReelle;
 
-	private Long quantiteAjustee;
+    private Long quantiteAjustee;
 
-	private double prixUnitaireReelle;
+    private double prixUnitaireReelle;
 
-	private double prixUnitaireAjustee;
+    private double prixUnitaireAjustee;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	public LigneInventaire() {
-	}
+    public LigneInventaire() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setLigneInventaireId(Utility.getUidFor(ligneInventaireId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setLigneInventaireId(Utility.getUidFor(ligneInventaireId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setInventaireId(inventaire.getInventaireId());
-		setProduitId(produit.getProduitId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setInventaireId(inventaire.getInventaireId());
+        setProduitId(produit.getProduitId());
+    }
 
 }

@@ -26,38 +26,38 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`trans-termes`")
 public class Terme extends Entite {
 
-	@Id
-	private String termeId;
+    @Id
+    private String termeId;
 
-	@Column(unique = true, nullable = false)
-	private String descriptionTerme;
+    @Column(unique = true, nullable = false)
+    private String descriptionTerme;
 
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public Terme(String descriptionTerme) {
-		super();
-		this.descriptionTerme = descriptionTerme;
-	}
+    public Terme(String descriptionTerme) {
+        super();
+        this.descriptionTerme = descriptionTerme;
+    }
 
-	public Terme() {
-		super();
-	}
+    public Terme() {
+        super();
+    }
 
-	@PrePersist
-	private void setKey() {
-		setTermeId(Utility.getUidFor(termeId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setTermeId(Utility.getUidFor(termeId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @Override
+    public void postConstructOperation() {
+    }
 
 }

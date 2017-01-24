@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`op-marge-client-reglees`")
+@Table(name = "`op-marge-client-reglees`")
 public class MargeClientReglee extends MargeClient {
 
-    public MargeClientReglee(){
+    public MargeClientReglee() {
         setSensOperation(SensOperation.SORTIE);
     }
 }

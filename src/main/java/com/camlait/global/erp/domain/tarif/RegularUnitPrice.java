@@ -10,9 +10,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`tarif-regular-unit-prices`")
+@Table(name = "`tarif-regular-unit-prices`")
 public class RegularUnitPrice extends UnitPrice {
-	
-	public RegularUnitPrice(){		
-	}
+
+    public RegularUnitPrice() {
+    }
 }

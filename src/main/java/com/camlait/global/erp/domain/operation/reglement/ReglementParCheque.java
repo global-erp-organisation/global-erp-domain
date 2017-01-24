@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`reg-reglement-par-cheques`")
+@Table(name = "`reg-reglement-par-cheques`")
 public class ReglementParCheque extends ModeDeReglement {
 
 }

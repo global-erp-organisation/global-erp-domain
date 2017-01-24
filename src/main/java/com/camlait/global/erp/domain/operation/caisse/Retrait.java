@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`op-retraits`")
+@Table(name = "`op-retraits`")
 public class Retrait extends OperationDeCaisse {
 
-    public Retrait(){
+    public Retrait() {
         setSensOperation(SensOperation.SORTIE);
     }
 }

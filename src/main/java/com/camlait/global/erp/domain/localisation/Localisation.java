@@ -32,37 +32,37 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`loc-localisations`")
 public class Localisation extends Entite {
 
-	@Id
-	private String localId;
+    @Id
+    private String localId;
 
-	@Column(nullable = false, unique = true)
-	private String code;
+    @Column(nullable = false, unique = true)
+    private String code;
 
-	private String descriptionLocal;
+    private String descriptionLocal;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	@Enumerated(EnumType.STRING)
-	private AutreEnum typeLocal;
+    @Enumerated(EnumType.STRING)
+    private AutreEnum typeLocal;
 
-	public Localisation() {
-	}
+    public Localisation() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setLocalId(Utility.getUidFor(localId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setLocalId(Utility.getUidFor(localId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @Override
+    public void postConstructOperation() {
+    }
 }

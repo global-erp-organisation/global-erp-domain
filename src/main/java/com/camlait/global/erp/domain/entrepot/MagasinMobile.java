@@ -12,9 +12,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`ent-magasin-mobiles`")
+@Table(name = "`ent-magasin-mobiles`")
 public class MagasinMobile extends Magasin {
-    
+
     public MagasinMobile() {
         setTypeMagasin(AutreEnum.MAGASIN_MOBILE);
     }

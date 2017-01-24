@@ -20,14 +20,14 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`partenaire-client-a-marges`")
+@Table(name = "`partenaire-client-a-marges`")
 public class ClientAmarge extends Client {
 
     @JsonManagedReference
-	@OneToMany(mappedBy = "client")
-	private Collection<MargeClient> margeClients = Sets.newHashSet();
+    @OneToMany(mappedBy = "client")
+    private Collection<MargeClient> margeClients = Sets.newHashSet();
 
-	public ClientAmarge() {
-		setTypePartenaire(TypePartenaire.CLIENT_A_MARGE);
-	}
+    public ClientAmarge() {
+        setTypePartenaire(TypePartenaire.CLIENT_A_MARGE);
+    }
 }

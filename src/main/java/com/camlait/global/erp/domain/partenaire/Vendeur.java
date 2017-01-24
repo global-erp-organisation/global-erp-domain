@@ -25,36 +25,36 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`partenaire-vendeurs`")
+@Table(name = "`partenaire-vendeurs`")
 public class Vendeur extends Employe {
 
     @Transient
     private String zoneId;
-    
+
     @JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "zoneId")
-	private Zone zoneDeVente;
+    @ManyToOne
+    @JoinColumn(name = "zoneId")
+    private Zone zoneDeVente;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "vendeur")
-	private Collection<ManquantFinancier> manquantFinanciers = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "vendeur")
+    private Collection<ManquantFinancier> manquantFinanciers = Sets.newHashSet();
 
-	private boolean recoisDesCommission;
+    private boolean recoisDesCommission;
 
-	private double tauxDeCommission;
+    private double tauxDeCommission;
 
-	public Vendeur() {
-		setTypePartenaire(TypePartenaire.VENDEUR);
-	}
-	
-	@Override
-	public void postConstructOperation() {
-		setCentreId(getCentre().getLocalId());
-		setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
-		setTarifId(getTarif().getTarifId());
-		setEmploisId(getEmplois().getEmploisId());
-		setUtilisateurId(getUtilisateur() != null ? getUtilisateur().getUtilisateurId() : null);
-		setZoneId(zoneDeVente.getLocalId());
-	}
+    public Vendeur() {
+        setTypePartenaire(TypePartenaire.VENDEUR);
+    }
+
+    @Override
+    public void postConstructOperation() {
+        setCentreId(getCentre().getLocalId());
+        setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
+        setTarifId(getTarif().getTarifId());
+        setEmploisId(getEmplois().getEmploisId());
+        setUtilisateurId(getUtilisateur() != null ? getUtilisateur().getUtilisateurId() : null);
+        setZoneId(zoneDeVente.getLocalId());
+    }
 }

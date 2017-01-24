@@ -30,71 +30,71 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`trans-terme-langues`")
 public class TermeLangue extends Entite {
 
-	@Id
-	private String termeLangueId;
+    @Id
+    private String termeLangueId;
 
-	@Transient
-	private String termeId;
+    @Transient
+    private String termeId;
 
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "termeId")
-	private Terme terme;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "termeId")
+    private Terme terme;
 
-	@Transient
-	private String langueId;
+    @Transient
+    private String langueId;
 
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "langueId")
-	private Langue langue;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "langueId")
+    private Langue langue;
 
-	private String value;
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    private String value;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public TermeLangue() {
-		super();
-	}
+    public TermeLangue() {
+        super();
+    }
 
-	public TermeLangue(Terme terme, Langue langue, String value) {
-		super();
-		this.terme = terme;
-		this.langue = langue;
-		this.value = value;
-	}
+    public TermeLangue(Terme terme, Langue langue, String value) {
+        super();
+        this.terme = terme;
+        this.langue = langue;
+        this.value = value;
+    }
 
-	public TermeLangue(String termeLangueId, Terme terme, Langue langue, String value) {
-		super();
-		this.termeLangueId = termeLangueId;
-		this.terme = terme;
-		this.langue = langue;
-		this.value = value;
-	}
+    public TermeLangue(String termeLangueId, Terme terme, Langue langue, String value) {
+        super();
+        this.termeLangueId = termeLangueId;
+        this.terme = terme;
+        this.langue = langue;
+        this.value = value;
+    }
 
-	public void setTermeId() {
-		setTermeId(getTerme().getTermeId());
-	}
+    public void setTermeId() {
+        setTermeId(getTerme().getTermeId());
+    }
 
-	public void setLangueId() {
-		setLangueId(getLangue().getLangId());
-	}
+    public void setLangueId() {
+        setLangueId(getLangue().getLangId());
+    }
 
-	@PrePersist
-	private void setKey() {
-		setTermeLangueId(Utility.getUidFor(termeLangueId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setTermeLangueId(Utility.getUidFor(termeLangueId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setLangueId(langue.getLangId());
-		setTermeId(terme.getTermeId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setLangueId(langue.getLangId());
+        setTermeId(terme.getTermeId());
+    }
 }

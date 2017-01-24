@@ -9,11 +9,11 @@ import com.camlait.global.erp.domain.enumeration.TypeDocuments;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="`doc-document-entrees`")
+@Table(name = "`doc-document-entrees`")
 public class DocumentEntree extends DocumentDeStock {
 
-	public DocumentEntree() {
-		setSensOperation(SensOperation.ENTREE);
-		setTypeDocument(TypeDocuments.DOCUMENT_ENTREE);
-	}
+    public DocumentEntree() {
+        setSensOperation(SensOperation.ENTREE);
+        setTypeDocument(TypeDocuments.DOCUMENT_ENTREE);
+    }
 }

@@ -22,40 +22,40 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`doc-document-de-ventes`")
+@Table(name = "`doc-document-de-ventes`")
 public abstract class DocumentDeVente extends DocumentCommerciaux {
-    
+
     @Transient
     private String clientId;
-    
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "clientId")
     private Client client;
-    
+
     @Transient
     private String zoneId;
-    
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "zoneId")
     private Zone zone;
-    
+
     private boolean documentSolde;
-        
+
     public DocumentDeVente() {
         setSensOperation(SensOperation.SORTIE);
         setTypeDocument(TypeDocuments.DOCUMENT_DE_VENTE);
-    } 
-    
-	@Override
-	public void postConstructOperation() {
-		setMagasinId(getMagasin().getMagasinId());
-		setResponsableId(getResponsableDocument().getPartenaireId());
-		setBmqId(getBmq() != null ? getBmq().getBmqId() : null);
-		setInventaireId(getInventaire() != null ? getInventaire().getInventaireId() : null);
-		setClientId(client.getPartenaireId());
-		setZoneId(zone.getLocalId());
-	}
+    }
+
+    @Override
+    public void postConstructOperation() {
+        setMagasinId(getMagasin().getMagasinId());
+        setResponsableId(getResponsableDocument().getPartenaireId());
+        setBmqId(getBmq() != null ? getBmq().getBmqId() : null);
+        setInventaireId(getInventaire() != null ? getInventaire().getInventaireId() : null);
+        setClientId(client.getPartenaireId());
+        setZoneId(zone.getLocalId());
+    }
 
 }

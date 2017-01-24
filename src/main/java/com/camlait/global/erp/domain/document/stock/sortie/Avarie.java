@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`doc-avaries`")
+@Table(name = "`doc-avaries`")
 public class Avarie extends DocumentDeSortie {
 
-	public Avarie() {
-		setTypeDocument(TypeDocuments.AVARIE);
-	}
+    public Avarie() {
+        setTypeDocument(TypeDocuments.AVARIE);
+    }
 }

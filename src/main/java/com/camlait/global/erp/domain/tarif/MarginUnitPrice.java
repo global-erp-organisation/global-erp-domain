@@ -9,11 +9,11 @@ import lombok.EqualsAndHashCode;
 @SuppressWarnings("serial")
 @Entity
 @Data
-@Table(name="`tarif-margin-unit-prices`")
+@Table(name = "`tarif-margin-unit-prices`")
 @EqualsAndHashCode(callSuper = true)
 public class MarginUnitPrice extends UnitPrice {
 
-	public MarginUnitPrice(){
-		
-	}
+    public MarginUnitPrice() {
+
+    }
 }

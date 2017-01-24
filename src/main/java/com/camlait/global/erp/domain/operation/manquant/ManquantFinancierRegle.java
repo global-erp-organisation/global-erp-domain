@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`op-manquant-financier-regles`")
+@Table(name = "`op-manquant-financier-regles`")
 public class ManquantFinancierRegle extends ManquantFinancier {
 
-    public ManquantFinancierRegle(){
+    public ManquantFinancierRegle() {
         setSensOperation(SensOperation.SORTIE);
     }
 }

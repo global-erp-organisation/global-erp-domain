@@ -31,48 +31,48 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`inv-fiche-de-stocks`")
 public class FicheDeStock extends Entite {
 
-	@Id
-	private String ficheId;
-	private Date dateFiche;
+    @Id
+    private String ficheId;
+    private Date dateFiche;
 
-	@Transient
-	private String magasinId;
+    @Transient
+    private String magasinId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "magasinId")
-	private Magasin magasin;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinId")
+    private Magasin magasin;
 
-	@Transient
-	private String produitId;
+    @Transient
+    private String produitId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "produitId")
-	private Produit produit;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "produitId")
+    private Produit produit;
 
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public FicheDeStock() {
-		super();
-	}
+    public FicheDeStock() {
+        super();
+    }
 
-	@PrePersist
-	private void setKey() {
-		setFicheId(Utility.getUidFor(ficheId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setFicheId(Utility.getUidFor(ficheId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setMagasinId(magasin.getMagasinId());
-		setProduitId(produit.getProduitId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setMagasinId(magasin.getMagasinId());
+        setProduitId(produit.getProduitId());
+    }
 }

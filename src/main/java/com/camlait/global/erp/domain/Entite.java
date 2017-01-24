@@ -23,56 +23,54 @@ import lombok.NonNull;
  */
 @SuppressWarnings("serial")
 public abstract class Entite implements Serializable {
-	/**
-	 * Merge the current entity with the given one.
-	 * 
-	 * @param from
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public <T> T merge(@NonNull T from) {
-		return (T) MergeBeanUtilsBean.mergeDefault(from, this);
-	}
+    /**
+     * Merge the current entity with the given one.
+     * 
+     * @param from
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T merge(@NonNull T from) {
+        return (T) MergeBeanUtilsBean.mergeDefault(from, this);
+    }
 
-	/**
-	 * Help to perform all the post constructor operations.
-	 */
-	@PostConstruct
-	public abstract void postConstructOperation();
+    /**
+     * Help to perform all the post constructor operations.
+     */
+    @PostConstruct
+    public abstract void postConstructOperation();
 
-	/**
-	 * Verify if the given class is the same type as the current class.
-	 * 
-	 * @param clazz
-	 * @return
-	 */
-	public <T> Boolean isTypeOf(@NonNull Class<T> clazz) {
-		return this.getClass().getName().equals(clazz.getName());
-	}
+    /**
+     * Verify if the given class is the same type as the current class.
+     * 
+     * @param clazz
+     * @return
+     */
+    public <T> Boolean isTypeOf(@NonNull Class<T> clazz) {
+        return this.getClass().getName().equals(clazz.getName());
+    }
 
-	/**
-	 * Scan the current class in order to find all collection that need to lazy
-	 * initialize.
-	 * 
-	 * @return The Object after lazy initialized collections.
-	 */
-	@SuppressWarnings("unchecked")
-	public <T extends Entite> T lazyInit() {
-		Stream.of(this.getClass().getFields()).filter(this::canBeLazyInit)
-				.forEach(f -> Hibernate.initialize(getFieldValue(f)));
-		return (T) this;
-	}
+    /**
+     * Scan the current class in order to find all collection that need to lazy
+     * initialize.
+     * 
+     * @return The Object after lazy initialized collections.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Entite> T lazyInit() {
+        Stream.of(this.getClass().getFields()).filter(this::canBeLazyInit).forEach(f -> Hibernate.initialize(getFieldValue(f)));
+        return (T) this;
+    }
 
-	private Boolean canBeLazyInit(Field f) {
-		return (f.getAnnotation(ManyToMany.class) != null)
-				|| (f.getAnnotation(OneToMany.class) != null) && (f.getType().isInstance(Collection.class));
-	}
+    private Boolean canBeLazyInit(Field f) {
+        return (f.getAnnotation(ManyToMany.class) != null) || (f.getAnnotation(OneToMany.class) != null) && (f.getType().isInstance(Collection.class));
+    }
 
-	private Object getFieldValue(Field f) {
-		try {
-			return readField(this, f.getName(), true);
-		} catch (Exception e) {
-			throw new LazyInitException("Unable to get he field value. Field name: " + f.getName());
-		}
-	}
+    private Object getFieldValue(Field f) {
+        try {
+            return readField(this, f.getName(), true);
+        } catch (Exception e) {
+            throw new LazyInitException("Unable to get he field value. Field name: " + f.getName());
+        }
+    }
 }

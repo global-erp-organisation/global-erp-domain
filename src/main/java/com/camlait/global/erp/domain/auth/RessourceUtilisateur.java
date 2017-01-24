@@ -32,57 +32,57 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`auth-ressource-utilisateurs`")
 public class RessourceUtilisateur extends Entite {
 
-	@Id
-	private String ressourceUtilisateurId;
+    @Id
+    private String ressourceUtilisateurId;
 
-	@Transient
-	private String utilisateurId;
+    @Transient
+    private String utilisateurId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "utilisateurId")
-	private Utilisateur utilisateur;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "utilisateurId")
+    private Utilisateur utilisateur;
 
-	@Transient
-	private String ressourceId;
+    @Transient
+    private String ressourceId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "ressourceId")
-	private Ressource ressource;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "ressourceId")
+    private Ressource ressource;
 
-	@Enumerated(EnumType.STRING)
-	private Etat etat;
+    @Enumerated(EnumType.STRING)
+    private Etat etat;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	public RessourceUtilisateur(Utilisateur utilisateur, Ressource ressource, Etat etat) {
-		super();
-		this.utilisateur = utilisateur;
-		this.ressource = ressource;
-		this.etat = etat;
-	}
+    public RessourceUtilisateur(Utilisateur utilisateur, Ressource ressource, Etat etat) {
+        super();
+        this.utilisateur = utilisateur;
+        this.ressource = ressource;
+        this.etat = etat;
+    }
 
-	public RessourceUtilisateur() {
-	}
+    public RessourceUtilisateur() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setRessourceUtilisateurId(Utility.getUidFor(ressourceUtilisateurId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setRessourceUtilisateurId(Utility.getUidFor(ressourceUtilisateurId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setRessourceId(ressource.getRessourceId());
-		setUtilisateurId(utilisateur.getUtilisateurId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setRessourceId(ressource.getRessourceId());
+        setUtilisateurId(utilisateur.getUtilisateurId());
+    }
 }

@@ -24,40 +24,40 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
-@Table(name="`reg-partenaire-mode-de-reglements`")
+@Table(name = "`reg-partenaire-mode-de-reglements`")
 public class PartenaireModeDeReglement extends Entite {
 
-	@Id
-	private String partenaireModeleId;
+    @Id
+    private String partenaireModeleId;
 
-	@Transient
-	private String modeleId;
-	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "modeleId")
-	private ModeleDeReglement modeleDeReglement;
+    @Transient
+    private String modeleId;
 
-	@Transient
-	private String partenaireId;
-	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "partenaireId")
-	private Partenaire partenaire;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "modeleId")
+    private ModeleDeReglement modeleDeReglement;
 
-	public PartenaireModeDeReglement() {
-		super();
-	}
-	
-	@PrePersist
-	private void setKey() {
-		setPartenaireModeleId(Utility.getUidFor(partenaireModeleId));
-	}
+    @Transient
+    private String partenaireId;
 
-	@Override
-	public void postConstructOperation() {
-		setModeleId(modeleDeReglement.getModeleId());
-		setPartenaireId(partenaire.getPartenaireId());
-	}
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "partenaireId")
+    private Partenaire partenaire;
+
+    public PartenaireModeDeReglement() {
+        super();
+    }
+
+    @PrePersist
+    private void setKey() {
+        setPartenaireModeleId(Utility.getUidFor(partenaireModeleId));
+    }
+
+    @Override
+    public void postConstructOperation() {
+        setModeleId(modeleDeReglement.getModeleId());
+        setPartenaireId(partenaire.getPartenaireId());
+    }
 }

@@ -12,10 +12,10 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`doc-animations`")
+@Table(name = "`doc-animations`")
 public class Animation extends DocumentDeSortie {
-	public Animation() {
-		setTypeDocument(TypeDocuments.ANIMATION);
-	}
+    public Animation() {
+        setTypeDocument(TypeDocuments.ANIMATION);
+    }
 
 }

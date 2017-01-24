@@ -28,38 +28,38 @@ import lombok.EqualsAndHashCode;
 @Builder
 public class Emplois extends Entite {
 
-	@Id
-	private String emploisId;
+    @Id
+    private String emploisId;
 
-	@Column(unique = true, nullable = false)
-	private String codeEmplois;
-	private String descriptionEmplois;
+    @Column(unique = true, nullable = false)
+    private String codeEmplois;
+    private String descriptionEmplois;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "emplois")
-	private Collection<Employe> employes = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "emplois")
+    private Collection<Employe> employes = Sets.newHashSet();
 
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public Emplois() {
-		super();
-	}
+    public Emplois() {
+        super();
+    }
 
-	@PrePersist
-	private void setKey() {
-		setEmploisId(Utility.getUidFor(emploisId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setEmploisId(Utility.getUidFor(emploisId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @Override
+    public void postConstructOperation() {
+    }
 
 }

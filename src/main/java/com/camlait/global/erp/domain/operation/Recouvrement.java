@@ -19,26 +19,26 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`op-recouvrements`")
+@Table(name = "`op-recouvrements`")
 public class Recouvrement extends Operation {
 
-	@Transient
-	private String bmqId;
+    @Transient
+    private String bmqId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "bmqId")
-	private Bmq bmq;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "bmqId")
+    private Bmq bmq;
 
-	public Recouvrement() {
-		setSensOperation(SensOperation.ENTREE);
-	}
+    public Recouvrement() {
+        setSensOperation(SensOperation.ENTREE);
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setResponsableId(getResponsable().getPartenaireId());
-		setPartenaireId(getPartenaire().getPartenaireId());
-		setBmqId(bmq != null ? bmq.getBmqId() : null);
-	}
+    @Override
+    public void postConstructOperation() {
+        setResponsableId(getResponsable().getPartenaireId());
+        setPartenaireId(getPartenaire().getPartenaireId());
+        setBmqId(bmq != null ? bmq.getBmqId() : null);
+    }
 
 }

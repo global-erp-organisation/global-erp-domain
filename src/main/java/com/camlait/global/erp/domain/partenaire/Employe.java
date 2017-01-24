@@ -26,56 +26,56 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`partenaire-employes`")
+@Table(name = "`partenaire-employes`")
 public class Employe extends Partenaire {
 
-	@Column(unique = true, nullable = false)
-	private String matricule;
+    @Column(unique = true, nullable = false)
+    private String matricule;
 
-	@Column(nullable = false)
-	private String nom;
+    @Column(nullable = false)
+    private String nom;
 
-	private String prenom;
+    private String prenom;
 
-	private Date dateDeNaissance;
+    private Date dateDeNaissance;
 
-	@Transient
-	private String utilisateurId;
+    @Transient
+    private String utilisateurId;
 
-	@JsonBackReference
-	@OneToOne
-	@JoinColumn(name = "utilisateurId")
-	private Utilisateur utilisateur;
+    @JsonBackReference
+    @OneToOne
+    @JoinColumn(name = "utilisateurId")
+    private Utilisateur utilisateur;
 
-	@Transient
-	private String emploisId;
+    @Transient
+    private String emploisId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "emploisId")
-	private Emplois emplois;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "emploisId")
+    private Emplois emplois;
 
-	@Enumerated(EnumType.STRING)
-	private Sexe sexe;
+    @Enumerated(EnumType.STRING)
+    private Sexe sexe;
 
-	public Employe() {
-		setTypePartenaire(TypePartenaire.EMPLOYE);
-	}
+    public Employe() {
+        setTypePartenaire(TypePartenaire.EMPLOYE);
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setCentreId(getCentre().getLocalId());
-		setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
-		setTarifId(getTarif().getTarifId());
-		setEmploisId(emplois.getEmploisId());
-		setUtilisateurId(utilisateur != null ? utilisateur.getUtilisateurId() : null);
-	}
+    @Override
+    public void postConstructOperation() {
+        setCentreId(getCentre().getLocalId());
+        setGroupePartenaireId(getGroupePartenaire().getGroupePartenaireId());
+        setTarifId(getTarif().getTarifId());
+        setEmploisId(emplois.getEmploisId());
+        setUtilisateurId(utilisateur != null ? utilisateur.getUtilisateurId() : null);
+    }
 
-	public Boolean isSeller() {
-		return this instanceof Vendeur;
-	}
+    public Boolean isSeller() {
+        return this instanceof Vendeur;
+    }
 
-	public Boolean isStorer() {
-		return this instanceof Magasinier;
-	}
+    public Boolean isStorer() {
+        return this instanceof Magasinier;
+    }
 }

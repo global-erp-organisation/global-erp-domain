@@ -32,49 +32,49 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`inv-stocks`")
 public class Stock extends Entite {
 
-	@Id
-	private String stockId;
+    @Id
+    private String stockId;
 
-	@Transient
-	private String produitId;
+    @Transient
+    private String produitId;
 
-	@JsonBackReference
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "produitId")
-	private Produit produit;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "produitId")
+    private Produit produit;
 
-	@Transient
-	private String magasinId;
+    @Transient
+    private String magasinId;
 
-	@JsonBackReference
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "magasinId")
-	private Magasin magasin;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "magasinId")
+    private Magasin magasin;
 
-	private Long quantiteDisponible;
+    private Long quantiteDisponible;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	public Stock() {
-	}
+    public Stock() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setStockId(Utility.getUidFor(stockId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setStockId(Utility.getUidFor(stockId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setMagasinId(magasin.getMagasinId());
-		setProduitId(produit.getProduitId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setMagasinId(magasin.getMagasinId());
+        setProduitId(produit.getProduitId());
+    }
 }

@@ -25,28 +25,28 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`tarif-tarifs`")
 public class Tarif extends Entite {
 
-	@Id
-	private String tarifId;
-	private String descriptionTarif;
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    @Id
+    private String tarifId;
+    private String descriptionTarif;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public Tarif() {
-	}
+    public Tarif() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setTarifId(Utility.getUidFor(tarifId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setTarifId(Utility.getUidFor(tarifId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @Override
+    public void postConstructOperation() {
+    }
 }

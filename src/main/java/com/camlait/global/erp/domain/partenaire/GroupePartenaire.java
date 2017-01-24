@@ -29,40 +29,40 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`partenaire-groupe-partenaires`")
 public class GroupePartenaire extends Entite {
 
-	@Id
-	private String groupePartenaireId;
+    @Id
+    private String groupePartenaireId;
 
-	private String descriptionGroupePartenaire;
+    private String descriptionGroupePartenaire;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "groupePartenaire")
-	private Collection<Partenaire> partenaires = Sets.newHashSet();
-	
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "groupePartenaire")
+    private Collection<Partenaire> partenaires = Sets.newHashSet();
 
-	public GroupePartenaire(String descriptionGroupePartenaire) {
-		super();
-		this.descriptionGroupePartenaire = descriptionGroupePartenaire;
-	}
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public GroupePartenaire() {
-		super();
-	}
+    public GroupePartenaire(String descriptionGroupePartenaire) {
+        super();
+        this.descriptionGroupePartenaire = descriptionGroupePartenaire;
+    }
 
-	@PrePersist
-	private void setKey() {
-		setGroupePartenaireId(Utility.getUidFor(groupePartenaireId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    public GroupePartenaire() {
+        super();
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setGroupePartenaireId(Utility.getUidFor(groupePartenaireId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
+
+    @Override
+    public void postConstructOperation() {
+    }
 }

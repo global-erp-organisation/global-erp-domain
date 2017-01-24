@@ -21,17 +21,17 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = true, exclude="factureReglements")
-@ToString(exclude="factureReglements")
-@Table(name="`doc-facture-clients`")
+@EqualsAndHashCode(callSuper = true, exclude = "factureReglements")
+@ToString(exclude = "factureReglements")
+@Table(name = "`doc-facture-clients`")
 public class FactureClient extends DocumentDeVente {
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "facture", cascade=CascadeType.ALL)
-    private Collection<FactureReglement> factureReglements =Sets.newHashSet();
+    @OneToMany(mappedBy = "facture", cascade = CascadeType.ALL)
+    private Collection<FactureReglement> factureReglements = Sets.newHashSet();
 
     public FactureClient() {
         setTypeDocument(TypeDocuments.FACTURE_CLIENT);
     }
-    
+
 }

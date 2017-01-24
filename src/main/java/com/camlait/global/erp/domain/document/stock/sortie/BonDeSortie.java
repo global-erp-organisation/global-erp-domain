@@ -12,9 +12,9 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`doc-bon-de-sorties`")
+@Table(name = "`doc-bon-de-sorties`")
 public class BonDeSortie extends DocumentDeSortie {
-    
+
     public BonDeSortie() {
         setTypeDocument(TypeDocuments.BON_DE_SORTIE);
     }

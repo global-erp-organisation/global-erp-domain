@@ -33,14 +33,11 @@ public final class JSONUtils {
     }
 
     /**
-     *
      * De-Serializes the JSON message to an Object of the specified clazz.
      *
      * @param jsonMessage Serialized version of the JSON object
      * @param clazz Target class to deserialize to
-     *
      * @return Deserialized message into object
-     *
      */
     public static <T> T deserialized(String jsonMessage, Class<T> clazz) {
         try {

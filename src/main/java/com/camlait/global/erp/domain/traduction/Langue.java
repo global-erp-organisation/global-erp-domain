@@ -32,48 +32,48 @@ import lombok.ToString;
 @Builder
 @Table(name = "`trans-langue`")
 public class Langue extends Entite {
-	@Id
-	private String langId;
+    @Id
+    private String langId;
 
-	@Column(unique = true, nullable = false)
-	private String codeLangue;
+    @Column(unique = true, nullable = false)
+    private String codeLangue;
 
-	private String title;
+    private String title;
 
-	private String alt;
+    private String alt;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "langue", cascade = CascadeType.ALL)
-	private Collection<TermeLangue> termeLangues = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "langue", cascade = CascadeType.ALL)
+    private Collection<TermeLangue> termeLangues = Sets.newHashSet();
 
-	private Date dateDeCreation;
-	private Date derniereMiseAJour;
+    private Date dateDeCreation;
+    private Date derniereMiseAJour;
 
-	public Langue(String key, String title, String alt) {
-		super();
-		this.codeLangue = key;
-		this.title = title;
-		this.alt = alt;
-	}
+    public Langue(String key, String title, String alt) {
+        super();
+        this.codeLangue = key;
+        this.title = title;
+        this.alt = alt;
+    }
 
-	public Langue() {
-	}
+    public Langue() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setLangId(Utility.getUidFor(langId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setLangId(Utility.getUidFor(langId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void postConstructOperation() {
+        // TODO Auto-generated method stub
+    }
 
 }

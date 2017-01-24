@@ -18,27 +18,27 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`doc-document-commerciaux`")
+@Table(name = "`doc-document-commerciaux`")
 public class DocumentCommerciaux extends Document {
 
-	@Transient
-	private String priceTypeId;
+    @Transient
+    private String priceTypeId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "priceTypeId")
-	private PriceType priceType;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "priceTypeId")
+    private PriceType priceType;
 
-	public DocumentCommerciaux() {
-		setTypeDocument(TypeDocuments.DOCUMENT_COMMERCIAUX);
-	}
-	
-	@Override
-	public void postConstructOperation() {
-		setMagasinId(getMagasin().getMagasinId());
-		setResponsableId(getResponsableDocument().getPartenaireId());
-		setBmqId(getBmq() != null ? getBmq().getBmqId() : null);
-		setInventaireId(getInventaire() != null ? getInventaire().getInventaireId() : null);
-		setPriceTypeId(priceType.getPriceTypeId());
-	}
+    public DocumentCommerciaux() {
+        setTypeDocument(TypeDocuments.DOCUMENT_COMMERCIAUX);
+    }
+
+    @Override
+    public void postConstructOperation() {
+        setMagasinId(getMagasin().getMagasinId());
+        setResponsableId(getResponsableDocument().getPartenaireId());
+        setBmqId(getBmq() != null ? getBmq().getBmqId() : null);
+        setInventaireId(getInventaire() != null ? getInventaire().getInventaireId() : null);
+        setPriceTypeId(priceType.getPriceTypeId());
+    }
 }

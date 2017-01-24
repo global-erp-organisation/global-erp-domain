@@ -24,28 +24,28 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`loc-secteurs`")
+@Table(name = "`loc-secteurs`")
 public class Secteur extends Localisation {
 
     @Transient
     private String regionId;
-    
+
     @JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "regionId")
-	private Region region;
+    @ManyToOne
+    @JoinColumn(name = "regionId")
+    private Region region;
 
     @JsonManagedReference
-	@OneToMany(mappedBy = "secteur", fetch = FetchType.EAGER)
-	private Collection<Zone> zones = Sets.newHashSet();
+    @OneToMany(mappedBy = "secteur", fetch = FetchType.EAGER)
+    private Collection<Zone> zones = Sets.newHashSet();
 
-	public Secteur() {
-		setTypeLocal(AutreEnum.SECTEUR);
-	}
-	
-	@Override
-	public void postConstructOperation() {
-		setRegionId(region.getLocalId());
-	}
+    public Secteur() {
+        setTypeLocal(AutreEnum.SECTEUR);
+    }
+
+    @Override
+    public void postConstructOperation() {
+        setRegionId(region.getLocalId());
+    }
 
 }

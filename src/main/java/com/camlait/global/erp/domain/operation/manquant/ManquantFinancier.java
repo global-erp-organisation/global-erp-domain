@@ -19,24 +19,24 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`op-manquant-financiers`")
+@Table(name = "`op-manquant-financiers`")
 public class ManquantFinancier extends Operation {
 
     @Transient
     private String vendeurId;
-    
+
     @JsonBackReference
-	@ManyToOne
-	@JoinColumn(name="vendeurId")
-	private Vendeur vendeur;
-    
-    public ManquantFinancier(){        
+    @ManyToOne
+    @JoinColumn(name = "vendeurId")
+    private Vendeur vendeur;
+
+    public ManquantFinancier() {
     }
-    
-	@Override
-	public void postConstructOperation() {
-		setResponsableId(getResponsable().getPartenaireId());
-		setPartenaireId(getPartenaire().getPartenaireId());
-		setVendeurId(vendeur.getPartenaireId());
-	}
+
+    @Override
+    public void postConstructOperation() {
+        setResponsableId(getResponsable().getPartenaireId());
+        setPartenaireId(getPartenaire().getPartenaireId());
+        setVendeurId(vendeur.getPartenaireId());
+    }
 }

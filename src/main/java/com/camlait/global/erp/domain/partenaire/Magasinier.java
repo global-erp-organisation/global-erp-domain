@@ -20,14 +20,15 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`partenaire-magasiniers`")
+@Table(name = "`partenaire-magasiniers`")
 public class Magasinier extends Employe {
 
     @JsonManagedReference
-	@OneToMany(mappedBy="magasinierSortant")
+    @OneToMany(mappedBy = "magasinierSortant")
     private Collection<Inventaire> inventaires = Sets.newHashSet();
+
     public Magasinier() {
-    	setTypePartenaire(TypePartenaire.MAGASINIER);
+        setTypePartenaire(TypePartenaire.MAGASINIER);
     }
 
 }

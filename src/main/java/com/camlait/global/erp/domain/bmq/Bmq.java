@@ -122,12 +122,17 @@ public class Bmq extends Entite {
     public Bmq buildLigne() {
         Set<LigneBmq> lignes = this.getDocuments().parallelStream().map(d -> {
             return d.getLigneDocuments().stream().map(l -> {
-                return LigneBmq.builder().bmq(d.getBmq()).bmqId(d.getBmq().getBmqId()).document(d).documentId(d.getDocumentId())
-                        .prixUnitaireLigne(l.getPrixunitaiteLigne()).produit(l.getProduit()).produitId(l.getProduit().getProduitId())
+                return LigneBmq.builder()
+                        .bmq(d.getBmq()).
+                        bmqId(d.getBmq().getBmqId())
+                        .document(d).documentId(d.getDocumentId())
+                        .prixUnitaireLigne(l.getPrixunitaiteLigne())
+                        .produit(l.getProduit())
+                        .produitId(l.getProduit().getProduitId())
                         .quantiteLigne(l.getQuantiteLigne()).build();
             }).collect(Collectors.toSet());
         }).findFirst().get();
         setLigneBmqs(lignes);
         return this;
     }
- }
+}

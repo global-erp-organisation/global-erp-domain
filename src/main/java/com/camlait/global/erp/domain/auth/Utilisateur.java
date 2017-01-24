@@ -31,67 +31,67 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "employes", "ressourceUtilisateurs" })
-@ToString(exclude = { "employes", "ressourceUtilisateurs" })
+@EqualsAndHashCode(callSuper = false, exclude = {"employes", "ressourceUtilisateurs"})
+@ToString(exclude = {"employes", "ressourceUtilisateurs"})
 @Builder
 @Table(name = "`auth-utilisateurs`")
 public class Utilisateur extends Entite {
-	@Id
-	private String utilisateurId;
+    @Id
+    private String utilisateurId;
 
-	@Column(nullable = false)
-	private String courriel;
+    @Column(nullable = false)
+    private String courriel;
 
-	private String motDePasse;
+    private String motDePasse;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "utilisateur")
-	private Collection<Employe> employes = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "utilisateur")
+    private Collection<Employe> employes = Sets.newHashSet();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "utilisateur")
-	private Collection<RessourceUtilisateur> ressourceUtilisateurs = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "utilisateur")
+    private Collection<RessourceUtilisateur> ressourceUtilisateurs = Sets.newHashSet();
 
-	@JsonBackReference
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "`auth-groupe-utilisateur`")
-	private Collection<Groupe> groupes = Sets.newHashSet();
+    @JsonBackReference
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "`auth-groupe-utilisateur`")
+    private Collection<Groupe> groupes = Sets.newHashSet();
 
-	public Utilisateur() {
-	}
+    public Utilisateur() {
+    }
 
-	@Override
-	public void postConstructOperation() {
-		ressourceGroupCopy();
-	}
+    @Override
+    public void postConstructOperation() {
+        ressourceGroupCopy();
+    }
 
-	private void ressourceGroupCopy() {
-		if (groupes != null && !groupes.isEmpty()) {
-			groupes.stream().forEach(g -> {
-				Collection<RessourceUtilisateur> ru = g.getRessourceGroupes().stream().map(rg -> {
-					return RessourceUtilisateur.builder().dateDeCreation(new Date()).derniereMiseAJour(new Date())
-							.etat(rg.getEtat()).ressource(rg.getRessource()).ressourceId(rg.getRessourceId())
-							.utilisateur(this).utilisateurId(this.getUtilisateurId()).build();
+    private void ressourceGroupCopy() {
+        if (groupes != null && !groupes.isEmpty()) {
+            groupes.stream().forEach(g -> {
+                Collection<RessourceUtilisateur> ru = g.getRessourceGroupes().stream().map(rg -> {
+                    return RessourceUtilisateur.builder().dateDeCreation(new Date()).derniereMiseAJour(new Date()).etat(rg.getEtat())
+                            .ressource(rg.getRessource()).ressourceId(rg.getRessourceId()).utilisateur(this).utilisateurId(this.getUtilisateurId())
+                            .build();
 
-				}).collect(Collectors.toList());
-				ressourceUtilisateurs.addAll(ru);
-			});
-		}
-	}
+                }).collect(Collectors.toList());
+                ressourceUtilisateurs.addAll(ru);
+            });
+        }
+    }
 
-	@PrePersist
-	private void prePersist() {
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void prePersist() {
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
 }

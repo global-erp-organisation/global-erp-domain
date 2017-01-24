@@ -34,80 +34,80 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "documents", "ligneInventaires" })
-@ToString(exclude = { "documents", "ligneInventaires" })
+@EqualsAndHashCode(callSuper = false, exclude = {"documents", "ligneInventaires"})
+@ToString(exclude = {"documents", "ligneInventaires"})
 @Builder
 @Table(name = "`inv-inventaires`")
 public class Inventaire extends Entite {
 
-	@Id
-	private String inventaireId;
+    @Id
+    private String inventaireId;
 
-	@Column(name = "codeInventaire", nullable = false, unique = true)
-	private String codeInventaire;
+    @Column(name = "codeInventaire", nullable = false, unique = true)
+    private String codeInventaire;
 
-	@Column(name = "dateInventaire", nullable = false)
-	private Date dateInventaire;
+    @Column(name = "dateInventaire", nullable = false)
+    private Date dateInventaire;
 
-	private String note;
+    private String note;
 
-	@Transient
-	private String magasinId;
+    @Transient
+    private String magasinId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "magasinId")
-	private Magasin magasin;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinId")
+    private Magasin magasin;
 
-	@Transient
-	private String magasinierSortantId;
+    @Transient
+    private String magasinierSortantId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "magasinierSortantId")
-	private Magasinier magasinierSortant;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinierSortantId")
+    private Magasinier magasinierSortant;
 
-	@Transient
-	private String magasinierEntrantId;
+    @Transient
+    private String magasinierEntrantId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "magasinierEntrantId")
-	private Magasinier magasinierEntrant;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "magasinierEntrantId")
+    private Magasinier magasinierEntrant;
 
-	private boolean inventaireClos;
+    private boolean inventaireClos;
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "inventaire", cascade = CascadeType.ALL)
-	private Collection<Document> documents = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "inventaire", cascade = CascadeType.ALL)
+    private Collection<Document> documents = Sets.newHashSet();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy = "inventaire", cascade = CascadeType.ALL)
-	private Collection<LigneInventaire> ligneInventaires = Sets.newHashSet();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "inventaire", cascade = CascadeType.ALL)
+    private Collection<LigneInventaire> ligneInventaires = Sets.newHashSet();
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	public Inventaire() {
-	}
+    public Inventaire() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setInventaireId(Utility.getUidFor(inventaireId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setInventaireId(Utility.getUidFor(inventaireId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setMagasinId(magasin.getMagasinId());
-		setMagasinierEntrantId(magasinierEntrant.getPartenaireId());
-		setMagasinierSortantId(magasinierSortant.getPartenaireId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setMagasinId(magasin.getMagasinId());
+        setMagasinierEntrantId(magasinierEntrant.getPartenaireId());
+        setMagasinierSortantId(magasinierSortant.getPartenaireId());
+    }
 }

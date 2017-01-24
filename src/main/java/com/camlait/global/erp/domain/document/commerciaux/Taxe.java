@@ -30,59 +30,59 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = { "produits", "categorieProduits" })
-@ToString(exclude = { "produits", "categorieProduits" })
+@EqualsAndHashCode(callSuper = true, exclude = {"produits", "categorieProduits"})
+@ToString(exclude = {"produits", "categorieProduits"})
 @Builder
 @Table(name = "`taxe-taxes`")
 public class Taxe extends Entite {
 
-	@Id
-	private String taxeId;
+    @Id
+    private String taxeId;
 
-	@Column(name = "codeTaxe", unique = true, nullable = false)
-	private String codeTaxe;
+    @Column(name = "codeTaxe", unique = true, nullable = false)
+    private String codeTaxe;
 
-	private String taxeDescription;
+    private String taxeDescription;
 
-	private double valeurPourcentage;
+    private double valeurPourcentage;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	@JsonBackReference
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "`produit-produit-taxe`")
-	private Collection<Produit> produits = Sets.newHashSet();
+    @JsonBackReference
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "`produit-produit-taxe`")
+    private Collection<Produit> produits = Sets.newHashSet();
 
-	@JsonBackReference
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "`produit-categorie-produit-taxe`")
-	private Collection<CategorieProduit> categorieProduits = Sets.newHashSet();
+    @JsonBackReference
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "`produit-categorie-produit-taxe`")
+    private Collection<CategorieProduit> categorieProduits = Sets.newHashSet();
 
-	public Taxe(String taxeId, String codeTaxe) {
-		super();
-		this.taxeId = taxeId;
-		this.codeTaxe = codeTaxe;
-	}
+    public Taxe(String taxeId, String codeTaxe) {
+        super();
+        this.taxeId = taxeId;
+        this.codeTaxe = codeTaxe;
+    }
 
-	public Taxe() {
-	}
+    public Taxe() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setTaxeId(Utility.getUidFor(taxeId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setTaxeId(Utility.getUidFor(taxeId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-	}
+    @Override
+    public void postConstructOperation() {
+    }
 
 }

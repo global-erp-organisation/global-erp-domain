@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name="`op-marge-clients`")
+@Table(name = "`op-marge-clients`")
 public class MargeClient extends Operation {
 
     @Transient

@@ -32,54 +32,54 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`auth-ressource-groupes`")
 public class RessourceGroupe extends Entite {
 
-	@Id
-	private String resourceGroupeId;
+    @Id
+    private String resourceGroupeId;
 
-	@Transient
-	private String groupId;
+    @Transient
+    private String groupId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "groupeId")
-	private Groupe groupe;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "groupeId")
+    private Groupe groupe;
 
-	@Transient
-	private String ressourceId;
+    @Transient
+    private String ressourceId;
 
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "ressourceId")
-	private Ressource ressource;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "ressourceId")
+    private Ressource ressource;
 
-	@Enumerated(EnumType.STRING)
-	private Etat etat;
+    @Enumerated(EnumType.STRING)
+    private Etat etat;
 
-	private Date dateDeCreation;
+    private Date dateDeCreation;
 
-	private Date derniereMiseAJour;
+    private Date derniereMiseAJour;
 
-	public RessourceGroupe() {
-	}
+    public RessourceGroupe() {
+    }
 
-	public void setRessourceId() {
-		setRessourceId(getRessource().getRessourceId());
-	}
+    public void setRessourceId() {
+        setRessourceId(getRessource().getRessourceId());
+    }
 
-	@PrePersist
-	private void setKey() {
-		setRessourceId(Utility.getUidFor(resourceGroupeId));
-		setDateDeCreation(new Date());
-		setDerniereMiseAJour(new Date());
-	}
+    @PrePersist
+    private void setKey() {
+        setRessourceId(Utility.getUidFor(resourceGroupeId));
+        setDateDeCreation(new Date());
+        setDerniereMiseAJour(new Date());
+    }
 
-	@PreUpdate
-	private void preUpdate() {
-		setDerniereMiseAJour(new Date());
-	}
+    @PreUpdate
+    private void preUpdate() {
+        setDerniereMiseAJour(new Date());
+    }
 
-	@Override
-	public void postConstructOperation() {
-		setGroupId(groupe.getGroupeId());
-		setRessourceId(ressource.getRessourceId());
-	}
+    @Override
+    public void postConstructOperation() {
+        setGroupId(groupe.getGroupeId());
+        setRessourceId(ressource.getRessourceId());
+    }
 }
