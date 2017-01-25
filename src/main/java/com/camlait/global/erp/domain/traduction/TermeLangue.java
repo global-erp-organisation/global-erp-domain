@@ -49,27 +49,12 @@ public class TermeLangue extends Entite {
     @JoinColumn(name = "langueId")
     private Langue langue;
 
-    private String value;
+    private String translatedValue;
     private Date dateDeCreation;
     private Date derniereMiseAJour;
 
     public TermeLangue() {
         super();
-    }
-
-    public TermeLangue(Terme terme, Langue langue, String value) {
-        super();
-        this.terme = terme;
-        this.langue = langue;
-        this.value = value;
-    }
-
-    public TermeLangue(String termeLangueId, Terme terme, Langue langue, String value) {
-        super();
-        this.termeLangueId = termeLangueId;
-        this.terme = terme;
-        this.langue = langue;
-        this.value = value;
     }
 
     public void setTermeId() {
