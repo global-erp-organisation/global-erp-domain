@@ -11,11 +11,11 @@ import java.io.IOException;
 /**
  * Several Utilities to serialize/deserialize from/to JSON format.
  */
-public final class JSONUtils {
-    private static final Logger LOG = LoggerFactory.getLogger(JSONUtils.class);
+public final class SerializerUtil {
+    private static final Logger LOG = LoggerFactory.getLogger(SerializerUtil.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private JSONUtils() {
+    private SerializerUtil() {
     }
 
     /**
@@ -23,7 +23,7 @@ public final class JSONUtils {
      *
      * @return object in JSON format (String).
      */
-    public static String serializeToJson(Object toSerialize) {
+    public static String toJson(Object toSerialize) {
         try {
             return OBJECT_MAPPER.writeValueAsString(toSerialize);
         } catch (JsonProcessingException e) {
@@ -58,7 +58,7 @@ public final class JSONUtils {
      */
     @SuppressWarnings("unchecked")
     public static <T> T copy(T from) {
-        String serialized = serializeToJson(from);
+        final String serialized = toJson(from);
         return deserialized(serialized, (Class<T>) from.getClass());
     }
 }

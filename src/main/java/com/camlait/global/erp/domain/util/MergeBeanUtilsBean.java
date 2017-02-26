@@ -1,25 +1,30 @@
 package com.camlait.global.erp.domain.util;
 
-import static org.apache.commons.lang.reflect.FieldUtils.readField;
-
+import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.springframework.stereotype.Component;
+
+import com.amazonaws.util.CollectionUtils;
 
 /**
  * Specific implementation of BeanUtilsBean class.
  * <p>
- * Merged the destination object with the source object according to a given
- * rule.
+ * Merged the destination object with the source object according to a given rule.
  * <p>
  * <u><b>How to use the merging operation</b></u>
  * <p>
- * {@code}1: mergeBean = new MergeBeanUtilsBean() or mergeBeanUtil = new
- * MergeBeanUtilsBean(builderCondition)
+ * {@code}1: mergeBean = new MergeBeanUtilsBean() or mergeBeanUtil = new MergeBeanUtilsBean(builderCondition)
  * <p>
  * {@code}2: merginObject = mergeBean.<b>merge(source, destination)</b>.
+ * 
+ * @see BeanUtilsBean
  */
+@Component
 public class MergeBeanUtilsBean extends BeanUtilsBean {
 
     private final BiFunction<Object, Object, Boolean> mergingRuleBuilder;
@@ -27,13 +32,11 @@ public class MergeBeanUtilsBean extends BeanUtilsBean {
     /**
      * Creates an instance of mergeBeanUtilsBean with a custom merging rule.
      * <p>
-     * Note: The merging rule is based on both source and destination field
-     * value. The function should take both source and destination value as
-     * parameter and produce a boolean that indicates if the destination field
-     * need to be set with the source field value or not.
+     * Note: The merging rule is based on both source and destination field value.
+     * The function should take both source and destination value as parameter and produce a boolean that indicates
+     * if the destination field need to be set with the source field value or not.
      * 
-     * @param mergingConditionBuilder
-     *            condition builder
+     * @param mergingConditionBuilder condition builder
      */
     public MergeBeanUtilsBean(BiFunction<Object, Object, Boolean> mergingConditionBuilder) {
         this.mergingRuleBuilder = mergingConditionBuilder;
@@ -42,25 +45,20 @@ public class MergeBeanUtilsBean extends BeanUtilsBean {
     /**
      * Creates an instance of mergeBeanUtilsBean with the default merging rule.
      * <p>
-     * Here, only null fields are updated in the destination object with
-     * corresponding non null fields value from the source.
+     * Here, only null fields or empty collections are updated in the destination object with corresponding non null fields value from the source.
      */
     public MergeBeanUtilsBean() {
         this.mergingRuleBuilder = (sourceValue, destinationValue) -> {
-            return sourceValue != null && destinationValue == null;
+            return canBeOverrides(sourceValue, destinationValue);
         };
     }
 
     /**
-     * Set the field destination value with the field source value according to
-     * a specific rule.
+     * Set the field destination value with the field source value according to a specific rule.
      * 
-     * @param destination
-     *            Destination object that need to be updated.
-     * @param fieldName
-     *            Field name that need to be updated.
-     * @param sourceValue
-     *            Value of the source field.
+     * @param destination Destination object that need to be updated.
+     * @param fieldName Field name that need to be updated.
+     * @param sourceValue Value of the source field.
      * @throws IllegalAccessException
      * @throws Exception
      */
@@ -73,44 +71,44 @@ public class MergeBeanUtilsBean extends BeanUtilsBean {
     }
 
     /**
-     * Makes a deep copy of the destination object and merges with the source
-     * object
+     * Makes a deep copy of the destination object and merges with the source object
      * <p>
      * The source and the destination object should be the same type.
      * 
-     * @param from
-     *            Source object
-     * @param to
-     *            Destination object.
+     * @param from Source object
+     * @param to Destination object.
      * @return The merging object.
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
     public <T> T merge(T from, T to) throws IllegalAccessException, InvocationTargetException {
-        this.copyProperties(to, from);
-        return to;
+        final T toMerge = SerializerUtil.copy(to);
+        this.copyProperties(toMerge, from);
+        return toMerge;
     }
 
     /**
-     * Makes a deep copy of the destination object and merges with the source
-     * object based on the default rule.
-     * <p>
-     * The source and the destination object should be the same type.
+     * Default condition that verify if the destination field value can be override with the source field value or not.
      * 
-     * @param from
-     *            Source object
-     * @param to
-     *            Destination object.
-     * @return The merging object.
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
+     * @param sourceValueSource field value
+     * @param destinationValue Destination field value
+     * @return
      */
-    public static <T> T mergeDefault(T from, T to) {
-        final MergeBeanUtilsBean b = new MergeBeanUtilsBean();
-        try {
-            return b.merge(from, to);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
+    private Boolean canBeOverrides(Object sourceValue, Object destinationValue) {
+        if (sourceValue != null) {
+            if (sourceValue instanceof Collection) {
+                if (CollectionUtils.isNullOrEmpty((Collection) destinationValue)) {
+                    return !((Collection) sourceValue).isEmpty();
+                }
+            } else if (sourceValue instanceof Map) {
+                if (destinationValue != null || ((Map) destinationValue).isEmpty()) {
+                    return !((Map) sourceValue).isEmpty();
+                }
+            } else {
+                return destinationValue == null;
+            }
         }
+        return false;
     }
+
 }
