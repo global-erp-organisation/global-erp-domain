@@ -28,6 +28,7 @@ public abstract class Entite implements Serializable {
      * 
      * @param from
      * @return
+     * @see MergeBeanUtilsBean
      */
     @SuppressWarnings("unchecked")
     public <T> T merge(@NonNull T from) {
@@ -51,8 +52,8 @@ public abstract class Entite implements Serializable {
     }
 
     /**
-     * Scan the current class in order to find all collection that need to lazy
-     * initialize.
+     * Scan the current entity in order to find all collection that need to be lazy
+     * initialized.
      * 
      * @return The Object after lazy initialized collections.
      */

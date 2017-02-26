@@ -88,6 +88,24 @@ public class MergeBeanUtilsBean extends BeanUtilsBean {
     }
 
     /**
+     * Makes a deep copy of the destination object and merges with the source object
+     * <p>
+     * The source and the destination object should be the same type.
+     * 
+     * @param from Source object
+     * @param to Destination object.
+     * @return The merging object.
+     */
+    public static <T> T mergeDefault(T from, T to) {
+        final MergeBeanUtilsBean merge = new MergeBeanUtilsBean();
+        try {
+            return merge.merge(from, to);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable the complete the merging process", e);
+        }
+    }
+
+    /**
      * Default condition that verify if the destination field value can be override with the source field value or not.
      * 
      * @param sourceValueSource field value
