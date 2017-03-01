@@ -1,80 +1,82 @@
-package com.camlait.global.erp.domain.operation;
+package com.camlait.global.erp.domain.warehouse;
 
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.enumeration.OperationDirection;
+import com.camlait.global.erp.domain.localisation.Centre;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.camlait.global.erp.domain.partner.Partner;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = "stores")
+@ToString(exclude = "stores")
 @Builder
-@Table(name = "`op-operations`")
-public class Operation extends Entite {
+@Table(name = "`warehouse-warehouses`")
+public class Warehouse extends Entite {
 
     @Id
-    private String operationId;
+    private String warehouseId;
 
-    private Date operationDate;
+    @Column(nullable = false, unique = true)
+    private String warehouseCode;
 
-    @Enumerated(EnumType.STRING)
-    private OperationDirection operationDirection;
+    private String warehouseDescription;
+
+    @Transient
+    private String centreId;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "centreId")
+    private Centre centre;
 
     private Date createdDate;
 
     private Date lastUpdatedDate;
 
-    private String operationLabel;
-
-    private double operationValue;
-
     @Transient
     private String workerId;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "workerId")
     private Employee worker;
 
-    @Transient
-    private String partnerId;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
+    private Collection<Store> stores = Sets.newHashSet();
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "partnerId")
-    private Partner partner;
-
-    public Operation() {
+    public Warehouse() {
     }
 
     @PrePersist
     private void setKey() {
-        setOperationId(Utility.getUidFor(operationId));
+        setWarehouseId(Utility.getUidFor(warehouseId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }
@@ -86,7 +88,7 @@ public class Operation extends Entite {
 
     @Override
     public void postConstructOperation() {
+        setCentreId(centre.getLocalId());
         setWorkerId(worker.getPartnerId());
-        setPartnerId(partner.getPartnerId());
     }
 }

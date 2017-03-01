@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.operation;
+package com.camlait.global.erp.domain.operation.regulation;
 
 import java.util.Date;
 
@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
@@ -16,9 +14,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.enumeration.OperationDirection;
-import com.camlait.global.erp.domain.partner.Employee;
+import com.camlait.global.erp.domain.enumeration.RegulationCondition;
 import com.camlait.global.erp.domain.partner.Partner;
+import com.camlait.global.erp.domain.enumeration.EvaluationMode;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -29,37 +27,30 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
-@Table(name = "`op-operations`")
-public class Operation extends Entite {
-
+@Table(name = "`reg-regulation-models`")
+public class RegulationModel extends Entite {
     @Id
-    private String operationId;
+    private String modeleId;
 
-    private Date operationDate;
+    @Enumerated(EnumType.ORDINAL)
+    private EvaluationMode modeEvaluation;
+    private double value;
+    private int numberOfDay;
 
-    @Enumerated(EnumType.STRING)
-    private OperationDirection operationDirection;
-
-    private Date createdDate;
-
-    private Date lastUpdatedDate;
-
-    private String operationLabel;
-
-    private double operationValue;
+    @Enumerated(EnumType.ORDINAL)
+    private RegulationCondition regulationCondition;
 
     @Transient
-    private String workerId;
+    private String regulationModeId;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "workerId")
-    private Employee worker;
+    @JoinColumn(name = "regulationModeId")
+    private RegulationMode regulationMode;
 
     @Transient
     private String partnerId;
@@ -69,12 +60,16 @@ public class Operation extends Entite {
     @JoinColumn(name = "partnerId")
     private Partner partner;
 
-    public Operation() {
+    private Date createdDate;
+    private Date lastUpdatedDate;
+
+    public RegulationModel() {
+        super();
     }
 
     @PrePersist
     private void setKey() {
-        setOperationId(Utility.getUidFor(operationId));
+        setModeleId(Utility.getUidFor(modeleId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }
@@ -86,7 +81,6 @@ public class Operation extends Entite {
 
     @Override
     public void postConstructOperation() {
-        setWorkerId(worker.getPartnerId());
-        setPartnerId(partner.getPartnerId());
+        setRegulationModeId(regulationMode.getRegulationModeId());
     }
 }

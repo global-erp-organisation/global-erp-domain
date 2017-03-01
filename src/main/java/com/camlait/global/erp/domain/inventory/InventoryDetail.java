@@ -1,6 +1,5 @@
-package com.camlait.global.erp.domain.tarif;
+package com.camlait.global.erp.domain.inventory;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,19 +7,15 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.keys.TarificationKey;
-import com.camlait.global.erp.domain.localisation.Zone;
+import com.camlait.global.erp.domain.keys.InventoryDetailKey;
 import com.camlait.global.erp.domain.product.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,22 +24,22 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
-@Table(name = "`tarif-tarifications`")
-@IdClass(value = TarificationKey.class)
-public class Tarification extends Entite {
-   
+@Table(name = "`inv-inventory-details`")
+@IdClass(value=InventoryDetailKey.class)
+public class InventoryDetail extends Entite {
+
     @Transient
-    private String zoneId;
+    private String inventoryId;
 
     @Id
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "zoneId")
-    private Zone zone;
+    @JoinColumn(name = "inventoryId")
+    private Inventory inventory;
 
     @Transient
     private String productId;
@@ -55,40 +50,36 @@ public class Tarification extends Entite {
     @JoinColumn(name = "productId")
     private Product product;
 
-    @Transient
-    private String tarifId;
+    private Long realQuantity;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "tarifId")
-    private Tarif tarif;
+    private Long ajustQuantity;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "product")
-    private Collection<UnitPrice> unitPrices = Sets.newHashSet();
+    private double realUnitPrice;
+
+    private double ajustUnitPrice;
 
     private Date createdDate;
-    private Date lastUpdatedate;
 
-    public Tarification() {
+    private Date lastUpdateddate;
+
+    public InventoryDetail() {
     }
 
     @PrePersist
     private void setKey() {
         setCreatedDate(new Date());
-        setLastUpdatedate(new Date());
+        setLastUpdateddate(new Date());
     }
 
     @PreUpdate
     private void preUpdate() {
-        setLastUpdatedate(new Date());
+        setLastUpdateddate(new Date());
     }
 
     @Override
     public void postConstructOperation() {
+        setInventoryId(inventory.getInventoryId());
         setProductId(product.getProductId());
-        setZoneId(zone.getLocalId());
-        setTarifId(tarif.getTarifId());
     }
+
 }

@@ -1,12 +1,11 @@
-package com.camlait.global.erp.domain.tarif;
+package com.camlait.global.erp.domain.inventory;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
@@ -15,8 +14,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.keys.StockKey;
 import com.camlait.global.erp.domain.product.Product;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -25,58 +25,44 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
-@Builder
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Table(name = "`tarif-unit-prices`")
 @EqualsAndHashCode(callSuper = false)
-public class UnitPrice extends Entite {
-
-    @Id
-    private String unitPriceId;
-
-    private Double value;
+@Builder
+@Table(name = "`inv-stocks`")
+@IdClass(value = StockKey.class)
+public class Stock extends Entite {
 
     @Transient
     private String productId;
 
+    @Id
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productId")
     private Product product;
 
     @Transient
-    private String priceTypeId;
+    private String storeId;
 
+    @Id
     @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "priceTypeId")
-    private PriceType priceType;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "storeId")
+    private Store store;
 
-
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "tarificationId")
-    private Tarification tarification;
+    private Long availableQuantity;
 
     private Date createdDate;
+
     private Date lastUpdatedDate;
 
-    public UnitPrice() {
-    }
-
-    @Override
-    public void postConstructOperation() {
-        setProductId(product.getProductId());
-        setPriceTypeId(priceType.getPriceTypeId());
-
+    public Stock() {
     }
 
     @PrePersist
     private void setKey() {
-        setUnitPriceId(Utility.getUidFor(unitPriceId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }
@@ -86,4 +72,9 @@ public class UnitPrice extends Entite {
         setLastUpdatedDate(new Date());
     }
 
+    @Override
+    public void postConstructOperation() {
+        setStoreId(store.getStoreId());
+        setProductId(product.getProductId());
+    }
 }

@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.Hibernate;
 
 import com.camlait.global.erp.domain.exception.LazyInitException;
-import com.camlait.global.erp.domain.util.MergeBeanUtilsBean;
+import com.camlait.global.erp.domain.util.MergeUtil;
 
 import lombok.NonNull;
 
@@ -28,11 +28,11 @@ public abstract class Entite implements Serializable {
      * 
      * @param from
      * @return
-     * @see MergeBeanUtilsBean
+     * @see MergeUtil
      */
     @SuppressWarnings("unchecked")
     public <T> T merge(@NonNull T from) {
-        return (T) MergeBeanUtilsBean.mergeDefault(from, this);
+        return (T) MergeUtil.mergeDefault(from, this);
     }
 
     /**

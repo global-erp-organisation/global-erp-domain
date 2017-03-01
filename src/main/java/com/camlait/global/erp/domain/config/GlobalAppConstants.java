@@ -3,7 +3,7 @@ package com.camlait.global.erp.domain.config;
 import java.util.function.Function;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.document.LigneDeDocument;
+import com.camlait.global.erp.domain.document.DocumentDetails;
 import com.camlait.global.erp.domain.exception.GlobalErpServiceException;
 
 public class GlobalAppConstants {
@@ -65,10 +65,10 @@ public class GlobalAppConstants {
         return "L'Objet " + object + " ne peut pas etre null";
     }
 
-    public static String unavailableProductMessage(LigneDeDocument ligne) {
+    public static String unavailableProductMessage(DocumentDetails ligne) {
         String message = "";
-        message = "The product " + ligne.getProduit().getDescriptionProduit() + " is not available." + " Only "
-                + ligne.getProduit().availableQuantity(ligne.getDocument().getMagasin()) + " is available";
+        message = "The product " + ligne.getProduct().getProductDescription() + " is not available." + " Only "
+                + ligne.getProduct().availableQuantity(ligne.getDocument().getStore()) + " is available";
         return message;
     }
 

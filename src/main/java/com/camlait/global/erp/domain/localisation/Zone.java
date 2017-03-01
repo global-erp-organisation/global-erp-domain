@@ -9,9 +9,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
+import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
 import com.camlait.global.erp.domain.enumeration.AutreEnum;
-import com.camlait.global.erp.domain.partenaire.Client;
+import com.camlait.global.erp.domain.partner.Client;
 import com.camlait.global.erp.domain.tarif.Tarification;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -39,7 +39,7 @@ public class Zone extends Localisation {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "zone")
-    private Collection<DocumentDeVente> documents = Sets.newHashSet();
+    private Collection<SaleDocument> documents = Sets.newHashSet();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "zone")

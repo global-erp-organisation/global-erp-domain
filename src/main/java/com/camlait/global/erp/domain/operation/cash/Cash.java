@@ -1,13 +1,10 @@
-package com.camlait.global.erp.domain.operation;
+package com.camlait.global.erp.domain.operation.cash;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
@@ -16,9 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.camlait.global.erp.domain.partner.Partner;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -29,29 +24,19 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name = "`op-operations`")
-public class Operation extends Entite {
-
+@Table(name = "`cash-cashes`")
+public class Cash extends Entite {
     @Id
-    private String operationId;
+    private String cashId;
 
-    private Date operationDate;
+    @Column(unique = true, nullable = false)
+    private String cashCode;
 
-    @Enumerated(EnumType.STRING)
-    private OperationDirection operationDirection;
-
-    private Date createdDate;
-
-    private Date lastUpdatedDate;
-
-    private String operationLabel;
-
-    private double operationValue;
+    private String cashDescription;
 
     @Transient
     private String workerId;
@@ -61,20 +46,16 @@ public class Operation extends Entite {
     @JoinColumn(name = "workerId")
     private Employee worker;
 
-    @Transient
-    private String partnerId;
+    private Date createdDate;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "partnerId")
-    private Partner partner;
+    private Date lastUpdatedDate;
 
-    public Operation() {
+    public Cash() {
     }
 
     @PrePersist
     private void setKey() {
-        setOperationId(Utility.getUidFor(operationId));
+        setCashId(Utility.getUidFor(cashId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }
@@ -87,6 +68,5 @@ public class Operation extends Entite {
     @Override
     public void postConstructOperation() {
         setWorkerId(worker.getPartnerId());
-        setPartnerId(partner.getPartnerId());
     }
 }

@@ -21,20 +21,20 @@ import javax.persistence.Transient;
 
 import com.amazonaws.util.CollectionUtils;
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.bmq.Bmq;
-import com.camlait.global.erp.domain.document.commerciaux.DocumentCommerciaux;
-import com.camlait.global.erp.domain.document.commerciaux.vente.DocumentDeVente;
-import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClient;
-import com.camlait.global.erp.domain.document.commerciaux.vente.FactureClientComptant;
-import com.camlait.global.erp.domain.document.commerciaux.vente.FactureMarge;
-import com.camlait.global.erp.domain.document.stock.DocumentDeStock;
-import com.camlait.global.erp.domain.entrepot.Magasin;
-import com.camlait.global.erp.domain.enumeration.SensOperation;
-import com.camlait.global.erp.domain.enumeration.TypeDocuments;
+import com.camlait.global.erp.domain.dm.DailyMovement;
+import com.camlait.global.erp.domain.document.business.BusinessDocument;
+import com.camlait.global.erp.domain.document.business.sale.CashClientBill;
+import com.camlait.global.erp.domain.document.business.sale.ClientBill;
+import com.camlait.global.erp.domain.document.business.sale.MargingBill;
+import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
+import com.camlait.global.erp.domain.document.stock.StockDocument;
+import com.camlait.global.erp.domain.enumeration.OperationDirection;
+import com.camlait.global.erp.domain.enumeration.DocumentType;
 import com.camlait.global.erp.domain.exception.DataStorageException;
-import com.camlait.global.erp.domain.inventaire.Inventaire;
-import com.camlait.global.erp.domain.partenaire.Employe;
+import com.camlait.global.erp.domain.inventory.Inventory;
+import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -50,114 +50,114 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = "ligneDocuments")
+@EqualsAndHashCode(callSuper = false, exclude = "documentDetails")
 @Table(name = "`doc-documents`")
-@ToString(exclude = "ligneDocuments")
+@ToString(exclude = "documentDetails")
 @Builder
 public class Document extends Entite {
 
     @Id
     private String documentId;
 
-    @Column(name = "codeDocument", unique = true, nullable = false)
-    private String codeDocument;
+    @Column(unique = true, nullable = false)
+    private String documentCode;
 
-    private Date dateDocument;
+    private Date documentDate;
 
     @Transient
-    private String magasinId;
+    private String storeId;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "magasinId")
-    private Magasin magasin;
+    @JoinColumn(name = "storeId")
+    private Store store;
 
     @Transient
-    private String responsableId;
+    private String workerId;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "responsableId")
-    private Employe responsableDocument;
+    @JoinColumn(name = "workerId")
+    private Employee documentWorker;
 
-    private Date dateDeCreation;
+    private Date createdDate;
 
-    private Date derniereMiseAJour;
+    private Date lastUpdatedDate;
 
     @Enumerated(EnumType.STRING)
-    private SensOperation sensOperation;
+    private OperationDirection operationDirection;
 
     @Transient
-    private String BmqId;
+    private String dmId;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "bmqId")
-    private Bmq bmq;
+    @JoinColumn(name = "dmId")
+    private DailyMovement dailyMovement;
 
     @Transient
-    private String inventaireId;
+    private String inventoryId;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "inventaireId")
-    private Inventaire inventaire;
+    @JoinColumn(name = "inventoryId")
+    private Inventory inventory;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-    private Collection<LigneDeDocument> ligneDocuments = Sets.newHashSet();
+    private Collection<DocumentDetails> documentDetails = Sets.newHashSet();
 
     @Enumerated(EnumType.STRING)
-    private TypeDocuments typeDocument;
+    private DocumentType documentType;
 
     public Document() {
     }
 
-    public boolean isFactureClient() {
-        return this instanceof FactureClient;
+    public boolean isClientBill() {
+        return this instanceof ClientBill;
     }
 
-    public boolean isFactureComptant() {
-        return this instanceof FactureClientComptant;
+    public boolean isCashBill() {
+        return this instanceof CashClientBill;
     }
 
-    public boolean isFactureMarge() {
-        return this instanceof FactureMarge;
+    public boolean isMarginBill() {
+        return this instanceof MargingBill;
     }
 
-    public boolean isDocumentDeVente() {
-        return this instanceof DocumentDeVente;
+    public boolean isSaleDocument() {
+        return this instanceof SaleDocument;
     }
 
-    public boolean isDocumentCommerciaux() {
-        return this instanceof DocumentCommerciaux;
+    public boolean isBusinessDocument() {
+        return this instanceof BusinessDocument;
     }
 
     public boolean stockAffects() {
-        return (this instanceof DocumentDeStock) || (this instanceof FactureClient);
+        return (this instanceof StockDocument) || (this instanceof ClientBill);
     }
 
     @PrePersist
     private void setKey() {
-        if (!CollectionUtils.isNullOrEmpty(ligneDocuments)) {
+        if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
             setDocumentId(Utility.getUidFor(documentId));
         } else {
             throw new DataStorageException("Unable to store a document with no detail.");
         }
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
     private void preUpdate() {
-        setDerniereMiseAJour(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override
     public void postConstructOperation() {
-        setMagasinId(magasin.getMagasinId());
-        setResponsableId(responsableDocument.getPartenaireId());
-        setBmqId(bmq != null ? bmq.getBmqId() : null);
-        setInventaireId(inventaire != null ? inventaire.getInventaireId() : null);
+        setStoreId(store.getStoreId());
+        setWorkerId(documentWorker.getPartnerId());
+        setDmId(dailyMovement != null ? dailyMovement.getDmId() : null);
+        setInventoryId(inventory != null ? inventory.getInventoryId() : null);
     }
 }
