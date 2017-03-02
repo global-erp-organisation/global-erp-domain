@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.operation.regulation.lettrage;
+package com.camlait.global.erp.domain.operation.regulation.lettering;
 
 import java.util.Date;
 

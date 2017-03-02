@@ -8,7 +8,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.enumeration.DocumentType;
-import com.camlait.global.erp.domain.operation.regulation.lettrage.BillRegulation;
+import com.camlait.global.erp.domain.operation.regulation.lettering.BillRegulation;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 

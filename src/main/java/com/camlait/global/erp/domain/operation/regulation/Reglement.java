@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.operation.Operation;
-import com.camlait.global.erp.domain.operation.regulation.lettrage.BillRegulation;
+import com.camlait.global.erp.domain.operation.regulation.lettering.BillRegulation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
