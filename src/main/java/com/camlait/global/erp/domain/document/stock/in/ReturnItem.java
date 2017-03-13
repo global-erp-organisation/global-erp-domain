@@ -13,9 +13,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`doc-right-of-returns`")
-public class RightOfReturn extends InDocument {
+public class ReturnItem extends InDocument {
 
-    public RightOfReturn() {
+    public ReturnItem() {
         setDocumentType(DocumentType.BON_DE_RETOUR);
     }
 }

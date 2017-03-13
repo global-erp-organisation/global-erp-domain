@@ -31,7 +31,7 @@ public abstract class Entite implements Serializable {
      * @see MergeUtil
      */
     @SuppressWarnings("unchecked")
-    public <T> T merge(@NonNull T from) {
+    public <T extends Entite> T merge(@NonNull T from) {
         return (T) MergeUtil.mergeDefault(from, this);
     }
 
@@ -47,7 +47,7 @@ public abstract class Entite implements Serializable {
      * @param clazz
      * @return
      */
-    public <T> Boolean isTypeOf(@NonNull Class<T> clazz) {
+    public <T extends Entite> Boolean isTypeOf(@NonNull Class<T> clazz) {
         return this.getClass().getName().equals(clazz.getName());
     }
 

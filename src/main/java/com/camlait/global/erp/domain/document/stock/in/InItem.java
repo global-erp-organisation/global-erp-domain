@@ -13,8 +13,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`doc-bon-entrees`")
-public class BonEntree extends InDocument {
-    public BonEntree() {
+public class InItem extends InDocument {
+    public InItem() {
         setDocumentType(DocumentType.BON_ENTREE);
     }
 }

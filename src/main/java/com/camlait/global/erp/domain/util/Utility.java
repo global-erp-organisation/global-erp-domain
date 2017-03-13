@@ -9,9 +9,9 @@ import com.camlait.global.erp.domain.document.business.sale.CashClientBill;
 import com.camlait.global.erp.domain.document.business.sale.ClientBill;
 import com.camlait.global.erp.domain.document.business.sale.MargingBill;
 import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
-import com.camlait.global.erp.domain.document.stock.in.BonEntree;
+import com.camlait.global.erp.domain.document.stock.in.InItem;
 import com.camlait.global.erp.domain.document.stock.in.InDocument;
-import com.camlait.global.erp.domain.document.stock.in.RightOfReturn;
+import com.camlait.global.erp.domain.document.stock.in.ReturnItem;
 import com.camlait.global.erp.domain.document.stock.out.Animation;
 import com.camlait.global.erp.domain.document.stock.out.Avarie;
 import com.camlait.global.erp.domain.document.stock.out.BonDeSortie;
@@ -101,9 +101,9 @@ public final class Utility {
                 else
                     return DocumentType.DOCUMENT_SORTIE;
             } else if (entite instanceof InDocument) {
-                if (entite instanceof BonEntree)
+                if (entite instanceof InItem)
                     return DocumentType.BON_ENTREE;
-                else if (entite instanceof RightOfReturn)
+                else if (entite instanceof ReturnItem)
                     return DocumentType.BON_DE_RETOUR;
                 else
                     return DocumentType.DOCUMENT_ENTREE;
