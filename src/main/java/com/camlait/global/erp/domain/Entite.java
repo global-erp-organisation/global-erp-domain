@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain;
 
 import static org.apache.commons.lang.reflect.FieldUtils.readField;
+
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -9,10 +10,12 @@ import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
 import org.hibernate.Hibernate;
 
 import com.camlait.global.erp.domain.exception.LazyInitException;
 import com.camlait.global.erp.domain.util.MergeUtil;
+import com.camlait.global.erp.domain.util.SerializerUtil;
 
 import lombok.NonNull;
 
@@ -24,10 +27,10 @@ import lombok.NonNull;
 @SuppressWarnings("serial")
 public abstract class Entite implements Serializable {
     /**
-     * Merge the current entity with the given one.
+     * Merge the current object with the one provided as parameter.
      * 
      * @param from
-     * @return
+     * @return The merging object;
      * @see MergeUtil
      */
     @SuppressWarnings("unchecked")
@@ -59,14 +62,38 @@ public abstract class Entite implements Serializable {
      */
     @SuppressWarnings("unchecked")
     public <T extends Entite> T lazyInit() {
-        Stream.of(this.getClass().getFields()).filter(this::canBeLazyInit).forEach(f -> Hibernate.initialize(getFieldValue(f)));
+        Stream.of(this.getClass().getFields())
+        .filter(this::canBeLazyInit)
+        .forEach(f -> Hibernate.initialize(getFieldValue(f)));
         return (T) this;
     }
 
-    private Boolean canBeLazyInit(Field f) {
-        return (f.getAnnotation(ManyToMany.class) != null) || (f.getAnnotation(OneToMany.class) != null) && (f.getType().isInstance(Collection.class));
+    /**
+     * Convert the current object to a Json format.
+     * 
+     * @return A string that represent a Json value for the current object.
+     */
+    public String toJson() {
+        return SerializerUtil.toJson(this);
     }
 
+    /**
+     * Verify if the provided field can be lazy initialized or not.
+     * 
+     * @param f Field to verify.
+     * @return true if the field can be lazy initialized and false otherwise.
+     */
+    private Boolean canBeLazyInit(Field f) {
+        return (f.getAnnotation(ManyToMany.class) != null) || (f.getAnnotation(OneToMany.class) != null) 
+                && (f.getType().isInstance(Collection.class));
+    }
+
+    /**
+     * Retrieve the value of the provided field.
+     * 
+     * @param f Field that the value need to be retrieved.
+     * @return An Object that represent the value of the provided field.
+     */
     private Object getFieldValue(Field f) {
         try {
             return readField(this, f.getName(), true);

@@ -81,7 +81,7 @@ public class MergeUtil extends BeanUtilsBean {
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
-    public <T> T merge(T from, T to) throws IllegalAccessException, InvocationTargetException {
+    public <T> T merge(T from, T to) throws Exception {
         final T toMerge = SerializerUtil.copy(to);
         this.copyProperties(toMerge, from);
         return toMerge;
@@ -112,6 +112,7 @@ public class MergeUtil extends BeanUtilsBean {
      * @param destinationValue Destination field value
      * @return
      */
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private Boolean canBeOverrides(Object sourceValue, Object destinationValue) {
         if (sourceValue != null) {
             if (sourceValue instanceof Collection) {
@@ -119,7 +120,7 @@ public class MergeUtil extends BeanUtilsBean {
                     return !((Collection) sourceValue).isEmpty();
                 }
             } else if (sourceValue instanceof Map) {
-                if (destinationValue != null || ((Map) destinationValue).isEmpty()) {
+                if (destinationValue != null && ((Map) destinationValue).isEmpty()) {
                     return !((Map) sourceValue).isEmpty();
                 }
             } else {
