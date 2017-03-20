@@ -18,7 +18,7 @@ import com.camlait.global.erp.domain.document.stock.out.BonDeSortie;
 import com.camlait.global.erp.domain.document.stock.out.Don;
 import com.camlait.global.erp.domain.document.stock.out.Echantillon;
 import com.camlait.global.erp.domain.document.stock.out.OutDocument;
-import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntite;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
@@ -45,9 +45,9 @@ public final class Utility {
         return currentKey == null ? UUID.randomUUID().toString() : currentKey;
     }
 
-    public static EnumTypeEntite obtenirPrefixe(Entite entite) throws IllegalArgumentException {
+    public static EnumTypeEntite getPrefix(Entite entite) throws IllegalArgumentException {
         if (entite instanceof DailyMovement)
-            return AutreEnum.BMQ;
+            return OtherEnum.BMQ;
         else if (entite instanceof Document)
             return obtenirPrefixeDocument(entite);
         else if (entite instanceof Partner)
@@ -55,14 +55,14 @@ public final class Utility {
         else if (entite instanceof Localisation)
             return obtenirPrefixeLocalisation(entite);
         else if (entite instanceof Inventory)
-            return AutreEnum.INVENTAIRE;
+            return OtherEnum.INVENTAIRE;
         else if (entite instanceof Store) {
             if (entite instanceof MobileStore) {
-                return AutreEnum.MAGASIN_MOBILE;
+                return OtherEnum.MAGASIN_MOBILE;
             } else
-                return AutreEnum.MAGASIN_FIXE;
+                return OtherEnum.MAGASIN_FIXE;
         } else if (entite instanceof Warehouse) {
-            return AutreEnum.ENTREPOT;
+            return OtherEnum.ENTREPOT;
         } else
             throw new IllegalArgumentException("L'entité " + entite.getClass().getName() + " n'existe pas");
     }
@@ -138,13 +138,13 @@ public final class Utility {
     private static EnumTypeEntite obtenirPrefixeLocalisation(Entite entite) {
         if (entite instanceof Localisation) {
             if (entite instanceof Centre) {
-                return AutreEnum.CENTRE;
+                return OtherEnum.CENTRE;
             } else if (entite instanceof Region) {
-                return AutreEnum.REGION;
+                return OtherEnum.REGION;
             } else if (entite instanceof Secteur) {
-                return AutreEnum.SECTEUR;
+                return OtherEnum.SECTEUR;
             } else
-                return AutreEnum.ZONE;
+                return OtherEnum.ZONE;
         }
         throw new IllegalArgumentException("L'entité " + entite.getClass().getName() + " n'existe pas");
     }

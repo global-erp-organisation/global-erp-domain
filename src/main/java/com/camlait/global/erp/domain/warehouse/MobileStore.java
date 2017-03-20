@@ -3,7 +3,7 @@ package com.camlait.global.erp.domain.warehouse;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.enumeration.OtherEnum;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,6 +16,6 @@ import lombok.EqualsAndHashCode;
 public class MobileStore extends Store {
 
     public MobileStore() {
-        setStoreType(AutreEnum.MAGASIN_MOBILE);
+        setStoreType(OtherEnum.MAGASIN_MOBILE);
     }
 }

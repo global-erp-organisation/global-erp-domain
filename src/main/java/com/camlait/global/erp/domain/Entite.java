@@ -84,8 +84,7 @@ public abstract class Entite implements Serializable {
      * @return true if the field can be lazy initialized and false otherwise.
      */
     private Boolean canBeLazyInit(Field f) {
-        return (f.getAnnotation(ManyToMany.class) != null) || (f.getAnnotation(OneToMany.class) != null) 
-                && (f.getType().isInstance(Collection.class));
+        return (f.getType().isAssignableFrom(Collection.class)) && (f.getAnnotation(ManyToMany.class) != null) || (f.getAnnotation(OneToMany.class) != null);
     }
 
     /**

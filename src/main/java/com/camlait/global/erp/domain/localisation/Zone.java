@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
-import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.partner.Client;
 import com.camlait.global.erp.domain.tarif.Tarification;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -50,7 +50,7 @@ public class Zone extends Localisation {
     private Collection<Tarification> tarifications = Sets.newHashSet();
 
     public Zone() {
-        setTypeLocal(AutreEnum.ZONE);
+        setTypeLocal(OtherEnum.ZONE);
     }
 
     @Override

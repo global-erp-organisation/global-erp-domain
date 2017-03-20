@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.inventory.StockCard;
 import com.camlait.global.erp.domain.util.Utility;
@@ -65,7 +65,7 @@ public class Store extends Entite {
     private Date lastUpdateddate;
 
     @Enumerated(EnumType.STRING)
-    private AutreEnum storeType;
+    private OtherEnum storeType;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)

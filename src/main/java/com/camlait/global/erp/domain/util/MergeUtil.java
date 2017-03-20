@@ -129,5 +129,4 @@ public class MergeUtil extends BeanUtilsBean {
         }
         return false;
     }
-
 }

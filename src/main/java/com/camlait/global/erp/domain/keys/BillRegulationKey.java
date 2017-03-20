@@ -3,7 +3,7 @@ package com.camlait.global.erp.domain.keys;
 import java.io.Serializable;
 
 import com.camlait.global.erp.domain.document.business.sale.ClientBill;
-import com.camlait.global.erp.domain.operation.regulation.Reglement;
+import com.camlait.global.erp.domain.operation.regulation.Regulation;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import lombok.Data;
 public class BillRegulationKey implements Serializable {
   
     private ClientBill bill;
-    private Reglement regulation;
+    private Regulation regulation;
 
     public BillRegulationKey() {
     }

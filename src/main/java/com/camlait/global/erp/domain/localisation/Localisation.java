@@ -14,7 +14,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.Entite;
-import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
@@ -45,7 +45,7 @@ public class Localisation extends Entite {
     private Date derniereMiseAJour;
 
     @Enumerated(EnumType.STRING)
-    private AutreEnum typeLocal;
+    private OtherEnum typeLocal;
 
     public Localisation() {
     }

@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.Entite;
 import com.camlait.global.erp.domain.document.business.sale.ClientBill;
 import com.camlait.global.erp.domain.keys.BillRegulationKey;
-import com.camlait.global.erp.domain.operation.regulation.Reglement;
+import com.camlait.global.erp.domain.operation.regulation.Regulation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -49,7 +49,7 @@ public class BillRegulation extends Entite {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "reglementId")
-    private Reglement reglement;
+    private Regulation reglement;
 
     private Date dateDeVentilation;
 

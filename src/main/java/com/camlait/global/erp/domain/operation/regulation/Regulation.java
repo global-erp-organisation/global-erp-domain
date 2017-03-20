@@ -27,7 +27,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true, exclude = "billRegulations")
 @ToString(exclude = "billRegulations")
 @Table(name = "`op-regulations`")
-public class Reglement extends Operation {
+public class Regulation extends Operation {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "regulation")
@@ -41,7 +41,7 @@ public class Reglement extends Operation {
     @JoinColumn(name = "regulationModeId")
     private RegulationMode regulationMode;
 
-    public Reglement() {
+    public Regulation() {
     }
 
     @Override

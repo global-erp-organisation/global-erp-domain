@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.enumeration.AutreEnum;
+import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -40,7 +40,7 @@ public class Region extends Localisation {
     private Collection<Secteur> secteurs = Sets.newHashSet();
 
     public Region() {
-        setTypeLocal(AutreEnum.REGION);
+        setTypeLocal(OtherEnum.REGION);
     }
 
     @Override
