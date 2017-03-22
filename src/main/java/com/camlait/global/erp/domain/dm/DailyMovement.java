@@ -121,12 +121,12 @@ public class DailyMovement extends Entite {
     }
 
     public DailyMovement buildLigne() {
-        Optional<Set<DailyMovementDetail>> lignes = 
+        Optional<Set<DailyMovementDetail>> lines = 
                 this.getDocuments().stream().map(d->{
                     return d.getDocumentDetails().stream().map(l->{
                         return DailyMovementDetail.builder()
-                                .dailyMovement(d.getDailyMovement())
-                                .dmdId(d.getDailyMovement().getDmId())
+                                .dailyMovement(this)
+                                .dmdId(this.getDmId())
                                 .document(d)
                                 .lineUnitPrice(l.getLineUnitPrice())
                                 .product(l.getProduct())
@@ -135,7 +135,7 @@ public class DailyMovement extends Entite {
                                 .build();
                     }).collect(Collectors.toSet());
                 }).findFirst();
-        setDailyMovementDetails(lignes.isPresent() ? lignes.get() : Sets.newHashSet());
+        setDailyMovementDetails(lines.isPresent() ? lines.get() : Sets.newHashSet());
         return this;
     }
 }

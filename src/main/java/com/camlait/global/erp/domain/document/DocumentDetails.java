@@ -120,8 +120,6 @@ public class DocumentDetails extends Entite {
                 if (CollectionUtils.isNullOrEmpty(taxes)) {
                     final Set<DocumentDetailsTax> lt = taxes.stream().map(t -> {
                         return DocumentDetailsTax.builder()
-                                .createdDate(new Date())
-                                .lastUpdateddate(new Date())
                                 .documentDetails(this)
                                 .docDetailId(this.getDocDetailId())
                                 .taxRate(t.getPercentageValue())
