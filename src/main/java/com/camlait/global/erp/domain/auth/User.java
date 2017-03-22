@@ -15,7 +15,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -35,7 +36,7 @@ import lombok.ToString;
 @ToString(exclude = {"employees", "resourceUsers"})
 @Builder
 @Table(name = "`auth-users`")
-public class User extends Entite {
+public class User extends BaseEntity {
     @Id
     private String userId;
 
@@ -74,8 +75,6 @@ public class User extends Entite {
             groups.stream().forEach(g -> {
                 Collection<ResourceUser> ru = g.getResourceGroups().stream().map(rg -> {
                     return ResourceUser.builder()
-                            .createdDate(new Date())
-                            .lastUpdatedDate(new Date())
                             .state(rg.getState())
                             .resource(rg.getResource())
                             .resourceId(rg.getResourceId())
@@ -99,4 +98,8 @@ public class User extends Entite {
         setLastUpdatedDate(new Date());
     }
 
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
+    }
 }

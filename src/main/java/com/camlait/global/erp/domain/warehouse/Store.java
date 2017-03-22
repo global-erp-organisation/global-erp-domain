@@ -19,7 +19,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.inventory.StockCard;
@@ -43,7 +44,7 @@ import lombok.ToString;
 @ToString(exclude = {"stockCards", "stocks"})
 @Builder
 @Table(name = "`warehouse-store`")
-public class Store extends Entite {
+public class Store extends BaseEntity {
     @Id
     private String storeId;
 
@@ -93,5 +94,10 @@ public class Store extends Entite {
     @Override
     public void postConstructOperation() {
         setWarehouseId(warehouse.getWarehouseId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
     }
 }

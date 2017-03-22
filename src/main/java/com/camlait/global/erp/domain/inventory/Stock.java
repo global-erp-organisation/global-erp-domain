@@ -13,7 +13,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.StockKey;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.warehouse.Store;
@@ -32,7 +33,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`inv-stocks`")
 @IdClass(value = StockKey.class)
-public class Stock extends Entite {
+public class Stock extends BaseEntity {
 
     @Transient
     private String productId;
@@ -76,5 +77,10 @@ public class Stock extends Entite {
     public void postConstructOperation() {
         setStoreId(store.getStoreId());
         setProductId(product.getProductId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
     }
 }

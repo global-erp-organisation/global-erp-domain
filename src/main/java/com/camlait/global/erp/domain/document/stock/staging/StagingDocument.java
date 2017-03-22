@@ -10,6 +10,7 @@ import com.camlait.global.erp.domain.document.stock.StockDocument;
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -44,5 +45,10 @@ public class StagingDocument extends StockDocument {
         setDmId(getDailyMovement() != null ? getDailyMovement().getDmId() : null);
         setInventoryId(getInventory() != null ? getInventory().getInventoryId() : null);
         setDestinationStoreId(destinationStore.getStoreId());
+    }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return DocumentType.TRANSFERT;
     }
 }

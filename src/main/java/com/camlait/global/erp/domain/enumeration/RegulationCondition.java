@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain.enumeration;
 
-public enum RegulationCondition implements EnumTypeEntite {
+public enum RegulationCondition implements EnumTypeEntitity {
 	JOURS_NET("Jour(s) net");
 
 	private final String type;
@@ -10,7 +10,7 @@ public enum RegulationCondition implements EnumTypeEntite {
 	}
 
 	@Override
-	public EnumTypeEntite getEnumType() {
+	public EnumTypeEntitity getEnumType() {
 		return this;
 	}
 

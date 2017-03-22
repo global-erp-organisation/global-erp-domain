@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import com.camlait.global.erp.domain.dm.DailyMovement;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.partner.CashClient;
 
 import lombok.Data;
@@ -33,5 +34,10 @@ public class CashClientBill extends ClientBill {
         f.setDocumentWorker(dailyMovement.getWorker());
         f.setZone(dailyMovement.getSeller().getSaleZone());
         return f;
+    }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return DocumentType.FACTURE_COMPTANT;
     }
 }

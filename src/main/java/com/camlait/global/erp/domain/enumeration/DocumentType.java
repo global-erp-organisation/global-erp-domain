@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain.enumeration;
 
-public enum DocumentType implements EnumTypeEntite {
+public enum DocumentType implements EnumTypeEntitity {
 
 	DOCUMENT_DE_STOCK("DS"), 
 	DOCUMENT_COMMERCIAUX("DC"),
@@ -33,7 +33,7 @@ public enum DocumentType implements EnumTypeEntite {
 	}
 
 	@Override
-	public EnumTypeEntite getEnumType() {
+	public EnumTypeEntitity getEnumType() {
 		return this;
 	}
 

@@ -12,7 +12,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.PartnerAssetKey;
 import com.camlait.global.erp.domain.partner.Partner;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -30,7 +31,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`asset-partner-assets`")
 @IdClass(value = PartnerAssetKey.class)
-public class PartnerAsset extends Entite {
+public class PartnerAsset extends BaseEntity {
 
     @Transient
     private String partnerId;
@@ -75,5 +76,10 @@ public class PartnerAsset extends Entite {
     public void postConstructOperation() {
         setPartnerId(partner.getPartnerId());
         setImmoId(asset.getAssetId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
     }
 }

@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.amazonaws.util.CollectionUtils;
@@ -27,6 +29,7 @@ import com.amazonaws.util.CollectionUtils;
 @Component
 public class MergeUtil extends BeanUtilsBean {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MergeUtil.class);
     private final BiFunction<Object, Object, Boolean> mergingRuleBuilder;
 
     /**
@@ -83,7 +86,7 @@ public class MergeUtil extends BeanUtilsBean {
      */
     public <T> T merge(T from, T to) throws Exception {
         final T toMerge = SerializerUtil.copy(to);
-        this.copyProperties(toMerge, from);
+        this.copyProperties(to, from);
         return toMerge;
     }
 
@@ -101,6 +104,7 @@ public class MergeUtil extends BeanUtilsBean {
         try {
             return merge.merge(from, to);
         } catch (Exception e) {
+            LOGGER.error("Unable the complete the merging process. Error message[{}]", e.getMessage(), e);
             throw new RuntimeException("Unable the complete the merging process", e);
         }
     }

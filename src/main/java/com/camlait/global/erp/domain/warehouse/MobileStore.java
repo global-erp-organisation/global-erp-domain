@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.warehouse;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 
 import lombok.Data;
@@ -17,5 +18,10 @@ public class MobileStore extends Store {
 
     public MobileStore() {
         setStoreType(OtherEnum.MAGASIN_MOBILE);
+    }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return OtherEnum.MAGASIN_MOBILE;
     }
 }

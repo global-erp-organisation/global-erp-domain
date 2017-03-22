@@ -13,7 +13,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.TermLanguageKey;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -30,13 +31,13 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`trans-term-languages`")
 @IdClass(value = TermLanguageKey.class)
-public class TermLanguage extends Entite {
+public class TermLanguage extends BaseEntity {
 
     @Transient
     private String termId;
 
     @Id
-    @JsonBackReference
+    @JsonBackReference(value="term")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "termId")
     private Term term;
@@ -45,7 +46,7 @@ public class TermLanguage extends Entite {
     private String languageId;
 
     @Id
-    @JsonBackReference
+    @JsonBackReference(value="language")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "languageId")
     private Language language;
@@ -81,5 +82,11 @@ public class TermLanguage extends Entite {
     public void postConstructOperation() {
         setLanguageId(language.getLangId());
         setTermId(term.getTermId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

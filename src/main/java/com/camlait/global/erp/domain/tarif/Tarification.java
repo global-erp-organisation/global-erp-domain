@@ -14,7 +14,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.TarificationKey;
 import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.product.Product;
@@ -35,7 +36,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`tarif-tarifications`")
 @IdClass(value = TarificationKey.class)
-public class Tarification extends Entite {
+public class Tarification extends BaseEntity {
    
     @Transient
     private String zoneId;
@@ -90,5 +91,11 @@ public class Tarification extends Entite {
         setProductId(product.getProductId());
         setZoneId(zone.getLocalId());
         setTarifId(tarif.getTarifId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

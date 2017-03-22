@@ -9,6 +9,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.document.business.BusinessDocument;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.partner.Client;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -23,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`doc-document-sales`")
-public abstract class SaleDocument extends BusinessDocument {
+public class SaleDocument extends BusinessDocument {
 
     @Transient
     private String clientId;
@@ -57,5 +58,11 @@ public abstract class SaleDocument extends BusinessDocument {
         setClientId(client.getPartnerId());
         setZoneId(zone.getLocalId());
     }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return DocumentType.DOCUMENT_DE_VENTE;
+    }
+
 
 }

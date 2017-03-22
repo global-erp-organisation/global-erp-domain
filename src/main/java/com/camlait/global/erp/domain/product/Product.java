@@ -21,8 +21,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.amazonaws.util.CollectionUtils;
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.inventory.StockCard;
 import com.camlait.global.erp.domain.tarif.PriceType;
@@ -48,7 +49,7 @@ import lombok.ToString;
 @ToString(exclude = {"unitPrices", "taxes", "stocks", "stockCards", "tarifications"})
 @Builder
 @Table(name = "`product-products`")
-public class Product extends Entite {
+public class Product extends BaseEntity {
 
     @Id
     private String productId;
@@ -96,15 +97,11 @@ public class Product extends Entite {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Tarification> tarifications = Sets.newHashSet();
 
-  
     public Product() {
     }
 
     public Long availableQuantity(Store m) {
-        return this.getStocks().stream()
-                .filter(s -> s.getStore().getStoreId().equals(m.getStoreId()))
-                .mapToLong(s -> s.getAvailableQuantity())
-                .sum();
+        return this.getStocks().stream().filter(s -> s.getStore().getStoreId().equals(m.getStoreId())).mapToLong(s -> s.getAvailableQuantity()).sum();
     }
 
     public Boolean isAvailable(Store m, Long quantiteVoulue) {
@@ -142,8 +139,7 @@ public class Product extends Entite {
      * Retrieve the unit price of the current product based on the given price
      * type.
      * 
-     * @param type
-     *            Provide price type.
+     * @param type Provided price type.
      * @return The unit price that belongs to the given type or the default unit
      *         price if no record found for the given price type.
      */
@@ -164,5 +160,11 @@ public class Product extends Entite {
      */
     public Stock getStockByStore(Store m) {
         return stocks.stream().filter(s -> m.getStoreId().equals(s.getStore().getStoreId())).findFirst().orElse(null);
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

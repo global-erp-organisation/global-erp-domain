@@ -8,6 +8,7 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.tarif.PriceType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -41,4 +42,10 @@ public class BusinessDocument extends Document {
         setInventoryId(getInventory() != null ? getInventory().getInventoryId() : null);
         setPriceTypeId(priceType.getPriceTypeId());
     }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return DocumentType.DOCUMENT_COMMERCIAUX;
+    }
+
 }

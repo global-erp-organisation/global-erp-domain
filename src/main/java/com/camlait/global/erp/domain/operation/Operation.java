@@ -15,7 +15,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Partner;
@@ -32,10 +33,10 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Builder
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "`op-operations`")
-public class Operation extends Entite {
+public class Operation extends BaseEntity {
 
     @Id
     private String operationId;
@@ -88,5 +89,10 @@ public class Operation extends Entite {
     public void postConstructOperation() {
         setWorkerId(worker.getPartnerId());
         setPartnerId(partner.getPartnerId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
     }
 }

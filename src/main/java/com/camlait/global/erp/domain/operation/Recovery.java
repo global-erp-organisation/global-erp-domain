@@ -40,5 +40,4 @@ public class Recovery extends Operation {
         setPartnerId(getPartner().getPartnerId());
         setDmId(dailyMovement != null ? dailyMovement.getDmId() : null);
     }
-
 }

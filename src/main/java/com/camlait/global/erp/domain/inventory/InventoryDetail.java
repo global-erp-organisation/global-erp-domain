@@ -12,7 +12,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.InventoryDetailKey;
 import com.camlait.global.erp.domain.product.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -30,7 +31,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`inv-inventory-details`")
 @IdClass(value=InventoryDetailKey.class)
-public class InventoryDetail extends Entite {
+public class InventoryDetail extends BaseEntity {
 
     @Transient
     private String inventoryId;
@@ -80,6 +81,11 @@ public class InventoryDetail extends Entite {
     public void postConstructOperation() {
         setInventoryId(inventory.getInventoryId());
         setProductId(product.getProductId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
     }
 
 }

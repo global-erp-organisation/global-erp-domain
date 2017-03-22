@@ -13,7 +13,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.util.Utility;
 
@@ -27,10 +28,10 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Builder
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "`loc-localisations`")
-public class Localisation extends Entite {
+public  class Localisation extends BaseEntity {
 
     @Id
     private String localId;
@@ -64,5 +65,10 @@ public class Localisation extends Entite {
 
     @Override
     public void postConstructOperation() {
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
     }
 }

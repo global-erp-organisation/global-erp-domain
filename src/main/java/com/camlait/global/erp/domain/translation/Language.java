@@ -12,7 +12,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -30,8 +31,8 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = "termLanguages")
 @ToString(exclude = "termLanguages")
 @Builder
-@Table(name = "`trans-langue`")
-public class Language extends Entite {
+@Table(name = "`trans-languages`")
+public class Language extends BaseEntity {
     @Id
     private String langId;
 
@@ -42,7 +43,7 @@ public class Language extends Entite {
 
     private String alt;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="language")
     @OneToMany(mappedBy = "langue", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Sets.newHashSet();
 
@@ -74,6 +75,12 @@ public class Language extends Entite {
     @Override
     public void postConstructOperation() {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

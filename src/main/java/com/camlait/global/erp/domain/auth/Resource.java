@@ -14,7 +14,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -34,7 +35,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Table(name = "`auth-resources`")
-public class Resource extends Entite {
+public class Resource extends BaseEntity {
 
     @Id
     private String resourceId;
@@ -109,5 +110,10 @@ public class Resource extends Entite {
     @Override
     public void postConstructOperation() {
         setParentResourceId(parentResource.getResourceId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
     }
 }

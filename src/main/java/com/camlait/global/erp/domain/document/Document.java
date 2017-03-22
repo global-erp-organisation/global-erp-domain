@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.amazonaws.util.CollectionUtils;
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.dm.DailyMovement;
 import com.camlait.global.erp.domain.document.business.BusinessDocument;
 import com.camlait.global.erp.domain.document.business.sale.CashClientBill;
@@ -28,8 +28,9 @@ import com.camlait.global.erp.domain.document.business.sale.ClientBill;
 import com.camlait.global.erp.domain.document.business.sale.MargingBill;
 import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
 import com.camlait.global.erp.domain.document.stock.StockDocument;
-import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
+import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.exception.DataStorageException;
 import com.camlait.global.erp.domain.inventory.Inventory;
 import com.camlait.global.erp.domain.partner.Employee;
@@ -50,11 +51,11 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
+@Builder
 @EqualsAndHashCode(callSuper = false, exclude = "documentDetails")
 @Table(name = "`doc-documents`")
 @ToString(exclude = "documentDetails")
-@Builder
-public class Document extends Entite {
+public class Document extends BaseEntity {
 
     @Id
     private String documentId;
@@ -159,5 +160,10 @@ public class Document extends Entite {
         setWorkerId(documentWorker.getPartnerId());
         setDmId(dailyMovement != null ? dailyMovement.getDmId() : null);
         setInventoryId(inventory != null ? inventory.getInventoryId() : null);
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
     }
 }

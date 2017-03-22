@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain.enumeration;
 
-public enum OtherEnum implements EnumTypeEntite {
+public enum OtherEnum implements EnumTypeEntitity {
     INVENTAIRE("INV"),
     BMQ("BMQ"),
     CENTRE("C"),
@@ -17,7 +17,7 @@ public enum OtherEnum implements EnumTypeEntite {
     }
     
     @Override
-    public EnumTypeEntite getEnumType() {
+    public EnumTypeEntitity getEnumType() {
         return this;
     }
     

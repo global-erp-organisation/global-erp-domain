@@ -13,9 +13,10 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.RegulationCondition;
 import com.camlait.global.erp.domain.partner.Partner;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.EvaluationMode;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -32,7 +33,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
 @Table(name = "`reg-regulation-models`")
-public class RegulationModel extends Entite {
+public class RegulationModel extends BaseEntity {
     @Id
     private String modeleId;
 
@@ -82,5 +83,11 @@ public class RegulationModel extends Entite {
     @Override
     public void postConstructOperation() {
         setRegulationModeId(regulationMode.getRegulationModeId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

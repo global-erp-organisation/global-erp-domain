@@ -3,8 +3,8 @@ package com.camlait.global.erp.domain.warehouse;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,5 +19,10 @@ public class LandStore extends Store {
 
     public LandStore() {
         setStoreType(OtherEnum.MAGASIN_FIXE);
+    }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return OtherEnum.MAGASIN_FIXE;
     }
 }

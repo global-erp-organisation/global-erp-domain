@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain.enumeration;
 
-public enum EvaluationMode implements EnumTypeEntite {
+public enum EvaluationMode implements EnumTypeEntitity {
 
 	PER_PERCENTAGE("P", "Percentage"), PER_VALUE("V", "Value");
 
@@ -13,7 +13,7 @@ public enum EvaluationMode implements EnumTypeEntite {
 	}
 
 	@Override
-	public EnumTypeEntite getEnumType() {
+	public EnumTypeEntitity getEnumType() {
 		return this;
 	}
 

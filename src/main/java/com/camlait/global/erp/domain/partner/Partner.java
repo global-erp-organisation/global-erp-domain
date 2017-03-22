@@ -18,9 +18,10 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.asset.PartnerAsset;
 import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.camlait.global.erp.domain.localisation.Centre;
 import com.camlait.global.erp.domain.operation.Operation;
@@ -41,10 +42,10 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Builder
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "`partner-partners`")
-public class Partner extends Entite {
+public class Partner extends BaseEntity {
 
     @Id
     private String partnerId;
@@ -132,5 +133,11 @@ public class Partner extends Entite {
 
     public Boolean isClient() {
         return this instanceof Client;
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

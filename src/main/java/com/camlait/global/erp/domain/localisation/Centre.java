@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -28,5 +29,10 @@ public class Centre extends Localisation {
 
     public Centre() {
         setTypeLocal(OtherEnum.CENTRE);
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return OtherEnum.CENTRE;
     }
 }

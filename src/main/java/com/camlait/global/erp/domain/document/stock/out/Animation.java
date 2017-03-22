@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.enumeration.DocumentType;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,4 +19,8 @@ public class Animation extends OutDocument {
         setDocumentType(DocumentType.ANIMATION);
     }
 
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return DocumentType.ANIMATION;
+    }
 }

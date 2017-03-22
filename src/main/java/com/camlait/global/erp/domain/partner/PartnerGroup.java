@@ -10,7 +10,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -27,7 +28,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
 @Table(name = "`partenaire-groupe-partners`")
-public class PartnerGroup extends Entite {
+public class PartnerGroup extends BaseEntity {
 
     @Id
     private String partnerGroupId;
@@ -60,5 +61,10 @@ public class PartnerGroup extends Entite {
 
     @Override
     public void postConstructOperation() {
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
     }
 }

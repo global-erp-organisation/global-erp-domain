@@ -14,7 +14,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -34,7 +35,7 @@ import lombok.ToString;
 @ToString(exclude = "operations")
 @Builder
 @Table(name = "`cash-journal-cashes`")
-public class CashJournal extends Entite {
+public class CashJournal extends BaseEntity {
 
     @Id
     private String journalId;
@@ -82,5 +83,11 @@ public class CashJournal extends Entite {
     @Override
     public void postConstructOperation() {
         setCashId(cash.getCashId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

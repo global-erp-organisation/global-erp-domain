@@ -12,7 +12,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -29,7 +30,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @Table(name = "`trans-terms`")
-public class Term extends Entite {
+public class Term extends BaseEntity {
 
     @Id
     private String termId;
@@ -40,7 +41,7 @@ public class Term extends Entite {
     private Date createdDate;
     private Date lastUpdateDate;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="term")
     @OneToMany(mappedBy = "term", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Sets.newHashSet();
 
@@ -62,6 +63,12 @@ public class Term extends Entite {
 
     @Override
     public void postConstructOperation() {
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -18,8 +18,10 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.Document;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
+import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.exception.DataValidationException;
 import com.camlait.global.erp.domain.operation.Recovery;
 import com.camlait.global.erp.domain.partner.Employee;
@@ -46,7 +48,7 @@ import lombok.ToString;
 @ToString(exclude = {"documents", "recoveries", "dailyMovementDetails"})
 @Builder
 @Table(name = "`dm-daily-movments`")
-public class DailyMovement extends Entite {
+public class DailyMovement extends BaseEntity {
 
     @Id
     private String dmId;
@@ -120,6 +122,11 @@ public class DailyMovement extends Entite {
         setSellerId(seller.getPartnerId());
     }
 
+    /**
+     * Built the Daily Movement details  for the current object.
+     * 
+     * @return The current object with associated details.
+     */
     public DailyMovement buildLigne() {
         Optional<Set<DailyMovementDetail>> lines = 
                 this.getDocuments().stream().map(d->{
@@ -137,5 +144,10 @@ public class DailyMovement extends Entite {
                 }).findFirst();
         setDailyMovementDetails(lines.isPresent() ? lines.get() : Sets.newHashSet());
         return this;
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return OtherEnum.BMQ;
     }
 }

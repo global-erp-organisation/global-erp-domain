@@ -13,7 +13,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.product.ProductCategory;
 import com.camlait.global.erp.domain.util.Utility;
@@ -34,7 +35,7 @@ import lombok.ToString;
 @ToString(exclude = {"products", "productCategories"})
 @Builder
 @Table(name = "`tax-taxes`")
-public class Tax extends Entite {
+public class Tax extends BaseEntity {
 
     @Id
     private String taxId;
@@ -78,6 +79,11 @@ public class Tax extends Entite {
 
     @Override
     public void postConstructOperation() {
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
     }
 
 }

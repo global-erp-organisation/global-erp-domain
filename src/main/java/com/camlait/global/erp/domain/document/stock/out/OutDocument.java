@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import com.camlait.global.erp.domain.document.stock.StockDocument;
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,5 +21,10 @@ public class OutDocument extends StockDocument {
     public OutDocument() {
         setOperationDirection(OperationDirection.OUT);
         setDocumentType(DocumentType.DOCUMENT_SORTIE);
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return DocumentType.DOCUMENT_SORTIE;
     }
 }

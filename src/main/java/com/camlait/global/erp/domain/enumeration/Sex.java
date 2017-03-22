@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain.enumeration;
 
-public enum Sex implements EnumTypeEntite {
+public enum Sex implements EnumTypeEntitity {
     
     MALE("M"),
     FEMALE("F");
@@ -12,7 +12,7 @@ public enum Sex implements EnumTypeEntite {
     }
     
     @Override
-    public EnumTypeEntite getEnumType() {
+    public EnumTypeEntitity getEnumType() {
         return this;
     }
     

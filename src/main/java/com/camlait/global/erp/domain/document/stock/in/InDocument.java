@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import com.camlait.global.erp.domain.document.stock.StockDocument;
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 
 @SuppressWarnings("serial")
 @Entity
@@ -15,5 +16,10 @@ public class InDocument extends StockDocument {
     public InDocument() {
         setOperationDirection(OperationDirection.IN);
         setDocumentType(DocumentType.DOCUMENT_ENTREE);
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return DocumentType.DOCUMENT_ENTREE;
     }
 }

@@ -14,7 +14,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -32,7 +33,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "`tarif-unit-prices`")
 @EqualsAndHashCode(callSuper = false)
-public class UnitPrice extends Entite {
+public class UnitPrice extends BaseEntity {
 
     @Id
     private String unitPriceId;
@@ -84,6 +85,12 @@ public class UnitPrice extends Entite {
     @PreUpdate
     private void preUpdate() {
         setLastUpdatedDate(new Date());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

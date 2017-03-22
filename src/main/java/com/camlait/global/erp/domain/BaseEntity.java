@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.Hibernate;
 
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.exception.LazyInitException;
 import com.camlait.global.erp.domain.util.MergeUtil;
 import com.camlait.global.erp.domain.util.SerializerUtil;
@@ -24,19 +25,8 @@ import lombok.NonNull;
  * 
  * @author Martin Blaise Signe
  */
-@SuppressWarnings("serial")
-public abstract class Entite implements Serializable {
-    /**
-     * Merge the current object with the one provided as parameter.
-     * 
-     * @param from
-     * @return The merging object;
-     * @see MergeUtil
-     */
-    @SuppressWarnings("unchecked")
-    public <T extends Entite> T merge(@NonNull T from) {
-        return (T) MergeUtil.mergeDefault(from, this);
-    }
+@SuppressWarnings({"serial", "unchecked"})
+public abstract class BaseEntity implements Serializable {
 
     /**
      * Help to perform all the post constructor operations.
@@ -45,33 +35,48 @@ public abstract class Entite implements Serializable {
     public abstract void postConstructOperation();
 
     /**
-     * Verify if the given class is the same type as the current class.
+     * Convert this entity to an enumeration type.
+     * 
+     * @return The corresponding Enumeration if exist or null if not.
+     */
+    public abstract EnumTypeEntitity toEnum();
+
+    /**
+     * Merge the current entity with the one provided as parameter.
+     * 
+     * @param from
+     * @return The merging object;
+     * @see MergeUtil
+     */
+    public <T extends BaseEntity> T merge(@NonNull T from) {
+        return (T) MergeUtil.mergeDefault(from, this);
+    }
+
+    /**
+     * Verify if the given entity is the same type as the current entity.
      * 
      * @param clazz
      * @return
      */
-    public <T extends Entite> Boolean isTypeOf(@NonNull Class<T> clazz) {
+    public <T extends BaseEntity> Boolean isTypeOf(@NonNull Class<T> clazz) {
         return this.getClass().getName().equals(clazz.getName());
     }
 
     /**
      * Scan the current entity in order to find all collection that need to be lazy
-     * initialized.
+     * initialized then initialized them.
      * 
-     * @return The Object after lazy initialized collections.
+     * @return The current entity after lazy initialized collections.
      */
-    @SuppressWarnings("unchecked")
-    public <T extends Entite> T lazyInit() {
-        Stream.of(this.getClass().getFields())
-        .filter(this::canBeLazyInit)
-        .forEach(f -> Hibernate.initialize(getFieldValue(f)));
+    public <T extends BaseEntity> T lazyInit() {
+        Stream.of(this.getClass().getFields()).filter(this::canBeLazyInit).forEach(f -> Hibernate.initialize(getFieldValue(f)));
         return (T) this;
     }
 
     /**
-     * Convert the current object to a Json format.
+     * Convert the current entity to a JSON format.
      * 
-     * @return A string that represent a Json value for the current object.
+     * @return A string that represent a JSON value for the current entity.
      */
     public String toJson() {
         return SerializerUtil.toJson(this);
@@ -84,7 +89,8 @@ public abstract class Entite implements Serializable {
      * @return true if the field can be lazy initialized and false otherwise.
      */
     private Boolean canBeLazyInit(Field f) {
-        return (f.getType().isAssignableFrom(Collection.class)) && (f.getAnnotation(ManyToMany.class) != null) || (f.getAnnotation(OneToMany.class) != null);
+        return (f.getType().isAssignableFrom(Collection.class)) && (f.getAnnotation(ManyToMany.class) != null)
+                || (f.getAnnotation(OneToMany.class) != null);
     }
 
     /**

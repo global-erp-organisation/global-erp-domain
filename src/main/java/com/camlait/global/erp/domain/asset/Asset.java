@@ -11,7 +11,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
@@ -24,10 +25,10 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
+@Builder
 @Table(name = "`asset-assets`")
 @EqualsAndHashCode(callSuper = false)
-@Builder
-public class Asset extends Entite {
+public class Asset extends BaseEntity {
 
     @Id
     private String assetId;
@@ -62,5 +63,11 @@ public class Asset extends Entite {
 
     @Override
     public void postConstructOperation() {
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

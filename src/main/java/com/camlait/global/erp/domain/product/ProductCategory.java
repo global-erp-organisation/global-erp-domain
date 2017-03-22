@@ -19,8 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.amazonaws.util.CollectionUtils;
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.Scope;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -41,7 +42,7 @@ import lombok.ToString;
 @ToString(exclude = {"taxes", "categoryChildren", "products"})
 @Builder
 @Table(name = "`produit-categorie-products`")
-public class ProductCategory extends Entite {
+public class ProductCategory extends BaseEntity {
 
     @Id
     private String productcategoryId;
@@ -121,5 +122,11 @@ public class ProductCategory extends Entite {
     @Override
     public void postConstructOperation() {
         setParentCategoryId(parentCategory.getParentCategoryId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

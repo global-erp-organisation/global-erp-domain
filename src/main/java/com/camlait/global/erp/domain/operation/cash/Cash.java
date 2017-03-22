@@ -12,7 +12,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -29,7 +30,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @Table(name = "`cash-cashes`")
-public class Cash extends Entite {
+public class Cash extends BaseEntity {
     @Id
     private String cashId;
 
@@ -68,5 +69,11 @@ public class Cash extends Entite {
     @Override
     public void postConstructOperation() {
         setWorkerId(worker.getPartnerId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

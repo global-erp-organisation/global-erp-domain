@@ -12,8 +12,9 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.sale.ClientBill;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.BillRegulationKey;
 import com.camlait.global.erp.domain.operation.regulation.Regulation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -31,7 +32,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`reg-bill-regulations`")
 @IdClass(value = BillRegulationKey.class)
-public class BillRegulation extends Entite {
+public class BillRegulation extends BaseEntity {
 
     @Transient
     private String documentId;
@@ -77,5 +78,11 @@ public class BillRegulation extends Entite {
     public void postConstructOperation() {
         setDocumentId(facture.getDocumentId());
         setReglementId(reglement.getOperationId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

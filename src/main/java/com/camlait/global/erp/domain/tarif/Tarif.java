@@ -8,7 +8,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 @Builder
 @Table(name = "`tarif-tarifs`")
-public class Tarif extends Entite {
+public class Tarif extends BaseEntity {
 
     @Id
     private String tarifId;
@@ -48,5 +49,11 @@ public class Tarif extends Entite {
 
     @Override
     public void postConstructOperation() {
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

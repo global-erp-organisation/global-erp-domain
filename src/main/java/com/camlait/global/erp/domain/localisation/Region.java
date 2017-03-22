@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -46,5 +47,10 @@ public class Region extends Localisation {
     @Override
     public void postConstructOperation() {
         setCentreId(centre.getLocalId());
+    }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return OtherEnum.REGION;
     }
 }

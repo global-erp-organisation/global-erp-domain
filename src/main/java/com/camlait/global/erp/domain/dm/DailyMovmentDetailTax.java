@@ -13,8 +13,9 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.DailyMovmentDetailTaxKey;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -31,7 +32,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`dm-daily-movment-details-taxes`")
 @IdClass(value=DailyMovmentDetailTaxKey.class)
-public class DailyMovmentDetailTax extends Entite {
+public class DailyMovmentDetailTax extends BaseEntity {
     @Transient
     private String dmdId;
 
@@ -84,4 +85,8 @@ public class DailyMovmentDetailTax extends Entite {
         setLastUpdatedDate(new Date());
     }
 
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
+    }
 }

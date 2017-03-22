@@ -17,8 +17,9 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.Document;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -37,7 +38,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true, exclude = "dailyMovmentDetailTaxes")
 @Builder
 @Table(name = "`dm-daily-movement-details`")
-public class DailyMovementDetail extends Entite {
+public class DailyMovementDetail extends BaseEntity {
 
     @Id
     private String dmdId;
@@ -80,7 +81,12 @@ public class DailyMovementDetail extends Entite {
     public DailyMovementDetail() {
     }
 
-    public void setTaxe() {
+    /**
+     * Built the tax details for the current object.
+     * 
+     * @return The  current object with associated tax details.
+     */
+    public DailyMovementDetail buildTaxes() {
         if (document != null && document.isBusinessDocument()) {
             document.getDocumentDetails().stream().forEach(ld -> {
                 final Collection<DailyMovmentDetailTax> taxes = ld.getDocumentDetailsTaxes().stream().map(lt -> {
@@ -95,6 +101,7 @@ public class DailyMovementDetail extends Entite {
                 dailyMovmentDetailTaxes.addAll(taxes);
              });
         }
+        return this;
     }
 
     @Override
@@ -107,7 +114,7 @@ public class DailyMovementDetail extends Entite {
     @PrePersist
     private void setKey() {
         setDmdId(Utility.getUidFor(dmdId));
-        setTaxe();
+        buildTaxes();
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }
@@ -115,5 +122,10 @@ public class DailyMovementDetail extends Entite {
     @PreUpdate
     private void preUpdate() {
         setLastUpdatedDate(new Date());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
     }
 }

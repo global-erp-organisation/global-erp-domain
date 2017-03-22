@@ -5,6 +5,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,5 +20,9 @@ public class StockDocument extends Document {
     public StockDocument() {
         setDocumentType(DocumentType.DOCUMENT_DE_STOCK);
     }
-
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return DocumentType.DOCUMENT_DE_STOCK;
+    }
 }

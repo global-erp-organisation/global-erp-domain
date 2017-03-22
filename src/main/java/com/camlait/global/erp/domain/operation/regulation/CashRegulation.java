@@ -12,5 +12,4 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`reg-cash-regulations`")
 public class CashRegulation extends RegulationMode {
-
 }

@@ -12,8 +12,9 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.DocumentDetailsTaxKey;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -30,7 +31,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`doc-document-detail-taxes`")
 @IdClass(value = DocumentDetailsTaxKey.class)
-public class DocumentDetailsTax extends Entite {
+public class DocumentDetailsTax extends BaseEntity {
 
     @Transient
     private String docDetailId;
@@ -74,5 +75,10 @@ public class DocumentDetailsTax extends Entite {
     public void postConstructOperation() {
         setDocDetailId(documentDetails.getDocDetailId());
         setTaxId(tax.getTaxId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
     }
 }

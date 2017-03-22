@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.auth.User;
 import com.camlait.global.erp.domain.enumeration.Sex;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -78,4 +79,10 @@ public class Employee extends Partner {
     public Boolean isStorer() {
         return this instanceof StoreOperator;
     }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return PartnerType.EMPLOYE;
+    }
+
 }

@@ -6,6 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.camlait.global.erp.domain.operation.cash.Cash;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -43,5 +44,11 @@ public class Cashier extends Employee {
         setTarifId(getTarif().getTarifId());
         setCashId(cash.getCashId());
     }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return PartnerType.CAISSIER;
+    }
+
 
 }

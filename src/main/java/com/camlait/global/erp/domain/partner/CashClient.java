@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.partner;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 
 import lombok.Data;
@@ -17,5 +18,10 @@ public class CashClient extends Client {
 
     public CashClient() {
         setPartnerType(PartnerType.CLIENT_COMPTANT);
+    }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return PartnerType.CLIENT_COMPTANT;
     }
 }

@@ -26,8 +26,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.amazonaws.util.CollectionUtils;
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.exception.DataStorageException;
 import com.camlait.global.erp.domain.inventory.Stock;
@@ -52,7 +53,7 @@ import lombok.ToString;
 @ToString(exclude = "documentDetailsTaxes")
 @Builder
 @Table(name = "`doc-document-details`")
-public class DocumentDetails extends Entite {
+public class DocumentDetails extends BaseEntity {
 
     @Id
     private String docDetailId;
@@ -102,7 +103,7 @@ public class DocumentDetails extends Entite {
     @PrePersist
     private void setKey() {
         setDocDetailId(Utility.getUidFor(docDetailId));
-        setTaxe();
+        buildTaxes();
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }
@@ -113,7 +114,12 @@ public class DocumentDetails extends Entite {
         setOldRecord(this);
     }
 
-    public DocumentDetails setTaxe() {
+    /**
+     * Built the tax details for the current object.
+     * 
+     * @return The current object with associated tax details.
+     */
+    public DocumentDetails buildTaxes() {
         if (document != null && document.isBusinessDocument()) {
             if (isStorable()) {
                 final Set<Tax> taxes = this.getProduct().getTaxes();
@@ -205,5 +211,10 @@ public class DocumentDetails extends Entite {
             this.getProduct().getStocks().add(s);
         }
         return s;
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
     }
 }

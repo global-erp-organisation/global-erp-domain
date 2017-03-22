@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.partner.Client;
 import com.camlait.global.erp.domain.tarif.Tarification;
@@ -56,6 +57,11 @@ public class Zone extends Localisation {
     @Override
     public void postConstructOperation() {
         setSecteurId(secteur.getLocalId());
+    }
+    
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return OtherEnum.ZONE;
     }
 
 }

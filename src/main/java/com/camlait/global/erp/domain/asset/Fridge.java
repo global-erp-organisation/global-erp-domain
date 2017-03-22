@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.asset;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,6 +11,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
 @Table(name = "`asset-fridges`")
 public class Fridge extends Asset {
 
@@ -18,6 +20,5 @@ public class Fridge extends Asset {
     private String marque;
 
     public Fridge() {
-
     }
 }

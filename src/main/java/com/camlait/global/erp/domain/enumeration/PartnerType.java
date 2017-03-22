@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain.enumeration;
 
-public enum PartnerType implements EnumTypeEntite {
+public enum PartnerType implements EnumTypeEntitity {
     CLIENT("CL"),
     VENDEUR("VE"),
     EMPLOYE("EM"),
@@ -16,7 +16,7 @@ public enum PartnerType implements EnumTypeEntite {
     }
     
     @Override
-    public EnumTypeEntite getEnumType() {
+    public EnumTypeEntitity getEnumType() {
         return this;
     }
     

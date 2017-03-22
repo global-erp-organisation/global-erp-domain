@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain.enumeration;
 
-public enum State implements EnumTypeEntite {
+public enum State implements EnumTypeEntitity {
 
 	ACTIVE("A"), INACTIVE("I"), VISIBLE("V"), INVISIBLE("IV");
 
@@ -11,7 +11,7 @@ public enum State implements EnumTypeEntite {
 	}
 
 	@Override
-	public EnumTypeEntite getEnumType() {
+	public EnumTypeEntitity getEnumType() {
 		return this;
 	}
 

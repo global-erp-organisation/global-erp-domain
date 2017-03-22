@@ -14,7 +14,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.Entite;
+import com.camlait.global.erp.domain.BaseEntity;
+import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.State;
 import com.camlait.global.erp.domain.keys.ResourceGroupKey;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -32,7 +33,7 @@ import lombok.EqualsAndHashCode;
 @Builder
 @Table(name = "`auth-resource-groups`")
 @IdClass(value = ResourceGroupKey.class)
-public class ResourceGroup extends Entite {
+public class ResourceGroup extends BaseEntity {
 
     @Transient
     private String groupId;
@@ -81,5 +82,10 @@ public class ResourceGroup extends Entite {
     public void postConstructOperation() {
         setGroupId(group.getGroupId());
         setResourceId(resource.getResourceId());
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+         return null;
     }
 }
