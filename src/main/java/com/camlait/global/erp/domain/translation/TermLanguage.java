@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.translation;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -53,6 +54,7 @@ public class TermLanguage extends BaseEntity {
 
     private String translatedValue;
     private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public TermLanguage() {

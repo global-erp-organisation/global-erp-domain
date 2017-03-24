@@ -47,8 +47,9 @@ public class Language extends BaseEntity {
     @OneToMany(mappedBy = "langue", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Sets.newHashSet();
 
-    private Date dateDeCreation;
-    private Date derniereMiseAJour;
+    private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date lastUpdatedDate;
 
     public Language(String key, String title, String alt) {
         super();
@@ -63,13 +64,13 @@ public class Language extends BaseEntity {
     @PrePersist
     private void setKey() {
         setLangId(Utility.getUidFor(langId));
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
     private void preUpdate() {
-        setDerniereMiseAJour(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override

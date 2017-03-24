@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.asset;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -56,6 +57,8 @@ public class PartnerAsset extends BaseEntity {
     private boolean active;
 
     private Date createdDate;
+
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdateddate;
 
     public PartnerAsset() {
@@ -80,6 +83,6 @@ public class PartnerAsset extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return null;
+        return null;
     }
 }

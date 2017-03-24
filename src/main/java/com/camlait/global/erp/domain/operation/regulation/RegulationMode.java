@@ -40,6 +40,7 @@ public class RegulationMode extends BaseEntity {
 
     private Date createdDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public RegulationMode() {

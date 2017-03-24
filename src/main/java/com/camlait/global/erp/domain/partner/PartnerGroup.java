@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.partner;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -40,6 +41,7 @@ public class PartnerGroup extends BaseEntity {
     private Collection<Partner> partners = Sets.newHashSet();
 
     private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
 

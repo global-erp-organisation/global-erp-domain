@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -43,7 +44,7 @@ public class Resource extends BaseEntity {
     @Transient
     private String parentResourceId;
 
-    @JsonBackReference
+    @JsonBackReference(value="resource-parent")
     @ManyToOne
     @JoinColumn(name = "parentResourceId")
     private Resource parentResource;
@@ -52,6 +53,7 @@ public class Resource extends BaseEntity {
 
     private Date createdDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     private String icon;
@@ -62,15 +64,15 @@ public class Resource extends BaseEntity {
 
     private Integer order;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="resource-parent")
     @OneToMany(mappedBy = "parentResource")
     private Collection<Resource> items = Sets.newHashSet();
 
-    @JsonManagedReference
+    @JsonManagedReference(value="resource")
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<ResourceGroup> resourceGroups = Sets.newHashSet();
 
-    @JsonManagedReference
+    @JsonManagedReference(value="resource-user")
     @OneToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
     private Collection<ResourceUser> resourceUsers = Sets.newHashSet();
 

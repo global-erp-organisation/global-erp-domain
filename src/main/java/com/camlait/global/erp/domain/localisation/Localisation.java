@@ -43,7 +43,8 @@ public  class Localisation extends BaseEntity {
 
     private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date lastUpdatedDate;
 
     @Enumerated(EnumType.STRING)
     private OtherEnum typeLocal;
@@ -55,12 +56,12 @@ public  class Localisation extends BaseEntity {
     private void setKey() {
         setLocalId(Utility.getUidFor(localId));
         setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
     private void preUpdate() {
-        setDerniereMiseAJour(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override

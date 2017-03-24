@@ -88,6 +88,7 @@ public class DailyMovement extends BaseEntity {
 
     private Date createdDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdateddate;
 
     private boolean bmqClos;

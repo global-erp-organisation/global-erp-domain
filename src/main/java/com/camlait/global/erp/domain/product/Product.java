@@ -81,6 +81,7 @@ public class Product extends BaseEntity {
 
     private Date createdDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     private boolean stockFollowing;

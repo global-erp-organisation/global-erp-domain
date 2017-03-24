@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.operation.regulation;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -62,6 +63,7 @@ public class RegulationModel extends BaseEntity {
     private Partner partner;
 
     private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public RegulationModel() {

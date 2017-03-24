@@ -17,7 +17,6 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.partner.Employee;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -32,8 +31,8 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = {"employees", "resourceUsers"})
-@ToString(exclude = {"employees", "resourceUsers"})
+@EqualsAndHashCode(callSuper = false, exclude = {"resourceUsers"})
+@ToString(exclude = {"resourceUsers"})
 @Builder
 @Table(name = "`auth-users`")
 public class User extends BaseEntity {
@@ -47,17 +46,14 @@ public class User extends BaseEntity {
 
     private Date createdDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "user")
-    private Collection<Employee> employees = Sets.newHashSet();
-
-    @JsonManagedReference
+    @JsonManagedReference(value = "resource-user")
     @OneToMany(mappedBy = "user")
     private Collection<ResourceUser> resourceUsers = Sets.newHashSet();
 
-    @JsonBackReference
+    @JsonBackReference(value = "user-group")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "`auth-groupe-users`")
     private Collection<Group> groups = Sets.newHashSet();
@@ -74,13 +70,8 @@ public class User extends BaseEntity {
         if (groups != null && !groups.isEmpty()) {
             groups.stream().forEach(g -> {
                 Collection<ResourceUser> ru = g.getResourceGroups().stream().map(rg -> {
-                    return ResourceUser.builder()
-                            .state(rg.getState())
-                            .resource(rg.getResource())
-                            .resourceId(rg.getResourceId())
-                            .user(this)
-                            .userId(this.getUserId())
-                            .build();
+                    return ResourceUser.builder().state(rg.getState()).resource(rg.getResource()).resourceId(rg.getResourceId()).user(this)
+                            .userId(this.getUserId()).build();
                 }).collect(Collectors.toList());
                 resourceUsers.addAll(ru);
             });
@@ -100,6 +91,6 @@ public class User extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return null;
+        return null;
     }
 }

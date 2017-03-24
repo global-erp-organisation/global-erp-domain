@@ -39,6 +39,7 @@ public class Term extends BaseEntity {
     private String termDescription;
 
     private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdateDate;
 
     @JsonManagedReference(value="term")

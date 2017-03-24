@@ -58,7 +58,7 @@ public class BillRegulation extends BaseEntity {
 
     private Date dateDeCreation;
 
-    private Date derniereMiseAJour;
+    private Date lastUpdatedDate;
 
     public BillRegulation() {
     }
@@ -66,12 +66,12 @@ public class BillRegulation extends BaseEntity {
     @PrePersist
     private void setKey() {
         setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
     private void preUpdate() {
-        setDerniereMiseAJour(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override
@@ -82,7 +82,6 @@ public class BillRegulation extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-        // TODO Auto-generated method stub
-        return null;
+         return null;
     }
 }

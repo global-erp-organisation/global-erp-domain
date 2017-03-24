@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.inventory;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -61,6 +62,7 @@ public class InventoryDetail extends BaseEntity {
 
     private Date createdDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdateddate;
 
     public InventoryDetail() {

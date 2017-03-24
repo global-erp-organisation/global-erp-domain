@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.auth;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -39,7 +40,7 @@ public class ResourceGroup extends BaseEntity {
     private String groupId;
 
     @Id
-    @JsonBackReference
+    @JsonBackReference(value="group")
     @ManyToOne
     @JoinColumn(name = "groupId")
     private Group group;
@@ -48,7 +49,7 @@ public class ResourceGroup extends BaseEntity {
     private String resourceId;
 
     @Id
-    @JsonBackReference
+    @JsonBackReference(value="resource")
     @ManyToOne
     @JoinColumn(name = "resourceId")
     private Resource resource;
@@ -58,6 +59,7 @@ public class ResourceGroup extends BaseEntity {
 
     private Date createdDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public ResourceGroup() {

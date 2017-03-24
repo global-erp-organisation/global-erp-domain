@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -41,14 +42,15 @@ public class Group extends BaseEntity {
 
     private Date createdDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "groupe", cascade = CascadeType.ALL)
+    @JsonManagedReference(value="group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private Collection<ResourceGroup> resourceGroups = Sets.newHashSet();
 
-    @JsonManagedReference
-    @ManyToMany(mappedBy = "groupes", cascade = CascadeType.ALL)
+    @JsonManagedReference(value="user-group")
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private Collection<User> users = Sets.newHashSet();
 
     public Group() {

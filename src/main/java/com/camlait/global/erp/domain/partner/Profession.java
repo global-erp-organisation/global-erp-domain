@@ -41,6 +41,7 @@ public class Profession extends BaseEntity {
     private Collection<Employee> employees = Sets.newHashSet();
 
     private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public Profession() {

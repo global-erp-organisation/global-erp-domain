@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.tarif;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -63,6 +64,7 @@ public class UnitPrice extends BaseEntity {
     private Tarification tarification;
 
     private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public UnitPrice() {

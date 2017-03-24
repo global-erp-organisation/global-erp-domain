@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.tarif;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
@@ -29,8 +30,9 @@ public class Tarif extends BaseEntity {
     @Id
     private String tarifId;
     private String descriptionTarif;
-    private Date dateDeCreation;
-    private Date derniereMiseAJour;
+    private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date lastUpdatedDate;
 
     public Tarif() {
     }
@@ -38,13 +40,13 @@ public class Tarif extends BaseEntity {
     @PrePersist
     private void setKey() {
         setTarifId(Utility.getUidFor(tarifId));
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
     private void preUpdate() {
-        setDerniereMiseAJour(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override

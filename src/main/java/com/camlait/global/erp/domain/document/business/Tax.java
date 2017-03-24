@@ -49,6 +49,7 @@ public class Tax extends BaseEntity {
 
     private Date createdDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lasteUpdateddate;
 
     @JsonBackReference
