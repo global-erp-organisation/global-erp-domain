@@ -89,8 +89,10 @@ public abstract class BaseEntity implements Serializable {
      * @return true if the field can be lazy initialized and false otherwise.
      */
     private Boolean canBeLazyInit(Field f) {
-        return (f.getType().isAssignableFrom(Collection.class)) && (f.getAnnotation(ManyToMany.class) != null)
-                || (f.getAnnotation(OneToMany.class) != null);
+        final Boolean isAnnotated = Stream.of(f.getDeclaredAnnotations()).anyMatch(a -> {
+            return a.annotationType().isAssignableFrom(ManyToMany.class) || a.annotationType().isAssignableFrom(OneToMany.class);
+        });
+        return f.getType().isAssignableFrom(Collection.class) && isAnnotated;
     }
 
     /**
