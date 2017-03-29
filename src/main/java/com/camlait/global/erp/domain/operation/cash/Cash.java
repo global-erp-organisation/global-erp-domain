@@ -47,6 +47,7 @@ public class Cash extends BaseEntity {
     @JoinColumn(name = "workerId")
     private Employee worker;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -58,8 +59,6 @@ public class Cash extends BaseEntity {
     @PrePersist
     private void setKey() {
         setCashId(Utility.getUidFor(cashId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

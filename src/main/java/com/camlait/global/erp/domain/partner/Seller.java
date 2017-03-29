@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.camlait.global.erp.domain.localisation.Zone;
-import com.camlait.global.erp.domain.operation.missing.FinancialMissing;
+import com.camlait.global.erp.domain.operation.missing.FinancialMissingOperation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -38,7 +38,7 @@ public class Seller extends Employee {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "seller")
-    private Collection<FinancialMissing> financialMissings = Sets.newHashSet();
+    private Collection<FinancialMissingOperation> financialMissings = Sets.newHashSet();
 
     private boolean commissionable;
 

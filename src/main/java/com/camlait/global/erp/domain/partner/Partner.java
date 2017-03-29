@@ -33,7 +33,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -42,10 +41,9 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Builder
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "`partner-partners`")
-public class Partner extends BaseEntity {
+public abstract class Partner extends BaseEntity {
 
     @Id
     private String partnerId;
@@ -58,6 +56,7 @@ public class Partner extends BaseEntity {
 
     private String phone;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -112,8 +111,6 @@ public class Partner extends BaseEntity {
     @PrePersist
     private void setKey() {
         setPartnerId(Utility.getUidFor(partnerId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

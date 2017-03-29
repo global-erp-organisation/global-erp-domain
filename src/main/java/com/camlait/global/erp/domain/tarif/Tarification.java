@@ -1,6 +1,5 @@
 package com.camlait.global.erp.domain.tarif;
 
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,8 +18,6 @@ import com.camlait.global.erp.domain.keys.TarificationKey;
 import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.product.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -65,22 +60,25 @@ public class Tarification extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "tarifId")
     private Tarif tarif;
+    
+    @Transient
+    private String priceTypeId;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "product")
-    private Collection<UnitPrice> unitPrices = Sets.newHashSet();
+    @Id
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "priceTypeId")
+    private PriceType priceType;
+    
+    private Double value;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
+    
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedate;
 
     public Tarification() {
-    }
-
-    @PrePersist
-    private void setKey() {
-        setCreatedDate(new Date());
-        setLastUpdatedate(new Date());
     }
 
     @PreUpdate
@@ -93,11 +91,11 @@ public class Tarification extends BaseEntity {
         setProductId(product.getProductId());
         setZoneId(zone.getLocalId());
         setTarifId(tarif.getTarifId());
+        setPriceTypeId(priceType.getPriceTypeId());
     }
 
     @Override
     public EnumTypeEntitity toEnum() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

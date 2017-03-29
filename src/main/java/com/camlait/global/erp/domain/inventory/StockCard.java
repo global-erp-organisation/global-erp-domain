@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -56,6 +55,7 @@ public class StockCard extends BaseEntity {
     @JoinColumn(name = "productId")
     private Product product;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
     
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -65,12 +65,7 @@ public class StockCard extends BaseEntity {
         super();
     }
 
-    @PrePersist
-    private void setKey() {
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
+ 
     @PreUpdate
     private void preUpdate() {
         setLastUpdatedDate(new Date());

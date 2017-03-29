@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -53,6 +52,8 @@ public class TermLanguage extends BaseEntity {
     private Language language;
 
     private String translatedValue;
+    
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
@@ -67,12 +68,6 @@ public class TermLanguage extends BaseEntity {
 
     public void setLangueId() {
         setLanguageId(getLanguage().getLangId());
-    }
-
-    @PrePersist
-    private void setKey() {
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -40,7 +39,7 @@ public class ResourceGroup extends BaseEntity {
     private String groupId;
 
     @Id
-    @JsonBackReference(value="group")
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "groupId")
     private Group group;
@@ -49,7 +48,7 @@ public class ResourceGroup extends BaseEntity {
     private String resourceId;
 
     @Id
-    @JsonBackReference(value="resource")
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "resourceId")
     private Resource resource;
@@ -57,6 +56,7 @@ public class ResourceGroup extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private State state;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -67,12 +67,6 @@ public class ResourceGroup extends BaseEntity {
 
     public void setRessourceId() {
         setResourceId(getResource().getResourceId());
-    }
-
-    @PrePersist
-    private void setKey() {
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`op-financial-missings")
-public class FinancialMissing extends Operation {
+public class FinancialMissingOperation extends Operation {
 
     @Transient
     private String sellerId;
@@ -30,7 +30,7 @@ public class FinancialMissing extends Operation {
     @JoinColumn(name = "sellerId")
     private Seller seller;
 
-    public FinancialMissing() {
+    public FinancialMissingOperation() {
     }
 
     @Override

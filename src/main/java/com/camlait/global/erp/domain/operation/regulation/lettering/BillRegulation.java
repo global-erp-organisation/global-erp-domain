@@ -2,12 +2,12 @@ package com.camlait.global.erp.domain.operation.regulation.lettering;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -56,17 +56,13 @@ public class BillRegulation extends BaseEntity {
 
     private Double montantVentile;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date dateDeCreation;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public BillRegulation() {
-    }
-
-    @PrePersist
-    private void setKey() {
-        setDateDeCreation(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

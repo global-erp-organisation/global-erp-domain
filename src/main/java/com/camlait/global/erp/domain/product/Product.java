@@ -26,9 +26,9 @@ import com.camlait.global.erp.domain.document.business.Tax;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.inventory.StockCard;
+import com.camlait.global.erp.domain.localisation.Localisation;
 import com.camlait.global.erp.domain.tarif.PriceType;
 import com.camlait.global.erp.domain.tarif.Tarification;
-import com.camlait.global.erp.domain.tarif.UnitPrice;
 import com.camlait.global.erp.domain.util.Utility;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -45,8 +45,8 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = {"unitPrices", "taxes", "stocks", "stockCards", "tarifications"})
-@ToString(exclude = {"unitPrices", "taxes", "stocks", "stockCards", "tarifications"})
+@EqualsAndHashCode(callSuper = false, exclude = {"taxes", "stocks", "stockCards", "tarifications"})
+@ToString(exclude = {"taxes", "stocks", "stockCards", "tarifications"})
 @Builder
 @Table(name = "`product-products`")
 public class Product extends BaseEntity {
@@ -58,10 +58,6 @@ public class Product extends BaseEntity {
     private String productCode;
 
     private String productDescription;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Collection<UnitPrice> unitPrices = Sets.newHashSet();
 
     @Transient
     private String productCategoryId;
@@ -79,6 +75,7 @@ public class Product extends BaseEntity {
     @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Tax> taxes = Sets.newHashSet();
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -122,8 +119,6 @@ public class Product extends BaseEntity {
     @PrePersist
     private void setKey() {
         setProductId(Utility.getUidFor(productId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
@@ -144,12 +139,15 @@ public class Product extends BaseEntity {
      * @return The unit price that belongs to the given type or the default unit
      *         price if no record found for the given price type.
      */
-    public Double getUnitPriceByType(PriceType type) {
-        final Optional<UnitPrice> p = unitPrices.stream().filter(u -> type.getPriceTypeId().equals(u.getPriceTypeId())).findFirst();
-        if (p.isPresent()) {
-            return p.get().getValue();
+    public Double getUnitPrice(PriceType type, Localisation zone) {
+        if (type == null || CollectionUtils.isNullOrEmpty(tarifications)) {
+            return defaultUnitprice;
         }
-        return defaultUnitprice;
+        final Optional<Tarification> p = tarifications.stream()
+                .filter(t -> zone.getLocalId().equals(t.getZone().getLocalId()))
+                .filter(t -> type.getPriceTypeId().equals(t.getPriceType().getPriceTypeId()))
+                .findFirst();
+        return p.isPresent() ? p.get().getValue() : defaultUnitprice;
     }
 
     /**

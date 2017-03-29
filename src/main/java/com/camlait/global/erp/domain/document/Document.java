@@ -41,7 +41,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -51,11 +50,10 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Builder
 @EqualsAndHashCode(callSuper = false, exclude = "documentDetails")
 @Table(name = "`doc-documents`")
 @ToString(exclude = "documentDetails")
-public class Document extends BaseEntity {
+public abstract class Document extends BaseEntity {
 
     @Id
     private String documentId;
@@ -81,6 +79,7 @@ public class Document extends BaseEntity {
     @JoinColumn(name = "workerId")
     private Employee documentWorker;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -146,9 +145,7 @@ public class Document extends BaseEntity {
         } else {
             throw new DataStorageException("Unable to store a document with no detail.");
         }
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
+     }
 
     @PreUpdate
     private void preUpdate() {

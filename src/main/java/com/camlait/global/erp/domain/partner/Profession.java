@@ -40,6 +40,7 @@ public class Profession extends BaseEntity {
     @OneToMany(mappedBy = "profession")
     private Collection<Employee> employees = Sets.newHashSet();
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
@@ -51,8 +52,6 @@ public class Profession extends BaseEntity {
     @PrePersist
     private void setKey() {
         setProfessionId(Utility.getUidFor(professionId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

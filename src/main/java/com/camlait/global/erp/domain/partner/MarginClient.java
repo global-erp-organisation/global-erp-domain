@@ -7,7 +7,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.enumeration.PartnerType;
-import com.camlait.global.erp.domain.operation.margin.ClientMargin;
+import com.camlait.global.erp.domain.operation.margin.ClientMarginOperation;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -25,7 +25,7 @@ public class MarginClient extends Client {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "client")
-    private Collection<ClientMargin> clientMargins = Sets.newHashSet();
+    private Collection<ClientMarginOperation> clientMargins = Sets.newHashSet();
 
     public MarginClient() {
         setPartnerType(PartnerType.CLIENT_A_MARGE);

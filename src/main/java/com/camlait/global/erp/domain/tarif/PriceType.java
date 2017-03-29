@@ -1,11 +1,10 @@
 package com.camlait.global.erp.domain.tarif;
 
-import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -13,8 +12,6 @@ import javax.persistence.Table;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,12 +31,10 @@ public class PriceType extends BaseEntity {
 
     private String description;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "priceType")
-    private Collection<UnitPrice> unitPrices = Sets.newHashSet();
-
-    private Date dateDeCreation;
-    private Date derniereMiseAJour;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date lastUpdatedDate;
 
     public PriceType() {
     }
@@ -47,13 +42,11 @@ public class PriceType extends BaseEntity {
     @PrePersist
     private void prePersist() {
         setPriceTypeId(Utility.getUidFor(priceTypeId));
-        setDateDeCreation(new Date());
-        setDerniereMiseAJour(new Date());
     }
 
     @PreUpdate
     private void preUpdate() {
-        setDerniereMiseAJour(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override

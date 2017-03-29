@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`op-marge-clients`")
-public class ClientMargin extends Operation {
+public class ClientMarginOperation extends Operation {
 
     @Transient
     private String clientMargeId;
@@ -30,6 +30,6 @@ public class ClientMargin extends Operation {
     @JoinColumn(name = "clientMargeId")
     private MarginClient client;
 
-    public ClientMargin() {
+    public ClientMarginOperation() {
     }
 }

@@ -47,6 +47,7 @@ public class Language extends BaseEntity {
     @OneToMany(mappedBy = "langue", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Sets.newHashSet();
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
@@ -64,8 +65,6 @@ public class Language extends BaseEntity {
     @PrePersist
     private void setKey() {
         setLangId(Utility.getUidFor(langId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

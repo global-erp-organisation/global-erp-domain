@@ -86,6 +86,7 @@ public class DailyMovement extends BaseEntity {
     @OneToMany(mappedBy = "dailyMovment")
     private Collection<DailyMovementDetail> dailyMovementDetails = Sets.newHashSet();
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -108,8 +109,6 @@ public class DailyMovement extends BaseEntity {
         if (!errors.isEmpty()) {
             throw new DataValidationException(Joiner.on("\n").join(errors));
         }
-        setCreatedDate(new Date());
-        setLastUpdateddate(new Date());
     }
 
     @PreUpdate

@@ -63,6 +63,7 @@ public class DailyMovementDetail extends BaseEntity {
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -117,8 +118,6 @@ public class DailyMovementDetail extends BaseEntity {
     private void setKey() {
         setDmdId(Utility.getUidFor(dmdId));
         buildTaxes();
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

@@ -38,6 +38,7 @@ public class Term extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String termDescription;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdateDate;
@@ -53,8 +54,6 @@ public class Term extends BaseEntity {
     @PrePersist
     private void setKey() {
         setTermId(Utility.getUidFor(termId));
-        setCreatedDate(new Date());
-        setLastUpdateDate(new Date());
     }
 
     @PreUpdate

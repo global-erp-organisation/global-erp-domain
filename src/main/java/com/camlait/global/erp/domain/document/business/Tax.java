@@ -47,6 +47,7 @@ public class Tax extends BaseEntity {
 
     private double percentageValue;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -69,8 +70,6 @@ public class Tax extends BaseEntity {
     @PrePersist
     private void setKey() {
         setTaxId(Utility.getUidFor(taxId));
-        setCreatedDate(new Date());
-        setLasteUpdateddate(new Date());
     }
 
     @PreUpdate

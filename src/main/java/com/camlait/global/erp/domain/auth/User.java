@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
@@ -44,16 +43,17 @@ public class User extends BaseEntity {
 
     private String password;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
-    @JsonManagedReference(value = "resource-user")
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private Collection<ResourceUser> resourceUsers = Sets.newHashSet();
 
-    @JsonBackReference(value = "user-group")
+    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "`auth-groupe-users`")
     private Collection<Group> groups = Sets.newHashSet();
@@ -78,11 +78,6 @@ public class User extends BaseEntity {
         }
     }
 
-    @PrePersist
-    private void prePersist() {
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
 
     @PreUpdate
     private void preUpdate() {

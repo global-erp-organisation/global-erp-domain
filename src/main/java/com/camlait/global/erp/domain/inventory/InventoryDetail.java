@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -60,6 +59,7 @@ public class InventoryDetail extends BaseEntity {
 
     private double ajustUnitPrice;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -68,12 +68,7 @@ public class InventoryDetail extends BaseEntity {
     public InventoryDetail() {
     }
 
-    @PrePersist
-    private void setKey() {
-        setCreatedDate(new Date());
-        setLastUpdateddate(new Date());
-    }
-
+  
     @PreUpdate
     private void preUpdate() {
         setLastUpdateddate(new Date());

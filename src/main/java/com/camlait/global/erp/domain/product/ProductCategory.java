@@ -67,6 +67,7 @@ public class ProductCategory extends BaseEntity {
 
     private boolean stockFollowing;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -111,8 +112,6 @@ public class ProductCategory extends BaseEntity {
     private void setKey() {
         setProductcategoryId(Utility.getUidFor(productcategoryId));
         setParentCategoryId(parentCategory != null ? parentCategory.getParentCategoryId() : null);
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
@@ -127,7 +126,6 @@ public class ProductCategory extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

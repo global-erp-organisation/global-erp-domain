@@ -13,9 +13,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`op-client-margin-paids`")
-public class ClientMarginPaid extends ClientMargin {
+public class ClientMarginPaidOperation extends ClientMarginOperation {
 
-    public ClientMarginPaid() {
+    public ClientMarginPaidOperation() {
         setOperationDirection(OperationDirection.OUT);
     }
 }

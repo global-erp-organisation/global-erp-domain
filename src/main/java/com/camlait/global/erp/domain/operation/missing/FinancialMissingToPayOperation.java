@@ -13,9 +13,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`op-financial-missing-to-pay`")
-public class FinancialMissingToPay extends FinancialMissing {
+public class FinancialMissingToPayOperation extends FinancialMissingOperation {
 
-    public FinancialMissingToPay() {
+    public FinancialMissingToPayOperation() {
         setOperationDirection(OperationDirection.IN);
     }
 }

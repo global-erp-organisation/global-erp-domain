@@ -25,7 +25,6 @@ import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -34,10 +33,9 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Builder
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "`op-operations`")
-public class Operation extends BaseEntity {
+public abstract class Operation extends BaseEntity {
 
     @Id
     private String operationId;
@@ -47,6 +45,7 @@ public class Operation extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OperationDirection operationDirection;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -78,8 +77,6 @@ public class Operation extends BaseEntity {
     @PrePersist
     private void setKey() {
         setOperationId(Utility.getUidFor(operationId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

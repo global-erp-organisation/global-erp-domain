@@ -19,7 +19,6 @@ import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,10 +27,9 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Builder
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "`loc-localisations`")
-public  class Localisation extends BaseEntity {
+public  abstract class Localisation extends BaseEntity {
 
     @Id
     private String localId;
@@ -41,7 +39,8 @@ public  class Localisation extends BaseEntity {
 
     private String descriptionLocal;
 
-    private Date dateDeCreation;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
@@ -55,8 +54,6 @@ public  class Localisation extends BaseEntity {
     @PrePersist
     private void setKey() {
         setLocalId(Utility.getUidFor(localId));
-        setDateDeCreation(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

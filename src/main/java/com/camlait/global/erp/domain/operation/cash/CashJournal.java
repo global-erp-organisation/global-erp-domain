@@ -61,6 +61,7 @@ public class CashJournal extends BaseEntity {
     @OneToMany(mappedBy = "journal")
     private Collection<CashOperation> operations = Sets.newHashSet();
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -72,8 +73,6 @@ public class CashJournal extends BaseEntity {
     @PrePersist
     private void setKey() {
         setJournalId(Utility.getUidFor(journalId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

@@ -29,7 +29,10 @@ public class Tarif extends BaseEntity {
 
     @Id
     private String tarifId;
+
     private String descriptionTarif;
+
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
@@ -40,8 +43,6 @@ public class Tarif extends BaseEntity {
     @PrePersist
     private void setKey() {
         setTarifId(Utility.getUidFor(tarifId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

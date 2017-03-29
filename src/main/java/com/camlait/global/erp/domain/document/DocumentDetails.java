@@ -79,6 +79,7 @@ public class DocumentDetails extends BaseEntity {
     @JoinColumn(name = "documentId")
     private Document document;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -106,8 +107,6 @@ public class DocumentDetails extends BaseEntity {
     private void setKey() {
         setDocDetailId(Utility.getUidFor(docDetailId));
         buildTaxes();
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
@@ -159,12 +158,10 @@ public class DocumentDetails extends BaseEntity {
     private void postRemove() {
         if (oldRecord != null) {
             updateStock(getStock(), this.lineQuantity, (s, q) -> {
-                if (s != null) {
-                    if (document.getOperationDirection().equals(OperationDirection.IN)) {
-                        s.setAvailableQuantity(s.getAvailableQuantity() - q);
-                    } else {
-                        s.setAvailableQuantity(s.getAvailableQuantity() + q);
-                    }
+                if (document.getOperationDirection().equals(OperationDirection.IN)) {
+                    s.setAvailableQuantity(s.getAvailableQuantity() - q);
+                } else {
+                    s.setAvailableQuantity(s.getAvailableQuantity() + q);
                 }
             });
             setOldRecord(null);
@@ -174,12 +171,10 @@ public class DocumentDetails extends BaseEntity {
     @PostPersist
     private void postPersist() {
         updateStock(getStock(), this.lineQuantity, (s, q) -> {
-            if (s != null) {
-                if (document.getOperationDirection().equals(OperationDirection.IN)) {
-                    s.setAvailableQuantity(s.getAvailableQuantity() + q);
-                } else {
-                    s.setAvailableQuantity(s.getAvailableQuantity() - q);
-                }
+            if (document.getOperationDirection().equals(OperationDirection.IN)) {
+                s.setAvailableQuantity(s.getAvailableQuantity() + q);
+            } else {
+                s.setAvailableQuantity(s.getAvailableQuantity() - q);
             }
         });
     }
@@ -188,12 +183,10 @@ public class DocumentDetails extends BaseEntity {
     private void postUpdate() {
         if (oldRecord != null) {
             updateStock(getStock(), this.lineQuantity, (s, q) -> {
-                if (s != null) {
-                    if (document.getOperationDirection().equals(OperationDirection.IN)) {
-                        s.setAvailableQuantity(s.getAvailableQuantity() - oldRecord.getLineQuantity() + q);
-                    } else {
-                        s.setAvailableQuantity(s.getAvailableQuantity() + oldRecord.getLineQuantity() - q);
-                    }
+                if (document.getOperationDirection().equals(OperationDirection.IN)) {
+                    s.setAvailableQuantity(s.getAvailableQuantity() - oldRecord.getLineQuantity() + q);
+                } else {
+                    s.setAvailableQuantity(s.getAvailableQuantity() + oldRecord.getLineQuantity() - q);
                 }
             });
             setOldRecord(null);
@@ -202,7 +195,9 @@ public class DocumentDetails extends BaseEntity {
 
     private void updateStock(Stock stock, Long quantity, BiConsumer<Stock, Long> updateConsumer) {
         if (document.stockAffects()) {
-            updateConsumer.accept(stock, quantity);
+            if (stock != null) {
+                updateConsumer.accept(stock, quantity);
+            }
         }
     }
 
@@ -217,6 +212,6 @@ public class DocumentDetails extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return null;
+        return null;
     }
 }

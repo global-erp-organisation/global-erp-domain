@@ -16,7 +16,6 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,10 +24,9 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Builder
 @Table(name = "`asset-assets`")
 @EqualsAndHashCode(callSuper = false)
-public class Asset extends BaseEntity {
+public abstract class Asset extends BaseEntity {
 
     @Id
     private String assetId;
@@ -40,6 +38,7 @@ public class Asset extends BaseEntity {
 
     private Date commissioningDate;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -53,8 +52,6 @@ public class Asset extends BaseEntity {
     @PrePersist
     private void setKey() {
         setAssetId(Utility.getUidFor(assetId));
-        setCreatedDate(new Date());
-        setLastUpdateddate(new Date());
     }
 
     @PreUpdate

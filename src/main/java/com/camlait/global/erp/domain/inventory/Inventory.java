@@ -87,6 +87,7 @@ public class Inventory extends BaseEntity {
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private Collection<InventoryDetail> inventoryDetails = Sets.newHashSet();
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -98,8 +99,6 @@ public class Inventory extends BaseEntity {
     @PrePersist
     private void setKey() {
         setInventoryId(Utility.getUidFor(inventoryId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

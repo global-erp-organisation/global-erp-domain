@@ -61,7 +61,8 @@ public class RegulationModel extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "partnerId")
     private Partner partner;
-
+    
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
@@ -73,8 +74,6 @@ public class RegulationModel extends BaseEntity {
     @PrePersist
     private void setKey() {
         setModeleId(Utility.getUidFor(modeleId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

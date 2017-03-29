@@ -16,7 +16,6 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,10 +24,9 @@ import lombok.EqualsAndHashCode;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@Builder
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "`reg-regulation-modes`")
-public class RegulationMode extends BaseEntity {
+public abstract class RegulationMode extends BaseEntity {
 
     @Id
     private String regulationModeId;
@@ -38,6 +36,7 @@ public class RegulationMode extends BaseEntity {
 
     private String regulationModeDescription;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -49,8 +48,6 @@ public class RegulationMode extends BaseEntity {
     @PrePersist
     private void setKey() {
         setRegulationModeId(Utility.getUidFor(regulationModeId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
