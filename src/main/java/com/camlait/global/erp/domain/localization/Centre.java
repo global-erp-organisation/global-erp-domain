@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.localisation;
+package com.camlait.global.erp.domain.localization;
 
 import java.util.Collection;
 
@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`loc-centres`")
-public class Centre extends Localisation {
+public class Centre extends Localization {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "centre")

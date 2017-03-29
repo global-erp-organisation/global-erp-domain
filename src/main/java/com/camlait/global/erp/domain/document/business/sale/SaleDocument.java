@@ -7,10 +7,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
+import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.document.business.BusinessDocument;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.localisation.Zone;
 import com.camlait.global.erp.domain.partner.Client;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 

@@ -85,9 +85,9 @@ public class MergeUtil extends BeanUtilsBean {
      * @throws IllegalAccessException
      */
     public <T> T merge(T from, T to) throws Exception {
-        final T toMerge = SerializerUtil.copy(to);
+        //final T toMerge = SerializerUtil.copy(to);
         this.copyProperties(to, from);
-        return toMerge;
+        return to;
     }
 
     /**

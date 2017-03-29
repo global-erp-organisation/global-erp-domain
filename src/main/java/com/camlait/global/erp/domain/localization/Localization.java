@@ -1,48 +1,59 @@
-package com.camlait.global.erp.domain.tarif;
+package com.camlait.global.erp.domain.localization;
 
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
+import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.util.Utility;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor
-@Builder
-@Table(name = "`tarif-tarifs`")
-public class Tarif extends BaseEntity {
+@Table(name = "`loc-localisations`")
+public  abstract class Localization extends BaseEntity {
 
     @Id
-    private String tarifId;
+    private String localId;
 
-    private String descriptionTarif;
+    @Column(nullable = false, unique = true)
+    private String code;
+
+    private String descriptionLocal;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
+
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
-    public Tarif() {
+    @Enumerated(EnumType.STRING)
+    private OtherEnum typeLocal;
+
+    public Localization() {
     }
 
     @PrePersist
     private void setKey() {
-        setTarifId(Utility.getUidFor(tarifId));
+        setLocalId(Utility.getUidFor(localId));
     }
 
     @PreUpdate
@@ -56,7 +67,6 @@ public class Tarif extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

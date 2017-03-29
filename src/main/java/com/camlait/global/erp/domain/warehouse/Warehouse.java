@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
-import com.camlait.global.erp.domain.localisation.Centre;
+import com.camlait.global.erp.domain.localization.Centre;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;

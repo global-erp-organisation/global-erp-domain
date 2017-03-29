@@ -26,9 +26,10 @@ import com.camlait.global.erp.domain.document.business.Tax;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.inventory.StockCard;
-import com.camlait.global.erp.domain.localisation.Localisation;
+import com.camlait.global.erp.domain.localization.Localization;
 import com.camlait.global.erp.domain.tarif.PriceType;
-import com.camlait.global.erp.domain.tarif.Tarification;
+import com.camlait.global.erp.domain.tarif.Tariff;
+import com.camlait.global.erp.domain.tarif.Tariffication;
 import com.camlait.global.erp.domain.util.Utility;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -93,7 +94,7 @@ public class Product extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Tarification> tarifications = Sets.newHashSet();
+    private Set<Tariffication> tarifications = Sets.newHashSet();
 
     public Product() {
     }
@@ -139,12 +140,21 @@ public class Product extends BaseEntity {
      * @return The unit price that belongs to the given type or the default unit
      *         price if no record found for the given price type.
      */
-    public Double getUnitPrice(PriceType type, Localisation zone) {
+    /**
+     * Retrieve the unit price of the current product
+     * 
+     * @param type
+     * @param zone
+     * @param tarif
+     * @return The unit price that belongs to the given price type, localization and the tariff.
+     */
+    public Double getUnitPrice(PriceType type, Localization zone, Tariff tariff) {
         if (type == null || CollectionUtils.isNullOrEmpty(tarifications)) {
             return defaultUnitprice;
         }
-        final Optional<Tarification> p = tarifications.stream()
+        final Optional<Tariffication> p = tarifications.stream()
                 .filter(t -> zone.getLocalId().equals(t.getZone().getLocalId()))
+                .filter(t->tariff.getTarifId().equals(t.getTarif().getTarifId()))
                 .filter(t -> type.getPriceTypeId().equals(t.getPriceType().getPriceTypeId()))
                 .findFirst();
         return p.isPresent() ? p.get().getValue() : defaultUnitprice;

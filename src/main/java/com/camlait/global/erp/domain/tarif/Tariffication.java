@@ -14,8 +14,8 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.keys.TarificationKey;
-import com.camlait.global.erp.domain.localisation.Zone;
+import com.camlait.global.erp.domain.keys.TarifficationKey;
+import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.product.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -31,8 +31,8 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Builder
 @Table(name = "`tarif-tarifications`")
-@IdClass(value = TarificationKey.class)
-public class Tarification extends BaseEntity {
+@IdClass(value = TarifficationKey.class)
+public class Tariffication extends BaseEntity {
    
     @Transient
     private String zoneId;
@@ -59,7 +59,7 @@ public class Tarification extends BaseEntity {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "tarifId")
-    private Tarif tarif;
+    private Tariff tarif;
     
     @Transient
     private String priceTypeId;
@@ -78,7 +78,7 @@ public class Tarification extends BaseEntity {
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedate;
 
-    public Tarification() {
+    public Tariffication() {
     }
 
     @PreUpdate

@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.localisation;
+package com.camlait.global.erp.domain.localization;
 
 import java.util.Collection;
 
@@ -13,7 +13,7 @@ import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.partner.Client;
-import com.camlait.global.erp.domain.tarif.Tarification;
+import com.camlait.global.erp.domain.tarif.Tariffication;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -28,7 +28,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`loc-zones`")
-public class Zone extends Localisation {
+public class Zone extends Localization {
 
     @Transient
     private String secteurId;
@@ -48,7 +48,7 @@ public class Zone extends Localisation {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "zone")
-    private Collection<Tarification> tarifications = Sets.newHashSet();
+    private Collection<Tariffication> tarifications = Sets.newHashSet();
 
     public Zone() {
         setTypeLocal(OtherEnum.ZONE);

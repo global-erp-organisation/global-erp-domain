@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.enumeration.PartnerType;
-import com.camlait.global.erp.domain.localisation.Zone;
+import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.operation.missing.FinancialMissingOperation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

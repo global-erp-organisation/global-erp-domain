@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.localisation;
+package com.camlait.global.erp.domain.localization;
 
 import java.util.Collection;
 
@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`loc-regions`")
-public class Region extends Localisation {
+public class Region extends Localization {
 
     @Transient
     private String centreId;

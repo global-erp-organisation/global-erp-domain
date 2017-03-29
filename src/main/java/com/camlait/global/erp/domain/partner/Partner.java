@@ -23,10 +23,10 @@ import com.camlait.global.erp.domain.asset.PartnerAsset;
 import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
-import com.camlait.global.erp.domain.localisation.Centre;
+import com.camlait.global.erp.domain.localization.Centre;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.regulation.RegulationModel;
-import com.camlait.global.erp.domain.tarif.Tarif;
+import com.camlait.global.erp.domain.tarif.Tariff;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -99,7 +99,7 @@ public abstract class Partner extends BaseEntity {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "tarifId")
-    private Tarif tarif;
+    private Tariff tarif;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "partenaire")
