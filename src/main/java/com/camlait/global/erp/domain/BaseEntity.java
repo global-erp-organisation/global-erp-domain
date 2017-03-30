@@ -69,9 +69,7 @@ public abstract class BaseEntity implements Serializable {
      * @return The current entity after lazy initialized collections.
      */
     public <T extends BaseEntity> T lazyInit() {
-        Stream.of(this.getClass().getDeclaredFields())
-        .filter(this::canBeLazyInit)
-        .forEach(f -> Hibernate.initialize(getFieldValue(f)));
+        Stream.of(this.getClass().getDeclaredFields()).filter(this::canBeLazyInit).forEach(f -> Hibernate.initialize(getFieldValue(f)));
         return (T) this;
     }
 
@@ -94,7 +92,8 @@ public abstract class BaseEntity implements Serializable {
         final Boolean isAnnotated = Stream.of(f.getDeclaredAnnotations()).anyMatch(a -> {
             return a.annotationType().isAssignableFrom(ManyToMany.class) || a.annotationType().isAssignableFrom(OneToMany.class);
         });
-        return f.getType().isAssignableFrom(Collection.class) && isAnnotated;
+        final Boolean isACollection = Stream.of(f.getType().getInterfaces()).anyMatch(c -> Collection.class.getName().equals(c.getName()));
+        return isACollection && isAnnotated;
     }
 
     /**
