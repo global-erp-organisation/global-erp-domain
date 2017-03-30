@@ -23,7 +23,7 @@ import com.camlait.global.erp.domain.asset.PartnerAsset;
 import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
-import com.camlait.global.erp.domain.localization.Centre;
+import com.camlait.global.erp.domain.localization.Center;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.regulation.RegulationModel;
 import com.camlait.global.erp.domain.tarif.Tariff;
@@ -66,31 +66,31 @@ public abstract class Partner extends BaseEntity {
     private PartnerType partnerType;
 
     @Transient
-    private String centreId;
+    private String centerId;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "centreId")
-    private Centre centre;
+    @JoinColumn(name = "centerId")
+    private Center centre;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "client")
     private Collection<SaleDocument> documents = Sets.newHashSet();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "immobilisation")
+    @OneToMany(mappedBy = "asset")
     private Collection<PartnerAsset> partnerAssets = Sets.newHashSet();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "partenaire")
+    @OneToMany(mappedBy = "partner")
     private Collection<Operation> operations = Sets.newHashSet();
 
     @Transient
-    private String groupePartenaireId;
+    private String partnerGroupId;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "groupePartenaireId")
+    @JoinColumn(name = "partnerGroupId")
     private PartnerGroup partnerGroup;
 
     @Transient
@@ -102,7 +102,7 @@ public abstract class Partner extends BaseEntity {
     private Tariff tarif;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "partenaire")
+    @OneToMany(mappedBy = "partner")
     private Collection<RegulationModel> regulationModels = Sets.newHashSet();
 
     public Partner() {
@@ -120,8 +120,8 @@ public abstract class Partner extends BaseEntity {
 
     @Override
     public void postConstructOperation() {
-        setCentreId(centre.getLocalId());
-        setGroupePartenaireId(partnerGroup.getPartnerGroupId());
+        setCenterId(centre.getLocalId());
+        setPartnerGroupId(partnerGroup.getPartnerGroupId());
         setTarifId(tarif.getTarifId());
     }
 

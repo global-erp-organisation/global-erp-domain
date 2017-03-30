@@ -43,8 +43,8 @@ public class Language extends BaseEntity {
 
     private String alt;
 
-    @JsonManagedReference(value="language")
-    @OneToMany(mappedBy = "langue", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "language", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Sets.newHashSet();
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

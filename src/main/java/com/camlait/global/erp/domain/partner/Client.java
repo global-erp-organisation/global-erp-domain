@@ -53,8 +53,8 @@ public class Client extends Partner {
 
     @Override
     public void postConstructOperation() {
-        setCentreId(getCentre().getLocalId());
-        setGroupePartenaireId(getPartnerGroup().getPartnerGroupId());
+        setCenterId(getCentre().getLocalId());
+        setPartnerGroupId(getPartnerGroup().getPartnerGroupId());
         setTarifId(getTarif().getTarifId());
         setZoneId(zone.getLocalId());
     }

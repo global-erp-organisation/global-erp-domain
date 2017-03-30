@@ -29,7 +29,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
-@Table(name = "`doc-document-detail-taxes`")
+@Table(name = "`doc-document-details-taxes`")
 @IdClass(value = DocumentDetailsTaxKey.class)
 public class DocumentDetailsTax extends BaseEntity {
 

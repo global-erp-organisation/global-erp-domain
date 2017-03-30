@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "`op-financial-missings")
+@Table(name = "`op-financial-missings`")
 public class FinancialMissingOperation extends Operation {
 
     @Transient

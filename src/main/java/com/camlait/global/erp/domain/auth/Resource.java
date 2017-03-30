@@ -44,7 +44,7 @@ public class Resource extends BaseEntity {
     @Transient
     private String parentResourceId;
 
-    @JsonBackReference(value="resource-parent")
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "parentResourceId")
     private Resource parentResource;
@@ -65,7 +65,7 @@ public class Resource extends BaseEntity {
 
     private Integer order;
 
-    @JsonManagedReference(value="resource-parent")
+    @JsonManagedReference
     @OneToMany(mappedBy = "parentResource")
     private Collection<Resource> items = Sets.newHashSet();
 
@@ -73,8 +73,8 @@ public class Resource extends BaseEntity {
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<ResourceGroup> resourceGroups = Sets.newHashSet();
 
-    @JsonManagedReference(value="resource-user")
-    @OneToMany(mappedBy = "ressource", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<ResourceUser> resourceUsers = Sets.newHashSet();
 
     public Resource() {

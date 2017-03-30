@@ -47,7 +47,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = {"documents", "recoveries", "dailyMovementDetails"})
 @ToString(exclude = {"documents", "recoveries", "dailyMovementDetails"})
 @Builder
-@Table(name = "`dm-daily-movments`")
+@Table(name = "`dm-daily-movements`")
 public class DailyMovement extends BaseEntity {
 
     @Id
@@ -75,15 +75,15 @@ public class DailyMovement extends BaseEntity {
     private Store store;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "dailyMovment")
+    @OneToMany(mappedBy = "dailyMovement")
     private Collection<Document> documents = Sets.newHashSet();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "dailyMovment")
+    @OneToMany(mappedBy = "dailyMovement")
     private Collection<Recovery> recoveries = Sets.newHashSet();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "dailyMovment")
+    @OneToMany(mappedBy = "dailyMovement")
     private Collection<DailyMovementDetail> dailyMovementDetails = Sets.newHashSet();
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

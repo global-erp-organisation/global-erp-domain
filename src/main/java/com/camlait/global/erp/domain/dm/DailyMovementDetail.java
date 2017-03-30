@@ -78,7 +78,7 @@ public class DailyMovementDetail extends BaseEntity {
     private Document document;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "ligneBmq", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dailyMovementDetail", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<DailyMovmentDetailTax> dailyMovmentDetailTaxes = Sets.newHashSet();
 
     public DailyMovementDetail() {

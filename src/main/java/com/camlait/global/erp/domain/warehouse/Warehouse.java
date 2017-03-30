@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
-import com.camlait.global.erp.domain.localization.Centre;
+import com.camlait.global.erp.domain.localization.Center;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.util.Utility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -55,7 +55,7 @@ public class Warehouse extends BaseEntity {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "centreId")
-    private Centre centre;
+    private Center centre;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;

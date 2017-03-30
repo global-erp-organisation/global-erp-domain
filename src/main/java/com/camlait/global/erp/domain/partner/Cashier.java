@@ -39,8 +39,8 @@ public class Cashier extends Employee {
 
     @Override
     public void postConstructOperation() {
-        setCentreId(getCentre().getLocalId());
-        setGroupePartenaireId(getPartnerGroup().getPartnerGroupId());
+        setCenterId(getCentre().getLocalId());
+        setPartnerGroupId(getPartnerGroup().getPartnerGroupId());
         setTarifId(getTarif().getTarifId());
         setCashId(cash.getCashId());
     }

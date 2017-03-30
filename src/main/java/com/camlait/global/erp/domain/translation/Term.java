@@ -43,7 +43,7 @@ public class Term extends BaseEntity {
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdateDate;
 
-    @JsonManagedReference(value="term")
+    @JsonManagedReference
     @OneToMany(mappedBy = "term", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Sets.newHashSet();
 

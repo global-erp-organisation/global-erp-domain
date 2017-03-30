@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 public class StoreOperator extends Employee {
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "magasinierSortant")
+    @OneToMany(mappedBy = "outgoingWarehouser")
     private Collection<Inventory> inventories = Sets.newHashSet();
 
     public StoreOperator() {

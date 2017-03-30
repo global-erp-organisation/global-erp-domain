@@ -34,11 +34,11 @@ public class Region extends Localization {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "centreId")
-    private Centre centre;
+    private Center centre;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
-    private Collection<Secteur> secteurs = Sets.newHashSet();
+    private Collection<Sector> secteurs = Sets.newHashSet();
 
     public Region() {
         setTypeLocal(OtherEnum.REGION);

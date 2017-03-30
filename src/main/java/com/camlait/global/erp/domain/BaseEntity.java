@@ -35,7 +35,7 @@ public abstract class BaseEntity implements Serializable {
     public abstract void postConstructOperation();
 
     /**
-     * Convert this entity to an enumeration type.
+     * Retrieves the enumeration that match with the current entity.
      * 
      * @return The corresponding Enumeration if exist or null if not.
      */
@@ -69,7 +69,9 @@ public abstract class BaseEntity implements Serializable {
      * @return The current entity after lazy initialized collections.
      */
     public <T extends BaseEntity> T lazyInit() {
-        Stream.of(this.getClass().getFields()).filter(this::canBeLazyInit).forEach(f -> Hibernate.initialize(getFieldValue(f)));
+        Stream.of(this.getClass().getDeclaredFields())
+        .filter(this::canBeLazyInit)
+        .forEach(f -> Hibernate.initialize(getFieldValue(f)));
         return (T) this;
     }
 
@@ -105,7 +107,7 @@ public abstract class BaseEntity implements Serializable {
         try {
             return readField(this, f.getName(), true);
         } catch (Exception e) {
-            throw new LazyInitException("Unable to get he field value. Field name: " + f.getName());
+            throw new LazyInitException("Unable to get the field value. Field name: " + f.getName());
         }
     }
 }

@@ -37,7 +37,7 @@ public class TermLanguage extends BaseEntity {
     private String termId;
 
     @Id
-    @JsonBackReference(value="term")
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "termId")
     private Term term;
@@ -46,7 +46,7 @@ public class TermLanguage extends BaseEntity {
     private String languageId;
 
     @Id
-    @JsonBackReference(value="language")
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "languageId")
     private Language language;

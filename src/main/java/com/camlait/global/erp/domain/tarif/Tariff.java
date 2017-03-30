@@ -30,7 +30,7 @@ public class Tariff extends BaseEntity {
     @Id
     private String tarifId;
 
-    private String descriptionTarif;
+    private String tariffDescription;
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;

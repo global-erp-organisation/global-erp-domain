@@ -28,8 +28,8 @@ import lombok.EqualsAndHashCode;
 @Entity
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Builder
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "`reg-bill-regulations`")
 @IdClass(value = BillRegulationKey.class)
 public class BillRegulation extends BaseEntity {
@@ -41,16 +41,16 @@ public class BillRegulation extends BaseEntity {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "documentId")
-    private ClientBill facture;
+    private ClientBill bill;
 
     @Transient
-    private String reglementId;
+    private String regulationId;
 
     @Id
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "reglementId")
-    private Regulation reglement;
+    @JoinColumn(name = "regulationId")
+    private Regulation regulation;
 
     private Date dateDeVentilation;
 
@@ -72,8 +72,8 @@ public class BillRegulation extends BaseEntity {
 
     @Override
     public void postConstructOperation() {
-        setDocumentId(facture.getDocumentId());
-        setReglementId(reglement.getOperationId());
+        setDocumentId(bill.getDocumentId());
+        setRegulationId(regulation.getOperationId());
     }
 
     @Override

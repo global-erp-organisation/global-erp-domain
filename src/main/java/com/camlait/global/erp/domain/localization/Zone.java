@@ -36,7 +36,7 @@ public class Zone extends Localization {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "secteurId")
-    private Secteur secteur;
+    private Sector secteur;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "zone")

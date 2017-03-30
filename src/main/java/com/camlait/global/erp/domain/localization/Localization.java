@@ -28,7 +28,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "`loc-localisations`")
+@Table(name = "`loc-localizations`")
 public  abstract class Localization extends BaseEntity {
 
     @Id

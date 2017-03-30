@@ -65,8 +65,8 @@ public class Employee extends Partner {
 
     @Override
     public void postConstructOperation() {
-        setCentreId(getCentre().getLocalId());
-        setGroupePartenaireId(getPartnerGroup().getPartnerGroupId());
+        setCenterId(getCentre().getLocalId());
+        setPartnerGroupId(getPartnerGroup().getPartnerGroupId());
         setTarifId(getTarif().getTarifId());
         setProfessionId(profession.getProfessionId());
         setUserId(user != null ? user.getUserId() : null);

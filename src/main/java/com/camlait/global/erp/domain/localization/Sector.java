@@ -25,8 +25,8 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "`loc-secteurs`")
-public class Secteur extends Localization {
+@Table(name = "`loc-sectors`")
+public class Sector extends Localization {
 
     @Transient
     private String regionId;
@@ -40,7 +40,7 @@ public class Secteur extends Localization {
     @OneToMany(mappedBy = "secteur", fetch = FetchType.EAGER)
     private Collection<Zone> zones = Sets.newHashSet();
 
-    public Secteur() {
+    public Sector() {
         setTypeLocal(OtherEnum.SECTEUR);
     }
 

@@ -41,7 +41,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = {"taxes", "categoryChildren", "products"})
 @ToString(exclude = {"taxes", "categoryChildren", "products"})
 @Builder
-@Table(name = "`produit-categorie-products`")
+@Table(name = "`produit-category-products`")
 public class ProductCategory extends BaseEntity {
 
     @Id
@@ -78,11 +78,11 @@ public class ProductCategory extends BaseEntity {
     private Set<ProductCategory> categoryChildren = Sets.newHashSet();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Product> products = Sets.newHashSet();
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "categorieProduits", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "productCategories", cascade = CascadeType.ALL)
     private Set<Tax> taxes = Sets.newHashSet();
 
     public void setCategorieParent(ProductCategory categorieParent) {

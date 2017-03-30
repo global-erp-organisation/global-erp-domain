@@ -50,8 +50,8 @@ public class Seller extends Employee {
 
     @Override
     public void postConstructOperation() {
-        setCentreId(getCentre().getLocalId());
-        setGroupePartenaireId(getPartnerGroup().getPartnerGroupId());
+        setCenterId(getCentre().getLocalId());
+        setPartnerGroupId(getPartnerGroup().getPartnerGroupId());
         setTarifId(getTarif().getTarifId());
         setProfessionId(getProfession().getProfessionId());
         setUserId(getUser() != null ? getUser().getUserId() : null);

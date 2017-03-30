@@ -21,13 +21,13 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`loc-centres`")
-public class Centre extends Localization {
+public class Center extends Localization {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "centre")
     private Collection<Region> regions = Sets.newHashSet();
 
-    public Centre() {
+    public Center() {
         setTypeLocal(OtherEnum.CENTRE);
     }
 

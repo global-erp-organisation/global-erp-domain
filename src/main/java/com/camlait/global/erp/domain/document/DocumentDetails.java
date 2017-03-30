@@ -89,7 +89,7 @@ public class DocumentDetails extends BaseEntity {
     private OperationDirection operationDirection;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "documentDetail", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "documentDetails", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<DocumentDetailsTax> documentDetailsTaxes = Sets.newHashSet();
 
     @Transient
