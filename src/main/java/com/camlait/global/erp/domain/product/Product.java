@@ -132,15 +132,7 @@ public class Product extends BaseEntity {
         setProductCategoryId(category.getProductcategoryId());
     }
 
-    /**
-     * Retrieve the unit price of the current product based on the given price
-     * type.
-     * 
-     * @param type Provided price type.
-     * @return The unit price that belongs to the given type or the default unit
-     *         price if no record found for the given price type.
-     */
-    /**
+     /**
      * Retrieve the unit price of the current product
      * 
      * @param type
@@ -163,12 +155,16 @@ public class Product extends BaseEntity {
     /**
      * Retrieve the stock of the current product for a specific store.
      * 
-     * @param m
-     *            given store.
+     * @param m given store.
      * @return
      */
-    public Stock getStockByStore(Store m) {
-        return stocks.stream().filter(s -> m.getStoreId().equals(s.getStore().getStoreId())).findFirst().orElse(null);
+    public Stock getStockByStore(Store store) {
+        if(CollectionUtils.isNullOrEmpty(stocks)) {
+            final Stock stock = Stock.builder().availableQuantity(0L).store(store).product(this).build();
+            this.getStocks().add(stock);
+            return stock;
+        }
+        return  stocks.stream().filter(s -> store.getStoreId().equals(s.getStore().getStoreId())).findFirst().orElse(null);
     }
 
     @Override

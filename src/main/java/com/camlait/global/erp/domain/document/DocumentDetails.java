@@ -100,13 +100,20 @@ public class DocumentDetails extends BaseEntity {
     }
 
     public boolean isStorable() {
+        if (!this.getProduct().isStockFollowing()) {
+            return true;
+        }
         return this.getProduct().availableQuantity(this.getDocument().getStore()) - this.getLineQuantity() > 0;
     }
 
     @PrePersist
     private void setKey() {
-        setDocDetailId(Helper.getUidFor(docDetailId));
-        buildTaxes();
+        if (isStorable()) {
+            setDocDetailId(Helper.getUidFor(docDetailId));
+            buildTaxes();
+        } else {
+            throw new DataStorageException(unavailableProductMessage(this));
+        }
     }
 
     @PreUpdate
@@ -122,22 +129,18 @@ public class DocumentDetails extends BaseEntity {
      */
     public DocumentDetails buildTaxes() {
         if (document != null && document.isBusinessDocument()) {
-            if (isStorable()) {
-                final Set<Tax> taxes = this.getProduct().getTaxes();
-                if (CollectionUtils.isNullOrEmpty(taxes)) {
-                    final Set<DocumentDetailsTax> lt = taxes.stream().map(t -> {
-                        return DocumentDetailsTax.builder()
-                                .documentDetails(this)
-                                .docDetailId(this.getDocDetailId())
-                                .taxRate(t.getPercentageValue())
-                                .tax(t)
-                                .taxId(t.getTaxId())
-                                .build();
-                    }).collect(Collectors.toSet());
-                    setDocumentDetailsTaxes(lt);
-                }
-            } else {
-                throw new DataStorageException(unavailableProductMessage(this));
+            final Set<Tax> taxes = this.getProduct().getTaxes();
+            if (CollectionUtils.isNullOrEmpty(taxes)) {
+                final Set<DocumentDetailsTax> lt = taxes.stream().map(t -> {
+                    return DocumentDetailsTax.builder()
+                            .documentDetails(this)
+                            .docDetailId(this.getDocDetailId())
+                            .taxRate(t.getPercentageValue())
+                            .tax(t)
+                            .taxId(t.getTaxId())
+                            .build();
+                }).collect(Collectors.toSet());
+                setDocumentDetailsTaxes(lt);
             }
         }
         return this;
@@ -202,12 +205,7 @@ public class DocumentDetails extends BaseEntity {
     }
 
     private Stock getStock() {
-        Stock s = this.getProduct().getStockByStore(document.getStore());
-        if (s == null) {
-            s = Stock.builder().store(document.getStore()).product(getProduct()).availableQuantity(0L).build();
-            this.getProduct().getStocks().add(s);
-        }
-        return s;
+        return this.getProduct().getStockByStore(document.getStore());
     }
 
     @Override
