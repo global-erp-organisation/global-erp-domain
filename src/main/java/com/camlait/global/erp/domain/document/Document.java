@@ -147,7 +147,7 @@ public abstract class Document extends BaseEntity {
         } else {
             throw new DataStorageException("Unable to store a document with no detail.");
         }
-     }
+    }
 
     @PreUpdate
     private void preUpdate() {
@@ -164,6 +164,28 @@ public abstract class Document extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return null;
+        return null;
+    }
+
+    /**
+     * Add a document detail into the current collection of document detail.
+     * 
+     * @param line
+     * @return
+     */
+    public Document addLine(DocumentDetails line) {
+        this.documentDetails.add(line);
+        return this;
+    }
+    
+    /**
+     * remove a document detail into the current collection of document detail.
+     * 
+     * @param line
+     * @return
+     */
+    public Document removeLine(DocumentDetails line) {
+        this.documentDetails.remove(line);
+        return this;
     }
 }
