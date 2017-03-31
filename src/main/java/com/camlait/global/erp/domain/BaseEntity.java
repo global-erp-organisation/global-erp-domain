@@ -77,9 +77,9 @@ public abstract class BaseEntity implements Serializable {
     }
 
     /**
-     * Convert the current entity to a JSON format.
+     * Built a JSON representation of the current entity.
      * 
-     * @return A string that represent a JSON value for the current entity.
+     * @return A string that represents a JSON value for the current entity.
      */
     public String toJson() {
         return SerializerUtil.toJson(this);
