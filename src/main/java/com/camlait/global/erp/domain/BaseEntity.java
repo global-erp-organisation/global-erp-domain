@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain;
 
+import com.camlait.global.erp.domain.util.Helper;
 import static org.apache.commons.lang.reflect.FieldUtils.readField;
 
 import java.io.Serializable;
@@ -59,7 +60,7 @@ public abstract class BaseEntity implements Serializable {
      * @return
      */
     public <T extends BaseEntity> Boolean isTypeOf(@NonNull Class<T> clazz) {
-        return this.getClass().getName().equals(clazz.getName());
+        return Helper.isTypeOf(this.getClass(), clazz);
     }
 
     /**
@@ -69,7 +70,9 @@ public abstract class BaseEntity implements Serializable {
      * @return The current entity after lazy initialized collections.
      */
     public <T extends BaseEntity> T lazyInit() {
-        Stream.of(this.getClass().getDeclaredFields()).filter(this::canBeLazyInit).forEach(f -> Hibernate.initialize(getFieldValue(f)));
+        Stream.of(this.getClass().getDeclaredFields())
+        .filter(this::canBeLazyInit)
+        .forEach(f -> Hibernate.initialize(getFieldValue(f)));
         return (T) this;
     }
 
@@ -90,9 +93,10 @@ public abstract class BaseEntity implements Serializable {
      */
     private Boolean canBeLazyInit(Field f) {
         final Boolean isAnnotated = Stream.of(f.getDeclaredAnnotations()).anyMatch(a -> {
-            return a.annotationType().isAssignableFrom(ManyToMany.class) || a.annotationType().isAssignableFrom(OneToMany.class);
+            return Helper.isTypeOf(a.annotationType(), ManyToMany.class) || Helper.isTypeOf(a.annotationType(), OneToMany.class);
         });
-        final Boolean isACollection = Stream.of(f.getType().getInterfaces()).anyMatch(c -> Collection.class.getName().equals(c.getName()));
+        final Boolean isACollection = Stream.of(f.getType().getInterfaces())
+                .anyMatch(c -> Collection.class.getName().equals(c.getName()));
         return isACollection && isAnnotated;
     }
 
@@ -109,4 +113,4 @@ public abstract class BaseEntity implements Serializable {
             throw new LazyInitException("Unable to get the field value. Field name: " + f.getName());
         }
     }
-}
+  }

@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -100,7 +100,7 @@ public class Resource extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setResourceId(Utility.getUidFor(resourceId));
+        setResourceId(Helper.getUidFor(resourceId));
     }
 
     @PreUpdate

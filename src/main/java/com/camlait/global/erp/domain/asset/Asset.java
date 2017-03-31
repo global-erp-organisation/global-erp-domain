@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -51,7 +51,7 @@ public abstract class Asset extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setAssetId(Utility.getUidFor(assetId));
+        setAssetId(Helper.getUidFor(assetId));
     }
 
     @PreUpdate

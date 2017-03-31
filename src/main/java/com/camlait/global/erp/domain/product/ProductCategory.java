@@ -23,7 +23,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.Scope;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -110,7 +110,7 @@ public class ProductCategory extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setProductcategoryId(Utility.getUidFor(productcategoryId));
+        setProductcategoryId(Helper.getUidFor(productcategoryId));
         setParentCategoryId(parentCategory != null ? parentCategory.getParentCategoryId() : null);
     }
 

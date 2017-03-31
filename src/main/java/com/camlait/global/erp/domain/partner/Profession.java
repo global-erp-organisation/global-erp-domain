@@ -12,7 +12,7 @@ import javax.persistence.PreUpdate;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -51,7 +51,7 @@ public class Profession extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setProfessionId(Utility.getUidFor(professionId));
+        setProfessionId(Helper.getUidFor(professionId));
     }
 
     @PreUpdate

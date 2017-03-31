@@ -21,7 +21,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Partner;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -76,7 +76,7 @@ public abstract class Operation extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setOperationId(Utility.getUidFor(operationId));
+        setOperationId(Helper.getUidFor(operationId));
     }
 
     @PreUpdate

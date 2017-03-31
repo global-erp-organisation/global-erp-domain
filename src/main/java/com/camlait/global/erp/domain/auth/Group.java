@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -59,7 +59,7 @@ public class Group extends BaseEntity {
 
     @PrePersist
     private void prePersist() {
-        setGroupId(Utility.getUidFor(groupId));
+        setGroupId(Helper.getUidFor(groupId));
     }
 
     @PreUpdate

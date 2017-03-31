@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -58,7 +58,7 @@ public class Cash extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setCashId(Utility.getUidFor(cashId));
+        setCashId(Helper.getUidFor(cashId));
     }
 
     @PreUpdate

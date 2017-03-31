@@ -34,7 +34,7 @@ import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.exception.DataStorageException;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.product.Product;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -105,7 +105,7 @@ public class DocumentDetails extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setDocDetailId(Utility.getUidFor(docDetailId));
+        setDocDetailId(Helper.getUidFor(docDetailId));
         buildTaxes();
     }
 

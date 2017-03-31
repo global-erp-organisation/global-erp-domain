@@ -20,7 +20,7 @@ import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.partner.StoreOperator;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -98,7 +98,7 @@ public class Inventory extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setInventoryId(Utility.getUidFor(inventoryId));
+        setInventoryId(Helper.getUidFor(inventoryId));
     }
 
     @PreUpdate

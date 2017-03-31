@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -53,7 +53,7 @@ public class Term extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setTermId(Utility.getUidFor(termId));
+        setTermId(Helper.getUidFor(termId));
     }
 
     @PreUpdate

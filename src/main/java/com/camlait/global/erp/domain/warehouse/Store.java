@@ -24,7 +24,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.inventory.StockCard;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -83,7 +83,7 @@ public class Store extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setStoreId(Utility.getUidFor(storeId));
+        setStoreId(Helper.getUidFor(storeId));
     }
 
     @PreUpdate

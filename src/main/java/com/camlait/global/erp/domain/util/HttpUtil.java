@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Utility for http calls.
+ * Helper for http calls.
  *
  * @param <T> Expected response body type for http calls.
  */

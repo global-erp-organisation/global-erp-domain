@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -64,7 +64,7 @@ public class Language extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setLangId(Utility.getUidFor(langId));
+        setLangId(Helper.getUidFor(langId));
     }
 
     @PreUpdate

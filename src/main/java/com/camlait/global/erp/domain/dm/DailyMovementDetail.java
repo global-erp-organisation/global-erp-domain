@@ -22,7 +22,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.product.Product;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -116,7 +116,7 @@ public class DailyMovementDetail extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setDmdId(Utility.getUidFor(dmdId));
+        setDmdId(Helper.getUidFor(dmdId));
         buildTaxes();
     }
 

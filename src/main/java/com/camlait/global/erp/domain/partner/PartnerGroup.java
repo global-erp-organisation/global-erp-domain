@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -52,7 +52,7 @@ public class PartnerGroup extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setPartnerGroupId(Utility.getUidFor(partnerGroupId));
+        setPartnerGroupId(Helper.getUidFor(partnerGroupId));
     }
 
     @PreUpdate

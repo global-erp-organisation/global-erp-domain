@@ -27,7 +27,7 @@ import com.camlait.global.erp.domain.localization.Center;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.regulation.RegulationModel;
 import com.camlait.global.erp.domain.tarif.Tariff;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -110,7 +110,7 @@ public abstract class Partner extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setPartnerId(Utility.getUidFor(partnerId));
+        setPartnerId(Helper.getUidFor(partnerId));
     }
 
     @PreUpdate

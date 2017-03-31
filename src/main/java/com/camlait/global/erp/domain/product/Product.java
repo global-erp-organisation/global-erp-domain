@@ -30,7 +30,7 @@ import com.camlait.global.erp.domain.localization.Localization;
 import com.camlait.global.erp.domain.tarif.PriceType;
 import com.camlait.global.erp.domain.tarif.Tariff;
 import com.camlait.global.erp.domain.tarif.Tariffication;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -119,7 +119,7 @@ public class Product extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setProductId(Utility.getUidFor(productId));
+        setProductId(Helper.getUidFor(productId));
     }
 
     @PreUpdate

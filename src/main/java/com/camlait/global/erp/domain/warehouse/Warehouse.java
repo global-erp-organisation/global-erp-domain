@@ -20,7 +20,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.localization.Center;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -80,7 +80,7 @@ public class Warehouse extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setWarehouseId(Utility.getUidFor(warehouseId));
+        setWarehouseId(Helper.getUidFor(warehouseId));
     }
 
     @PreUpdate

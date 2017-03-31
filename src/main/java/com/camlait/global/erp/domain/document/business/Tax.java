@@ -17,7 +17,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.product.ProductCategory;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.common.collect.Sets;
 
@@ -69,7 +69,7 @@ public class Tax extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setTaxId(Utility.getUidFor(taxId));
+        setTaxId(Helper.getUidFor(taxId));
     }
 
     @PreUpdate

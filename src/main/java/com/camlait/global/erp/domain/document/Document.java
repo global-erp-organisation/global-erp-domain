@@ -34,7 +34,7 @@ import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.exception.DataStorageException;
 import com.camlait.global.erp.domain.inventory.Inventory;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -141,7 +141,7 @@ public abstract class Document extends BaseEntity {
     @PrePersist
     private void setKey() {
         if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
-            setDocumentId(Utility.getUidFor(documentId));
+            setDocumentId(Helper.getUidFor(documentId));
         } else {
             throw new DataStorageException("Unable to store a document with no detail.");
         }

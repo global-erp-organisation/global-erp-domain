@@ -26,7 +26,7 @@ import com.camlait.global.erp.domain.exception.DataValidationException;
 import com.camlait.global.erp.domain.operation.Recovery;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Seller;
-import com.camlait.global.erp.domain.util.Utility;
+import com.camlait.global.erp.domain.util.Helper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -104,7 +104,7 @@ public class DailyMovement extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setDmId(Utility.getUidFor(dmId));
+        setDmId(Helper.getUidFor(dmId));
         final List<String> errors = Lists.newArrayList();
         if (!errors.isEmpty()) {
             throw new DataValidationException(Joiner.on("\n").join(errors));
