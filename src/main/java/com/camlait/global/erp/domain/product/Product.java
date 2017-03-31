@@ -76,10 +76,10 @@ public class Product extends BaseEntity {
     @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Tax> taxes = Sets.newHashSet();
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     private boolean stockFollowing;
@@ -120,6 +120,8 @@ public class Product extends BaseEntity {
     @PrePersist
     private void setKey() {
         setProductId(Helper.getUidFor(productId));
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

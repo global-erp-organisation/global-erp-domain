@@ -79,10 +79,10 @@ public abstract class Document extends BaseEntity {
     @JoinColumn(name = "workerId")
     private Employee documentWorker;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @Enumerated(EnumType.STRING)
@@ -140,6 +140,8 @@ public abstract class Document extends BaseEntity {
 
     @PrePersist
     private void setKey() {
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
         if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
             setDocumentId(Helper.getUidFor(documentId));
         } else {

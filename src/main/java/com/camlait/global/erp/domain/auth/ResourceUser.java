@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -56,10 +57,10 @@ public class ResourceUser extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private State state;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public ResourceUser(User user, Resource resource, State state) {
@@ -70,6 +71,12 @@ public class ResourceUser extends BaseEntity {
     }
 
     public ResourceUser() {
+    }
+
+    @PrePersist
+    private void prePersist(){
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

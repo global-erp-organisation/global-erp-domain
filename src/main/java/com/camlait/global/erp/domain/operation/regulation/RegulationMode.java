@@ -36,10 +36,10 @@ public abstract class RegulationMode extends BaseEntity {
 
     private String regulationModeDescription;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public RegulationMode() {
@@ -48,6 +48,8 @@ public abstract class RegulationMode extends BaseEntity {
     @PrePersist
     private void setKey() {
         setRegulationModeId(Helper.getUidFor(regulationModeId));
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

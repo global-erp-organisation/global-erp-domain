@@ -40,9 +40,9 @@ public class PartnerGroup extends BaseEntity {
     @OneToMany(mappedBy = "partnerGroup")
     private Collection<Partner> partners = Sets.newHashSet();
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
 
@@ -53,6 +53,8 @@ public class PartnerGroup extends BaseEntity {
     @PrePersist
     private void setKey() {
         setPartnerGroupId(Helper.getUidFor(partnerGroupId));
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

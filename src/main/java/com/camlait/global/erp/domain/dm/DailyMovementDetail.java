@@ -63,10 +63,10 @@ public class DailyMovementDetail extends BaseEntity {
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @Transient
@@ -117,6 +117,8 @@ public class DailyMovementDetail extends BaseEntity {
     @PrePersist
     private void setKey() {
         setDmdId(Helper.getUidFor(dmdId));
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
         buildTaxes();
     }
 

@@ -57,10 +57,10 @@ public class Warehouse extends BaseEntity {
     @JoinColumn(name = "centreId")
     private Center centre;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @Transient
@@ -81,6 +81,8 @@ public class Warehouse extends BaseEntity {
     @PrePersist
     private void setKey() {
         setWarehouseId(Helper.getUidFor(warehouseId));
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

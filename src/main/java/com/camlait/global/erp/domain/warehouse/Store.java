@@ -61,11 +61,11 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "warehouseId")
     private Warehouse warehouse;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdateddate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    private Date lastUpdatedDate;
 
     @Enumerated(EnumType.STRING)
     private OtherEnum storeType;
@@ -84,11 +84,13 @@ public class Store extends BaseEntity {
     @PrePersist
     private void setKey() {
         setStoreId(Helper.getUidFor(storeId));
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
     private void preUpdate() {
-        setLastUpdateddate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -33,7 +34,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`tarif-tarifications`")
 @IdClass(value = TarifficationKey.class)
 public class Tariffication extends BaseEntity {
-   
+
     @Transient
     private String zoneId;
 
@@ -60,7 +61,7 @@ public class Tariffication extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "tarifId")
     private Tariff tarif;
-    
+
     @Transient
     private String priceTypeId;
 
@@ -69,21 +70,27 @@ public class Tariffication extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "priceTypeId")
     private PriceType priceType;
-    
+
     private Double value;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
-    
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedate;
+
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    private Date lastUpdatedDate;
 
     public Tariffication() {
     }
 
+    @PrePersist
+    private void prePersist() {
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
+    }
+
     @PreUpdate
     private void preUpdate() {
-        setLastUpdatedate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override

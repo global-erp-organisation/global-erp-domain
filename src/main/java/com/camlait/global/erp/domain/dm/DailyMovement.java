@@ -86,11 +86,11 @@ public class DailyMovement extends BaseEntity {
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<DailyMovementDetail> dailyMovementDetails = Sets.newHashSet();
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdateddate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    private Date lastUpdatedDate;
 
     private boolean bmqClos;
 
@@ -105,6 +105,9 @@ public class DailyMovement extends BaseEntity {
     @PrePersist
     private void setKey() {
         setDmId(Helper.getUidFor(dmId));
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
+
         final List<String> errors = Lists.newArrayList();
         if (!errors.isEmpty()) {
             throw new DataValidationException(Joiner.on("\n").join(errors));
@@ -113,7 +116,7 @@ public class DailyMovement extends BaseEntity {
 
     @PreUpdate
     private void preUpdate() {
-        setLastUpdateddate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override

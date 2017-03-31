@@ -79,10 +79,10 @@ public class DocumentDetails extends BaseEntity {
     @JoinColumn(name = "documentId")
     private Document document;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @Enumerated(EnumType.STRING)
@@ -108,6 +108,8 @@ public class DocumentDetails extends BaseEntity {
 
     @PrePersist
     private void setKey() {
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
         if (isStorable()) {
             setDocDetailId(Helper.getUidFor(docDetailId));
             buildTaxes();

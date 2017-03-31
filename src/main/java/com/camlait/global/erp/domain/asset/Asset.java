@@ -38,11 +38,11 @@ public abstract class Asset extends BaseEntity {
 
     private Date commissioningDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdateddate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    private Date lastUpdatedDate;
 
     private String assetDescription;
 
@@ -52,11 +52,13 @@ public abstract class Asset extends BaseEntity {
     @PrePersist
     private void setKey() {
         setAssetId(Helper.getUidFor(assetId));
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
     private void preUpdate() {
-        setLastUpdateddate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @Override

@@ -67,10 +67,10 @@ public class ProductCategory extends BaseEntity {
 
     private boolean stockFollowing;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @JsonManagedReference
@@ -112,6 +112,8 @@ public class ProductCategory extends BaseEntity {
     private void setKey() {
         setProductcategoryId(Helper.getUidFor(productcategoryId));
         setParentCategoryId(parentCategory != null ? parentCategory.getParentCategoryId() : null);
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate

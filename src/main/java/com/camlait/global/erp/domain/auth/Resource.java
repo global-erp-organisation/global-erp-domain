@@ -51,10 +51,10 @@ public class Resource extends BaseEntity {
 
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     private String icon;
@@ -63,7 +63,7 @@ public class Resource extends BaseEntity {
 
     private String href;
 
-    private Integer order;
+    private Integer resourceOrder;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "parentResource")
@@ -101,6 +101,8 @@ public class Resource extends BaseEntity {
     @PrePersist
     private void setKey() {
         setResourceId(Helper.getUidFor(resourceId));
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
     }
 
     @PreUpdate
