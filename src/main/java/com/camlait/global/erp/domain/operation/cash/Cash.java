@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -47,10 +47,10 @@ public class Cash extends BaseEntity {
     @JoinColumn(name = "workerId")
     private Employee worker;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public Cash() {
@@ -58,7 +58,7 @@ public class Cash extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setCashId(Helper.getUidFor(cashId));
+        setCashId(EntityHelper.getUidFor(cashId));
     }
 
     @PreUpdate

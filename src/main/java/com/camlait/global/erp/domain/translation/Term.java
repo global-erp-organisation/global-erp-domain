@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -38,9 +38,9 @@ public class Term extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String termDescription;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @JsonManagedReference
@@ -53,7 +53,7 @@ public class Term extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setTermId(Helper.getUidFor(termId));
+        setTermId(EntityHelper.getUidFor(termId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

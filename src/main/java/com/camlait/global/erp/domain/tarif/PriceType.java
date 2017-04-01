@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,9 +31,9 @@ public class PriceType extends BaseEntity {
 
     private String description;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public PriceType() {
@@ -41,7 +41,7 @@ public class PriceType extends BaseEntity {
 
     @PrePersist
     private void prePersist() {
-        setPriceTypeId(Helper.getUidFor(priceTypeId));
+        setPriceTypeId(EntityHelper.getUidFor(priceTypeId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

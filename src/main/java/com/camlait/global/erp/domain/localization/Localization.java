@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,10 +39,10 @@ public  abstract class Localization extends BaseEntity {
 
     private String descriptionLocal;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @Enumerated(EnumType.STRING)
@@ -53,7 +53,7 @@ public  abstract class Localization extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setLocalId(Helper.getUidFor(localId));
+        setLocalId(EntityHelper.getUidFor(localId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

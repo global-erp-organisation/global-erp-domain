@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -47,9 +47,9 @@ public class Language extends BaseEntity {
     @OneToMany(mappedBy = "language", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Sets.newHashSet();
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public Language(String key, String title, String alt) {
@@ -64,7 +64,7 @@ public class Language extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setLangId(Helper.getUidFor(langId));
+        setLangId(EntityHelper.getUidFor(langId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

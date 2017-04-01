@@ -27,7 +27,7 @@ import com.camlait.global.erp.domain.localization.Center;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.regulation.RegulationModel;
 import com.camlait.global.erp.domain.tarif.Tariff;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -56,10 +56,10 @@ public abstract class Partner extends BaseEntity {
 
     private String phone;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @Enumerated(EnumType.STRING)
@@ -110,7 +110,7 @@ public abstract class Partner extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setPartnerId(Helper.getUidFor(partnerId));
+        setPartnerId(EntityHelper.getUidFor(partnerId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

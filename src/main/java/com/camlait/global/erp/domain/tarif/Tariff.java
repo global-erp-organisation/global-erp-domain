@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,9 +32,9 @@ public class Tariff extends BaseEntity {
 
     private String tariffDescription;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public Tariff() {
@@ -42,7 +42,7 @@ public class Tariff extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setTarifId(Helper.getUidFor(tarifId));
+        setTarifId(EntityHelper.getUidFor(tarifId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

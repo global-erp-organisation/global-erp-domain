@@ -34,7 +34,7 @@ import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.exception.DataStorageException;
 import com.camlait.global.erp.domain.inventory.Inventory;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -79,10 +79,10 @@ public abstract class Document extends BaseEntity {
     @JoinColumn(name = "workerId")
     private Employee documentWorker;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @Enumerated(EnumType.STRING)
@@ -143,7 +143,7 @@ public abstract class Document extends BaseEntity {
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
         if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
-            setDocumentId(Helper.getUidFor(documentId));
+            setDocumentId(EntityHelper.getUidFor(documentId));
         } else {
             throw new DataStorageException("Unable to store a document with no detail.");
         }

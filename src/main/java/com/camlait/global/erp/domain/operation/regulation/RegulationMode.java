@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,10 +36,10 @@ public abstract class RegulationMode extends BaseEntity {
 
     private String regulationModeDescription;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public RegulationMode() {
@@ -47,7 +47,7 @@ public abstract class RegulationMode extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setRegulationModeId(Helper.getUidFor(regulationModeId));
+        setRegulationModeId(EntityHelper.getUidFor(regulationModeId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

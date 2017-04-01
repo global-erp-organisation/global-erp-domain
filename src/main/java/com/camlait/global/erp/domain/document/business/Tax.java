@@ -17,7 +17,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.product.ProductCategory;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.common.collect.Sets;
 
@@ -47,10 +47,10 @@ public class Tax extends BaseEntity {
 
     private double percentageValue;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @JsonBackReference
@@ -69,7 +69,7 @@ public class Tax extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setTaxId(Helper.getUidFor(taxId));
+        setTaxId(EntityHelper.getUidFor(taxId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

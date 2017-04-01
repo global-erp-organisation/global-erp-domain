@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -51,10 +51,10 @@ public class Resource extends BaseEntity {
 
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     private String icon;
@@ -100,7 +100,7 @@ public class Resource extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setResourceId(Helper.getUidFor(resourceId));
+        setResourceId(EntityHelper.getUidFor(resourceId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

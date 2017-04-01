@@ -12,7 +12,7 @@ import javax.persistence.PreUpdate;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
 
@@ -40,9 +40,9 @@ public class Profession extends BaseEntity {
     @OneToMany(mappedBy = "profession")
     private Collection<Employee> employees = Sets.newHashSet();
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public Profession() {
@@ -51,7 +51,7 @@ public class Profession extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setProfessionId(Helper.getUidFor(professionId));
+        setProfessionId(EntityHelper.getUidFor(professionId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

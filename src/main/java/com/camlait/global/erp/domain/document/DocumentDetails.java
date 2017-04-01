@@ -34,7 +34,7 @@ import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.exception.DataStorageException;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.product.Product;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -79,10 +79,10 @@ public class DocumentDetails extends BaseEntity {
     @JoinColumn(name = "documentId")
     private Document document;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @Enumerated(EnumType.STRING)
@@ -111,7 +111,7 @@ public class DocumentDetails extends BaseEntity {
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
         if (isStorable()) {
-            setDocDetailId(Helper.getUidFor(docDetailId));
+            setDocDetailId(EntityHelper.getUidFor(docDetailId));
             buildTaxes();
         } else {
             throw new DataStorageException(unavailableProductMessage(this));

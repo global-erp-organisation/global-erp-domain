@@ -20,7 +20,7 @@ import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.partner.StoreOperator;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -87,10 +87,10 @@ public class Inventory extends BaseEntity {
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private Collection<InventoryDetail> inventoryDetails = Sets.newHashSet();
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public Inventory() {
@@ -98,7 +98,7 @@ public class Inventory extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setInventoryId(Helper.getUidFor(inventoryId));
+        setInventoryId(EntityHelper.getUidFor(inventoryId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

@@ -1,6 +1,6 @@
 package com.camlait.global.erp.domain;
 
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import static org.apache.commons.lang.reflect.FieldUtils.readField;
 
 import java.io.Serializable;
@@ -60,7 +60,7 @@ public abstract class BaseEntity implements Serializable {
      * @return
      */
     public <T extends BaseEntity> Boolean isTypeOf(@NonNull Class<T> clazz) {
-        return Helper.isTypeOf(this.getClass(), clazz);
+        return EntityHelper.isTypeOf(this.getClass(), clazz);
     }
 
     /**
@@ -93,7 +93,7 @@ public abstract class BaseEntity implements Serializable {
      */
     private Boolean canBeLazyInit(Field f) {
         final Boolean isAnnotated = Stream.of(f.getDeclaredAnnotations()).anyMatch(a -> {
-            return Helper.isTypeOf(a.annotationType(), ManyToMany.class) || Helper.isTypeOf(a.annotationType(), OneToMany.class);
+            return EntityHelper.isTypeOf(a.annotationType(), ManyToMany.class) || EntityHelper.isTypeOf(a.annotationType(), OneToMany.class);
         });
         final Boolean isACollection = Stream.of(f.getType().getInterfaces())
                 .anyMatch(c -> Collection.class.getName().equals(c.getName()));

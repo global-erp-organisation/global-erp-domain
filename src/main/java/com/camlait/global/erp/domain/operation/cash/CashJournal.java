@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -61,10 +61,10 @@ public class CashJournal extends BaseEntity {
     @OneToMany(mappedBy = "journal")
     private Collection<CashOperation> operations = Sets.newHashSet();
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public CashJournal() {
@@ -72,7 +72,7 @@ public class CashJournal extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setJournalId(Helper.getUidFor(journalId));
+        setJournalId(EntityHelper.getUidFor(journalId));
     }
 
     @PreUpdate

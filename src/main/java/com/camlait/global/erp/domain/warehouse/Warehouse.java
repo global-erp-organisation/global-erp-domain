@@ -20,7 +20,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.localization.Center;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -57,10 +57,10 @@ public class Warehouse extends BaseEntity {
     @JoinColumn(name = "centreId")
     private Center centre;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @Transient
@@ -80,7 +80,7 @@ public class Warehouse extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setWarehouseId(Helper.getUidFor(warehouseId));
+        setWarehouseId(EntityHelper.getUidFor(warehouseId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

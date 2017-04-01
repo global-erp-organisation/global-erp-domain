@@ -26,7 +26,7 @@ import com.camlait.global.erp.domain.exception.DataValidationException;
 import com.camlait.global.erp.domain.operation.Recovery;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Seller;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -86,10 +86,10 @@ public class DailyMovement extends BaseEntity {
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<DailyMovementDetail> dailyMovementDetails = Sets.newHashSet();
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     private boolean bmqClos;
@@ -104,7 +104,7 @@ public class DailyMovement extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setDmId(Helper.getUidFor(dmId));
+        setDmId(EntityHelper.getUidFor(dmId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
 

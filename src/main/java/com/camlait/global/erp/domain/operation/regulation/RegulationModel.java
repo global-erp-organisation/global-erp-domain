@@ -19,7 +19,7 @@ import com.camlait.global.erp.domain.enumeration.RegulationCondition;
 import com.camlait.global.erp.domain.partner.Partner;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.EvaluationMode;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
@@ -62,9 +62,9 @@ public class RegulationModel extends BaseEntity {
     @JoinColumn(name = "partnerId")
     private Partner partner;
     
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     public RegulationModel() {
@@ -73,7 +73,7 @@ public class RegulationModel extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setModeleId(Helper.getUidFor(modeleId));
+        setModeleId(EntityHelper.getUidFor(modeleId));
     }
 
     @PreUpdate

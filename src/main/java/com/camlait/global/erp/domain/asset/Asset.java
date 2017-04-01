@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,10 +38,10 @@ public abstract class Asset extends BaseEntity {
 
     private Date commissioningDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     private String assetDescription;
@@ -51,7 +51,7 @@ public abstract class Asset extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setAssetId(Helper.getUidFor(assetId));
+        setAssetId(EntityHelper.getUidFor(assetId));
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
     }

@@ -23,7 +23,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.Scope;
-import com.camlait.global.erp.domain.util.Helper;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Sets;
@@ -67,10 +67,10 @@ public class ProductCategory extends BaseEntity {
 
     private boolean stockFollowing;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
     @JsonManagedReference
@@ -110,7 +110,7 @@ public class ProductCategory extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setProductcategoryId(Helper.getUidFor(productcategoryId));
+        setProductcategoryId(EntityHelper.getUidFor(productcategoryId));
         setParentCategoryId(parentCategory != null ? parentCategory.getParentCategoryId() : null);
         setCreatedDate(new Date());
         setLastUpdatedDate(new Date());
