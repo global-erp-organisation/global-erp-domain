@@ -4,6 +4,11 @@ import java.util.UUID;
 
 import lombok.NonNull;
 
+/**
+ * Common Entity operations helper.
+ * 
+ * @author Martin Blaise Signe
+ */
 public final class EntityHelper {
 
     /**
@@ -17,7 +22,7 @@ public final class EntityHelper {
     }
 
     /**
-     * Verify if two classes are instances of the same class.
+     * Verify if two classes are instance of the same class.
      * 
      * @param first First object.
      * @param second Second object.

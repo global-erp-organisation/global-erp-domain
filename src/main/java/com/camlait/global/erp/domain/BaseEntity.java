@@ -1,6 +1,5 @@
 package com.camlait.global.erp.domain;
 
-import com.camlait.global.erp.domain.util.EntityHelper;
 import static org.apache.commons.lang.reflect.FieldUtils.readField;
 
 import java.io.Serializable;
@@ -16,6 +15,7 @@ import org.hibernate.Hibernate;
 
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.exception.LazyInitException;
+import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.util.MergeUtil;
 import com.camlait.global.erp.domain.util.SerializerUtil;
 
