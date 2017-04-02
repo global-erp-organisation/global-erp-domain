@@ -1,7 +1,6 @@
 package com.camlait.global.erp.domain.translation;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,14 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,12 +43,7 @@ public class Language extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "language", cascade = CascadeType.ALL)
-    private Collection<TermLanguage> termLanguages = Sets.newHashSet();
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
+    private Collection<TermLanguage> termLanguages = Lists.newArrayList();
 
     public Language(String key, String title, String alt) {
         super();
@@ -65,14 +58,7 @@ public class Language extends BaseEntity {
     @PrePersist
     private void setKey() {
         setLangId(EntityHelper.getUidFor(langId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
-    }
+     }
 
     @Override
     public void postConstructOperation() {

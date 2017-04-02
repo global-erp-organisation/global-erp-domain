@@ -14,7 +14,7 @@ import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.operation.missing.FinancialMissingOperation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,14 +38,14 @@ public class Seller extends Employee {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "seller")
-    private Collection<FinancialMissingOperation> financialMissings = Sets.newHashSet();
+    private Collection<FinancialMissingOperation> financialMissings = Lists.newArrayList();
 
     private boolean commissionable;
 
     private double commissionRate;
 
     public Seller() {
-        setPartnerType(PartnerType.VENDEUR);
+        setPartnerType(PartnerType.SELLER);
     }
 
     @Override

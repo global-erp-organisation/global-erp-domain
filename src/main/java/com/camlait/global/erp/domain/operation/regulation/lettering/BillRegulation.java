@@ -2,14 +2,11 @@ package com.camlait.global.erp.domain.operation.regulation.lettering;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -53,28 +50,11 @@ public class BillRegulation extends BaseEntity {
     @JoinColumn(name = "regulationId")
     private Regulation regulation;
 
-    private Date dateDeVentilation;
+    private Date distributionDate;
 
-    private Double montantVentile;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
+    private Double distributionValue;
 
     public BillRegulation() {
-    }
-
-    @PrePersist
-    private void prePersist() {
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

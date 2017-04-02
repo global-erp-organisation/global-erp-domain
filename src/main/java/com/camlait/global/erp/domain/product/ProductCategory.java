@@ -1,7 +1,6 @@
 package com.camlait.global.erp.domain.product;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +13,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -26,7 +24,7 @@ import com.camlait.global.erp.domain.enumeration.Scope;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,11 +39,11 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, exclude = {"taxes", "categoryChildren", "products"})
 @ToString(exclude = {"taxes", "categoryChildren", "products"})
 @Builder
-@Table(name = "`produit-category-products`")
+@Table(name = "`product-category-products`")
 public class ProductCategory extends BaseEntity {
 
     @Id
-    private String productcategoryId;
+    private String productCategoryId;
 
     @Transient
     private String parentCategoryId;
@@ -67,23 +65,17 @@ public class ProductCategory extends BaseEntity {
 
     private boolean stockFollowing;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     @JsonManagedReference
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
-    private Set<ProductCategory> categoryChildren = Sets.newHashSet();
+    private Collection<ProductCategory> categoryChildren = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private Set<Product> products = Sets.newHashSet();
+    private Collection<Product> products = Lists.newArrayList();
 
     @JsonManagedReference
     @ManyToMany(mappedBy = "productCategories", cascade = CascadeType.ALL)
-    private Set<Tax> taxes = Sets.newHashSet();
+    private Collection<Tax> taxes = Lists.newArrayList();
 
     public void setCategorieParent(ProductCategory categorieParent) {
         this.parentCategory = categorieParent;
@@ -102,7 +94,7 @@ public class ProductCategory extends BaseEntity {
     }
 
     private void copierTaxeParent(ProductCategory categorieParent) {
-        final Set<Tax> parentTaxes = categorieParent != null ? categorieParent.getTaxes() : null;
+        final Collection<Tax> parentTaxes = categorieParent != null ? categorieParent.getTaxes() : null;
         if (!CollectionUtils.isNullOrEmpty(parentTaxes) && (taxes.isEmpty())) {
             setTaxes(parentTaxes);
         }
@@ -110,15 +102,8 @@ public class ProductCategory extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setProductcategoryId(EntityHelper.getUidFor(productcategoryId));
-        setParentCategoryId(parentCategory != null ? parentCategory.getParentCategoryId() : null);
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
+        setProductCategoryId(EntityHelper.getUidFor(productCategoryId));
+        setParentCategoryId(parentCategory == null ? null : parentCategory.getParentCategoryId());
     }
 
     @Override

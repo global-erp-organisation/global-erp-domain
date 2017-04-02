@@ -1,7 +1,6 @@
 package com.camlait.global.erp.domain.warehouse;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -27,7 +25,7 @@ import com.camlait.global.erp.domain.inventory.StockCard;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -61,22 +59,16 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "warehouseId")
     private Warehouse warehouse;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     @Enumerated(EnumType.STRING)
     private OtherEnum storeType;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private Collection<Stock> stocks = Sets.newHashSet();
+    private Collection<Stock> stocks = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private Collection<StockCard> stockCards = Sets.newHashSet();
+    private Collection<StockCard> stockCards = Lists.newArrayList();
 
     public Store() {
     }
@@ -84,13 +76,6 @@ public class Store extends BaseEntity {
     @PrePersist
     private void setKey() {
         setStoreId(EntityHelper.getUidFor(storeId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

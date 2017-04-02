@@ -16,7 +16,7 @@ import com.camlait.global.erp.domain.partner.Client;
 import com.camlait.global.erp.domain.tarif.Tariffication;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,15 +40,15 @@ public class Zone extends Localization {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "zone")
-    private Collection<SaleDocument> documents = Sets.newHashSet();
+    private Collection<SaleDocument> documents = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "zone")
-    private Collection<Client> clients = Sets.newHashSet();
+    private Collection<Client> clients = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "zone")
-    private Collection<Tariffication> tarifications = Sets.newHashSet();
+    private Collection<Tariffication> tarifications = Lists.newArrayList();
 
     public Zone() {
         setTypeLocal(OtherEnum.ZONE);

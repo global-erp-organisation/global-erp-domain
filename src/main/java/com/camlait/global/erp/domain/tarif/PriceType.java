@@ -1,12 +1,8 @@
 package com.camlait.global.erp.domain.tarif;
 
-import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
@@ -31,24 +27,12 @@ public class PriceType extends BaseEntity {
 
     private String description;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     public PriceType() {
     }
 
     @PrePersist
     private void prePersist() {
         setPriceTypeId(EntityHelper.getUidFor(priceTypeId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

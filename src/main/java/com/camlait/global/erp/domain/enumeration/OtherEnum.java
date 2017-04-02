@@ -3,13 +3,13 @@ package com.camlait.global.erp.domain.enumeration;
 public enum OtherEnum implements EnumTypeEntitity {
     INVENTAIRE("INV"),
     BMQ("BMQ"),
-    CENTRE("C"),
+    CENTER("C"),
     REGION("R"),
-    SECTEUR("S"),
+    SECTOR("S"),
     ZONE("Z"),
-    MAGASIN_MOBILE("MM"),
-    MAGASIN_FIXE("MF"),
-    ENTREPOT ("EN");
+    LAND_STORE("MM"),
+    MOBILE_STORE("MF"),
+    WAREHOUSE("EN");
     private final String type;
     
     private OtherEnum(String type) {

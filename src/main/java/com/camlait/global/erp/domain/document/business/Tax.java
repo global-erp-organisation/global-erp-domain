@@ -1,17 +1,17 @@
 package com.camlait.global.erp.domain.document.business;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
@@ -19,7 +19,6 @@ import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.product.ProductCategory;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,21 +46,17 @@ public class Tax extends BaseEntity {
 
     private double percentageValue;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
+    @JsonBackReference
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "`product-product-taxes`", joinColumns = {@JoinColumn(name = "`product-id`")}, inverseJoinColumns = {@JoinColumn(name = "`tax-id`")}
+    ,uniqueConstraints = @UniqueConstraint(columnNames = {"`product-id`", "`tax-id`"}))
+    private Collection<Product> products;
 
     @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "`product-product-taxes`")
-    private Collection<Product> products = Sets.newHashSet();
-
-    @JsonBackReference
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "`product-category-product-taxes`")
-    private Collection<ProductCategory> productCategories = Sets.newHashSet();
+    @JoinTable(name = "`product-category-product-taxes`", joinColumns = {@JoinColumn(name = "`product-category-id`")}, inverseJoinColumns = {@JoinColumn(name = "`tax-id`")}
+    ,uniqueConstraints = @UniqueConstraint(columnNames = {"`product-category-id`", "`tax-id`"}))
+    private Collection<ProductCategory> productCategories ;
 
  
     public Tax() {
@@ -70,14 +65,7 @@ public class Tax extends BaseEntity {
     @PrePersist
     private void setKey() {
         setTaxId(EntityHelper.getUidFor(taxId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
-    }
+     }
 
     @Override
     public void postConstructOperation() {

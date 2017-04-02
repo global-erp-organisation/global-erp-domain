@@ -1,17 +1,14 @@
 package com.camlait.global.erp.domain.auth;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -20,7 +17,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,12 +48,6 @@ public class Resource extends BaseEntity {
 
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     private String icon;
 
     private String sref;
@@ -67,15 +58,15 @@ public class Resource extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "parentResource")
-    private Collection<Resource> items = Sets.newHashSet();
+    private Collection<Resource> items = Lists.newArrayList();
 
-    @JsonManagedReference(value="resource")
+    @JsonManagedReference(value = "resource")
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
-    private Collection<ResourceGroup> resourceGroups = Sets.newHashSet();
+    private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
-    private Collection<ResourceUser> resourceUsers = Sets.newHashSet();
+    private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 
     public Resource() {
     }
@@ -101,13 +92,6 @@ public class Resource extends BaseEntity {
     @PrePersist
     private void setKey() {
         setResourceId(EntityHelper.getUidFor(resourceId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override
@@ -117,6 +101,6 @@ public class Resource extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return null;
+        return null;
     }
 }

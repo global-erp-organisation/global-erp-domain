@@ -13,7 +13,7 @@ import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.regulation.lettering.BillRegulation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +31,7 @@ public class Regulation extends Operation {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "regulation")
-    private Collection<BillRegulation> billRegulations = Sets.newHashSet();
+    private Collection<BillRegulation> billRegulations = Lists.newArrayList();
 
     @Transient
     private String regulationModeId;

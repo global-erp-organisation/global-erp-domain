@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
@@ -38,12 +37,6 @@ public abstract class Asset extends BaseEntity {
 
     private Date commissioningDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     private String assetDescription;
 
     public Asset() {
@@ -52,13 +45,6 @@ public abstract class Asset extends BaseEntity {
     @PrePersist
     private void setKey() {
         setAssetId(EntityHelper.getUidFor(assetId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

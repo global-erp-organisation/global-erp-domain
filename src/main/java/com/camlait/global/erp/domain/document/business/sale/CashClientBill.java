@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 public class CashClientBill extends ClientBill {
 
     public CashClientBill() {
-        setDocumentType(DocumentType.FACTURE_COMPTANT);
+        setDocumentType(DocumentType.CASH_BILL);
     }
 
     public static Document createHeaderFromBmq(DailyMovement dailyMovement) {
@@ -38,6 +38,6 @@ public class CashClientBill extends ClientBill {
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.FACTURE_COMPTANT;
+         return DocumentType.CASH_BILL;
     }
 }

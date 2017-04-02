@@ -35,7 +35,7 @@ public class StagingDocument extends StockDocument {
 
     public StagingDocument() {
         setOperationDirection(OperationDirection.STAGING);
-        setDocumentType(DocumentType.TRANSFERT);
+        setDocumentType(DocumentType.STAGING_DOCUMENT);
     }
 
     @Override
@@ -49,6 +49,6 @@ public class StagingDocument extends StockDocument {
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.TRANSFERT;
+         return DocumentType.STAGING_DOCUMENT;
     }
 }

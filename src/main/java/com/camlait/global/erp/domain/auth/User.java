@@ -1,26 +1,25 @@
 package com.camlait.global.erp.domain.auth;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,23 +44,18 @@ public class User extends BaseEntity {
 
     @Transient
     private String password;
-    
-    private String encryptPassword;
-    
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
+    private String encryptPassword;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
-    private Collection<ResourceUser> resourceUsers = Sets.newHashSet();
+    private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 
     @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "`auth-groupe-users`")
-    private Collection<Group> groups = Sets.newHashSet();
+    @JoinTable(name = "`auth-groupe-users`", joinColumns = {@JoinColumn(name = "`group-id`")}, inverseJoinColumns = {@JoinColumn(name = "`user-id`")},
+               uniqueConstraints = @UniqueConstraint(columnNames = {"`group-id`", "`user-id`"}))
+    private Collection<Group> groups = Lists.newArrayList();
 
     public User() {
     }
@@ -81,18 +75,6 @@ public class User extends BaseEntity {
                 resourceUsers.addAll(ru);
             });
         }
-    }
-
-
-    @PrePersist
-    private void prePersist(){
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

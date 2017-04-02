@@ -14,7 +14,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +38,7 @@ public class Region extends Localization {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "region", fetch = FetchType.EAGER)
-    private Collection<Sector> secteurs = Sets.newHashSet();
+    private Collection<Sector> secteurs = Lists.newArrayList();
 
     public Region() {
         setTypeLocal(OtherEnum.REGION);

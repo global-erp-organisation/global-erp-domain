@@ -15,11 +15,11 @@ public class InDocument extends StockDocument {
 
     public InDocument() {
         setOperationDirection(OperationDirection.IN);
-        setDocumentType(DocumentType.DOCUMENT_ENTREE);
+        setDocumentType(DocumentType.IN_DOCUMENT);
     }
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.DOCUMENT_ENTREE;
+         return DocumentType.IN_DOCUMENT;
     }
 }

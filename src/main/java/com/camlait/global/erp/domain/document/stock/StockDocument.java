@@ -18,11 +18,11 @@ import lombok.EqualsAndHashCode;
 public class StockDocument extends Document {
 
     public StockDocument() {
-        setDocumentType(DocumentType.DOCUMENT_DE_STOCK);
+        setDocumentType(DocumentType.STOCK_DOCUMENT);
     }
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.DOCUMENT_DE_STOCK;
+         return DocumentType.STOCK_DOCUMENT;
     }
 }

@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -24,7 +23,7 @@ import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -81,17 +80,11 @@ public class Inventory extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
-    private Collection<Document> documents = Sets.newHashSet();
+    private Collection<Document> documents = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
-    private Collection<InventoryDetail> inventoryDetails = Sets.newHashSet();
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
+    private Collection<InventoryDetail> inventoryDetails = Lists.newArrayList();
 
     public Inventory() {
     }
@@ -99,13 +92,6 @@ public class Inventory extends BaseEntity {
     @PrePersist
     private void setKey() {
         setInventoryId(EntityHelper.getUidFor(inventoryId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

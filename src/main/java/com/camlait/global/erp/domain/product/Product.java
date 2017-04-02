@@ -1,22 +1,18 @@
 package com.camlait.global.erp.domain.product;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -34,7 +30,7 @@ import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -73,34 +69,31 @@ public class Product extends BaseEntity {
     private Double defaultUnitprice;
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Tax> taxes = Sets.newHashSet();
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
+    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    private Collection<Tax> taxes = Lists.newArrayList();
 
     private boolean stockFollowing;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Stock> stocks = Sets.newHashSet();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Collection<Stock> stocks = Lists.newArrayList();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<StockCard> stockCards = Sets.newHashSet();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Collection<StockCard> stockCards = Lists.newArrayList();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Tariffication> tarifications = Sets.newHashSet();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Collection<Tariffication> tarifications = Lists.newArrayList();
 
     public Product() {
     }
 
     public Long availableQuantity(Store m) {
-        return this.getStocks().stream().filter(s -> s.getStore().getStoreId().equals(m.getStoreId())).mapToLong(s -> s.getAvailableQuantity()).sum();
+        return this.getStocks().stream()
+                .filter(s -> s.getStore().getStoreId().equals(m.getStoreId()))
+                .mapToLong(s -> s.getAvailableQuantity())
+                .sum();
     }
 
     public Boolean isAvailable(Store m, Long quantiteVoulue) {
@@ -120,18 +113,11 @@ public class Product extends BaseEntity {
     @PrePersist
     private void setKey() {
         setProductId(EntityHelper.getUidFor(productId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override
     public void postConstructOperation() {
-        setProductCategoryId(category.getProductcategoryId());
+        setProductCategoryId(category.getProductCategoryId());
     }
 
      /**

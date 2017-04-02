@@ -1,7 +1,6 @@
 package com.camlait.global.erp.domain.partner;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -30,7 +28,7 @@ import com.camlait.global.erp.domain.tarif.Tariff;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -56,12 +54,6 @@ public abstract class Partner extends BaseEntity {
 
     private String phone;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     @Enumerated(EnumType.STRING)
     private PartnerType partnerType;
 
@@ -75,15 +67,15 @@ public abstract class Partner extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "client")
-    private Collection<SaleDocument> documents = Sets.newHashSet();
+    private Collection<SaleDocument> documents = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "asset")
-    private Collection<PartnerAsset> partnerAssets = Sets.newHashSet();
+    private Collection<PartnerAsset> partnerAssets = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "partner")
-    private Collection<Operation> operations = Sets.newHashSet();
+    private Collection<Operation> operations = Lists.newArrayList();
 
     @Transient
     private String partnerGroupId;
@@ -103,7 +95,7 @@ public abstract class Partner extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "partner")
-    private Collection<RegulationModel> regulationModels = Sets.newHashSet();
+    private Collection<RegulationModel> regulationModels = Lists.newArrayList();
 
     public Partner() {
     }
@@ -111,13 +103,6 @@ public abstract class Partner extends BaseEntity {
     @PrePersist
     private void setKey() {
         setPartnerId(EntityHelper.getUidFor(partnerId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

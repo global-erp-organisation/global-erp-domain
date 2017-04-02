@@ -1,8 +1,5 @@
 package com.camlait.global.erp.domain.operation.regulation;
 
-import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,15 +7,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.BaseEntity;
-import com.camlait.global.erp.domain.enumeration.RegulationCondition;
-import com.camlait.global.erp.domain.partner.Partner;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.EvaluationMode;
+import com.camlait.global.erp.domain.enumeration.RegulationCondition;
+import com.camlait.global.erp.domain.partner.Partner;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -61,11 +57,6 @@ public class RegulationModel extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "partnerId")
     private Partner partner;
-    
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
 
     public RegulationModel() {
         super();
@@ -74,11 +65,6 @@ public class RegulationModel extends BaseEntity {
     @PrePersist
     private void setKey() {
         setModeleId(EntityHelper.getUidFor(modeleId));
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

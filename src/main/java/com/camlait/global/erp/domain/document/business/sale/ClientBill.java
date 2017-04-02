@@ -11,7 +11,7 @@ import com.camlait.global.erp.domain.enumeration.DocumentType;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.operation.regulation.lettering.BillRegulation;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,14 +29,14 @@ public class ClientBill extends SaleDocument {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
-    private Collection<BillRegulation> billRegulations = Sets.newHashSet();
+    private Collection<BillRegulation> billRegulations = Lists.newArrayList();
 
     public ClientBill() {
-        setDocumentType(DocumentType.FACTURE_CLIENT);
+        setDocumentType(DocumentType.CLIENT_BILL);
     }
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.FACTURE_CLIENT;
+         return DocumentType.CLIENT_BILL;
     }
 }

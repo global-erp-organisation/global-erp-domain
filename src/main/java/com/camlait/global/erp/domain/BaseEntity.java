@@ -5,11 +5,17 @@ import static org.apache.commons.lang.reflect.FieldUtils.readField;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.Column;
 import javax.persistence.ManyToMany;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Version;
 
 import org.hibernate.Hibernate;
 
@@ -19,6 +25,8 @@ import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.util.MergeUtil;
 import com.camlait.global.erp.domain.util.SerializerUtil;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 
 /**
@@ -27,7 +35,18 @@ import lombok.NonNull;
  * @author Martin Blaise Signe
  */
 @SuppressWarnings({"serial", "unchecked"})
+@MappedSuperclass
+@Data
+@EqualsAndHashCode(callSuper = false)
 public abstract class BaseEntity implements Serializable {
+
+    @Version
+    private Integer version;
+
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createdDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date lastUpdatedDate;
 
     /**
      * Help to perform all the post constructor operations.
@@ -70,9 +89,7 @@ public abstract class BaseEntity implements Serializable {
      * @return The current entity after lazy initialized collections.
      */
     public <T extends BaseEntity> T lazyInit() {
-        Stream.of(this.getClass().getDeclaredFields())
-        .filter(this::canBeLazyInit)
-        .forEach(f -> Hibernate.initialize(getFieldValue(f)));
+        Stream.of(this.getClass().getDeclaredFields()).filter(this::canBeLazyInit).forEach(f -> Hibernate.initialize(getFieldValue(f)));
         return (T) this;
     }
 
@@ -95,8 +112,7 @@ public abstract class BaseEntity implements Serializable {
         final Boolean isAnnotated = Stream.of(f.getDeclaredAnnotations()).anyMatch(a -> {
             return EntityHelper.isTypeOf(a.annotationType(), ManyToMany.class) || EntityHelper.isTypeOf(a.annotationType(), OneToMany.class);
         });
-        final Boolean isACollection = Stream.of(f.getType().getInterfaces())
-                .anyMatch(c -> Collection.class.getName().equals(c.getName()));
+        final Boolean isACollection = Stream.of(f.getType().getInterfaces()).anyMatch(c -> Collection.class.getName().equals(c.getName()));
         return isACollection && isAnnotated;
     }
 
@@ -113,4 +129,16 @@ public abstract class BaseEntity implements Serializable {
             throw new LazyInitException("Unable to get the field value. Field name: " + f.getName());
         }
     }
-  }
+
+    @PrePersist
+    private void prePersist() {
+        setCreatedDate(new Date());
+        setLastUpdatedDate(new Date());
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        setLastUpdatedDate(new Date());
+    }
+
+}

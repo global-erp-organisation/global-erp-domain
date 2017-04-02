@@ -17,11 +17,11 @@ import lombok.EqualsAndHashCode;
 public class MargingBill extends ClientBill {
 
     public MargingBill() {
-        setDocumentType(DocumentType.FACTURE_MARGE);
+        setDocumentType(DocumentType.MARGIN_BILL);
     }
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.FACTURE_MARGE;
+         return DocumentType.MARGIN_BILL;
     }
 }

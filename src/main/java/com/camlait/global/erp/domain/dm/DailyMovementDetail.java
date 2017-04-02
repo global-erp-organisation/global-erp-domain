@@ -1,12 +1,9 @@
 package com.camlait.global.erp.domain.dm;
 
 import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -14,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -25,7 +21,7 @@ import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,12 +59,6 @@ public class DailyMovementDetail extends BaseEntity {
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     @Transient
     private String documentId;
 
@@ -79,7 +69,7 @@ public class DailyMovementDetail extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "dailyMovementDetail", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<DailyMovmentDetailTax> dailyMovmentDetailTaxes = Sets.newHashSet();
+    private Collection<DailyMovmentDetailTax> dailyMovmentDetailTaxes = Lists.newArrayList();
 
     public DailyMovementDetail() {
     }
@@ -117,14 +107,7 @@ public class DailyMovementDetail extends BaseEntity {
     @PrePersist
     private void setKey() {
         setDmdId(EntityHelper.getUidFor(dmdId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
         buildTaxes();
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

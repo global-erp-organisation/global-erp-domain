@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -32,7 +31,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -76,22 +74,15 @@ public class DailyMovement extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "dailyMovement")
-    private Collection<Document> documents = Sets.newHashSet();
+    private Collection<Document> documents = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "dailyMovement")
-    private Collection<Recovery> recoveries = Sets.newHashSet();
+    private Collection<Recovery> recoveries = Lists.newArrayList();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "dailyMovement")
-    private Collection<DailyMovementDetail> dailyMovementDetails = Sets.newHashSet();
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
+    private Collection<DailyMovementDetail> dailyMovementDetails = Lists.newArrayList();
     private boolean bmqClos;
 
     @ManyToOne
@@ -105,18 +96,10 @@ public class DailyMovement extends BaseEntity {
     @PrePersist
     private void setKey() {
         setDmId(EntityHelper.getUidFor(dmId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-
         final List<String> errors = Lists.newArrayList();
         if (!errors.isEmpty()) {
             throw new DataValidationException(Joiner.on("\n").join(errors));
         }
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override
@@ -145,7 +128,7 @@ public class DailyMovement extends BaseEntity {
                                 .build();
                     }).collect(Collectors.toSet());
                 }).findFirst();
-        setDailyMovementDetails(lines.isPresent() ? lines.get() : Sets.newHashSet());
+        setDailyMovementDetails(lines.isPresent() ? lines.get() : Lists.newArrayList());
         return this;
     }
 

@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.camlait.global.erp.domain.inventory.Inventory;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,10 +25,10 @@ public class StoreOperator extends Employee {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "outgoingWarehouser")
-    private Collection<Inventory> inventories = Sets.newHashSet();
+    private Collection<Inventory> inventories = Lists.newArrayList();
 
     public StoreOperator() {
-        setPartnerType(PartnerType.MAGASINIER);
+        setPartnerType(PartnerType.STORE_OPERATOR);
     }
 
 }

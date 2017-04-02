@@ -1,20 +1,18 @@
 package com.camlait.global.erp.domain.partner;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,12 +36,7 @@ public class Profession extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "profession")
-    private Collection<Employee> employees = Sets.newHashSet();
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
+    private Collection<Employee> employees = Lists.newArrayList();
 
     public Profession() {
         super();
@@ -52,13 +45,6 @@ public class Profession extends BaseEntity {
     @PrePersist
     private void setKey() {
         setProfessionId(EntityHelper.getUidFor(professionId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

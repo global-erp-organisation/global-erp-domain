@@ -46,7 +46,7 @@ public class SaleDocument extends BusinessDocument {
 
     public SaleDocument() {
         setOperationDirection(OperationDirection.OUT);
-        setDocumentType(DocumentType.DOCUMENT_DE_VENTE);
+        setDocumentType(DocumentType.SALE_DOCUMENT);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SaleDocument extends BusinessDocument {
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.DOCUMENT_DE_VENTE;
+         return DocumentType.SALE_DOCUMENT;
     }
 
 

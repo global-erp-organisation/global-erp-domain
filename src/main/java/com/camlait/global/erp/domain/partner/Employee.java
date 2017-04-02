@@ -60,7 +60,7 @@ public class Employee extends Partner {
     private Sex sex;
 
     public Employee() {
-        setPartnerType(PartnerType.EMPLOYE);
+        setPartnerType(PartnerType.EMPLOYEE);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class Employee extends Partner {
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return PartnerType.EMPLOYE;
+         return PartnerType.EMPLOYEE;
     }
 
 }

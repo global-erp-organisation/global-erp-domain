@@ -17,11 +17,11 @@ import lombok.EqualsAndHashCode;
 public class CashClient extends Client {
 
     public CashClient() {
-        setPartnerType(PartnerType.CLIENT_COMPTANT);
+        setPartnerType(PartnerType.CASH_CLIENT);
     }
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return PartnerType.CLIENT_COMPTANT;
+         return PartnerType.CASH_CLIENT;
     }
 }

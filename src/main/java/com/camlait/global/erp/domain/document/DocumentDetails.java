@@ -2,13 +2,12 @@ package com.camlait.global.erp.domain.document;
 
 import static com.camlait.global.erp.domain.config.GlobalAppConstants.unavailableProductMessage;
 
-import java.util.Date;
+import java.util.Collection;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,7 +37,7 @@ import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -79,18 +78,12 @@ public class DocumentDetails extends BaseEntity {
     @JoinColumn(name = "documentId")
     private Document document;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     @Enumerated(EnumType.STRING)
     private OperationDirection operationDirection;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "documentDetails", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<DocumentDetailsTax> documentDetailsTaxes = Sets.newHashSet();
+    private Collection<DocumentDetailsTax> documentDetailsTaxes = Lists.newArrayList();
 
     @Transient
     @JsonIgnore
@@ -108,8 +101,6 @@ public class DocumentDetails extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
         if (isStorable()) {
             setDocDetailId(EntityHelper.getUidFor(docDetailId));
             buildTaxes();
@@ -120,8 +111,7 @@ public class DocumentDetails extends BaseEntity {
 
     @PreUpdate
     private void preUpdate() {
-        setLastUpdatedDate(new Date());
-        setOldRecord(this);
+         setOldRecord(this);
     }
 
     /**
@@ -131,7 +121,7 @@ public class DocumentDetails extends BaseEntity {
      */
     public DocumentDetails buildTaxes() {
         if (document != null && document.isBusinessDocument()) {
-            final Set<Tax> taxes = this.getProduct().getTaxes();
+            final Collection<Tax> taxes = this.getProduct().getTaxes();
             if (CollectionUtils.isNullOrEmpty(taxes)) {
                 final Set<DocumentDetailsTax> lt = taxes.stream().map(t -> {
                     return DocumentDetailsTax.builder()

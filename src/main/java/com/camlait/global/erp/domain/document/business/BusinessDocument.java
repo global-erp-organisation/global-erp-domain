@@ -31,7 +31,7 @@ public class BusinessDocument extends Document {
     private PriceType priceType;
 
     public BusinessDocument() {
-        setDocumentType(DocumentType.DOCUMENT_COMMERCIAUX);
+        setDocumentType(DocumentType.BUSINESS_DOCUMENT);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class BusinessDocument extends Document {
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.DOCUMENT_COMMERCIAUX;
+         return DocumentType.BUSINESS_DOCUMENT;
     }
 
 }

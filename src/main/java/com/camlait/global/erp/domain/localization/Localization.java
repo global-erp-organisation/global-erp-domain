@@ -1,7 +1,5 @@
 package com.camlait.global.erp.domain.localization;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
@@ -39,12 +36,6 @@ public  abstract class Localization extends BaseEntity {
 
     private String descriptionLocal;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     @Enumerated(EnumType.STRING)
     private OtherEnum typeLocal;
 
@@ -54,13 +45,6 @@ public  abstract class Localization extends BaseEntity {
     @PrePersist
     private void setKey() {
         setLocalId(EntityHelper.getUidFor(localId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

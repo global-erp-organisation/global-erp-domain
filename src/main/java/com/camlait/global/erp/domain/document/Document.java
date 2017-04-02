@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -38,7 +37,7 @@ import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -79,12 +78,6 @@ public abstract class Document extends BaseEntity {
     @JoinColumn(name = "workerId")
     private Employee documentWorker;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     @Enumerated(EnumType.STRING)
     private OperationDirection operationDirection;
 
@@ -106,7 +99,7 @@ public abstract class Document extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-    private Collection<DocumentDetails> documentDetails = Sets.newHashSet();
+    private Collection<DocumentDetails> documentDetails = Lists.newArrayList();
 
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
@@ -140,18 +133,11 @@ public abstract class Document extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
         if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
             setDocumentId(EntityHelper.getUidFor(documentId));
         } else {
             throw new DataStorageException("Unable to store a document with no detail.");
         }
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override

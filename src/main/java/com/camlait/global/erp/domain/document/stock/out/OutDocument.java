@@ -20,11 +20,11 @@ public class OutDocument extends StockDocument {
 
     public OutDocument() {
         setOperationDirection(OperationDirection.OUT);
-        setDocumentType(DocumentType.DOCUMENT_SORTIE);
+        setDocumentType(DocumentType.OUT_DOCUMENT);
     }
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.DOCUMENT_SORTIE;
+         return DocumentType.OUT_DOCUMENT;
     }
 }

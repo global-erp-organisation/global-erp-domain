@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,7 +18,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -59,13 +58,7 @@ public class CashJournal extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "journal")
-    private Collection<CashOperation> operations = Sets.newHashSet();
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
+    private Collection<CashOperation> operations = Lists.newArrayList();
 
     public CashJournal() {
     }
@@ -75,10 +68,6 @@ public class CashJournal extends BaseEntity {
         setJournalId(EntityHelper.getUidFor(journalId));
     }
 
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
-    }
 
     @Override
     public void postConstructOperation() {

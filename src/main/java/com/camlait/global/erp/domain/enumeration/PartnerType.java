@@ -2,12 +2,12 @@ package com.camlait.global.erp.domain.enumeration;
 
 public enum PartnerType implements EnumTypeEntitity {
     CLIENT("CL"),
-    VENDEUR("VE"),
-    EMPLOYE("EM"),
-    CAISSIER("CA"),
-    CLIENT_COMPTANT("CC"),
-    MAGASINIER("MA"),
-    CLIENT_A_MARGE("CM");
+    SELLER("VE"),
+    EMPLOYEE("EM"),
+    CASHIER("CA"),
+    CASH_CLIENT("CC"),
+    STORE_OPERATOR("MA"),
+    MARGIN_CLIENT("CM");
     
     private final String type;
     

@@ -34,7 +34,7 @@ public class Cashier extends Employee {
     private String motDePasse;
 
     public Cashier() {
-        setPartnerType(PartnerType.CAISSIER);
+        setPartnerType(PartnerType.CASHIER);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Cashier extends Employee {
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return PartnerType.CAISSIER;
+         return PartnerType.CASHIER;
     }
 
 

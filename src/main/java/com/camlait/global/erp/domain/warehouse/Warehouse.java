@@ -1,7 +1,6 @@
 package com.camlait.global.erp.domain.warehouse;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -23,7 +21,7 @@ import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,12 +55,6 @@ public class Warehouse extends BaseEntity {
     @JoinColumn(name = "centreId")
     private Center centre;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createdDate;
-
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date lastUpdatedDate;
-
     @Transient
     private String workerId;
 
@@ -73,7 +65,7 @@ public class Warehouse extends BaseEntity {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
-    private Collection<Store> stores = Sets.newHashSet();
+    private Collection<Store> stores = Lists.newArrayList();
 
     public Warehouse() {
     }
@@ -81,13 +73,6 @@ public class Warehouse extends BaseEntity {
     @PrePersist
     private void setKey() {
         setWarehouseId(EntityHelper.getUidFor(warehouseId));
-        setCreatedDate(new Date());
-        setLastUpdatedDate(new Date());
-    }
-
-    @PreUpdate
-    private void preUpdate() {
-        setLastUpdatedDate(new Date());
     }
 
     @Override
@@ -98,6 +83,6 @@ public class Warehouse extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-        return OtherEnum.ENTREPOT;
+        return OtherEnum.WAREHOUSE;
     }
 }
