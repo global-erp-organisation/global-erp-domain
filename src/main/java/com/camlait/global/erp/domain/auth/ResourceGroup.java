@@ -16,6 +16,7 @@ import com.camlait.global.erp.domain.enumeration.State;
 import com.camlait.global.erp.domain.keys.ResourceGroupKey;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,20 +32,24 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = ResourceGroupKey.class)
 public class ResourceGroup extends BaseEntity {
 
+    @ApiModelProperty(hidden = true)
     @Transient
     private String groupId;
 
     @Id
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "groupId")
     private Group group;
 
+    @ApiModelProperty(hidden = true)
     @Transient
     private String resourceId;
 
     @Id
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "resourceId")
     private Resource resource;

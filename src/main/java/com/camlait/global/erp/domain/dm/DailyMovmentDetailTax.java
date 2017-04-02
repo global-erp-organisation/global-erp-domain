@@ -15,6 +15,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.DailyMovmentDetailTaxKey;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class DailyMovmentDetailTax extends BaseEntity {
 
     @Id
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dmdId")
     private DailyMovementDetail dailyMovementDetail;
@@ -43,6 +45,7 @@ public class DailyMovmentDetailTax extends BaseEntity {
 
     @Id
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "taxId")
     private Tax tax;

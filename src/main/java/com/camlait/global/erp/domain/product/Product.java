@@ -32,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -56,12 +57,15 @@ public class Product extends BaseEntity {
 
     private String productDescription;
 
+    @ApiModelProperty(hidden = true)
     @Transient
     private String productCategoryId;
 
+    
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productCategoryId")
+    @ApiModelProperty(hidden = true)
     private ProductCategory category;
 
     private boolean taxableProduct;
@@ -69,20 +73,24 @@ public class Product extends BaseEntity {
     private Double defaultUnitprice;
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private Collection<Tax> taxes = Lists.newArrayList();
 
     private boolean stockFollowing;
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Stock> stocks = Lists.newArrayList();
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<StockCard> stockCards = Lists.newArrayList();
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Tariffication> tarifications = Lists.newArrayList();
 

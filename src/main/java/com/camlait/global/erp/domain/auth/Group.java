@@ -16,6 +16,7 @@ import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,11 +38,13 @@ public class Group extends BaseEntity {
 
     private String groupDescription;
 
-    @JsonManagedReference(value="group")
+    @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
-    @JsonManagedReference(value="user-group")
+    @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private Collection<User> users = Lists.newArrayList();
 

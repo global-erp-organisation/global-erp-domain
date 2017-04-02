@@ -16,6 +16,7 @@ import com.camlait.global.erp.domain.enumeration.State;
 import com.camlait.global.erp.domain.keys.ResourceUserKey;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,11 +32,13 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = ResourceUserKey.class)
 public class ResourceUser extends BaseEntity {
 
+    @ApiModelProperty(hidden = true)
     @Transient
     private String userId;
 
     @Id
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
@@ -45,6 +48,7 @@ public class ResourceUser extends BaseEntity {
 
     @Id
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "resourceId")
     private Resource resource;

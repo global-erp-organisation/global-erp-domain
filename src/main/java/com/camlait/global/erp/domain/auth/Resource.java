@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,10 +39,12 @@ public class Resource extends BaseEntity {
     @Id
     private String resourceId;
 
+    @ApiModelProperty(hidden = true)
     @Transient
     private String parentResourceId;
 
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "parentResourceId")
     private Resource parentResource;
@@ -57,14 +60,17 @@ public class Resource extends BaseEntity {
     private Integer resourceOrder;
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "parentResource")
     private Collection<Resource> items = Lists.newArrayList();
 
     @JsonManagedReference(value = "resource")
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 

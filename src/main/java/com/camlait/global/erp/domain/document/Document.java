@@ -39,6 +39,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -66,6 +67,7 @@ public abstract class Document extends BaseEntity {
     private String storeId;
 
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "storeId")
     private Store store;
@@ -74,6 +76,7 @@ public abstract class Document extends BaseEntity {
     private String workerId;
 
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "workerId")
     private Employee documentWorker;
@@ -85,6 +88,7 @@ public abstract class Document extends BaseEntity {
     private String dmId;
 
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
@@ -93,11 +97,13 @@ public abstract class Document extends BaseEntity {
     private String inventoryId;
 
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "inventoryId")
     private Inventory inventory;
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
     private Collection<DocumentDetails> documentDetails = Lists.newArrayList();
 

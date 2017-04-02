@@ -32,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -60,6 +61,7 @@ public class DailyMovement extends BaseEntity {
     private String sellerId;
 
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "sellerId")
     private Seller seller;
@@ -68,24 +70,32 @@ public class DailyMovement extends BaseEntity {
     private String storeId;
 
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne
     @JoinColumn(name = "storeId")
     private Store store;
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<Document> documents = Lists.newArrayList();
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<Recovery> recoveries = Lists.newArrayList();
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<DailyMovementDetail> dailyMovementDetails = Lists.newArrayList();
     private boolean bmqClos;
 
+    @Transient
+    private String workerId;
+    
     @ManyToOne
+    @ApiModelProperty(hidden = true)
     @JsonBackReference
     @JoinColumn(name = "workerId")
     private Employee worker;
@@ -106,6 +116,7 @@ public class DailyMovement extends BaseEntity {
     public void postConstructOperation() {
         setStoreId(store.getStoreId());
         setSellerId(seller.getPartnerId());
+        setWorkerId(worker.getPartnerId());
     }
 
     /**
