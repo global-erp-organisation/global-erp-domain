@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,6 +50,7 @@ public class ProductCategory extends BaseEntity {
     private String parentCategoryId;
 
     @JsonBackReference
+    @ApiModelProperty(hidden = true)
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parentCategoryId")
     private ProductCategory parentCategory;
@@ -66,14 +68,17 @@ public class ProductCategory extends BaseEntity {
     private boolean stockFollowing;
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private Collection<ProductCategory> categoryChildren = Lists.newArrayList();
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Collection<Product> products = Lists.newArrayList();
 
     @JsonManagedReference
+    @ApiModelProperty(hidden = true)
     @ManyToMany(mappedBy = "productCategories", cascade = CascadeType.ALL)
     private Collection<Tax> taxes = Lists.newArrayList();
 
