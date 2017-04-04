@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.util;
+package com.camlait.global.erp.domain.helper;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -6,9 +6,9 @@ import java.util.Locale;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
 
-public final class NumberUtil {
+public final class NumberHelper {
 
-    private NumberUtil() {
+    private NumberHelper() {
         // no-op.
     }
 

@@ -32,13 +32,13 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = ResourceUserKey.class)
 public class ResourceUser extends BaseEntity {
 
-    @ApiModelProperty(hidden = true)
+    
     @Transient
     private String userId;
 
     @Id
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
@@ -48,7 +48,7 @@ public class ResourceUser extends BaseEntity {
 
     @Id
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne
     @JoinColumn(name = "resourceId")
     private Resource resource;

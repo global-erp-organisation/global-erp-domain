@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
-import com.camlait.global.erp.domain.util.EntityHelper;
+import com.camlait.global.erp.domain.helper.EntityHelper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

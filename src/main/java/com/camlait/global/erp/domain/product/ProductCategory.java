@@ -21,9 +21,11 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.Scope;
-import com.camlait.global.erp.domain.util.EntityHelper;
+import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.common.collect.Lists;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -49,8 +51,8 @@ public class ProductCategory extends BaseEntity {
     @Transient
     private String parentCategoryId;
 
-    @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    //@JsonBackReference
+    
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parentCategoryId")
     private ProductCategory parentCategory;
@@ -67,18 +69,18 @@ public class ProductCategory extends BaseEntity {
 
     private boolean stockFollowing;
 
-    @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    //@JsonManagedReference
+    
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private Collection<ProductCategory> categoryChildren = Lists.newArrayList();
 
-    @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    //@JsonManagedReference
+    
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Collection<Product> products = Lists.newArrayList();
 
-    @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    //@JsonManagedReference
+    
     @ManyToMany(mappedBy = "productCategories", cascade = CascadeType.ALL)
     private Collection<Tax> taxes = Lists.newArrayList();
 
@@ -120,4 +122,44 @@ public class ProductCategory extends BaseEntity {
     public EnumTypeEntitity toEnum() {
         return null;
     }
+
+    public ProductCategory addChildren(Collection<ProductCategory> children) {
+        if (categoryChildren != null) {
+            categoryChildren = Lists.newArrayList();
+        }
+        categoryChildren.addAll(children);
+        return this;
+    }
+
+    public ProductCategory addChild(ProductCategory child) {
+        if (categoryChildren != null) {
+            categoryChildren = Lists.newArrayList();
+        }
+        categoryChildren.add(child);
+        return this;
+    }
+
+    public ProductCategory addParent(ProductCategory parent) {
+        setParentCategory(parent);
+        Collection<ProductCategory> children = parent.getCategoryChildren();
+        if (children == null) {
+            children = Lists.newArrayList();
+        }
+        children.add(this);
+        return this;
+    }
+
+    public ProductCategory addCategoryToTax() {
+        if (taxes != null) {
+            taxes.forEach(t -> {
+                Collection<ProductCategory> categories = t.getProductCategories();
+                if (categories == null) {
+                    categories = Lists.newArrayList();
+                }
+                categories.add(this);
+            });
+        }
+        return this;
+    }
+
 }

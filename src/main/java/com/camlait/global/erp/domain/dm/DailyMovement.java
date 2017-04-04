@@ -22,10 +22,10 @@ import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.exception.DataValidationException;
+import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.operation.Recovery;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Seller;
-import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -61,7 +61,7 @@ public class DailyMovement extends BaseEntity {
     private String sellerId;
 
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne
     @JoinColumn(name = "sellerId")
     private Seller seller;
@@ -70,23 +70,23 @@ public class DailyMovement extends BaseEntity {
     private String storeId;
 
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne
     @JoinColumn(name = "storeId")
     private Store store;
 
     @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<Document> documents = Lists.newArrayList();
 
     @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<Recovery> recoveries = Lists.newArrayList();
 
     @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<DailyMovementDetail> dailyMovementDetails = Lists.newArrayList();
     private boolean bmqClos;
@@ -95,7 +95,7 @@ public class DailyMovement extends BaseEntity {
     private String workerId;
     
     @ManyToOne
-    @ApiModelProperty(hidden = true)
+    
     @JsonBackReference
     @JoinColumn(name = "workerId")
     private Employee worker;

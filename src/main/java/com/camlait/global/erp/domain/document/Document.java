@@ -31,9 +31,9 @@ import com.camlait.global.erp.domain.enumeration.DocumentType;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.exception.DataStorageException;
+import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.inventory.Inventory;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.camlait.global.erp.domain.util.EntityHelper;
 import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -67,7 +67,7 @@ public abstract class Document extends BaseEntity {
     private String storeId;
 
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne
     @JoinColumn(name = "storeId")
     private Store store;
@@ -76,7 +76,7 @@ public abstract class Document extends BaseEntity {
     private String workerId;
 
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne
     @JoinColumn(name = "workerId")
     private Employee documentWorker;
@@ -88,7 +88,7 @@ public abstract class Document extends BaseEntity {
     private String dmId;
 
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
@@ -97,13 +97,13 @@ public abstract class Document extends BaseEntity {
     private String inventoryId;
 
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne
     @JoinColumn(name = "inventoryId")
     private Inventory inventory;
 
     @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
     private Collection<DocumentDetails> documentDetails = Lists.newArrayList();
 

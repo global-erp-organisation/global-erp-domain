@@ -49,12 +49,12 @@ public class User extends BaseEntity {
     private String encryptPassword;
 
     @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    
     @OneToMany(mappedBy = "user")
     private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "`auth-groupe-users`", joinColumns = {@JoinColumn(name = "`group-id`")}, inverseJoinColumns = {@JoinColumn(name = "`user-id`")},
                uniqueConstraints = @UniqueConstraint(columnNames = {"`group-id`", "`user-id`"}))

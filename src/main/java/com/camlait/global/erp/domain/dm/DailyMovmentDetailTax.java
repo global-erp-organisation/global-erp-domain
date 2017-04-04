@@ -35,7 +35,7 @@ public class DailyMovmentDetailTax extends BaseEntity {
 
     @Id
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dmdId")
     private DailyMovementDetail dailyMovementDetail;
@@ -45,7 +45,7 @@ public class DailyMovmentDetailTax extends BaseEntity {
 
     @Id
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "taxId")
     private Tax tax;

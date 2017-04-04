@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.EntityHelper;
+import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
@@ -39,12 +39,12 @@ public class Group extends BaseEntity {
     private String groupDescription;
 
     @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
     @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private Collection<User> users = Lists.newArrayList();
 

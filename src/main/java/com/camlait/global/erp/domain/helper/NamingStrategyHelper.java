@@ -1,13 +1,13 @@
-package com.camlait.global.erp.domain.util;
+package com.camlait.global.erp.domain.helper;
 
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 
 @SuppressWarnings("serial")
-public class NamingStrategyUtil extends PhysicalNamingStrategyStandardImpl {
+public class NamingStrategyHelper extends PhysicalNamingStrategyStandardImpl {
 
-    public static final NamingStrategyUtil INSTANCE = new NamingStrategyUtil();
+    public static final NamingStrategyHelper INSTANCE = new NamingStrategyHelper();
     private final static char SEPARATOR = '-';
 
     @Override

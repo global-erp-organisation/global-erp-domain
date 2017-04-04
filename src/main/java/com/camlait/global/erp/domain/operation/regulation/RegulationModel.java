@@ -14,8 +14,8 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.EvaluationMode;
 import com.camlait.global.erp.domain.enumeration.RegulationCondition;
+import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.Partner;
-import com.camlait.global.erp.domain.util.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;

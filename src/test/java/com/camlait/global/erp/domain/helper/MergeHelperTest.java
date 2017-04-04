@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.util;
+package com.camlait.global.erp.domain.helper;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,9 +7,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.camlait.global.erp.domain.helper.MergeHelper;
+import com.camlait.global.erp.domain.helper.SerializerHelper;
 import com.camlait.global.erp.domain.product.Product;
 
-public class MergeUtilTest {
+public class MergeHelperTest {
 
     private Product nonNullTo;
     private Product to;
@@ -24,13 +26,13 @@ public class MergeUtilTest {
 
     @Test
     public void testMergeWithDefaultCondition() throws Exception {
-        final MergeUtil mergeBean = new MergeUtil();
+        final MergeHelper mergeBean = new MergeHelper();
         assertTrue(to.getProductId() == null);
         assertTrue(to.getProductDescription() == null);
         final Product merge = mergeBean.merge(from, to);
         assertTrue(from.getProductId().equals(merge.getProductId()));
         assertTrue(from.getProductDescription().equals(merge.getProductDescription()));
-        assertTrue(SerializerUtil.toJson(from).equals(SerializerUtil.toJson(merge)));
+        assertTrue(SerializerHelper.toJson(from).equals(SerializerHelper.toJson(merge)));
 
         assertTrue(nonNullTo.getProductId() != null);
         assertTrue(nonNullTo.getProductDescription() == null);
@@ -41,7 +43,7 @@ public class MergeUtilTest {
 
     @Test
     public void testMergeWithGenericCondition() throws Exception {
-        final MergeUtil mergeBean = new MergeUtil((source, destination) -> {
+        final MergeHelper mergeBean = new MergeHelper((source, destination) -> {
             return (source != null && destination != null);
         });
         assertTrue(to.getProductId() == null);
@@ -51,7 +53,7 @@ public class MergeUtilTest {
         assertFalse(from.getProductDescription().equals(merge.getProductDescription()));
         assertTrue(to.getProductId() == null);
         assertTrue(to.getProductDescription() == null);
-        assertFalse(SerializerUtil.toJson(from).equals(SerializerUtil.toJson(merge)));
+        assertFalse(SerializerHelper.toJson(from).equals(SerializerHelper.toJson(merge)));
         
         assertTrue(nonNullTo.getProductId() != null);
         assertTrue(nonNullTo.getProductDescription() == null);

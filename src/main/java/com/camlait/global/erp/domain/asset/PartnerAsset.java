@@ -16,7 +16,6 @@ import com.camlait.global.erp.domain.keys.PartnerAssetKey;
 import com.camlait.global.erp.domain.partner.Partner;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,24 +31,22 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = PartnerAssetKey.class)
 public class PartnerAsset extends BaseEntity {
 
-    @ApiModelProperty(hidden = true)
     @Transient
     private String partnerId;
 
     @Id
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+
     @ManyToOne
     @JoinColumn(name = "partenaireId")
     private Partner partner;
 
-    @ApiModelProperty(hidden = true)
     @Transient
     private String immoId;
 
     @Id
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+
     @ManyToOne
     @JoinColumn(name = "assetId")
     private Asset asset;

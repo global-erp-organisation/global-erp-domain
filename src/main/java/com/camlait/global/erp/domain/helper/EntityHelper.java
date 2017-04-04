@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.util;
+package com.camlait.global.erp.domain.helper;
 
 import java.util.UUID;
 

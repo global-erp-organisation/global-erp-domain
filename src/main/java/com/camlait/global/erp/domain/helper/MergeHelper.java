@@ -1,4 +1,4 @@
-package com.camlait.global.erp.domain.util;
+package com.camlait.global.erp.domain.helper;
 
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import java.lang.reflect.InvocationTargetException;
@@ -20,16 +20,16 @@ import com.amazonaws.util.CollectionUtils;
  * <p>
  * <u><b>How to use the merging operation</b></u>
  * <p>
- * {@code}1: mergeBean = new MergeUtil() or mergeBeanUtil = new MergeUtil(builderCondition)
+ * {@code}1: mergeBean = new MergeHelper() or mergeBeanUtil = new MergeHelper(builderCondition)
  * <p>
  * {@code}2: merginObject = mergeBean.<b>merge(source, destination)</b>.
  * 
  * @see BeanUtilsBean
  */
 @Component
-public class MergeUtil extends BeanUtilsBean {
+public class MergeHelper extends BeanUtilsBean {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MergeUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MergeHelper.class);
     private final BiFunction<Object, Object, Boolean> mergingRuleBuilder;
 
     /**
@@ -41,7 +41,7 @@ public class MergeUtil extends BeanUtilsBean {
      * 
      * @param mergingConditionBuilder condition builder
      */
-    public MergeUtil(BiFunction<Object, Object, Boolean> mergingConditionBuilder) {
+    public MergeHelper(BiFunction<Object, Object, Boolean> mergingConditionBuilder) {
         this.mergingRuleBuilder = mergingConditionBuilder;
     }
 
@@ -50,7 +50,7 @@ public class MergeUtil extends BeanUtilsBean {
      * <p>
      * Here, only null fields or empty collections are updated in the destination object with corresponding non null fields value from the source.
      */
-    public MergeUtil() {
+    public MergeHelper() {
         this.mergingRuleBuilder = (sourceValue, destinationValue) -> {
             return canBeOverrides(sourceValue, destinationValue);
         };
@@ -85,7 +85,7 @@ public class MergeUtil extends BeanUtilsBean {
      * @throws IllegalAccessException
      */
     public <T> T merge(T from, T to) throws Exception {
-        //final T toMerge = SerializerUtil.copy(to);
+        //final T toMerge = SerializerHelper.copy(to);
         this.copyProperties(to, from);
         return to;
     }
@@ -100,7 +100,7 @@ public class MergeUtil extends BeanUtilsBean {
      * @return The merging object.
      */
     public static <T> T mergeDefault(T from, T to) {
-        final MergeUtil merge = new MergeUtil();
+        final MergeHelper merge = new MergeHelper();
         try {
             return merge.merge(from, to);
         } catch (Exception e) {

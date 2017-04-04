@@ -21,9 +21,9 @@ import org.hibernate.Hibernate;
 
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.exception.LazyInitException;
-import com.camlait.global.erp.domain.util.EntityHelper;
-import com.camlait.global.erp.domain.util.MergeUtil;
-import com.camlait.global.erp.domain.util.SerializerUtil;
+import com.camlait.global.erp.domain.helper.EntityHelper;
+import com.camlait.global.erp.domain.helper.MergeHelper;
+import com.camlait.global.erp.domain.helper.SerializerHelper;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,14 +41,14 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = false)
 public abstract class BaseEntity implements Serializable {
 
-    @ApiModelProperty(hidden = true)
+    
     @Version
     private Integer version;
 
-    @ApiModelProperty(hidden = true)
+    
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
-    @ApiModelProperty(hidden = true)
+    
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 
@@ -70,10 +70,10 @@ public abstract class BaseEntity implements Serializable {
      * 
      * @param from
      * @return The merging object;
-     * @see MergeUtil
+     * @see MergeHelper
      */
     public <T extends BaseEntity> T merge(@NonNull T from) {
-        return (T) MergeUtil.mergeDefault(from, this);
+        return (T) MergeHelper.mergeDefault(from, this);
     }
 
     /**
@@ -103,7 +103,7 @@ public abstract class BaseEntity implements Serializable {
      * @return A string that represents a JSON value for the current entity.
      */
     public String toJson() {
-        return SerializerUtil.toJson(this);
+        return SerializerHelper.toJson(this);
     }
 
     /**

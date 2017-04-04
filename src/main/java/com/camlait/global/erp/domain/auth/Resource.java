@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.util.EntityHelper;
+import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
@@ -39,12 +39,12 @@ public class Resource extends BaseEntity {
     @Id
     private String resourceId;
 
-    @ApiModelProperty(hidden = true)
+    
     @Transient
     private String parentResourceId;
 
     @JsonBackReference
-    @ApiModelProperty(hidden = true)
+    
     @ManyToOne
     @JoinColumn(name = "parentResourceId")
     private Resource parentResource;
@@ -60,17 +60,17 @@ public class Resource extends BaseEntity {
     private Integer resourceOrder;
 
     @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    
     @OneToMany(mappedBy = "parentResource")
     private Collection<Resource> items = Lists.newArrayList();
 
     @JsonManagedReference(value = "resource")
-    @ApiModelProperty(hidden = true)
+    
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
     @JsonManagedReference
-    @ApiModelProperty(hidden = true)
+    
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
     private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 
