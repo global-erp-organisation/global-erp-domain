@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.helper;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -30,9 +32,9 @@ public class MergeHelperTest {
         assertTrue(to.getProductId() == null);
         assertTrue(to.getProductDescription() == null);
         final Product merge = mergeBean.merge(from, to);
-        assertTrue(from.getProductId().equals(merge.getProductId()));
-        assertTrue(from.getProductDescription().equals(merge.getProductDescription()));
-        assertTrue(SerializerHelper.toJson(from).equals(SerializerHelper.toJson(merge)));
+        assertThat(from.getProductDescription(),is(merge.getProductDescription()));
+        assertThat(from.getProductId(),is(merge.getProductId()));
+        assertThat(SerializerHelper.toJson(from), is(SerializerHelper.toJson(merge)));
 
         assertTrue(nonNullTo.getProductId() != null);
         assertTrue(nonNullTo.getProductDescription() == null);

@@ -37,7 +37,6 @@ import lombok.ToString;
 @ToString(exclude = {"products", "productCategories"})
 @Builder
 @Table(name = "`tax-taxes`")
-@JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
 public class Tax extends BaseEntity {
 
     @Id

@@ -38,8 +38,8 @@ import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -67,7 +67,7 @@ public abstract class Document extends BaseEntity {
     private String storeId;
 
     @JsonBackReference
-    
+
     @ManyToOne
     @JoinColumn(name = "storeId")
     private Store store;
@@ -76,7 +76,7 @@ public abstract class Document extends BaseEntity {
     private String workerId;
 
     @JsonBackReference
-    
+
     @ManyToOne
     @JoinColumn(name = "workerId")
     private Employee documentWorker;
@@ -88,7 +88,7 @@ public abstract class Document extends BaseEntity {
     private String dmId;
 
     @JsonBackReference
-    
+
     @ManyToOne
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
@@ -97,13 +97,13 @@ public abstract class Document extends BaseEntity {
     private String inventoryId;
 
     @JsonBackReference
-    
+
     @ManyToOne
     @JoinColumn(name = "inventoryId")
     private Inventory inventory;
 
     @JsonManagedReference
-    
+
     @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
     private Collection<DocumentDetails> documentDetails = Lists.newArrayList();
 
@@ -159,17 +159,7 @@ public abstract class Document extends BaseEntity {
         return null;
     }
 
-    /**
-     * Add a document detail into the current collection of document detail.
-     * 
-     * @param line
-     * @return
-     */
-    public Document addLine(DocumentDetails line) {
-        this.documentDetails.add(line);
-        return this;
-    }
-    
+
     /**
      * remove a document detail into the current collection of document detail.
      * 
@@ -177,7 +167,9 @@ public abstract class Document extends BaseEntity {
      * @return
      */
     public Document removeLine(DocumentDetails line) {
-        this.documentDetails.remove(line);
+        if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
+            this.documentDetails.remove(line);
+        }
         return this;
     }
 }

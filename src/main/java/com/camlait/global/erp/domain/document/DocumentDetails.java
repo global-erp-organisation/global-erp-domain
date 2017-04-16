@@ -38,6 +38,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -122,7 +123,7 @@ public class DocumentDetails extends BaseEntity {
     public DocumentDetails buildTaxes() {
         if (document != null && document.isBusinessDocument()) {
             final Collection<Tax> taxes = this.getProduct().getTaxes();
-            if (CollectionUtils.isNullOrEmpty(taxes)) {
+            if (!CollectionUtils.isNullOrEmpty(taxes)) {
                 final Set<DocumentDetailsTax> lt = taxes.stream().map(t -> {
                     return DocumentDetailsTax.builder()
                             .documentDetails(this)
@@ -204,4 +205,5 @@ public class DocumentDetails extends BaseEntity {
     public EnumTypeEntitity toEnum() {
         return null;
     }
+  
 }

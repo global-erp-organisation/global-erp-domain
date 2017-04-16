@@ -28,13 +28,8 @@ import com.camlait.global.erp.domain.tarif.PriceType;
 import com.camlait.global.erp.domain.tarif.Tariff;
 import com.camlait.global.erp.domain.tarif.Tariffication;
 import com.camlait.global.erp.domain.warehouse.Store;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.common.collect.Lists;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,7 +44,6 @@ import lombok.ToString;
 @ToString(exclude = {"taxes", "stocks", "stockCards", "tarifications"})
 @Builder
 @Table(name = "`product-products`")
-@JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class)
 public class Product extends BaseEntity {
 
     @Id
