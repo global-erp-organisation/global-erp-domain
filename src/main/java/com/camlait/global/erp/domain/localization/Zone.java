@@ -30,44 +30,44 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`loc-zones`")
 public class Zone extends Localization {
 
-	@Transient
-	private String secteurId;
+    @Transient
+    private String secteurId;
 
-	@ManyToOne
-	@JoinColumn(name = "secteurId")
-	private Sector secteur;
+    @ManyToOne
+    @JoinColumn(name = "secteurId")
+    private Sector secteur;
 
-	@OneToMany(mappedBy = "zone")
-	private Collection<SaleDocument> documents = Lists.newArrayList();
+    @OneToMany(mappedBy = "zone")
+    private Collection<SaleDocument> documents = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "zone")
-	private Collection<Client> clients = Lists.newArrayList();
+    @OneToMany(mappedBy = "zone")
+    private Collection<Client> clients = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "zone")
-	private Collection<Tariffication> tarifications = Lists.newArrayList();
+    @OneToMany(mappedBy = "zone")
+    private Collection<Tariffication> tarifications = Lists.newArrayList();
 
-	public Zone() {
-		setTypeLocal(OtherEnum.ZONE);
-	}
+    public Zone() {
+        setTypeLocal(OtherEnum.ZONE);
+    }
 
-	@Override
-	public Zone init() {
-		setSecteurId(secteur == null ? null : secteur.getLocalId());
-		setDocuments(documents.stream().map(d->{
-			return d.init();
-		}).collect(Collectors.toList()));
-		setClients(clients.stream().map(c->{
-			return c.init();
-		}).collect(Collectors.toList()));
-		setTarifications(tarifications.stream().map(t->{
-			return t.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Zone init() {
+        setSecteurId(secteur == null ? null : secteur.getLocalId());
+        setDocuments(documents == null ? Lists.newArrayList() : documents.stream().map(d -> {
+            return d.init();
+        }).collect(Collectors.toList()));
+        setClients(clients == null ? Lists.newArrayList() : clients.stream().map(c -> {
+            return c.init();
+        }).collect(Collectors.toList()));
+        setTarifications(tarifications == null ? Lists.newArrayList() : tarifications.stream().map(t -> {
+            return t.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return OtherEnum.ZONE;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return OtherEnum.ZONE;
+    }
 
 }

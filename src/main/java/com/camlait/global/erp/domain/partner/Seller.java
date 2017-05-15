@@ -10,7 +10,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.operation.missing.FinancialMissingOperation;
@@ -28,35 +27,35 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`partner-sellers`")
 public class Seller extends Employee {
 
-	@Transient
-	private String zoneId;
+    @Transient
+    private String zoneId;
 
-	@ManyToOne
-	@JoinColumn(name = "zoneId")
-	private Zone saleZone;
+    @ManyToOne
+    @JoinColumn(name = "zoneId")
+    private Zone saleZone;
 
-	@OneToMany(mappedBy = "seller")
-	private Collection<FinancialMissingOperation> financialMissings = Lists.newArrayList();
+    @OneToMany(mappedBy = "seller")
+    private Collection<FinancialMissingOperation> financialMissings = Lists.newArrayList();
 
-	private boolean commissionable;
+    private boolean commissionable;
 
-	private double commissionRate;
+    private double commissionRate;
 
-	public Seller() {
-		setPartnerType(PartnerType.SELLER);
-	}
+    public Seller() {
+        setPartnerType(PartnerType.SELLER);
+    }
 
-	@Override
-	public Seller init() {
-		setCenterId(getCentre() == null ? null : getCentre().getLocalId());
-		setPartnerGroupId(getPartnerGroup() == null ? null : getPartnerGroup().getPartnerGroupId());
-		setTarifId(getTarif() == null ? null : getTarif().getTarifId());
-		setProfessionId(getProfession() == null ? null : getProfession().getProfessionId());
-		setUserId(getUser() != null ? getUser().getUserId() : null);
-		setZoneId(saleZone == null ? null : saleZone.getLocalId());
-		setFinancialMissings(financialMissings.stream().map(fm -> {
-			return fm.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Seller init() {
+        setCenterId(getCentre() == null ? null : getCentre().getLocalId());
+        setPartnerGroupId(getPartnerGroup() == null ? null : getPartnerGroup().getPartnerGroupId());
+        setTarifId(getTarif() == null ? null : getTarif().getTarifId());
+        setProfessionId(getProfession() == null ? null : getProfession().getProfessionId());
+        setUserId(getUser() != null ? getUser().getUserId() : null);
+        setZoneId(saleZone == null ? null : saleZone.getLocalId());
+        setFinancialMissings(financialMissings == null ? Lists.newArrayList() : financialMissings.stream().map(fm -> {
+            return fm.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 }

@@ -34,73 +34,76 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "documents", "inventoryDetails" })
-@ToString(exclude = { "documents", "inventoryDetails" })
+@EqualsAndHashCode(callSuper = false, exclude = {"documents", "inventoryDetails"})
+@ToString(exclude = {"documents", "inventoryDetails"})
 @Builder
 @Table(name = "`inv-inventories`")
 public class Inventory extends BaseEntity {
 
-	@Id
-	private String inventoryId;
+    @Id
+    private String inventoryId;
 
-	@Column(nullable = false, unique = true)
-	private String inventoryCode;
+    @Column(nullable = false, unique = true)
+    private String inventoryCode;
 
-	@Column(nullable = false)
-	private Date inventoryDate;
+    @Column(nullable = false)
+    private Date inventoryDate;
 
-	private String note;
+    private String note;
 
-	@Transient
-	private String storeId;
+    @Transient
+    private String storeId;
 
-	@ManyToOne
-	@JoinColumn(name = "storeId")
-	private Store store;
+    @ManyToOne
+    @JoinColumn(name = "storeId")
+    private Store store;
 
-	@Transient
-	private String outgoingWarehouserId;
+    @Transient
+    private String outgoingWarehouserId;
 
-	@ManyToOne
-	@JoinColumn(name = "outgoingWarehouserId")
-	private StoreOperator outgoingWarehouser;
+    @ManyToOne
+    @JoinColumn(name = "outgoingWarehouserId")
+    private StoreOperator outgoingWarehouser;
 
-	@Transient
-	private String incomingWarehouserId;
+    @Transient
+    private String incomingWarehouserId;
 
-	@ManyToOne
-	@JoinColumn(name = "incomingWarehouserId")
-	private StoreOperator incomingWarehouser;
+    @ManyToOne
+    @JoinColumn(name = "incomingWarehouserId")
+    private StoreOperator incomingWarehouser;
 
-	private boolean closedInventory;
+    private boolean closedInventory;
 
-	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
-	private Collection<Document> documents = Lists.newArrayList();
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+    private Collection<Document> documents = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
-	private Collection<InventoryDetail> inventoryDetails = Lists.newArrayList();
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+    private Collection<InventoryDetail> inventoryDetails = Lists.newArrayList();
 
-	public Inventory() {
-	}
+    public Inventory() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setInventoryId(EntityHelper.getUidFor(inventoryId));
-	}
+    @PrePersist
+    private void setKey() {
+        setInventoryId(EntityHelper.getUidFor(inventoryId));
+    }
 
-	@Override
-	public Inventory init() {
-		setStoreId(store == null ? null : store.getStoreId());
-		setIncomingWarehouserId(incomingWarehouser == null ? null : incomingWarehouser.getPartnerId());
-		setOutgoingWarehouserId(outgoingWarehouser == null ? null : outgoingWarehouser.getPartnerId());
-		setInventoryDetails(inventoryDetails.stream().map(id->{
-			return id.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Inventory init() {
+        setStoreId(store == null ? null : store.getStoreId());
+        setIncomingWarehouserId(incomingWarehouser == null ? null : incomingWarehouser.getPartnerId());
+        setOutgoingWarehouserId(outgoingWarehouser == null ? null : outgoingWarehouser.getPartnerId());
+        setInventoryDetails(inventoryDetails == null ? Lists.newArrayList() : inventoryDetails.stream().map(id -> {
+            return id.init();
+        }).collect(Collectors.toList()));
+        setDocuments(documents == null ? Lists.newArrayList() : documents.stream().map(d -> {
+            return d.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return OtherEnum.INVENTAIRE;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return OtherEnum.INVENTAIRE;
+    }
 }

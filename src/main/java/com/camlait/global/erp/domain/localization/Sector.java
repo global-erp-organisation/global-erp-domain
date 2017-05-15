@@ -28,31 +28,31 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`loc-sectors`")
 public class Sector extends Localization {
 
-	@Transient
-	private String regionId;
+    @Transient
+    private String regionId;
 
-	@ManyToOne
-	@JoinColumn(name = "regionId")
-	private Region region;
+    @ManyToOne
+    @JoinColumn(name = "regionId")
+    private Region region;
 
-	@OneToMany(mappedBy = "secteur", fetch = FetchType.EAGER)
-	private Collection<Zone> zones = Lists.newArrayList();
+    @OneToMany(mappedBy = "secteur", fetch = FetchType.EAGER)
+    private Collection<Zone> zones = Lists.newArrayList();
 
-	public Sector() {
-		setTypeLocal(OtherEnum.SECTOR);
-	}
+    public Sector() {
+        setTypeLocal(OtherEnum.SECTOR);
+    }
 
-	@Override
-	public Sector init() {
-		setRegionId(region == null ? null : region.getLocalId());
-		setZones(zones.stream().map(z->{
-			return z.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Sector init() {
+        setRegionId(region == null ? null : region.getLocalId());
+        setZones(zones == null ? Lists.newArrayList() : zones.stream().map(z -> {
+            return z.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return OtherEnum.SECTOR;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return OtherEnum.SECTOR;
+    }
 }

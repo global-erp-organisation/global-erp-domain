@@ -1,7 +1,6 @@
 package com.camlait.global.erp.domain.auth;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -26,45 +25,45 @@ import lombok.ToString;
 @SuppressWarnings("serial")
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "resourceGroups", "users" })
-@ToString(exclude = { "resourceGroups", "users" })
+@EqualsAndHashCode(callSuper = false, exclude = {"resourceGroups", "users"})
+@ToString(exclude = {"resourceGroups", "users"})
 @AllArgsConstructor
 @Builder
 @Table(name = "`auth-groups`")
 public class Group extends BaseEntity {
 
-	@Id
-	private String groupId;
+    @Id
+    private String groupId;
 
-	private String groupDescription;
+    private String groupDescription;
 
-	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-	private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
-	@ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
-	private Collection<User> users = Lists.newArrayList();
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
+    private Collection<User> users = Lists.newArrayList();
 
-	public Group() {
-	}
+    public Group() {
+    }
 
-	@PrePersist
-	private void prePersist() {
-		setGroupId(EntityHelper.getUidFor(groupId));
-	}
+    @PrePersist
+    private void prePersist() {
+        setGroupId(EntityHelper.getUidFor(groupId));
+    }
 
-	@Override
-	public Group init() {
-		setResourceGroups(resourceGroups.stream().map(rg -> {
-			return rg.init();
-		}).collect(Collectors.toList()));
-		setUsers(users.stream().map(u -> {
-			return u.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Group init() {
+        setResourceGroups(resourceGroups == null ? Lists.newArrayList() : resourceGroups.stream().map(rg -> {
+            return rg.init();
+        }).collect(Collectors.toList()));
+        setUsers(users == null ? Lists.newArrayList() : users.stream().map(u -> {
+            return u.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return null;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
+    }
 }

@@ -29,48 +29,48 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`partner-clients`")
 public class Client extends Partner {
 
-	@Transient
-	private String zoneId;
+    @Transient
+    private String zoneId;
 
-	@ManyToOne
-	@JoinColumn(name = "zoneId")
-	private Zone zone;
+    @ManyToOne
+    @JoinColumn(name = "zoneId")
+    private Zone zone;
 
-	@OneToMany(mappedBy = "client")
-	private Collection<SaleDocument> saleDocuments = Lists.newArrayList();
+    @OneToMany(mappedBy = "client")
+    private Collection<SaleDocument> saleDocuments = Lists.newArrayList();
 
-	private String description;
+    private String description;
 
-	private boolean clientAristourne;
+    private boolean clientAristourne;
 
-	private double ristourne;
+    private double ristourne;
 
-	public Client() {
-		setPartnerType(PartnerType.CLIENT);
-	}
+    public Client() {
+        setPartnerType(PartnerType.CLIENT);
+    }
 
-	@Override
-	public Client init() {
-		setCenterId(getCentre() == null ? null : getCentre().getLocalId());
-		setPartnerGroupId(getPartnerGroup() == null ? null : getPartnerGroup().getPartnerGroupId());
-		setTarifId(getTarif() == null ? null : getTarif().getTarifId());
-		setZoneId(zone == null ? null : zone.getLocalId());
-		setSaleDocuments(saleDocuments.stream().map(sd->{
-			return sd.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Client init() {
+        setCenterId(getCentre() == null ? null : getCentre().getLocalId());
+        setPartnerGroupId(getPartnerGroup() == null ? null : getPartnerGroup().getPartnerGroupId());
+        setTarifId(getTarif() == null ? null : getTarif().getTarifId());
+        setZoneId(zone == null ? null : zone.getLocalId());
+        setSaleDocuments(saleDocuments == null ? Lists.newArrayList() : saleDocuments.stream().map(sd -> {
+            return sd.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	public Boolean isMarginClient() {
-		return this instanceof MarginClient;
-	}
+    public Boolean isMarginClient() {
+        return this instanceof MarginClient;
+    }
 
-	public Boolean isCashSalesClient() {
-		return this instanceof CashClient;
-	}
+    public Boolean isCashSalesClient() {
+        return this instanceof CashClient;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return PartnerType.CLIENT;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return PartnerType.CLIENT;
+    }
 }

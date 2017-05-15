@@ -37,57 +37,57 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.JOINED)
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "stockCards", "stocks" })
-@ToString(exclude = { "stockCards", "stocks" })
+@EqualsAndHashCode(callSuper = false, exclude = {"stockCards", "stocks"})
+@ToString(exclude = {"stockCards", "stocks"})
 @Builder
 @Table(name = "`warehouse-store`")
 public class Store extends BaseEntity {
-	@Id
-	private String storeId;
+    @Id
+    private String storeId;
 
-	@Column(unique = true, nullable = false)
-	private String storeCode;
+    @Column(unique = true, nullable = false)
+    private String storeCode;
 
-	private String storeDescription;
+    private String storeDescription;
 
-	@Transient
-	private String warehouseId;
+    @Transient
+    private String warehouseId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "warehouseId")
-	private Warehouse warehouse;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "warehouseId")
+    private Warehouse warehouse;
 
-	@Enumerated(EnumType.STRING)
-	private OtherEnum storeType;
+    @Enumerated(EnumType.STRING)
+    private OtherEnum storeType;
 
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-	private Collection<Stock> stocks = Lists.newArrayList();
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private Collection<Stock> stocks = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-	private Collection<StockCard> stockCards = Lists.newArrayList();
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private Collection<StockCard> stockCards = Lists.newArrayList();
 
-	public Store() {
-	}
+    public Store() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setStoreId(EntityHelper.getUidFor(storeId));
-	}
+    @PrePersist
+    private void setKey() {
+        setStoreId(EntityHelper.getUidFor(storeId));
+    }
 
-	@Override
-	public Store init() {
-		setWarehouseId(warehouse == null ? null : warehouse.getWarehouseId());
-		setStockCards(stockCards.stream().map(sc -> {
-			return sc.init();
-		}).collect(Collectors.toList()));
-		setStocks(stocks.stream().map(s -> {
-			return s.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Store init() {
+        setWarehouseId(warehouse == null ? null : warehouse.getWarehouseId());
+        setStockCards(stockCards == null ? Lists.newArrayList() : stockCards.stream().map(sc -> {
+            return sc.init();
+        }).collect(Collectors.toList()));
+        setStocks(stocks == null ? Lists.newArrayList() : stocks.stream().map(s -> {
+            return s.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return null;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
+    }
 }

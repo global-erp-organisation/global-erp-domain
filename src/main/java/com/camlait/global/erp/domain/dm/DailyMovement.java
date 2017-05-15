@@ -40,100 +40,99 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "documents", "recoveries", "dailyMovementDetails" })
-@ToString(exclude = { "documents", "recoveries", "dailyMovementDetails" })
+@EqualsAndHashCode(callSuper = false, exclude = {"documents", "recoveries", "dailyMovementDetails"})
+@ToString(exclude = {"documents", "recoveries", "dailyMovementDetails"})
 @Builder
 @Table(name = "`dm-daily-movements`")
 public class DailyMovement extends BaseEntity {
 
-	@Id
-	private String dmId;
+    @Id
+    private String dmId;
 
-	@Column(nullable = false, unique = true)
-	private String dmCode;
+    @Column(nullable = false, unique = true)
+    private String dmCode;
 
-	private Date dmDate;
+    private Date dmDate;
 
-	@Transient
-	private String sellerId;
+    @Transient
+    private String sellerId;
 
-	@ManyToOne
-	@JoinColumn(name = "sellerId")
-	private Seller seller;
+    @ManyToOne
+    @JoinColumn(name = "sellerId")
+    private Seller seller;
 
-	@Transient
-	private String storeId;
+    @Transient
+    private String storeId;
 
-	@ManyToOne
-	@JoinColumn(name = "storeId")
-	private Store store;
+    @ManyToOne
+    @JoinColumn(name = "storeId")
+    private Store store;
 
-	@OneToMany(mappedBy = "dailyMovement")
-	private Collection<Document> documents = Lists.newArrayList();
+    @OneToMany(mappedBy = "dailyMovement")
+    private Collection<Document> documents = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "dailyMovement")
-	private Collection<Recovery> recoveries = Lists.newArrayList();
+    @OneToMany(mappedBy = "dailyMovement")
+    private Collection<Recovery> recoveries = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "dailyMovement")
-	private Collection<DailyMovementDetail> dailyMovementDetails = Lists.newArrayList();
-	private boolean bmqClos;
+    @OneToMany(mappedBy = "dailyMovement")
+    private Collection<DailyMovementDetail> dailyMovementDetails = Lists.newArrayList();
+    private boolean bmqClos;
 
-	@Transient
-	private String workerId;
+    @Transient
+    private String workerId;
 
-	@ManyToOne
+    @ManyToOne
 
-	@JoinColumn(name = "workerId")
-	private Employee worker;
+    @JoinColumn(name = "workerId")
+    private Employee worker;
 
-	public DailyMovement() {
-	}
+    public DailyMovement() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setDmId(EntityHelper.getUidFor(dmId));
-		final List<String> errors = Lists.newArrayList();
-		if (!errors.isEmpty()) {
-			throw new DataValidationException(Joiner.on("\n").join(errors));
-		}
-	}
+    @PrePersist
+    private void setKey() {
+        setDmId(EntityHelper.getUidFor(dmId));
+        final List<String> errors = Lists.newArrayList();
+        if (!errors.isEmpty()) {
+            throw new DataValidationException(Joiner.on("\n").join(errors));
+        }
+    }
 
-	@Override
-	public DailyMovement init() {
-		setStoreId(store == null ? null : store.getStoreId());
-		setSellerId(seller == null ? null : seller.getPartnerId());
-		setWorkerId(worker == null ? null : worker.getPartnerId());
-		setDailyMovementDetails(dailyMovementDetails.stream().map(dm->{
-			return dm.init();
-		}).collect(Collectors.toList()));
-		setRecoveries(recoveries.stream().map(r->{
-			return r.init();
-		}).collect(Collectors.toList()));
-		setDocuments(documents.stream().map(d->{
-			return d.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public DailyMovement init() {
+        setStoreId(store == null ? null : store.getStoreId());
+        setSellerId(seller == null ? null : seller.getPartnerId());
+        setWorkerId(worker == null ? null : worker.getPartnerId());
+        setDailyMovementDetails(dailyMovementDetails == null ? Lists.newArrayList() : dailyMovementDetails.stream().map(dm -> {
+            return dm.init();
+        }).collect(Collectors.toList()));
+        setRecoveries(recoveries == null ? Lists.newArrayList() : recoveries.stream().map(r -> {
+            return r.init();
+        }).collect(Collectors.toList()));
+        setDocuments(documents == null ? Lists.newArrayList() : documents.stream().map(d -> {
+            return d.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	/**
-	 * Built the Daily Movement details for the current object.
-	 * 
-	 * @return The current object with associated details.
-	 */
-	public DailyMovement buildLigne() {
-		Optional<Set<DailyMovementDetail>> lines = this.getDocuments().stream().map(d -> {
-			return d.getDocumentDetails().stream().map(l -> {
-				return DailyMovementDetail.builder().dailyMovement(this).dmdId(this.getDmId()).document(d)
-						.lineUnitPrice(l.getLineUnitPrice()).product(l.getProduct())
-						.productId(l.getProduct().getProductId()).lineQuantity(l.getLineQuantity()).build();
-			}).collect(Collectors.toSet());
-		}).findFirst();
-		setDailyMovementDetails(lines.isPresent() ? lines.get() : Lists.newArrayList());
-		return this;
-	}
+    /**
+     * Built the Daily Movement details for the current object.
+     * 
+     * @return The current object with associated details.
+     */
+    public DailyMovement buildLigne() {
+        Optional<Set<DailyMovementDetail>> lines = this.getDocuments().stream().map(d -> {
+            return d.getDocumentDetails().stream().map(l -> {
+                return DailyMovementDetail.builder().dailyMovement(this).dmdId(this.getDmId()).document(d).lineUnitPrice(l.getLineUnitPrice())
+                        .product(l.getProduct()).productId(l.getProduct().getProductId()).lineQuantity(l.getLineQuantity()).build();
+            }).collect(Collectors.toSet());
+        }).findFirst();
+        setDailyMovementDetails(lines.isPresent() ? lines.get() : Lists.newArrayList());
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return OtherEnum.BMQ;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return OtherEnum.BMQ;
+    }
 }

@@ -33,11 +33,12 @@ public class Center extends Localization {
 
     @Override
     public Center init() {
-    	setRegions(regions.stream().map(r->{
-    		return r.init();
-    	}).collect(Collectors.toList()));
-    	return this;
+        setRegions(regions == null ? Lists.newArrayList() : regions.stream().map(r -> {
+            return r.init();
+        }).collect(Collectors.toList()));
+        return this;
     }
+
     @Override
     public EnumTypeEntitity toEnum() {
         return OtherEnum.CENTER;

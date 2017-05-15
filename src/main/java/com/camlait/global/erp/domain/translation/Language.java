@@ -61,7 +61,7 @@ public class Language extends BaseEntity {
 
     @Override
     public Language init() {
-    	setTermLanguages(termLanguages.stream().map(tl->{
+    	setTermLanguages(termLanguages==null?Lists.newArrayList():termLanguages.stream().map(tl->{
     		return tl.init();
     	}).collect(Collectors.toList()));
         return this;

@@ -36,7 +36,6 @@ public class PartnerGroup extends BaseEntity {
     @OneToMany(mappedBy = "partnerGroup")
     private Collection<Partner> partners = Lists.newArrayList();
 
-
     public PartnerGroup() {
         super();
     }
@@ -48,14 +47,14 @@ public class PartnerGroup extends BaseEntity {
 
     @Override
     public PartnerGroup init() {
-    	setPartners(partners.stream().map(p->{
-    		return p.init();
-    	}).collect(Collectors.toList()));
-    	return this;
+        setPartners(partners == null ? Lists.newArrayList() : partners.stream().map(p -> {
+            return p.init();
+        }).collect(Collectors.toList()));
+        return this;
     }
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return null;
+        return null;
     }
 }

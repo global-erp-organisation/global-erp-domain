@@ -68,13 +68,13 @@ public class Tax extends BaseEntity {
 
     @Override
     public Tax init() {
-    	setProductCategories(productCategories.stream().map(pc->{
-    		return pc.init();
-    	}).collect(Collectors.toList()));
-    	setProducts(products.stream().map(p->{
-    		return p.init();
-    	}).collect(Collectors.toList()));
-    	return this;
+        setProductCategories(productCategories == null ? Lists.newArrayList() : productCategories.stream().map(pc -> {
+            return pc.init();
+        }).collect(Collectors.toList()));
+        setProducts(products == null ? Lists.newArrayList() : products.stream().map(p -> {
+            return p.init();
+        }).collect(Collectors.toList()));
+        return this;
     }
 
     @Override

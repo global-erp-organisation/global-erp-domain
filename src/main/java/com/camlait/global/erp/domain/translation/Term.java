@@ -46,14 +46,14 @@ public class Term extends BaseEntity {
     @PrePersist
     private void setKey() {
         setTermId(EntityHelper.getUidFor(termId));
-     }
+    }
 
     @Override
     public Term init() {
-    	setTermLanguages(termLanguages.stream().map(tl->{
-    		return tl.init();
-    	}).collect(Collectors.toList()));
-    	 return this;
+        setTermLanguages(termLanguages == null ? Lists.newArrayList() : termLanguages.stream().map(tl -> {
+            return tl.init();
+        }).collect(Collectors.toList()));
+        return this;
     }
 
     @Override

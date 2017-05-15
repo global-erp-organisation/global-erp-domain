@@ -38,51 +38,51 @@ import lombok.ToString;
 @Table(name = "`warehouse-warehouses`")
 public class Warehouse extends BaseEntity {
 
-	@Id
-	private String warehouseId;
+    @Id
+    private String warehouseId;
 
-	@Column(nullable = false, unique = true)
-	private String warehouseCode;
+    @Column(nullable = false, unique = true)
+    private String warehouseCode;
 
-	private String warehouseDescription;
+    private String warehouseDescription;
 
-	@Transient
-	private String centreId;
+    @Transient
+    private String centreId;
 
-	@ManyToOne
-	@JoinColumn(name = "centreId")
-	private Center centre;
+    @ManyToOne
+    @JoinColumn(name = "centreId")
+    private Center centre;
 
-	@Transient
-	private String workerId;
+    @Transient
+    private String workerId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "workerId")
-	private Employee worker;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "workerId")
+    private Employee worker;
 
-	@OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
-	private Collection<Store> stores = Lists.newArrayList();
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
+    private Collection<Store> stores = Lists.newArrayList();
 
-	public Warehouse() {
-	}
+    public Warehouse() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setWarehouseId(EntityHelper.getUidFor(warehouseId));
-	}
+    @PrePersist
+    private void setKey() {
+        setWarehouseId(EntityHelper.getUidFor(warehouseId));
+    }
 
-	@Override
-	public Warehouse init() {
-		setCentreId(centre == null ? null : centre.getLocalId());
-		setWorkerId(worker == null ? null : worker.getPartnerId());
-		setStores(stores.stream().map(s -> {
-			return s.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Warehouse init() {
+        setCentreId(centre == null ? null : centre.getLocalId());
+        setWorkerId(worker == null ? null : worker.getPartnerId());
+        setStores(stores == null ? Lists.newArrayList() : stores.stream().map(s -> {
+            return s.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return OtherEnum.WAREHOUSE;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return OtherEnum.WAREHOUSE;
+    }
 }

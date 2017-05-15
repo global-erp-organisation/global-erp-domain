@@ -35,48 +35,48 @@ import lombok.ToString;
 @Table(name = "`cash-journal-cashes`")
 public class CashJournal extends BaseEntity {
 
-	@Id
-	private String journalId;
+    @Id
+    private String journalId;
 
-	@Column(unique = true, nullable = false)
-	private String journalCode;
+    @Column(unique = true, nullable = false)
+    private String journalCode;
 
-	private String description;
+    private String description;
 
-	private Date startDate;
+    private Date startDate;
 
-	private Date endDate;
+    private Date endDate;
 
-	@Transient
-	private String cashId;
+    @Transient
+    private String cashId;
 
-	@ManyToOne
-	@JoinColumn(name = "cashId")
-	private Cash cash;
+    @ManyToOne
+    @JoinColumn(name = "cashId")
+    private Cash cash;
 
-	@OneToMany(mappedBy = "journal")
-	private Collection<CashOperation> operations = Lists.newArrayList();
+    @OneToMany(mappedBy = "journal")
+    private Collection<CashOperation> operations = Lists.newArrayList();
 
-	public CashJournal() {
-	}
+    public CashJournal() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setJournalId(EntityHelper.getUidFor(journalId));
-	}
+    @PrePersist
+    private void setKey() {
+        setJournalId(EntityHelper.getUidFor(journalId));
+    }
 
-	@Override
-	public CashJournal init() {
-		setCashId(cash == null ? null : cash.getCashId());
-		setOperations(operations.stream().map(o->{
-			return o.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public CashJournal init() {
+        setCashId(cash == null ? null : cash.getCashId());
+        setOperations(operations == null ? Lists.newArrayList() : operations.stream().map(o -> {
+            return o.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

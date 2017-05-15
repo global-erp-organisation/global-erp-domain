@@ -29,12 +29,12 @@ public class MarginClient extends Client {
     public MarginClient() {
         setPartnerType(PartnerType.MARGIN_CLIENT);
     }
-    
+
     @Override
     public MarginClient init() {
-    	setClientMargins(clientMargins.stream().map(cmo->{
-    		return cmo.init();
-    	}).collect(Collectors.toList()));
-    	return this;
+        setClientMargins(clientMargins == null ? Lists.newArrayList() : clientMargins.stream().map(cmo -> {
+            return cmo.init();
+        }).collect(Collectors.toList()));
+        return this;
     }
 }

@@ -29,13 +29,13 @@ public class StoreOperator extends Employee {
     public StoreOperator() {
         setPartnerType(PartnerType.STORE_OPERATOR);
     }
-    
+
     @Override
     public StoreOperator init() {
-    	setInventories(inventories.stream().map(i->{
-    		return i.init();
-    	}).collect(Collectors.toList()));
-     	return this;
+        setInventories(inventories == null ? Lists.newArrayList() : inventories.stream().map(i -> {
+            return i.init();
+        }).collect(Collectors.toList()));
+        return this;
     }
 
 }

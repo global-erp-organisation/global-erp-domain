@@ -29,27 +29,27 @@ import lombok.ToString;
 @Table(name = "`op-regulations`")
 public class Regulation extends Operation {
 
-	@OneToMany(mappedBy = "regulation")
-	private Collection<BillRegulation> billRegulations = Lists.newArrayList();
+    @OneToMany(mappedBy = "regulation")
+    private Collection<BillRegulation> billRegulations = Lists.newArrayList();
 
-	@Transient
-	private String regulationModeId;
+    @Transient
+    private String regulationModeId;
 
-	@ManyToOne
-	@JoinColumn(name = "regulationModeId")
-	private RegulationMode regulationMode;
+    @ManyToOne
+    @JoinColumn(name = "regulationModeId")
+    private RegulationMode regulationMode;
 
-	public Regulation() {
-	}
+    public Regulation() {
+    }
 
-	@Override
-	public Regulation init() {
-		setWorkerId(getWorker() == null ? null : getWorker().getPartnerId());
-		setPartnerId(getPartner() == null ? null : getPartner().getPartnerId());
-		setRegulationModeId(regulationMode == null ? null : regulationMode.getRegulationModeId());
-		setBillRegulations(billRegulations.stream().map(br->{
-			return br.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Regulation init() {
+        setWorkerId(getWorker() == null ? null : getWorker().getPartnerId());
+        setPartnerId(getPartner() == null ? null : getPartner().getPartnerId());
+        setRegulationModeId(regulationMode == null ? null : regulationMode.getRegulationModeId());
+        setBillRegulations(billRegulations == null ? Lists.newArrayList() : billRegulations.stream().map(br -> {
+            return br.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 }

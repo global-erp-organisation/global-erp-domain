@@ -42,92 +42,92 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`partner-partners`")
 public abstract class Partner extends BaseEntity {
 
-	@Id
-	private String partnerId;
+    @Id
+    private String partnerId;
 
-	@Column(name = "partnerCode", nullable = false, unique = true)
-	private String partnerCode;
+    @Column(name = "partnerCode", nullable = false, unique = true)
+    private String partnerCode;
 
-	@Column(length = 512)
-	private String adress;
+    @Column(length = 512)
+    private String adress;
 
-	private String phone;
+    private String phone;
 
-	@Enumerated(EnumType.STRING)
-	private PartnerType partnerType;
+    @Enumerated(EnumType.STRING)
+    private PartnerType partnerType;
 
-	@Transient
-	private String centerId;
+    @Transient
+    private String centerId;
 
-	@ManyToOne
-	@JoinColumn(name = "centerId")
-	private Center centre;
+    @ManyToOne
+    @JoinColumn(name = "centerId")
+    private Center centre;
 
-	@OneToMany(mappedBy = "client")
-	private Collection<SaleDocument> documents = Lists.newArrayList();
+    @OneToMany(mappedBy = "client")
+    private Collection<SaleDocument> documents = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "asset")
-	private Collection<PartnerAsset> partnerAssets = Lists.newArrayList();
+    @OneToMany(mappedBy = "asset")
+    private Collection<PartnerAsset> partnerAssets = Lists.newArrayList();
 
-	@OneToMany(mappedBy = "partner")
-	private Collection<Operation> operations = Lists.newArrayList();
+    @OneToMany(mappedBy = "partner")
+    private Collection<Operation> operations = Lists.newArrayList();
 
-	@Transient
-	private String partnerGroupId;
+    @Transient
+    private String partnerGroupId;
 
-	@ManyToOne
-	@JoinColumn(name = "partnerGroupId")
-	private PartnerGroup partnerGroup;
+    @ManyToOne
+    @JoinColumn(name = "partnerGroupId")
+    private PartnerGroup partnerGroup;
 
-	@Transient
-	private String tarifId;
+    @Transient
+    private String tarifId;
 
-	@ManyToOne
-	@JoinColumn(name = "tarifId")
-	private Tariff tarif;
+    @ManyToOne
+    @JoinColumn(name = "tarifId")
+    private Tariff tarif;
 
-	@OneToMany(mappedBy = "partner")
-	private Collection<RegulationModel> regulationModels = Lists.newArrayList();
+    @OneToMany(mappedBy = "partner")
+    private Collection<RegulationModel> regulationModels = Lists.newArrayList();
 
-	public Partner() {
-	}
+    public Partner() {
+    }
 
-	@PrePersist
-	private void setKey() {
-		setPartnerId(EntityHelper.getUidFor(partnerId));
-	}
+    @PrePersist
+    private void setKey() {
+        setPartnerId(EntityHelper.getUidFor(partnerId));
+    }
 
-	@Override
-	public Partner init() {
-		setCenterId(centre == null ? null : centre.getLocalId());
-		setPartnerGroupId(partnerGroup == null ? null : partnerGroup.getPartnerGroupId());
-		setTarifId(tarif == null ? null : tarif.getTarifId());
-		setDocuments(documents.stream().map(d -> {
-			return d.init();
-		}).collect(Collectors.toList()));
-		setPartnerAssets(partnerAssets.stream().map(pa -> {
-			return pa.init();
-		}).collect(Collectors.toList()));
-		setOperations(operations.stream().map(o -> {
-			return o.init();
-		}).collect(Collectors.toList()));
-		setRegulationModels(regulationModels.stream().map(rm -> {
-			return rm.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Partner init() {
+        setCenterId(centre == null ? null : centre.getLocalId());
+        setPartnerGroupId(partnerGroup == null ? null : partnerGroup.getPartnerGroupId());
+        setTarifId(tarif == null ? null : tarif.getTarifId());
+        setDocuments(documents == null ? Lists.newArrayList() : documents.stream().map(d -> {
+            return d.init();
+        }).collect(Collectors.toList()));
+        setPartnerAssets(partnerAssets == null ? Lists.newArrayList() : partnerAssets.stream().map(pa -> {
+            return pa.init();
+        }).collect(Collectors.toList()));
+        setOperations(operations == null ? Lists.newArrayList() : operations.stream().map(o -> {
+            return o.init();
+        }).collect(Collectors.toList()));
+        setRegulationModels(regulationModels == null ? Lists.newArrayList() : regulationModels.stream().map(rm -> {
+            return rm.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	public Boolean isEmployee() {
-		return this instanceof Employee;
-	}
+    public Boolean isEmployee() {
+        return this instanceof Employee;
+    }
 
-	public Boolean isClient() {
-		return this instanceof Client;
-	}
+    public Boolean isClient() {
+        return this instanceof Client;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

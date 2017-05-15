@@ -53,114 +53,114 @@ import lombok.ToString;
 @ToString(exclude = "documentDetails")
 public abstract class Document extends BaseEntity {
 
-	@Id
-	private String documentId;
+    @Id
+    private String documentId;
 
-	@Column(unique = true, nullable = false)
-	private String documentCode;
+    @Column(unique = true, nullable = false)
+    private String documentCode;
 
-	private Date documentDate;
+    private Date documentDate;
 
-	@Transient
-	private String storeId;
+    @Transient
+    private String storeId;
 
-	@ManyToOne
-	@JoinColumn(name = "storeId")
-	private Store store;
+    @ManyToOne
+    @JoinColumn(name = "storeId")
+    private Store store;
 
-	@Transient
-	private String workerId;
+    @Transient
+    private String workerId;
 
-	@ManyToOne
-	@JoinColumn(name = "workerId")
-	private Employee documentWorker;
+    @ManyToOne
+    @JoinColumn(name = "workerId")
+    private Employee documentWorker;
 
-	@Enumerated(EnumType.STRING)
-	private OperationDirection operationDirection;
+    @Enumerated(EnumType.STRING)
+    private OperationDirection operationDirection;
 
-	@Transient
-	private String dmId;
+    @Transient
+    private String dmId;
 
-	@ManyToOne
-	@JoinColumn(name = "dmId")
-	private DailyMovement dailyMovement;
+    @ManyToOne
+    @JoinColumn(name = "dmId")
+    private DailyMovement dailyMovement;
 
-	@Transient
-	private String inventoryId;
+    @Transient
+    private String inventoryId;
 
-	@ManyToOne
-	@JoinColumn(name = "inventoryId")
-	private Inventory inventory;
+    @ManyToOne
+    @JoinColumn(name = "inventoryId")
+    private Inventory inventory;
 
-	@OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-	private Collection<DocumentDetails> documentDetails = Lists.newArrayList();
+    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+    private Collection<DocumentDetails> documentDetails = Lists.newArrayList();
 
-	@Enumerated(EnumType.STRING)
-	private DocumentType documentType;
+    @Enumerated(EnumType.STRING)
+    private DocumentType documentType;
 
-	public Document() {
-	}
+    public Document() {
+    }
 
-	public boolean isClientBill() {
-		return this instanceof ClientBill;
-	}
+    public boolean isClientBill() {
+        return this instanceof ClientBill;
+    }
 
-	public boolean isCashBill() {
-		return this instanceof CashClientBill;
-	}
+    public boolean isCashBill() {
+        return this instanceof CashClientBill;
+    }
 
-	public boolean isMarginBill() {
-		return this instanceof MargingBill;
-	}
+    public boolean isMarginBill() {
+        return this instanceof MargingBill;
+    }
 
-	public boolean isSaleDocument() {
-		return this instanceof SaleDocument;
-	}
+    public boolean isSaleDocument() {
+        return this instanceof SaleDocument;
+    }
 
-	public boolean isBusinessDocument() {
-		return this instanceof BusinessDocument;
-	}
+    public boolean isBusinessDocument() {
+        return this instanceof BusinessDocument;
+    }
 
-	public boolean stockAffects() {
-		return (this instanceof StockDocument) || (this instanceof ClientBill);
-	}
+    public boolean stockAffects() {
+        return (this instanceof StockDocument) || (this instanceof ClientBill);
+    }
 
-	@PrePersist
-	private void setKey() {
-		if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
-			setDocumentId(EntityHelper.getUidFor(documentId));
-		} else {
-			throw new DataStorageException("Unable to store a document with no detail.");
-		}
-	}
+    @PrePersist
+    private void setKey() {
+        if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
+            setDocumentId(EntityHelper.getUidFor(documentId));
+        } else {
+            throw new DataStorageException("Unable to store a document with no detail.");
+        }
+    }
 
-	@Override
-	public Document init() {
-		setStoreId(store == null ? null : store.getStoreId());
-		setWorkerId(documentWorker == null ? null : documentWorker.getPartnerId());
-		setDmId(dailyMovement != null ? dailyMovement.getDmId() : null);
-		setInventoryId(inventory != null ? inventory.getInventoryId() : null);
-		setDocumentDetails(documentDetails.stream().map(dd->{
-			return dd.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public Document init() {
+        setStoreId(store == null ? null : store.getStoreId());
+        setWorkerId(documentWorker == null ? null : documentWorker.getPartnerId());
+        setDmId(dailyMovement != null ? dailyMovement.getDmId() : null);
+        setInventoryId(inventory != null ? inventory.getInventoryId() : null);
+        setDocumentDetails(documentDetails == null ? Lists.newArrayList() : documentDetails.stream().map(dd -> {
+            return dd.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return null;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
+    }
 
-	/**
-	 * remove a document detail into the current collection of document detail.
-	 * 
-	 * @param line
-	 * @return
-	 */
-	public Document removeLine(DocumentDetails line) {
-		if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
-			this.documentDetails.remove(line);
-		}
-		return this;
-	}
+    /**
+     * remove a document detail into the current collection of document detail.
+     * 
+     * @param line
+     * @return
+     */
+    public Document removeLine(DocumentDetails line) {
+        if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
+            this.documentDetails.remove(line);
+        }
+        return this;
+    }
 }

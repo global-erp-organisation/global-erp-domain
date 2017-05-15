@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.document.business.sale;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -35,6 +36,14 @@ public class ClientBill extends SaleDocument {
 
     @Override
     public EnumTypeEntitity toEnum() {
-         return DocumentType.CLIENT_BILL;
+        return DocumentType.CLIENT_BILL;
+    }
+
+    @Override
+    public ClientBill init() {
+        setBillRegulations(billRegulations == null ? Lists.newArrayList() : billRegulations.stream().map(br -> {
+            return br.init();
+        }).collect(Collectors.toList()));
+        return this;
     }
 }

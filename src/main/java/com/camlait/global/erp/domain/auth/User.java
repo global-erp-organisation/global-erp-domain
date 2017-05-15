@@ -30,61 +30,60 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = { "resourceUsers" })
-@ToString(exclude = { "resourceUsers" })
+@EqualsAndHashCode(callSuper = false, exclude = {"resourceUsers"})
+@ToString(exclude = {"resourceUsers"})
 @Builder
 @Table(name = "`auth-users`")
 public class User extends BaseEntity {
-	@Id
-	private String userId;
+    @Id
+    private String userId;
 
-	@Column(nullable = false)
-	private String email;
+    @Column(nullable = false)
+    private String email;
 
-	@Transient
-	@JsonIgnore
-	private String password;
+    @Transient
+    @JsonIgnore
+    private String password;
 
-	private String encryptPassword;
+    private String encryptPassword;
 
-	@OneToMany(mappedBy = "user")
-	private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
+    @OneToMany(mappedBy = "user")
+    private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "`auth-groupe-users`", joinColumns = { @JoinColumn(name = "`group-id`") }, inverseJoinColumns = {
-			@JoinColumn(name = "`user-id`") }, uniqueConstraints = @UniqueConstraint(columnNames = { "`group-id`",
-					"`user-id`" }))
-	private Collection<Group> groups = Lists.newArrayList();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "`auth-groupe-users`", joinColumns = {@JoinColumn(name = "`group-id`")}, inverseJoinColumns = {@JoinColumn(name = "`user-id`")},
+               uniqueConstraints = @UniqueConstraint(columnNames = {"`group-id`", "`user-id`"}))
+    private Collection<Group> groups = Lists.newArrayList();
 
-	public User() {
-	}
+    public User() {
+    }
 
-	@Override
-	public User init() {
-		setResourceUsers(resourceUsers.stream().map(ru -> {
-			return ru.init();
-		}).collect(Collectors.toList()));
-		setGroups(groups.stream().map(g -> {
-			return g.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public User init() {
+        setResourceUsers(resourceUsers == null ? Lists.newArrayList() : resourceUsers.stream().map(ru -> {
+            return ru.init();
+        }).collect(Collectors.toList()));
+        setGroups(groups == null ? Lists.newArrayList() : groups.stream().map(g -> {
+            return g.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	public User ressourceGroupCopy() {
-		if (groups != null && !groups.isEmpty()) {
-			groups.stream().forEach(g -> {
-				Collection<ResourceUser> ru = g.getResourceGroups().stream().map(rg -> {
-					return ResourceUser.builder().state(rg.getState()).resource(rg.getResource())
-							.resourceId(rg.getResourceId()).user(this).userId(this.getUserId()).build();
-				}).collect(Collectors.toList());
-				resourceUsers.addAll(ru);
-			});
-		}
-		return this;
-	}
+    public User ressourceGroupCopy() {
+        if (groups != null && !groups.isEmpty()) {
+            groups.stream().forEach(g -> {
+                Collection<ResourceUser> ru = g.getResourceGroups().stream().map(rg -> {
+                    return ResourceUser.builder().state(rg.getState()).resource(rg.getResource()).resourceId(rg.getResourceId()).user(this)
+                            .userId(this.getUserId()).build();
+                }).collect(Collectors.toList());
+                resourceUsers.addAll(ru);
+            });
+        }
+        return this;
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return null;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
+    }
 }

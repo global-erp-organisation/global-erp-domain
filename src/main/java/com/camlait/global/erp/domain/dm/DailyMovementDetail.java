@@ -36,77 +36,77 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`dm-daily-movement-details`")
 public class DailyMovementDetail extends BaseEntity {
 
-	@Id
-	private String dmdId;
+    @Id
+    private String dmdId;
 
-	@Transient
-	private String productId;
+    @Transient
+    private String productId;
 
-	@ManyToOne
-	@JoinColumn(name = "productId")
-	private Product product;
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
 
-	private Long lineQuantity;
-	private double lineUnitPrice;
+    private Long lineQuantity;
+    private double lineUnitPrice;
 
-	@Transient
-	private String dmId;
+    @Transient
+    private String dmId;
 
-	@ManyToOne
-	@JoinColumn(name = "dmId")
-	private DailyMovement dailyMovement;
+    @ManyToOne
+    @JoinColumn(name = "dmId")
+    private DailyMovement dailyMovement;
 
-	@Transient
-	private String documentId;
+    @Transient
+    private String documentId;
 
-	@ManyToOne
-	@JoinColumn(name = "documentId")
-	private Document document;
+    @ManyToOne
+    @JoinColumn(name = "documentId")
+    private Document document;
 
-	@OneToMany(mappedBy = "dailyMovementDetail", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Collection<DailyMovmentDetailTax> dailyMovmentDetailTaxes = Lists.newArrayList();
+    @OneToMany(mappedBy = "dailyMovementDetail", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Collection<DailyMovmentDetailTax> dailyMovmentDetailTaxes = Lists.newArrayList();
 
-	public DailyMovementDetail() {
-	}
+    public DailyMovementDetail() {
+    }
 
-	/**
-	 * Built the tax details for the current object.
-	 * 
-	 * @return The current object with associated tax details.
-	 */
-	public DailyMovementDetail buildTaxes() {
-		if (document != null && document.isBusinessDocument()) {
-			document.getDocumentDetails().stream().forEach(ld -> {
-				final Collection<DailyMovmentDetailTax> taxes = ld.getDocumentDetailsTaxes().stream().map(lt -> {
-					return DailyMovmentDetailTax.builder().dailyMovementDetail(this).dmdId(this.getDmdId())
-							.taxRate(lt.getTaxRate()).tax(lt.getTax()).taxId(lt.getTaxId()).build();
-				}).collect(Collectors.toList());
-				dailyMovmentDetailTaxes.addAll(taxes);
-			});
-		}
-		return this;
-	}
+    /**
+     * Built the tax details for the current object.
+     * 
+     * @return The current object with associated tax details.
+     */
+    public DailyMovementDetail buildTaxes() {
+        if (document != null && document.isBusinessDocument()) {
+            document.getDocumentDetails().stream().forEach(ld -> {
+                final Collection<DailyMovmentDetailTax> taxes = ld.getDocumentDetailsTaxes().stream().map(lt -> {
+                    return DailyMovmentDetailTax.builder().dailyMovementDetail(this).dmdId(this.getDmdId()).taxRate(lt.getTaxRate()).tax(lt.getTax())
+                            .taxId(lt.getTaxId()).build();
+                }).collect(Collectors.toList());
+                dailyMovmentDetailTaxes.addAll(taxes);
+            });
+        }
+        return this;
+    }
 
-	@Override
-	public DailyMovementDetail init() {
-		setProductId(product == null ? null : product.getProductId());
-		setDmId(dailyMovement == null ? null : dailyMovement.getDmId());
-		setDocumentId(document == null ? null : document.getDocumentId());
-		setDailyMovmentDetailTaxes(dailyMovmentDetailTaxes.stream().map(dmt->{
-			return dmt.init();
-		}).collect(Collectors.toList()));
-		return this;
-	}
+    @Override
+    public DailyMovementDetail init() {
+        setProductId(product == null ? null : product.getProductId());
+        setDmId(dailyMovement == null ? null : dailyMovement.getDmId());
+        setDocumentId(document == null ? null : document.getDocumentId());
+        setDailyMovmentDetailTaxes(dailyMovmentDetailTaxes == null ? Lists.newArrayList() : dailyMovmentDetailTaxes.stream().map(dmt -> {
+            return dmt.init();
+        }).collect(Collectors.toList()));
+        return this;
+    }
 
-	@PrePersist
-	@PreUpdate
-	private void setKey() {
-		setDmdId(EntityHelper.getUidFor(dmdId));
-		buildTaxes();
-	}
+    @PrePersist
+    @PreUpdate
+    private void setKey() {
+        setDmdId(EntityHelper.getUidFor(dmdId));
+        buildTaxes();
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return null;
-	}
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
+    }
 }
