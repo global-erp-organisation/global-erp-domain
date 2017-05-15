@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "`reg-regulation-modes`")
@@ -42,7 +42,8 @@ public abstract class RegulationMode extends BaseEntity {
     }
 
     @Override
-    public void postConstructOperation() {
+    public RegulationMode init() {
+    	return this;
     }
 
     @Override

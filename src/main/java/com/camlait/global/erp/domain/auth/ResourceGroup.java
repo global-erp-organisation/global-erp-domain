@@ -14,9 +14,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.State;
 import com.camlait.global.erp.domain.keys.ResourceGroupKey;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +22,7 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -32,45 +30,41 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = ResourceGroupKey.class)
 public class ResourceGroup extends BaseEntity {
 
-    
-    @Transient
-    private String groupId;
+	@Transient
+	private String groupId;
 
-    @Id
-    @JsonBackReference
-    
-    @ManyToOne
-    @JoinColumn(name = "groupId")
-    private Group group;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "groupId")
+	private Group group;
 
-    
-    @Transient
-    private String resourceId;
+	@Transient
+	private String resourceId;
 
-    @Id
-    @JsonBackReference
-    
-    @ManyToOne
-    @JoinColumn(name = "resourceId")
-    private Resource resource;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "resourceId")
+	private Resource resource;
 
-    @Enumerated(EnumType.STRING)
-    private State state;
-    public ResourceGroup() {
-    }
+	@Enumerated(EnumType.STRING)
+	private State state;
 
-    public void setRessourceId() {
-        setResourceId(getResource().getResourceId());
-    }
+	public ResourceGroup() {
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setGroupId(group.getGroupId());
-        setResourceId(resource.getResourceId());
-    }
+	public void setRessourceId() {
+		setResourceId(getResource().getResourceId());
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-         return null;
-    }
+	@Override
+	public ResourceGroup init() {
+		setGroupId(group == null ? null : group.getGroupId());
+		setResourceId(resource == null ? null : resource.getResourceId());
+		return this;
+	}
+
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 }

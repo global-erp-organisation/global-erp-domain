@@ -37,7 +37,8 @@ public class Tariff extends BaseEntity {
     }
 
     @Override
-    public void postConstructOperation() {
+    public Tariff init() {
+    	return this;
     }
 
     @Override

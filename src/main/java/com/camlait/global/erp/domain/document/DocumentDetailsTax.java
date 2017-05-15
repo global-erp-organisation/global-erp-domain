@@ -12,7 +12,6 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.DocumentDetailsTaxKey;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +20,7 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -29,37 +28,36 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = DocumentDetailsTaxKey.class)
 public class DocumentDetailsTax extends BaseEntity {
 
-    @Transient
-    private String docDetailId;
+	@Transient
+	private String docDetailId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "docDetailId")
-    private DocumentDetails documentDetails;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "docDetailId")
+	private DocumentDetails documentDetails;
 
-    @Transient
-    private String taxId;
+	@Transient
+	private String taxId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "taxId")
-    private Tax tax;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "taxId")
+	private Tax tax;
 
-    private double taxRate;
+	private double taxRate;
 
-    public DocumentDetailsTax() {
-    }
+	public DocumentDetailsTax() {
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setDocDetailId(documentDetails.getDocDetailId());
-        setTaxId(tax.getTaxId());
-    }
+	@Override
+	public DocumentDetailsTax init() {
+		setDocDetailId(documentDetails == null ? null : documentDetails.getDocDetailId());
+		setTaxId(tax == null ? null : tax.getTaxId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 }

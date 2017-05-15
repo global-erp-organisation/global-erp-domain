@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.inventory;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,8 +22,6 @@ import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.StoreOperator;
 import com.camlait.global.erp.domain.warehouse.Store;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -33,76 +32,75 @@ import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = {"documents", "inventoryDetails"})
-@ToString(exclude = {"documents", "inventoryDetails"})
+@EqualsAndHashCode(callSuper = false, exclude = { "documents", "inventoryDetails" })
+@ToString(exclude = { "documents", "inventoryDetails" })
 @Builder
 @Table(name = "`inv-inventories`")
 public class Inventory extends BaseEntity {
 
-    @Id
-    private String inventoryId;
+	@Id
+	private String inventoryId;
 
-    @Column(nullable = false, unique = true)
-    private String inventoryCode;
+	@Column(nullable = false, unique = true)
+	private String inventoryCode;
 
-    @Column(nullable = false)
-    private Date inventoryDate;
+	@Column(nullable = false)
+	private Date inventoryDate;
 
-    private String note;
+	private String note;
 
-    @Transient
-    private String storeId;
+	@Transient
+	private String storeId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "storeId")
-    private Store store;
+	@ManyToOne
+	@JoinColumn(name = "storeId")
+	private Store store;
 
-    @Transient
-    private String outgoingWarehouserId;
+	@Transient
+	private String outgoingWarehouserId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "outgoingWarehouserId")
-    private StoreOperator outgoingWarehouser;
+	@ManyToOne
+	@JoinColumn(name = "outgoingWarehouserId")
+	private StoreOperator outgoingWarehouser;
 
-    @Transient
-    private String incomingWarehouserId;
+	@Transient
+	private String incomingWarehouserId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "incomingWarehouserId")
-    private StoreOperator incomingWarehouser;
+	@ManyToOne
+	@JoinColumn(name = "incomingWarehouserId")
+	private StoreOperator incomingWarehouser;
 
-    private boolean closedInventory;
+	private boolean closedInventory;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
-    private Collection<Document> documents = Lists.newArrayList();
+	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+	private Collection<Document> documents = Lists.newArrayList();
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
-    private Collection<InventoryDetail> inventoryDetails = Lists.newArrayList();
+	@OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+	private Collection<InventoryDetail> inventoryDetails = Lists.newArrayList();
 
-    public Inventory() {
-    }
+	public Inventory() {
+	}
 
-    @PrePersist
-    private void setKey() {
-        setInventoryId(EntityHelper.getUidFor(inventoryId));
-    }
+	@PrePersist
+	private void setKey() {
+		setInventoryId(EntityHelper.getUidFor(inventoryId));
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setStoreId(store.getStoreId());
-        setIncomingWarehouserId(incomingWarehouser.getPartnerId());
-        setOutgoingWarehouserId(outgoingWarehouser.getPartnerId());
-    }
-    
-    @Override
-    public EnumTypeEntitity toEnum() {
-         return OtherEnum.INVENTAIRE;
-    }
+	@Override
+	public Inventory init() {
+		setStoreId(store == null ? null : store.getStoreId());
+		setIncomingWarehouserId(incomingWarehouser == null ? null : incomingWarehouser.getPartnerId());
+		setOutgoingWarehouserId(outgoingWarehouser == null ? null : outgoingWarehouser.getPartnerId());
+		setInventoryDetails(inventoryDetails.stream().map(id->{
+			return id.init();
+		}).collect(Collectors.toList()));
+		return this;
+	}
+
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return OtherEnum.INVENTAIRE;
+	}
 }

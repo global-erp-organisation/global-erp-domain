@@ -16,7 +16,6 @@ import com.camlait.global.erp.domain.enumeration.EvaluationMode;
 import com.camlait.global.erp.domain.enumeration.RegulationCondition;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.Partner;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,54 +26,53 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Builder
 @Table(name = "`reg-regulation-models`")
 public class RegulationModel extends BaseEntity {
-    @Id
-    private String modeleId;
+	@Id
+	private String modeleId;
 
-    @Enumerated(EnumType.ORDINAL)
-    private EvaluationMode modeEvaluation;
-    private double value;
-    private int numberOfDay;
+	@Enumerated(EnumType.ORDINAL)
+	private EvaluationMode modeEvaluation;
+	private double value;
+	private int numberOfDay;
 
-    @Enumerated(EnumType.ORDINAL)
-    private RegulationCondition regulationCondition;
+	@Enumerated(EnumType.ORDINAL)
+	private RegulationCondition regulationCondition;
 
-    @Transient
-    private String regulationModeId;
+	@Transient
+	private String regulationModeId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "regulationModeId")
-    private RegulationMode regulationMode;
+	@ManyToOne
+	@JoinColumn(name = "regulationModeId")
+	private RegulationMode regulationMode;
 
-    @Transient
-    private String partnerId;
+	@Transient
+	private String partnerId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "partnerId")
-    private Partner partner;
+	@ManyToOne
+	@JoinColumn(name = "partnerId")
+	private Partner partner;
 
-    public RegulationModel() {
-        super();
-    }
+	public RegulationModel() {
+		super();
+	}
 
-    @PrePersist
-    private void setKey() {
-        setModeleId(EntityHelper.getUidFor(modeleId));
-    }
+	@PrePersist
+	private void setKey() {
+		setModeleId(EntityHelper.getUidFor(modeleId));
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setRegulationModeId(regulationMode.getRegulationModeId());
-    }
+	@Override
+	public RegulationModel init() {
+		setRegulationModeId(regulationMode == null ? null : regulationMode.getRegulationModeId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

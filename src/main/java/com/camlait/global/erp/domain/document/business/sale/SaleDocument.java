@@ -6,13 +6,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.enumeration.OperationDirection;
-import com.camlait.global.erp.domain.localization.Zone;
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.BusinessDocument;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
+import com.camlait.global.erp.domain.enumeration.OperationDirection;
+import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.partner.Client;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,49 +20,47 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`doc-document-sales`")
 public class SaleDocument extends BusinessDocument {
 
-    @Transient
-    private String clientId;
+	@Transient
+	private String clientId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "clientId")
-    private Client client;
+	@ManyToOne
+	@JoinColumn(name = "clientId")
+	private Client client;
 
-    @Transient
-    private String zoneId;
+	@Transient
+	private String zoneId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "zoneId")
-    private Zone zone;
+	@ManyToOne
+	@JoinColumn(name = "zoneId")
+	private Zone zone;
 
-    private boolean documentSolde;
+	private boolean documentSolde;
 
-    public SaleDocument() {
-        setOperationDirection(OperationDirection.OUT);
-        setDocumentType(DocumentType.SALE_DOCUMENT);
-    }
+	public SaleDocument() {
+		setOperationDirection(OperationDirection.OUT);
+		setDocumentType(DocumentType.SALE_DOCUMENT);
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setStoreId(getStore().getStoreId());
-        setWorkerId(getDocumentWorker().getPartnerId());
-        setDmId(getDailyMovement() != null ? getDailyMovement().getDmId() : null);
-        setInventoryId(getInventory() != null ? getInventory().getInventoryId() : null);
-        setClientId(client.getPartnerId());
-        setZoneId(zone.getLocalId());
-    }
-    
-    @Override
-    public EnumTypeEntitity toEnum() {
-         return DocumentType.SALE_DOCUMENT;
-    }
+	@Override
+	public SaleDocument init() {
+		setStoreId(getStore() == null ? null : getStore().getStoreId());
+		setWorkerId(getDocumentWorker() == null ? null : getDocumentWorker().getPartnerId());
+		setDmId(getDailyMovement() == null ? null : getDailyMovement() != null ? getDailyMovement().getDmId() : null);
+		setInventoryId(getInventory() != null ? getInventory().getInventoryId() : null);
+		setClientId(client == null ? null : client.getPartnerId());
+		setZoneId(zone == null ? null : zone.getLocalId());
+		return this;
+	}
 
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return DocumentType.SALE_DOCUMENT;
+	}
 
 }

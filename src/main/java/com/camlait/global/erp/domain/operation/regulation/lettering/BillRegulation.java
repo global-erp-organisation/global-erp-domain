@@ -15,7 +15,6 @@ import com.camlait.global.erp.domain.document.business.sale.ClientBill;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.BillRegulationKey;
 import com.camlait.global.erp.domain.operation.regulation.Regulation;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +23,7 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = false)
@@ -32,39 +31,38 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = BillRegulationKey.class)
 public class BillRegulation extends BaseEntity {
 
-    @Transient
-    private String documentId;
+	@Transient
+	private String documentId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "documentId")
-    private ClientBill bill;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "documentId")
+	private ClientBill bill;
 
-    @Transient
-    private String regulationId;
+	@Transient
+	private String regulationId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "regulationId")
-    private Regulation regulation;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "regulationId")
+	private Regulation regulation;
 
-    private Date distributionDate;
+	private Date distributionDate;
 
-    private Double distributionValue;
+	private Double distributionValue;
 
-    public BillRegulation() {
-    }
+	public BillRegulation() {
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setDocumentId(bill.getDocumentId());
-        setRegulationId(regulation.getOperationId());
-    }
+	@Override
+	public BillRegulation init() {
+		setDocumentId(bill == null ? null : bill.getDocumentId());
+		setRegulationId(regulation == null ? null : regulation.getOperationId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 }

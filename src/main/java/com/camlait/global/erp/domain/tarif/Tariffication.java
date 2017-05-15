@@ -13,7 +13,6 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.TarifficationKey;
 import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.product.Product;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,63 +23,60 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Builder
 @Table(name = "`tarif-tarifications`")
 @IdClass(value = TarifficationKey.class)
 public class Tariffication extends BaseEntity {
 
-    @Transient
-    private String zoneId;
+	@Transient
+	private String zoneId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "zoneId")
-    private Zone zone;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "zoneId")
+	private Zone zone;
 
-    @Transient
-    private String productId;
+	@Transient
+	private String productId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "productId")
-    private Product product;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "productId")
+	private Product product;
 
-    @Transient
-    private String tarifId;
+	@Transient
+	private String tarifId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "tarifId")
-    private Tariff tarif;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "tarifId")
+	private Tariff tarif;
 
-    @Transient
-    private String priceTypeId;
+	@Transient
+	private String priceTypeId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "priceTypeId")
-    private PriceType priceType;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "priceTypeId")
+	private PriceType priceType;
 
-    private Double value;
+	private Double value;
 
-    public Tariffication() {
-    }
+	public Tariffication() {
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setProductId(product.getProductId());
-        setZoneId(zone.getLocalId());
-        setTarifId(tarif.getTarifId());
-        setPriceTypeId(priceType.getPriceTypeId());
-    }
+	@Override
+	public Tariffication init() {
+		setProductId(product == null ? null : product.getProductId());
+		setZoneId(zone == null ? null : zone.getLocalId());
+		setTarifId(tarif == null ? null : tarif.getTarifId());
+		setPriceTypeId(priceType == null ? null : priceType.getPriceTypeId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 }

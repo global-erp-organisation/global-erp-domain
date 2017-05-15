@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.document.business;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,9 +19,6 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.product.ProductCategory;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -31,7 +29,7 @@ import lombok.ToString;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true, exclude = {"products", "productCategories"})
 @ToString(exclude = {"products", "productCategories"})
@@ -49,13 +47,11 @@ public class Tax extends BaseEntity {
 
     private double percentageValue;
 
-    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "`product-product-taxes`", joinColumns = {@JoinColumn(name = "`product-id`")}, inverseJoinColumns = {@JoinColumn(name = "`tax-id`")},
                uniqueConstraints = @UniqueConstraint(columnNames = {"`product-id`", "`tax-id`"}))
     private Collection<Product> products;
 
-    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "`product-category-product-taxes`", joinColumns = {@JoinColumn(name = "`product-category-id`")},
                inverseJoinColumns = {@JoinColumn(name = "`tax-id`")},
@@ -71,7 +67,14 @@ public class Tax extends BaseEntity {
     }
 
     @Override
-    public void postConstructOperation() {
+    public Tax init() {
+    	setProductCategories(productCategories.stream().map(pc->{
+    		return pc.init();
+    	}).collect(Collectors.toList()));
+    	setProducts(products.stream().map(p->{
+    		return p.init();
+    	}).collect(Collectors.toList()));
+    	return this;
     }
 
     @Override

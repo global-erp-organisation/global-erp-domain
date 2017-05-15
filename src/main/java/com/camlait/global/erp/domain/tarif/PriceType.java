@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = true)
@@ -36,7 +36,8 @@ public class PriceType extends BaseEntity {
     }
 
     @Override
-    public void postConstructOperation() {
+    public PriceType init() {
+    	return this;
     }
 
     @Override

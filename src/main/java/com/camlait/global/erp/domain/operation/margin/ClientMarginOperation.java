@@ -8,15 +8,13 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.partner.MarginClient;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`op-marge-clients`")
@@ -25,11 +23,15 @@ public class ClientMarginOperation extends Operation {
     @Transient
     private String clientMargeId;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "clientMargeId")
     private MarginClient client;
 
     public ClientMarginOperation() {
+    }
+    
+    @Override
+    public ClientMarginOperation init() {
+    	return this;
     }
 }

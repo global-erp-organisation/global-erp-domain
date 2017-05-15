@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 @SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "`loc-localizations`")
@@ -48,7 +48,8 @@ public  abstract class Localization extends BaseEntity {
     }
 
     @Override
-    public void postConstructOperation() {
+    public BaseEntity init() {
+    	return this;
     }
 
     @Override

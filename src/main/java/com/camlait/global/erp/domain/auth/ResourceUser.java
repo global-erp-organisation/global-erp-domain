@@ -14,9 +14,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.State;
 import com.camlait.global.erp.domain.keys.ResourceUserKey;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +22,7 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -32,48 +30,44 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = ResourceUserKey.class)
 public class ResourceUser extends BaseEntity {
 
-    
-    @Transient
-    private String userId;
+	@Transient
+	private String userId;
 
-    @Id
-    @JsonBackReference
-    
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private User user;
 
-    @Transient
-    private String resourceId;
+	@Transient
+	private String resourceId;
 
-    @Id
-    @JsonBackReference
-    
-    @ManyToOne
-    @JoinColumn(name = "resourceId")
-    private Resource resource;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "resourceId")
+	private Resource resource;
 
-    @Enumerated(EnumType.STRING)
-    private State state;
+	@Enumerated(EnumType.STRING)
+	private State state;
 
-    public ResourceUser(User user, Resource resource, State state) {
-        super();
-        this.user = user;
-        this.resource = resource;
-        this.state = state;
-    }
+	public ResourceUser(User user, Resource resource, State state) {
+		super();
+		this.user = user;
+		this.resource = resource;
+		this.state = state;
+	}
 
-    public ResourceUser() {
-    }
+	public ResourceUser() {
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setResourceId(resource.getResourceId());
-        setUserId(user.getUserId());
-    }
+	@Override
+	public ResourceUser init() {
+		setResourceId(resource == null ? null : resource.getResourceId());
+		setUserId(user == null ? null : user.getUserId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 }

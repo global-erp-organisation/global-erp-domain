@@ -23,49 +23,50 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
+@AllArgsConstructor
 @Table(name = "`asset-partner-assets`")
 @IdClass(value = PartnerAssetKey.class)
 public class PartnerAsset extends BaseEntity {
 
-    @Transient
-    private String partnerId;
+	@Transient
+	private String partnerId;
 
-    @Id
-    @JsonBackReference
+	@Id
+	@JsonBackReference
 
-    @ManyToOne
-    @JoinColumn(name = "partenaireId")
-    private Partner partner;
+	@ManyToOne
+	@JoinColumn(name = "partenaireId")
+	private Partner partner;
 
-    @Transient
-    private String immoId;
+	@Transient
+	private String immoId;
 
-    @Id
-    @JsonBackReference
+	@Id
+	@JsonBackReference
 
-    @ManyToOne
-    @JoinColumn(name = "assetId")
-    private Asset asset;
+	@ManyToOne
+	@JoinColumn(name = "assetId")
+	private Asset asset;
 
-    private Date allocationDate;
+	private Date allocationDate;
 
-    private boolean active;
+	private boolean active;
 
-    public PartnerAsset() {
-    }
+	public PartnerAsset() {
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setPartnerId(partner.getPartnerId());
-        setImmoId(asset.getAssetId());
-    }
+	@Override
+	public PartnerAsset init() {
+		setPartnerId(partner == null ? null : partner.getPartnerId());
+		setImmoId(asset == null ? null : asset.getAssetId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 }

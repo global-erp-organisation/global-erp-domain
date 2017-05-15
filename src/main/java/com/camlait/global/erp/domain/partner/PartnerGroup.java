@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.partner;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,7 +12,6 @@ import javax.persistence.Table;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.helper.EntityHelper;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Builder
 @Table(name = "`partenaire-groupe-partners`")
 public class PartnerGroup extends BaseEntity {
@@ -33,7 +33,6 @@ public class PartnerGroup extends BaseEntity {
 
     private String partnerGroupDescription;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "partnerGroup")
     private Collection<Partner> partners = Lists.newArrayList();
 
@@ -48,7 +47,11 @@ public class PartnerGroup extends BaseEntity {
     }
 
     @Override
-    public void postConstructOperation() {
+    public PartnerGroup init() {
+    	setPartners(partners.stream().map(p->{
+    		return p.init();
+    	}).collect(Collectors.toList()));
+    	return this;
     }
 
     @Override

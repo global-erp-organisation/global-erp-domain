@@ -12,7 +12,6 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.InventoryDetailKey;
 import com.camlait.global.erp.domain.product.Product;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +20,7 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -29,44 +28,43 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = InventoryDetailKey.class)
 public class InventoryDetail extends BaseEntity {
 
-    @Transient
-    private String inventoryId;
+	@Transient
+	private String inventoryId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "inventoryId")
-    private Inventory inventory;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "inventoryId")
+	private Inventory inventory;
 
-    @Transient
-    private String productId;
+	@Transient
+	private String productId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "productId")
-    private Product product;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "productId")
+	private Product product;
 
-    private Long realQuantity;
+	private Long realQuantity;
 
-    private Long ajustQuantity;
+	private Long ajustQuantity;
 
-    private double realUnitPrice;
+	private double realUnitPrice;
 
-    private double ajustUnitPrice;
+	private double ajustUnitPrice;
 
-    public InventoryDetail() {
-    }
+	public InventoryDetail() {
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setInventoryId(inventory.getInventoryId());
-        setProductId(product.getProductId());
-    }
+	@Override
+	public InventoryDetail init() {
+		setInventoryId(inventory == null ? null : inventory.getInventoryId());
+		setProductId(product == null ? null : product.getProductId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 
 }

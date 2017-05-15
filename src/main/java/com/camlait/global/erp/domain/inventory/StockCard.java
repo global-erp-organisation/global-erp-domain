@@ -15,7 +15,6 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.StockCardKey;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.warehouse.Store;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,45 +25,44 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Builder
 @Table(name = "`inv-stock-cards`")
 @IdClass(value = StockCardKey.class)
 public class StockCard extends BaseEntity {
 
-    @Id
-    private Date stockDate;
+	@Id
+	private Date stockDate;
 
-    @Transient
-    private String storeId;
+	@Transient
+	private String storeId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "storeId")
-    private Store store;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "storeId")
+	private Store store;
 
-    @Transient
-    private String productId;
+	@Transient
+	private String productId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "productId")
-    private Product product;
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "productId")
+	private Product product;
 
-    public StockCard() {
-        super();
-    }
+	public StockCard() {
+		super();
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setStoreId(store.getStoreId());
-        setProductId(product.getProductId());
-    }
+	@Override
+	public StockCard init() {
+		setStoreId(store == null ? null : store.getStoreId());
+		setProductId(product == null ? null : product.getProductId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 }

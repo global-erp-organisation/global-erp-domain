@@ -6,8 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.operation.Operation;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,27 +15,27 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @Table(name = "`op-cash-operations`")
 @EqualsAndHashCode(callSuper = true)
 public class CashOperation extends Operation {
 
-    @Transient
-    private String journalId;
+	@Transient
+	private String journalId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "journalId")
-    private CashJournal journal;
+	@ManyToOne
+	@JoinColumn(name = "journalId")
+	private CashJournal journal;
 
-    public CashOperation() {
-    }
+	public CashOperation() {
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setWorkerId(getWorker().getPartnerId());
-        setPartnerId(getPartner().getPartnerId());
-        setJournalId(journal.getJournalId());
-    }
+	@Override
+	public CashOperation init() {
+		setWorkerId(getWorker() == null ? null : getWorker().getPartnerId());
+		setPartnerId(getPartner() == null ? null : getPartner().getPartnerId());
+		setJournalId(journal == null ? null : journal.getJournalId());
+		return this;
+	}
 }

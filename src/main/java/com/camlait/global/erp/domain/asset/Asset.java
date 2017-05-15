@@ -14,14 +14,12 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@AllArgsConstructor(suppressConstructorProperties = true)
 @Data
 @Table(name = "`asset-assets`")
 @EqualsAndHashCode(callSuper = false)
@@ -48,7 +46,8 @@ public abstract class Asset extends BaseEntity {
     }
 
     @Override
-    public void postConstructOperation() {
+    public Asset init() {
+    	return this;
     }
 
     @Override

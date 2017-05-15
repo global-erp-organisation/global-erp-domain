@@ -12,7 +12,6 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.TermLanguageKey;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +20,7 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -29,48 +28,46 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = TermLanguageKey.class)
 public class TermLanguage extends BaseEntity {
 
-    @Transient
-    private String termId;
+	@Transient
+	private String termId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "termId")
-    private Term term;
+	@Id
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "termId")
+	private Term term;
 
-    @Transient
-    private String languageId;
+	@Transient
+	private String languageId;
 
-    @Id
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "languageId")
-    private Language language;
+	@Id
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "languageId")
+	private Language language;
 
-    private String translatedValue;
-    
-    public TermLanguage() {
-        super();
-    }
+	private String translatedValue;
 
-    public void setTermeId() {
-        setTermId(getTerm().getTermId());
-    }
+	public TermLanguage() {
+		super();
+	}
 
-    public void setLangueId() {
-        setLanguageId(getLanguage().getLangId());
-    }
+	public void setTermeId() {
+		setTermId(getTerm().getTermId());
+	}
 
+	public void setLangueId() {
+		setLanguageId(getLanguage().getLangId());
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setLanguageId(language.getLangId());
-        setTermId(term.getTermId());
-    }
+	@Override
+	public TermLanguage init() {
+		setLanguageId(language == null ? null : language.getLangId());
+		setTermId(term == null ? null : term.getTermId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

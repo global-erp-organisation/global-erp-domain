@@ -20,7 +20,6 @@ import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Partner;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,56 +28,55 @@ import lombok.EqualsAndHashCode;
 @SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "`op-operations`")
 public abstract class Operation extends BaseEntity {
 
-    @Id
-    private String operationId;
+	@Id
+	private String operationId;
 
-    private Date operationDate;
+	private Date operationDate;
 
-    @Enumerated(EnumType.STRING)
-    private OperationDirection operationDirection;
+	@Enumerated(EnumType.STRING)
+	private OperationDirection operationDirection;
 
-    private String operationLabel;
+	private String operationLabel;
 
-    private double operationValue;
+	private double operationValue;
 
-    @Transient
-    private String workerId;
+	@Transient
+	private String workerId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "workerId")
-    private Employee worker;
+	@ManyToOne
+	@JoinColumn(name = "workerId")
+	private Employee worker;
 
-    @Transient
-    private String partnerId;
+	@Transient
+	private String partnerId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "partnerId")
-    private Partner partner;
+	@ManyToOne
+	@JoinColumn(name = "partnerId")
+	private Partner partner;
 
-    public Operation() {
-    }
+	public Operation() {
+	}
 
-    @PrePersist
-    private void setKey() {
-        setOperationId(EntityHelper.getUidFor(operationId));
-    }
+	@PrePersist
+	private void setKey() {
+		setOperationId(EntityHelper.getUidFor(operationId));
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setWorkerId(worker.getPartnerId());
-        setPartnerId(partner.getPartnerId());
-    }
+	@Override
+	public Operation init() {
+		setWorkerId(worker == null ? null : worker.getPartnerId());
+		setPartnerId(partner == null ? null : partner.getPartnerId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-         return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 }

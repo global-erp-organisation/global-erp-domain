@@ -12,11 +12,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.auth.User;
-import com.camlait.global.erp.domain.enumeration.Sex;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.camlait.global.erp.domain.enumeration.Sex;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,65 +24,64 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "`partner-employees`")
 public class Employee extends Partner {
 
-    @Column(unique = true, nullable = false)
-    private String matricule;
+	@Column(unique = true, nullable = false)
+	private String matricule;
 
-    @Column(nullable = false)
-    private String lastName;
+	@Column(nullable = false)
+	private String lastName;
 
-    private String firstname;
+	private String firstname;
 
-    private Date dateOfBirth;
+	private Date dateOfBirth;
 
-    @Transient
-    private String userId;
+	@Transient
+	private String userId;
 
-    @JsonBackReference
-    @OneToOne
-    @JoinColumn(name = "userId")
-    private User user;
+	@OneToOne
+	@JoinColumn(name = "userId")
+	private User user;
 
-    @Transient
-    private String professionId;
+	@Transient
+	private String professionId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "professionId")
-    private Profession profession;
+	@ManyToOne
+	@JoinColumn(name = "professionId")
+	private Profession profession;
 
-    @Enumerated(EnumType.STRING)
-    private Sex sex;
+	@Enumerated(EnumType.STRING)
+	private Sex sex;
 
-    public Employee() {
-        setPartnerType(PartnerType.EMPLOYEE);
-    }
+	public Employee() {
+		setPartnerType(PartnerType.EMPLOYEE);
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setCenterId(getCentre().getLocalId());
-        setPartnerGroupId(getPartnerGroup().getPartnerGroupId());
-        setTarifId(getTarif().getTarifId());
-        setProfessionId(profession.getProfessionId());
-        setUserId(user != null ? user.getUserId() : null);
-    }
+	@Override
+	public Employee init() {
+		setCenterId(getCentre() == null ? null : getCentre().getLocalId());
+		setPartnerGroupId(getPartnerGroup() == null ? null : getPartnerGroup().getPartnerGroupId());
+		setTarifId(getTarif() == null ? null : getTarif().getTarifId());
+		setProfessionId(profession == null ? null : profession.getProfessionId());
+		setUserId(user != null ? user.getUserId() : null);
+		return this;
+	}
 
-    public Boolean isSeller() {
-        return this instanceof Seller;
-    }
+	public Boolean isSeller() {
+		return this instanceof Seller;
+	}
 
-    public Boolean isStorer() {
-        return this instanceof StoreOperator;
-    }
-    
-    @Override
-    public EnumTypeEntitity toEnum() {
-         return PartnerType.EMPLOYEE;
-    }
+	public Boolean isStorer() {
+		return this instanceof StoreOperator;
+	}
+
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return PartnerType.EMPLOYEE;
+	}
 
 }

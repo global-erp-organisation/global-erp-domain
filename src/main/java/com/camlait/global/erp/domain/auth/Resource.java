@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.auth;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,84 +29,93 @@ import lombok.ToString;
 @SuppressWarnings("serial")
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false, exclude = {"items", "resourceGroups", "resourceUsers"})
-@ToString(exclude = {"items", "resourceGroups", "resourceUsers"})
+@EqualsAndHashCode(callSuper = false, exclude = { "items", "resourceGroups", "resourceUsers" })
+@ToString(exclude = { "items", "resourceGroups", "resourceUsers" })
 @Builder
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Table(name = "`auth-resources`")
 public class Resource extends BaseEntity {
 
-    @Id
-    private String resourceId;
+	@Id
+	private String resourceId;
 
-    
-    @Transient
-    private String parentResourceId;
+	@Transient
+	private String parentResourceId;
 
-    @JsonBackReference
-    
-    @ManyToOne
-    @JoinColumn(name = "parentResourceId")
-    private Resource parentResource;
+	@JsonBackReference
 
-    private String title;
+	@ManyToOne
+	@JoinColumn(name = "parentResourceId")
+	private Resource parentResource;
 
-    private String icon;
+	private String title;
 
-    private String sref;
+	private String icon;
 
-    private String href;
+	private String sref;
 
-    private Integer resourceOrder;
+	private String href;
 
-    @JsonManagedReference
-    
-    @OneToMany(mappedBy = "parentResource")
-    private Collection<Resource> items = Lists.newArrayList();
+	private Integer resourceOrder;
 
-    @JsonManagedReference(value = "resource")
-    
-    @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
-    private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
+	@JsonManagedReference
 
-    @JsonManagedReference
-    
-    @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
-    private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
+	@OneToMany(mappedBy = "parentResource")
+	private Collection<Resource> items = Lists.newArrayList();
 
-    public Resource() {
-    }
+	@JsonManagedReference(value = "resource")
 
-    public Resource(String descriptionMenu) {
-        this.title = descriptionMenu;
-    }
+	@OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
+	private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
-    public Resource(String descriptionMenu, Resource menuParent) {
-        super();
-        this.title = descriptionMenu;
-        this.parentResource = menuParent;
-    }
+	@JsonManagedReference
 
-    public void setRessourceParentId() {
-        setParentResourceId(getParentResource().getResourceId());
-    }
+	@OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
+	private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 
-    public boolean hasDetails() {
-        return (!this.getItems().isEmpty());
-    }
+	public Resource() {
+	}
 
-    @PrePersist
-    private void setKey() {
-        setResourceId(EntityHelper.getUidFor(resourceId));
-    }
+	public Resource(String descriptionMenu) {
+		this.title = descriptionMenu;
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setParentResourceId(parentResource.getResourceId());
-    }
+	public Resource(String descriptionMenu, Resource menuParent) {
+		super();
+		this.title = descriptionMenu;
+		this.parentResource = menuParent;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        return null;
-    }
+	public void setRessourceParentId() {
+		setParentResourceId(getParentResource().getResourceId());
+	}
+
+	public boolean hasDetails() {
+		return (!this.getItems().isEmpty());
+	}
+
+	@PrePersist
+	private void setKey() {
+		setResourceId(EntityHelper.getUidFor(resourceId));
+	}
+
+	@Override
+	public Resource init() {
+		setParentResourceId(parentResource == null ? null : parentResource.getResourceId());
+		setResourceGroups(resourceGroups.stream().map(rg -> {
+			return rg.init();
+		}).collect(Collectors.toList()));
+		setResourceUsers(resourceUsers.stream().map(ru -> {
+			return ru.init();
+		}).collect(Collectors.toList()));
+		setItems(items.stream().map(i -> {
+			return i.init();
+		}).collect(Collectors.toList()));
+		return this;
+	}
+
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 }

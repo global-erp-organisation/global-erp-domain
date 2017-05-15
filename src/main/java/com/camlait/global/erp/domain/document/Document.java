@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.document;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,10 +36,7 @@ import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.inventory.Inventory;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.warehouse.Store;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,128 +46,121 @@ import lombok.ToString;
 @SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false, exclude = "documentDetails")
 @Table(name = "`doc-documents`")
 @ToString(exclude = "documentDetails")
 public abstract class Document extends BaseEntity {
 
-    @Id
-    private String documentId;
+	@Id
+	private String documentId;
 
-    @Column(unique = true, nullable = false)
-    private String documentCode;
+	@Column(unique = true, nullable = false)
+	private String documentCode;
 
-    private Date documentDate;
+	private Date documentDate;
 
-    @Transient
-    private String storeId;
+	@Transient
+	private String storeId;
 
-    @JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "storeId")
+	private Store store;
 
-    @ManyToOne
-    @JoinColumn(name = "storeId")
-    private Store store;
+	@Transient
+	private String workerId;
 
-    @Transient
-    private String workerId;
+	@ManyToOne
+	@JoinColumn(name = "workerId")
+	private Employee documentWorker;
 
-    @JsonBackReference
+	@Enumerated(EnumType.STRING)
+	private OperationDirection operationDirection;
 
-    @ManyToOne
-    @JoinColumn(name = "workerId")
-    private Employee documentWorker;
+	@Transient
+	private String dmId;
 
-    @Enumerated(EnumType.STRING)
-    private OperationDirection operationDirection;
+	@ManyToOne
+	@JoinColumn(name = "dmId")
+	private DailyMovement dailyMovement;
 
-    @Transient
-    private String dmId;
+	@Transient
+	private String inventoryId;
 
-    @JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "inventoryId")
+	private Inventory inventory;
 
-    @ManyToOne
-    @JoinColumn(name = "dmId")
-    private DailyMovement dailyMovement;
+	@OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+	private Collection<DocumentDetails> documentDetails = Lists.newArrayList();
 
-    @Transient
-    private String inventoryId;
+	@Enumerated(EnumType.STRING)
+	private DocumentType documentType;
 
-    @JsonBackReference
+	public Document() {
+	}
 
-    @ManyToOne
-    @JoinColumn(name = "inventoryId")
-    private Inventory inventory;
+	public boolean isClientBill() {
+		return this instanceof ClientBill;
+	}
 
-    @JsonManagedReference
+	public boolean isCashBill() {
+		return this instanceof CashClientBill;
+	}
 
-    @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-    private Collection<DocumentDetails> documentDetails = Lists.newArrayList();
+	public boolean isMarginBill() {
+		return this instanceof MargingBill;
+	}
 
-    @Enumerated(EnumType.STRING)
-    private DocumentType documentType;
+	public boolean isSaleDocument() {
+		return this instanceof SaleDocument;
+	}
 
-    public Document() {
-    }
+	public boolean isBusinessDocument() {
+		return this instanceof BusinessDocument;
+	}
 
-    public boolean isClientBill() {
-        return this instanceof ClientBill;
-    }
+	public boolean stockAffects() {
+		return (this instanceof StockDocument) || (this instanceof ClientBill);
+	}
 
-    public boolean isCashBill() {
-        return this instanceof CashClientBill;
-    }
+	@PrePersist
+	private void setKey() {
+		if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
+			setDocumentId(EntityHelper.getUidFor(documentId));
+		} else {
+			throw new DataStorageException("Unable to store a document with no detail.");
+		}
+	}
 
-    public boolean isMarginBill() {
-        return this instanceof MargingBill;
-    }
+	@Override
+	public Document init() {
+		setStoreId(store == null ? null : store.getStoreId());
+		setWorkerId(documentWorker == null ? null : documentWorker.getPartnerId());
+		setDmId(dailyMovement != null ? dailyMovement.getDmId() : null);
+		setInventoryId(inventory != null ? inventory.getInventoryId() : null);
+		setDocumentDetails(documentDetails.stream().map(dd->{
+			return dd.init();
+		}).collect(Collectors.toList()));
+		return this;
+	}
 
-    public boolean isSaleDocument() {
-        return this instanceof SaleDocument;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		return null;
+	}
 
-    public boolean isBusinessDocument() {
-        return this instanceof BusinessDocument;
-    }
-
-    public boolean stockAffects() {
-        return (this instanceof StockDocument) || (this instanceof ClientBill);
-    }
-
-    @PrePersist
-    private void setKey() {
-        if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
-            setDocumentId(EntityHelper.getUidFor(documentId));
-        } else {
-            throw new DataStorageException("Unable to store a document with no detail.");
-        }
-    }
-
-    @Override
-    public void postConstructOperation() {
-        setStoreId(store.getStoreId());
-        setWorkerId(documentWorker.getPartnerId());
-        setDmId(dailyMovement != null ? dailyMovement.getDmId() : null);
-        setInventoryId(inventory != null ? inventory.getInventoryId() : null);
-    }
-
-    @Override
-    public EnumTypeEntitity toEnum() {
-        return null;
-    }
-
-
-    /**
-     * remove a document detail into the current collection of document detail.
-     * 
-     * @param line
-     * @return
-     */
-    public Document removeLine(DocumentDetails line) {
-        if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
-            this.documentDetails.remove(line);
-        }
-        return this;
-    }
+	/**
+	 * remove a document detail into the current collection of document detail.
+	 * 
+	 * @param line
+	 * @return
+	 */
+	public Document removeLine(DocumentDetails line) {
+		if (!CollectionUtils.isNullOrEmpty(documentDetails)) {
+			this.documentDetails.remove(line);
+		}
+		return this;
+	}
 }

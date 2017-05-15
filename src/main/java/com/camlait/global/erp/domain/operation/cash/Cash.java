@@ -13,7 +13,6 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.Employee;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,44 +21,44 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
 @Table(name = "`cash-cashes`")
 public class Cash extends BaseEntity {
-    @Id
-    private String cashId;
+	@Id
+	private String cashId;
 
-    @Column(unique = true, nullable = false)
-    private String cashCode;
+	@Column(unique = true, nullable = false)
+	private String cashCode;
 
-    private String cashDescription;
+	private String cashDescription;
 
-    @Transient
-    private String workerId;
+	@Transient
+	private String workerId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "workerId")
-    private Employee worker;
+	@ManyToOne
+	@JoinColumn(name = "workerId")
+	private Employee worker;
 
-    public Cash() {
-    }
+	public Cash() {
+	}
 
-    @PrePersist
-    private void setKey() {
-        setCashId(EntityHelper.getUidFor(cashId));
-    }
+	@PrePersist
+	private void setKey() {
+		setCashId(EntityHelper.getUidFor(cashId));
+	}
 
-    @Override
-    public void postConstructOperation() {
-        setWorkerId(worker.getPartnerId());
-    }
+	@Override
+	public Cash init() {
+		setWorkerId(worker == null ? null : worker.getPartnerId());
+		return this;
+	}
 
-    @Override
-    public EnumTypeEntitity toEnum() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public EnumTypeEntitity toEnum() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

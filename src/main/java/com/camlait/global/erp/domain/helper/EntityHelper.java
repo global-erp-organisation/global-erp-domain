@@ -22,11 +22,11 @@ public final class EntityHelper {
     }
 
     /**
-     * Verify if two classes are instance of the same class.
+     * Verify if two objects are instance of the same class.
      * 
      * @param first First object.
      * @param second Second object.
-     * @return true if the two classes belong to the same class or false otherwise.
+     * @return true if the two objects belong to the same class or false otherwise.
      */
     public static Boolean isTypeOf(@NonNull Class<?> first, @NonNull Class<?> second) {
         return first.isAssignableFrom(second);

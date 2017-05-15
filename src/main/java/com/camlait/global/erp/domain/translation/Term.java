@@ -1,6 +1,7 @@
 package com.camlait.global.erp.domain.translation;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +14,6 @@ import javax.persistence.Table;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.helper.EntityHelper;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 
 @SuppressWarnings("serial")
 @Entity
-@AllArgsConstructor(suppressConstructorProperties = true)
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder
@@ -36,7 +36,6 @@ public class Term extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String termDescription;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "term", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Lists.newArrayList();
 
@@ -50,7 +49,11 @@ public class Term extends BaseEntity {
      }
 
     @Override
-    public void postConstructOperation() {
+    public Term init() {
+    	setTermLanguages(termLanguages.stream().map(tl->{
+    		return tl.init();
+    	}).collect(Collectors.toList()));
+    	 return this;
     }
 
     @Override
