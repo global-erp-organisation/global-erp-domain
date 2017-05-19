@@ -6,10 +6,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.camlait.global.erp.domain.operation.cash.Cash;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +26,7 @@ public class Cashier extends Employee {
 	@Transient
 	private String cashId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cashId", updatable = false, insertable = false)
 	private Cash cash;

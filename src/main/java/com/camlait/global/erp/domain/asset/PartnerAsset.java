@@ -14,7 +14,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.PartnerAssetKey;
 import com.camlait.global.erp.domain.partner.Partner;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,9 +34,8 @@ public class PartnerAsset extends BaseEntity {
 	@Transient
 	private String partnerId;
 
+	@JsonIgnore
 	@Id
-	@JsonBackReference
-
 	@ManyToOne
 	@JoinColumn(name = "partenaireId")
 	private Partner partner;
@@ -44,9 +43,8 @@ public class PartnerAsset extends BaseEntity {
 	@Transient
 	private String immoId;
 
+	@JsonIgnore
 	@Id
-	@JsonBackReference
-
 	@ManyToOne
 	@JoinColumn(name = "assetId")
 	private Asset asset;

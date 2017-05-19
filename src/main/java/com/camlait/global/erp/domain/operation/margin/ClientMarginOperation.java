@@ -8,6 +8,8 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.partner.MarginClient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +25,7 @@ public class ClientMarginOperation extends Operation {
     @Transient
     private String clientMargeId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "clientMargeId")
     private MarginClient client;

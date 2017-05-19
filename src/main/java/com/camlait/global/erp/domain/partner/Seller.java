@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.operation.missing.FinancialMissingOperation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class Seller extends Employee {
     @Transient
     private String zoneId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "zoneId")
     private Zone saleZone;

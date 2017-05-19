@@ -6,13 +6,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.BusinessDocument;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.partner.Client;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +29,7 @@ public class SaleDocument extends BusinessDocument {
 	@Transient
 	private String clientId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "clientId")
 	private Client client;
@@ -36,6 +37,7 @@ public class SaleDocument extends BusinessDocument {
 	@Transient
 	private String zoneId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "zoneId")
 	private Zone zone;

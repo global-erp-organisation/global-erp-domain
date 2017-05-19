@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.helper.EntityHelper;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -50,10 +51,12 @@ public class CashJournal extends BaseEntity {
     @Transient
     private String cashId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "cashId")
     private Cash cash;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "journal")
     private Collection<CashOperation> operations = Lists.newArrayList();
 

@@ -20,6 +20,7 @@ import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -42,6 +43,7 @@ public class DailyMovementDetail extends BaseEntity {
     @Transient
     private String productId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "productId")
     private Product product;
@@ -52,6 +54,7 @@ public class DailyMovementDetail extends BaseEntity {
     @Transient
     private String dmId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
@@ -59,10 +62,12 @@ public class DailyMovementDetail extends BaseEntity {
     @Transient
     private String documentId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "documentId")
     private Document document;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "dailyMovementDetail", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<DailyMovmentDetailTax> dailyMovmentDetailTaxes = Lists.newArrayList();
 

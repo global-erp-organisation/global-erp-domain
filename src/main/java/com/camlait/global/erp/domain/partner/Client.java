@@ -10,11 +10,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.camlait.global.erp.domain.localization.Zone;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -32,6 +32,7 @@ public class Client extends Partner {
     @Transient
     private String zoneId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "zoneId")
     private Zone zone;

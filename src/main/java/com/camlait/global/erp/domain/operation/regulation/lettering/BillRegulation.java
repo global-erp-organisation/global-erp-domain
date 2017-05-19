@@ -15,6 +15,7 @@ import com.camlait.global.erp.domain.document.business.sale.ClientBill;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.BillRegulationKey;
 import com.camlait.global.erp.domain.operation.regulation.Regulation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +35,7 @@ public class BillRegulation extends BaseEntity {
 	@Transient
 	private String documentId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "documentId")
@@ -42,6 +44,7 @@ public class BillRegulation extends BaseEntity {
 	@Transient
 	private String regulationId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "regulationId")

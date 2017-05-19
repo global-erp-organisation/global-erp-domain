@@ -6,11 +6,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.DocumentType;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.tarif.PriceType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,6 +25,7 @@ public class BusinessDocument extends Document {
 	@Transient
 	private String priceTypeId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "priceTypeId")
 	private PriceType priceType;

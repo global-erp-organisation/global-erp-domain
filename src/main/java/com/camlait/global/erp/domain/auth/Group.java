@@ -37,9 +37,11 @@ public class Group extends BaseEntity {
 
     private String groupDescription;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
+    @Builder.Default 
     @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private Collection<User> users = Lists.newArrayList();
 

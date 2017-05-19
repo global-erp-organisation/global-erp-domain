@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.TermLanguageKey;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,7 @@ public class TermLanguage extends BaseEntity {
 	@Transient
 	private String termId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "termId")
@@ -39,6 +41,7 @@ public class TermLanguage extends BaseEntity {
 	@Transient
 	private String languageId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "languageId")

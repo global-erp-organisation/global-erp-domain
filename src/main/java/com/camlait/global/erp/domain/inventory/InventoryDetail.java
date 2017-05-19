@@ -12,6 +12,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.InventoryDetailKey;
 import com.camlait.global.erp.domain.product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,7 @@ public class InventoryDetail extends BaseEntity {
 	@Transient
 	private String inventoryId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "inventoryId")
@@ -39,6 +41,7 @@ public class InventoryDetail extends BaseEntity {
 	@Transient
 	private String productId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "productId")

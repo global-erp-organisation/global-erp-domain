@@ -15,6 +15,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.StockCardKey;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,7 @@ public class StockCard extends BaseEntity {
 	@Transient
 	private String storeId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "storeId")
@@ -45,6 +47,7 @@ public class StockCard extends BaseEntity {
 	@Transient
 	private String productId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "productId")

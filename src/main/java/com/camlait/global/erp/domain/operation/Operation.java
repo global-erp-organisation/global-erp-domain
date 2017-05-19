@@ -20,6 +20,7 @@ import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Partner;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,6 +50,7 @@ public abstract class Operation extends BaseEntity {
 	@Transient
 	private String workerId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "workerId")
 	private Employee worker;
@@ -56,6 +58,7 @@ public abstract class Operation extends BaseEntity {
 	@Transient
 	private String partnerId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "partnerId")
 	private Partner partner;

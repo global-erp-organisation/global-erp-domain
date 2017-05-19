@@ -24,6 +24,7 @@ import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.inventory.StockCard;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -53,6 +54,7 @@ public class Store extends BaseEntity {
     @Transient
     private String warehouseId;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "warehouseId")
     private Warehouse warehouse;
@@ -60,9 +62,11 @@ public class Store extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OtherEnum storeType;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private Collection<Stock> stocks = Lists.newArrayList();
 
+    @Builder.Default 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private Collection<StockCard> stockCards = Lists.newArrayList();
 

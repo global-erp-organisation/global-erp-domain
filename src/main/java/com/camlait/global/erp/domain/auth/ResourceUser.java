@@ -14,6 +14,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.State;
 import com.camlait.global.erp.domain.keys.ResourceUserKey;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public class ResourceUser extends BaseEntity {
 	@Transient
 	private String userId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "userId")
@@ -41,6 +43,7 @@ public class ResourceUser extends BaseEntity {
 	@Transient
 	private String resourceId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "resourceId")

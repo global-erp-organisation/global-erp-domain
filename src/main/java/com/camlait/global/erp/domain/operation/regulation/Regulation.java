@@ -10,9 +10,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.regulation.lettering.BillRegulation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -35,6 +35,7 @@ public class Regulation extends Operation {
     @Transient
     private String regulationModeId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "regulationModeId")
     private RegulationMode regulationMode;

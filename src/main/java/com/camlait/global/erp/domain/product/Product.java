@@ -28,7 +28,7 @@ import com.camlait.global.erp.domain.tarif.PriceType;
 import com.camlait.global.erp.domain.tarif.Tariff;
 import com.camlait.global.erp.domain.tarif.Tariffication;
 import com.camlait.global.erp.domain.warehouse.Store;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -58,7 +58,7 @@ public class Product extends BaseEntity {
     @Transient
     private String productCategoryId;
 
-    @JsonManagedReference("")
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productCategoryId")
     private ProductCategory category;
@@ -67,17 +67,21 @@ public class Product extends BaseEntity {
 
     private Double defaultUnitprice;
 
+    @Builder.Default
     @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private Collection<Tax> taxes = Lists.newArrayList();
 
     private boolean stockFollowing;
 
+    @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Stock> stocks = Lists.newArrayList();
 
+    @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<StockCard> stockCards = Lists.newArrayList();
 
+    @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Tariffication> tarifications = Lists.newArrayList();
 
@@ -161,7 +165,6 @@ public class Product extends BaseEntity {
 
     @Override
     public EnumTypeEntitity toEnum() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -176,16 +179,17 @@ public class Product extends BaseEntity {
         return this;
     }
 
-    public Product addProductToTax() {
-        if (taxes != null) {
-            taxes.forEach(t -> {
-                Collection<Product> products = t.getProducts();
-                if (products == null) {
-                    products = Lists.newArrayList();
-                }
-                products.add(this);
-            });
+    public Product addProductToTax(Collection<Tax> tx) {
+        if (CollectionUtils.isNullOrEmpty(taxes)) {
+            setTaxes(tx);
         }
+        taxes.forEach(t -> {
+            Collection<Product> products = t.getProducts();
+            if (products == null) {
+                products = Lists.newArrayList();
+            }
+            products.add(this);
+        });
         return this;
     }
 }

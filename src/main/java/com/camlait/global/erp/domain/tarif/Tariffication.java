@@ -13,6 +13,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.TarifficationKey;
 import com.camlait.global.erp.domain.localization.Zone;
 import com.camlait.global.erp.domain.product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,7 @@ public class Tariffication extends BaseEntity {
 	@Transient
 	private String zoneId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "zoneId")
@@ -40,6 +42,7 @@ public class Tariffication extends BaseEntity {
 	@Transient
 	private String productId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "productId")
@@ -48,6 +51,7 @@ public class Tariffication extends BaseEntity {
 	@Transient
 	private String tarifId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "tarifId")
@@ -56,6 +60,7 @@ public class Tariffication extends BaseEntity {
 	@Transient
 	private String priceTypeId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "priceTypeId")

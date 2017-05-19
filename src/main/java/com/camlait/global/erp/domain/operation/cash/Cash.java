@@ -13,6 +13,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.Employee;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,6 +39,7 @@ public class Cash extends BaseEntity {
 	@Transient
 	private String workerId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "workerId")
 	private Employee worker;

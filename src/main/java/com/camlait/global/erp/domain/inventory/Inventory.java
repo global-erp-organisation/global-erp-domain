@@ -22,6 +22,7 @@ import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.StoreOperator;
 import com.camlait.global.erp.domain.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -54,6 +55,7 @@ public class Inventory extends BaseEntity {
     @Transient
     private String storeId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "storeId")
     private Store store;
@@ -61,6 +63,7 @@ public class Inventory extends BaseEntity {
     @Transient
     private String outgoingWarehouserId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "outgoingWarehouserId")
     private StoreOperator outgoingWarehouser;
@@ -68,15 +71,18 @@ public class Inventory extends BaseEntity {
     @Transient
     private String incomingWarehouserId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "incomingWarehouserId")
     private StoreOperator incomingWarehouser;
 
     private boolean closedInventory;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private Collection<Document> documents = Lists.newArrayList();
 
+    @Builder.Default 
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private Collection<InventoryDetail> inventoryDetails = Lists.newArrayList();
 

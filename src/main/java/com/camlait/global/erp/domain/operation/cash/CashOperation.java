@@ -6,8 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.operation.Operation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +24,7 @@ public class CashOperation extends Operation {
 	@Transient
 	private String journalId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "journalId")
 	private CashJournal journal;

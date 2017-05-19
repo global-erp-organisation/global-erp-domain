@@ -12,6 +12,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.DocumentDetailsTaxKey;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,7 @@ public class DocumentDetailsTax extends BaseEntity {
 	@Transient
 	private String docDetailId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "docDetailId")
@@ -39,6 +41,7 @@ public class DocumentDetailsTax extends BaseEntity {
 	@Transient
 	private String taxId;
 
+	@JsonIgnore
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "taxId")

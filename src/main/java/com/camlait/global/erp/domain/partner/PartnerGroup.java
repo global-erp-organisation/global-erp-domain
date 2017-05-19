@@ -33,6 +33,7 @@ public class PartnerGroup extends BaseEntity {
 
     private String partnerGroupDescription;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "partnerGroup")
     private Collection<Partner> partners = Lists.newArrayList();
 

@@ -27,6 +27,7 @@ import com.camlait.global.erp.domain.localization.Center;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.regulation.RegulationModel;
 import com.camlait.global.erp.domain.tarif.Tariff;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -59,6 +60,7 @@ public abstract class Partner extends BaseEntity {
     @Transient
     private String centerId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "centerId")
     private Center centre;
@@ -75,6 +77,7 @@ public abstract class Partner extends BaseEntity {
     @Transient
     private String partnerGroupId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "partnerGroupId")
     private PartnerGroup partnerGroup;
@@ -82,6 +85,7 @@ public abstract class Partner extends BaseEntity {
     @Transient
     private String tarifId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "tarifId")
     private Tariff tarif;

@@ -36,6 +36,7 @@ import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.inventory.Inventory;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -64,6 +65,7 @@ public abstract class Document extends BaseEntity {
     @Transient
     private String storeId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "storeId")
     private Store store;
@@ -71,6 +73,7 @@ public abstract class Document extends BaseEntity {
     @Transient
     private String workerId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "workerId")
     private Employee documentWorker;
@@ -81,6 +84,7 @@ public abstract class Document extends BaseEntity {
     @Transient
     private String dmId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
@@ -88,6 +92,7 @@ public abstract class Document extends BaseEntity {
     @Transient
     private String inventoryId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "inventoryId")
     private Inventory inventory;

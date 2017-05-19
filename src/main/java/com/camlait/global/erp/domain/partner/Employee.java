@@ -12,11 +12,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.auth.User;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
 import com.camlait.global.erp.domain.enumeration.Sex;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,6 +43,7 @@ public class Employee extends Partner {
 	@Transient
 	private String userId;
 
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "userId")
 	private User user;
@@ -50,6 +51,7 @@ public class Employee extends Partner {
 	@Transient
 	private String professionId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "professionId")
 	private Profession profession;

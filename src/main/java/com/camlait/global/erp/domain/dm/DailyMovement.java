@@ -27,6 +27,7 @@ import com.camlait.global.erp.domain.operation.Recovery;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Seller;
 import com.camlait.global.erp.domain.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
@@ -57,6 +58,7 @@ public class DailyMovement extends BaseEntity {
     @Transient
     private String sellerId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sellerId")
     private Seller seller;
@@ -64,16 +66,20 @@ public class DailyMovement extends BaseEntity {
     @Transient
     private String storeId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "storeId")
     private Store store;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<Document> documents = Lists.newArrayList();
 
+    @Builder.Default 
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<Recovery> recoveries = Lists.newArrayList();
 
+    @Builder.Default 
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<DailyMovementDetail> dailyMovementDetails = Lists.newArrayList();
     private boolean bmqClos;
@@ -81,8 +87,8 @@ public class DailyMovement extends BaseEntity {
     @Transient
     private String workerId;
 
+    @JsonIgnore
     @ManyToOne
-
     @JoinColumn(name = "workerId")
     private Employee worker;
 

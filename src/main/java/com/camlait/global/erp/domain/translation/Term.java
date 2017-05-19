@@ -36,6 +36,7 @@ public class Term extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String termDescription;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "term", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Lists.newArrayList();
 

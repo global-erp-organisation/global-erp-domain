@@ -41,6 +41,7 @@ public class Language extends BaseEntity {
 
     private String alt;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "language", cascade = CascadeType.ALL)
     private Collection<TermLanguage> termLanguages = Lists.newArrayList();
 

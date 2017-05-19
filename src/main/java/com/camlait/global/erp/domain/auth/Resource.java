@@ -16,8 +16,7 @@ import javax.persistence.Transient;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.helper.EntityHelper;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -42,8 +41,7 @@ public class Resource extends BaseEntity {
     @Transient
     private String parentResourceId;
 
-    @JsonBackReference
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "parentResourceId")
     private Resource parentResource;
@@ -58,20 +56,14 @@ public class Resource extends BaseEntity {
 
     private Integer resourceOrder;
 
-    @JsonManagedReference
-
     @OneToMany(mappedBy = "parentResource")
-    private Collection<Resource> items = Lists.newArrayList();
-
-    @JsonManagedReference(value = "resource")
+    @Builder.Default private Collection<Resource> items = Lists.newArrayList();
 
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
-    private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
-
-    @JsonManagedReference
+    @Builder.Default private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL)
-    private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
+    @Builder.Default private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 
     public Resource() {
     }

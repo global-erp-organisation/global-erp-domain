@@ -20,6 +20,7 @@ import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.localization.Center;
 import com.camlait.global.erp.domain.partner.Employee;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -49,6 +50,7 @@ public class Warehouse extends BaseEntity {
     @Transient
     private String centreId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "centreId")
     private Center centre;
@@ -56,10 +58,12 @@ public class Warehouse extends BaseEntity {
     @Transient
     private String workerId;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "workerId")
     private Employee worker;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
     private Collection<Store> stores = Lists.newArrayList();
 

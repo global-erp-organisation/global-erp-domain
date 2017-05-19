@@ -34,6 +34,7 @@ public class Profession extends BaseEntity {
     private String professionCode;
     private String professionDescription;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "profession")
     private Collection<Employee> employees = Lists.newArrayList();
 

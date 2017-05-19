@@ -59,6 +59,7 @@ public class DocumentDetails extends BaseEntity {
     @Transient
     private String productId;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "produitId")
     private Product product;
@@ -70,6 +71,7 @@ public class DocumentDetails extends BaseEntity {
     @Transient
     private String documenId;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "documentId")
     private Document document;
@@ -77,6 +79,7 @@ public class DocumentDetails extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OperationDirection operationDirection;
 
+    @Builder.Default 
     @OneToMany(mappedBy = "documentDetails", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<DocumentDetailsTax> documentDetailsTaxes = Lists.newArrayList();
 

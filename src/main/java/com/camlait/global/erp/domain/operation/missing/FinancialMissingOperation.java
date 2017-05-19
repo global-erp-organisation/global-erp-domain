@@ -8,6 +8,7 @@ import javax.persistence.Transient;
 
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.partner.Seller;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class FinancialMissingOperation extends Operation {
 	@Transient
 	private String sellerId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "sellerId")
 	private Seller seller;

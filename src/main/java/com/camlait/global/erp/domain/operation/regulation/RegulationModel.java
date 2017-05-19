@@ -16,6 +16,7 @@ import com.camlait.global.erp.domain.enumeration.EvaluationMode;
 import com.camlait.global.erp.domain.enumeration.RegulationCondition;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.Partner;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,6 +45,7 @@ public class RegulationModel extends BaseEntity {
 	@Transient
 	private String regulationModeId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "regulationModeId")
 	private RegulationMode regulationMode;
@@ -51,6 +53,7 @@ public class RegulationModel extends BaseEntity {
 	@Transient
 	private String partnerId;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "partnerId")
 	private Partner partner;
