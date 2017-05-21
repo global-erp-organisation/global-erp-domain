@@ -1,6 +1,13 @@
 package com.camlait.global.erp.validation;
 
-public interface ValidatorResult<T, R> {
-    T getErrors();
-    R getResult();
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
+import lombok.Data;
+
+@Data
+public class ValidatorResult<R> {
+    private List<String> errors = Lists.newArrayList();
+    private R result;
 }
