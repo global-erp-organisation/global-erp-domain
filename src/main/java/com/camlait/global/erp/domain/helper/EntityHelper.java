@@ -1,6 +1,10 @@
 package com.camlait.global.erp.domain.helper;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import com.camlait.global.erp.domain.BaseEntity;
 
 import lombok.NonNull;
 
@@ -30,5 +34,12 @@ public final class EntityHelper {
      */
     public static Boolean isTypeOf(@NonNull Class<?> first, @NonNull Class<?> second) {
         return first.isAssignableFrom(second);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends BaseEntity> List<T> batchInit(List<T> entities) {
+        return entities.stream().map(e -> {
+            return (T) e.init();
+        }).collect(Collectors.toList());
     }
 }

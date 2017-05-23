@@ -24,6 +24,7 @@ import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.helper.MergeHelper;
 import com.camlait.global.erp.domain.helper.SerializerHelper;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -39,12 +40,15 @@ import lombok.NonNull;
 @EqualsAndHashCode(callSuper = false)
 public abstract class BaseEntity implements Serializable {
 
+    @ApiModelProperty(hidden = true)
     @Version
     private Integer version;
 
+    @ApiModelProperty(hidden = true)
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdDate;
 
+    @ApiModelProperty(hidden = true)
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdatedDate;
 

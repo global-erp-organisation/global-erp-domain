@@ -51,7 +51,7 @@ public class User extends BaseEntity {
     @Builder.Default private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "`auth-groupe-users`", joinColumns = {@JoinColumn(name = "`group-id`")}, inverseJoinColumns = {@JoinColumn(name = "`user-id`")},
+    @JoinTable(name = "`auth-groupe-users`", joinColumns = {@JoinColumn(name = "`user-id`")}, inverseJoinColumns = {@JoinColumn(name = "`group-id`")},
                uniqueConstraints = @UniqueConstraint(columnNames = {"`group-id`", "`user-id`"}))
     @Builder.Default private Collection<Group> groups = Lists.newArrayList();
 

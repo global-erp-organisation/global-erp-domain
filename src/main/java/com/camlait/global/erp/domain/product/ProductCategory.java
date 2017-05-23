@@ -26,6 +26,7 @@ import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +43,7 @@ import lombok.ToString;
 @Table(name = "`product-category-products`")
 public class ProductCategory extends BaseEntity {
 
+    @ApiModelProperty(hidden = true)
     @Id
     private String productCategoryId;
 
@@ -65,15 +67,17 @@ public class ProductCategory extends BaseEntity {
 
     private boolean stockFollowing;
 
-    
+    @ApiModelProperty(hidden = true)
     @Builder.Default
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private Collection<ProductCategory> categoryChildren = Lists.newArrayList();
 
+    @ApiModelProperty(hidden = true)
     @Builder.Default
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Collection<Product> products = Lists.newArrayList();
 
+    @ApiModelProperty(hidden = true)
     @Builder.Default
     @ManyToMany(mappedBy = "productCategories", cascade = CascadeType.ALL)
     private Collection<Tax> taxes = Lists.newArrayList();
@@ -113,7 +117,7 @@ public class ProductCategory extends BaseEntity {
         setProducts(products == null ? Lists.newArrayList() : products.stream().map(p -> {
             return p.init();
         }).collect(Collectors.toList()));
-       setTaxes(taxes == null ? Lists.newArrayList() : taxes.stream().map(t -> {
+        setTaxes(taxes == null ? Lists.newArrayList() : taxes.stream().map(t -> {
             return t.init();
         }).collect(Collectors.toList()));
         setCategoryChildren(getCategoryChildren() == null ? Lists.newArrayList() : getCategoryChildren().stream().map(cc -> {
@@ -145,7 +149,7 @@ public class ProductCategory extends BaseEntity {
 
     public ProductCategory addParent(ProductCategory parent) {
         setParentCategory(parent);
-        Collection<ProductCategory> children = parent.getCategoryChildren();
+        Collection<ProductCategory> children = parent == null ? Lists.newArrayList() : parent.getCategoryChildren();
         if (children == null) {
             children = Lists.newArrayList();
         }

@@ -31,6 +31,7 @@ import com.camlait.global.erp.domain.warehouse.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,6 +48,7 @@ import lombok.ToString;
 @Table(name = "`product-products`")
 public class Product extends BaseEntity {
 
+    @ApiModelProperty(hidden = true)
     @Id
     private String productId;
 
@@ -58,6 +60,7 @@ public class Product extends BaseEntity {
     @Transient
     private String productCategoryId;
 
+    @ApiModelProperty(hidden = true)
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productCategoryId")
@@ -67,20 +70,24 @@ public class Product extends BaseEntity {
 
     private Double defaultUnitprice;
 
+    @ApiModelProperty(hidden = true)
     @Builder.Default
     @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
     private Collection<Tax> taxes = Lists.newArrayList();
 
     private boolean stockFollowing;
 
+    @ApiModelProperty(hidden = true)
     @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Stock> stocks = Lists.newArrayList();
 
+    @ApiModelProperty(hidden = true)
     @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<StockCard> stockCards = Lists.newArrayList();
 
+    @ApiModelProperty(hidden = true)
     @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Collection<Tariffication> tarifications = Lists.newArrayList();

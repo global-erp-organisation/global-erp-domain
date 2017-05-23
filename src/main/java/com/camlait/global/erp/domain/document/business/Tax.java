@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,6 +40,7 @@ import lombok.ToString;
 @Table(name = "`tax-taxes`")
 public class Tax extends BaseEntity {
 
+    @ApiModelProperty(hidden = true)
     @Id
     @JsonProperty
     private String taxId;
@@ -51,18 +53,20 @@ public class Tax extends BaseEntity {
 
     private double percentageValue;
 
+    @ApiModelProperty(hidden = true)
     @JsonIgnore
     @Builder.Default
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "`product-product-taxes`", joinColumns = {@JoinColumn(name = "`product-id`")}, inverseJoinColumns = {@JoinColumn(name = "`tax-id`")},
+    @JoinTable(name = "`product-product-taxes`", joinColumns = {@JoinColumn(name = "`tax-id`")}, inverseJoinColumns = {@JoinColumn(name = "`product-id`")},
                uniqueConstraints = @UniqueConstraint(columnNames = {"`product-id`", "`tax-id`"}))
     private Collection<Product> products = Lists.newArrayList();
 
+    @ApiModelProperty(hidden = true)
     @JsonIgnore
     @Builder.Default
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "`product-category-product-taxes`", joinColumns = {@JoinColumn(name = "`product-category-id`")},
-               inverseJoinColumns = {@JoinColumn(name = "`tax-id`")},
+    @JoinTable(name = "`product-category-product-taxes`", joinColumns = {@JoinColumn(name = "`tax-id`")},
+               inverseJoinColumns = {@JoinColumn(name = "`product-category-id`")},
                uniqueConstraints = @UniqueConstraint(columnNames = {"`product-category-id`", "`tax-id`"}))
     private Collection<ProductCategory> productCategories = Lists.newArrayList();
 
