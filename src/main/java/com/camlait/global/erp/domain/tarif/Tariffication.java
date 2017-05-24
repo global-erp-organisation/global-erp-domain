@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.tarif;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -35,7 +36,7 @@ public class Tariffication extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "zoneId")
 	private Zone zone;
 
@@ -44,7 +45,7 @@ public class Tariffication extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "productId")
 	private Product product;
 
@@ -53,7 +54,7 @@ public class Tariffication extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "tarifId")
 	private Tariff tarif;
 
@@ -62,7 +63,7 @@ public class Tariffication extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "priceTypeId")
 	private PriceType priceType;
 

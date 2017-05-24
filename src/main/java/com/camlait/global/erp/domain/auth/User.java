@@ -3,7 +3,6 @@ package com.camlait.global.erp.domain.auth;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -50,7 +49,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     @Builder.Default private Collection<ResourceUser> resourceUsers = Lists.newArrayList();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "`auth-groupe-users`", joinColumns = {@JoinColumn(name = "`user-id`")}, inverseJoinColumns = {@JoinColumn(name = "`group-id`")},
                uniqueConstraints = @UniqueConstraint(columnNames = {"`group-id`", "`user-id`"}))
     @Builder.Default private Collection<Group> groups = Lists.newArrayList();

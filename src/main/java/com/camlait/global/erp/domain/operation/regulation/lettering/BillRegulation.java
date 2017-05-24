@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.operation.regulation.lettering;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -37,7 +38,7 @@ public class BillRegulation extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "documentId")
 	private ClientBill bill;
 
@@ -46,7 +47,7 @@ public class BillRegulation extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "regulationId")
 	private Regulation regulation;
 

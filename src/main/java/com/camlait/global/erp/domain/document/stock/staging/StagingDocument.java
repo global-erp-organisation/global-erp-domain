@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.document.stock.staging;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,7 +30,7 @@ public class StagingDocument extends StockDocument {
 	private String destinationStoreId;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "destinationStoreId")
 	private Store destinationStore;
 

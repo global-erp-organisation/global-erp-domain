@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.partner;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -61,7 +62,7 @@ public abstract class Partner extends BaseEntity {
     private String centerId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "centerId")
     private Center centre;
 
@@ -78,7 +79,7 @@ public abstract class Partner extends BaseEntity {
     private String partnerGroupId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "partnerGroupId")
     private PartnerGroup partnerGroup;
 
@@ -86,7 +87,7 @@ public abstract class Partner extends BaseEntity {
     private String tarifId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "tarifId")
     private Tariff tarif;
 

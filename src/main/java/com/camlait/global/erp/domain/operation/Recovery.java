@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.operation;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,7 +27,7 @@ public class Recovery extends Operation {
 	private String dmId;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "dmId")
 	private DailyMovement dailyMovement;
 

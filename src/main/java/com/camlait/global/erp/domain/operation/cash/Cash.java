@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.operation.cash;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -40,7 +41,7 @@ public class Cash extends BaseEntity {
 	private String workerId;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "workerId")
 	private Employee worker;
 

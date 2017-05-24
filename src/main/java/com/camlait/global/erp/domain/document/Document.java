@@ -66,7 +66,7 @@ public abstract class Document extends BaseEntity {
     private String storeId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "storeId")
     private Store store;
 
@@ -74,7 +74,7 @@ public abstract class Document extends BaseEntity {
     private String workerId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "workerId")
     private Employee documentWorker;
 
@@ -85,7 +85,7 @@ public abstract class Document extends BaseEntity {
     private String dmId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
 
@@ -93,7 +93,7 @@ public abstract class Document extends BaseEntity {
     private String inventoryId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "inventoryId")
     private Inventory inventory;
 

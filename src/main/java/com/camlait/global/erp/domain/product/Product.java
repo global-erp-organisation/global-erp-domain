@@ -9,12 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import com.amazonaws.util.CollectionUtils;
 import com.camlait.global.erp.domain.BaseEntity;
@@ -57,12 +59,13 @@ public class Product extends BaseEntity {
 
     private String productDescription;
 
+    @ApiModelProperty(hidden = true)
     @Transient
     private String productCategoryId;
 
     @ApiModelProperty(hidden = true)
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "productCategoryId")
     private ProductCategory category;
 
@@ -72,24 +75,26 @@ public class Product extends BaseEntity {
 
     @ApiModelProperty(hidden = true)
     @Builder.Default
-    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(name = "`product-product-taxes`", joinColumns = {@JoinColumn(name = "`product-id`")}, inverseJoinColumns = {@JoinColumn(name = "`tax-id`")},
+               uniqueConstraints = @UniqueConstraint(columnNames = {"`product-id`", "`tax-id`"}))
     private Collection<Tax> taxes = Lists.newArrayList();
 
     private boolean stockFollowing;
 
     @ApiModelProperty(hidden = true)
     @Builder.Default
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Collection<Stock> stocks = Lists.newArrayList();
 
     @ApiModelProperty(hidden = true)
     @Builder.Default
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Collection<StockCard> stockCards = Lists.newArrayList();
 
     @ApiModelProperty(hidden = true)
     @Builder.Default
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Collection<Tariffication> tarifications = Lists.newArrayList();
 
     public Product() {

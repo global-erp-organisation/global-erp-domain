@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.document.business.sale;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,7 +31,7 @@ public class SaleDocument extends BusinessDocument {
 	private String clientId;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "clientId")
 	private Client client;
 
@@ -38,7 +39,7 @@ public class SaleDocument extends BusinessDocument {
 	private String zoneId;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "zoneId")
 	private Zone zone;
 

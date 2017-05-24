@@ -56,7 +56,7 @@ public class Inventory extends BaseEntity {
     private String storeId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "storeId")
     private Store store;
 
@@ -64,7 +64,7 @@ public class Inventory extends BaseEntity {
     private String outgoingWarehouserId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "outgoingWarehouserId")
     private StoreOperator outgoingWarehouser;
 
@@ -72,7 +72,7 @@ public class Inventory extends BaseEntity {
     private String incomingWarehouserId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "incomingWarehouserId")
     private StoreOperator incomingWarehouser;
 

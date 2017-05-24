@@ -10,12 +10,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import com.amazonaws.util.CollectionUtils;
 import com.camlait.global.erp.domain.BaseEntity;
@@ -47,11 +49,15 @@ public class ProductCategory extends BaseEntity {
     @Id
     private String productCategoryId;
 
+    @ApiModelProperty(hidden = true)
     @Transient
     private String parentCategoryId;
 
+    @Transient
+    private String parentCategoryCode;
+
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "parentCategoryId")
     private ProductCategory parentCategory;
 
@@ -69,17 +75,19 @@ public class ProductCategory extends BaseEntity {
 
     @ApiModelProperty(hidden = true)
     @Builder.Default
-    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parentCategory", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Collection<ProductCategory> categoryChildren = Lists.newArrayList();
 
     @ApiModelProperty(hidden = true)
     @Builder.Default
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Collection<Product> products = Lists.newArrayList();
 
     @ApiModelProperty(hidden = true)
     @Builder.Default
-    @ManyToMany(mappedBy = "productCategories", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(name = "`product-category-product-taxes`", joinColumns = {@JoinColumn(name = "`product-category-id`")},
+               inverseJoinColumns = {@JoinColumn(name = "`tax-id`")}, uniqueConstraints = @UniqueConstraint(columnNames = {"`tax-id`", "`tax-id`"}))
     private Collection<Tax> taxes = Lists.newArrayList();
 
     public void setCategorieParent(ProductCategory categorieParent) {
@@ -114,6 +122,7 @@ public class ProductCategory extends BaseEntity {
     @Override
     public ProductCategory init() {
         setParentCategoryId(parentCategory == null ? null : parentCategory.getProductCategoryId());
+        setParentCategoryCode(parentCategory == null ? null : parentCategory.getParentCategoryCode());
         setProducts(products == null ? Lists.newArrayList() : products.stream().map(p -> {
             return p.init();
         }).collect(Collectors.toList()));
@@ -168,7 +177,6 @@ public class ProductCategory extends BaseEntity {
             }
             categories.add(this);
         });
-
         return this;
     }
 }

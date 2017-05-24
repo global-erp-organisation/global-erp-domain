@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.auth;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -36,7 +37,7 @@ public class ResourceUser extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	 @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "userId")
 	private User user;
 
@@ -45,7 +46,7 @@ public class ResourceUser extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	 @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "resourceId")
 	private Resource resource;
 

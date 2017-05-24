@@ -36,7 +36,7 @@ public class Stock extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "productId")
 	private Product product;
 
@@ -45,7 +45,7 @@ public class Stock extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "storeId")
 	private Store store;
 

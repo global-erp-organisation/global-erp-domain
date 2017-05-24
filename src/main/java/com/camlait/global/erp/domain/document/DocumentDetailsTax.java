@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.document;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -34,7 +35,7 @@ public class DocumentDetailsTax extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "docDetailId")
 	private DocumentDetails documentDetails;
 
@@ -43,7 +44,7 @@ public class DocumentDetailsTax extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "taxId")
 	private Tax tax;
 

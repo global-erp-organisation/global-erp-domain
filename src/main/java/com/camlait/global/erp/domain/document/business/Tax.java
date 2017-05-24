@@ -2,7 +2,6 @@ package com.camlait.global.erp.domain.document.business;
 
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -56,7 +55,7 @@ public class Tax extends BaseEntity {
     @ApiModelProperty(hidden = true)
     @JsonIgnore
     @Builder.Default
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "`product-product-taxes`", joinColumns = {@JoinColumn(name = "`tax-id`")}, inverseJoinColumns = {@JoinColumn(name = "`product-id`")},
                uniqueConstraints = @UniqueConstraint(columnNames = {"`product-id`", "`tax-id`"}))
     private Collection<Product> products = Lists.newArrayList();
@@ -64,7 +63,7 @@ public class Tax extends BaseEntity {
     @ApiModelProperty(hidden = true)
     @JsonIgnore
     @Builder.Default
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "`product-category-product-taxes`", joinColumns = {@JoinColumn(name = "`tax-id`")},
                inverseJoinColumns = {@JoinColumn(name = "`product-category-id`")},
                uniqueConstraints = @UniqueConstraint(columnNames = {"`product-category-id`", "`tax-id`"}))

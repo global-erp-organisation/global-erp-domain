@@ -60,7 +60,7 @@ public class DocumentDetails extends BaseEntity {
     private String productId;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "produitId")
     private Product product;
 
@@ -72,7 +72,7 @@ public class DocumentDetails extends BaseEntity {
     private String documenId;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "documentId")
     private Document document;
 

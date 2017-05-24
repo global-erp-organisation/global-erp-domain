@@ -6,10 +6,13 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
@@ -37,12 +40,14 @@ public class Group extends BaseEntity {
 
     private String groupDescription;
 
-    @Builder.Default 
+    @Builder.Default
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private Collection<ResourceGroup> resourceGroups = Lists.newArrayList();
 
-    @Builder.Default 
-    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL)
+    @Builder.Default
+    @ManyToMany
+    @JoinTable(name = "`auth-groupe-users`", joinColumns = {@JoinColumn(name = "`group-id`")}, inverseJoinColumns = {@JoinColumn(name = "`user-id`")},
+               uniqueConstraints = @UniqueConstraint(columnNames = {"`group-id`", "`user-id`"}))
     private Collection<User> users = Lists.newArrayList();
 
     public Group() {

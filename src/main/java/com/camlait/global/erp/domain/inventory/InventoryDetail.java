@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.inventory;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -34,7 +35,7 @@ public class InventoryDetail extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "inventoryId")
 	private Inventory inventory;
 
@@ -43,7 +44,7 @@ public class InventoryDetail extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "productId")
 	private Product product;
 

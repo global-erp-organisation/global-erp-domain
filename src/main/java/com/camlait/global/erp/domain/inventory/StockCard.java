@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.inventory;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -40,7 +41,7 @@ public class StockCard extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "storeId")
 	private Store store;
 
@@ -49,7 +50,7 @@ public class StockCard extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "productId")
 	private Product product;
 

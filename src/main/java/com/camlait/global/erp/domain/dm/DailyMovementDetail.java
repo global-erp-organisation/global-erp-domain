@@ -44,7 +44,7 @@ public class DailyMovementDetail extends BaseEntity {
     private String productId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "productId")
     private Product product;
 
@@ -55,7 +55,7 @@ public class DailyMovementDetail extends BaseEntity {
     private String dmId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "dmId")
     private DailyMovement dailyMovement;
 
@@ -63,7 +63,7 @@ public class DailyMovementDetail extends BaseEntity {
     private String documentId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "documentId")
     private Document document;
 

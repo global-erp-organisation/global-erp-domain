@@ -34,7 +34,7 @@ public class TermLanguage extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "termId")
 	private Term term;
 
@@ -43,7 +43,7 @@ public class TermLanguage extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "languageId")
 	private Language language;
 

@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.localization;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -34,7 +35,7 @@ public class Zone extends Localization {
     private String secteurId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "secteurId")
     private Sector secteur;
 

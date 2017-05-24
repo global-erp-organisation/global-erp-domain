@@ -1,5 +1,6 @@
 package com.camlait.global.erp.domain.operation.regulation;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -46,7 +47,7 @@ public class RegulationModel extends BaseEntity {
 	private String regulationModeId;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "regulationModeId")
 	private RegulationMode regulationMode;
 
@@ -54,7 +55,7 @@ public class RegulationModel extends BaseEntity {
 	private String partnerId;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "partnerId")
 	private Partner partner;
 

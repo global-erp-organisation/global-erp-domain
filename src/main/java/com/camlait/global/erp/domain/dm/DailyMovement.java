@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -59,7 +60,7 @@ public class DailyMovement extends BaseEntity {
     private String sellerId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "sellerId")
     private Seller seller;
 
@@ -67,7 +68,7 @@ public class DailyMovement extends BaseEntity {
     private String storeId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "storeId")
     private Store store;
 
@@ -88,7 +89,7 @@ public class DailyMovement extends BaseEntity {
     private String workerId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "workerId")
     private Employee worker;
 

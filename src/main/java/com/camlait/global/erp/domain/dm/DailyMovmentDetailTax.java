@@ -43,7 +43,7 @@ public class DailyMovmentDetailTax extends BaseEntity {
 
 	@JsonIgnore
 	@Id
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "taxId")
 	private Tax tax;
 

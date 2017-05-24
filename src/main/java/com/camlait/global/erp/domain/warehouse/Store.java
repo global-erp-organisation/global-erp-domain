@@ -55,7 +55,7 @@ public class Store extends BaseEntity {
     private String warehouseId;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "warehouseId")
     private Warehouse warehouse;
 

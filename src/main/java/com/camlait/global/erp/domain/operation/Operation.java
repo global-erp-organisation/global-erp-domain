@@ -2,6 +2,7 @@ package com.camlait.global.erp.domain.operation;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -51,7 +52,7 @@ public abstract class Operation extends BaseEntity {
 	private String workerId;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "workerId")
 	private Employee worker;
 
@@ -59,7 +60,7 @@ public abstract class Operation extends BaseEntity {
 	private String partnerId;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "partnerId")
 	private Partner partner;
 

@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.operation.regulation;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -36,7 +37,7 @@ public class Regulation extends Operation {
     private String regulationModeId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "regulationModeId")
     private RegulationMode regulationMode;
 
