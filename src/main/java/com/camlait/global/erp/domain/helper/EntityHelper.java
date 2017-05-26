@@ -1,10 +1,13 @@
 package com.camlait.global.erp.domain.helper;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.amazonaws.util.CollectionUtils;
 import com.camlait.global.erp.domain.BaseEntity;
+import com.google.common.collect.Lists;
 
 import lombok.NonNull;
 
@@ -37,8 +40,8 @@ public final class EntityHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends BaseEntity> List<T> batchInit(List<T> entities) {
-        return entities.stream().map(e -> {
+    public static <T extends BaseEntity> List<T> batchInit(Collection<T> entities) {
+        return CollectionUtils.isNullOrEmpty(entities) ? Lists.newArrayList() : entities.stream().map(e -> {
             return (T) e.init();
         }).collect(Collectors.toList());
     }

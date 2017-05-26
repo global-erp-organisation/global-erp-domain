@@ -14,7 +14,7 @@ public class GlobalAppConstants {
     public final static String DOMAIN_BASE_PACKAGE = ROOT_PACKAGE + ".domain";
     public final static String SERVICE_BASE_PACKAGE = ROOT_PACKAGE + ".delegate";
 
-    public final static String HASH_ALGORITHM = "SHA1PRNG";
+    public static String RETRIEVE_ALL = "ALL";
 
     public static String unavailableProductMessage(DocumentDetails ligne) {
         String message = "";
@@ -23,4 +23,4 @@ public class GlobalAppConstants {
         return message;
     }
 
- }
+}

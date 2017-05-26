@@ -66,9 +66,9 @@ public abstract class BaseEntity implements Serializable {
     public abstract EnumTypeEntitity toEnum();
 
     /**
-     * Merge the current entity with the one provided as parameter.
+     * Merge the current entity with the one provided as parameter using the default merging rule.
      * 
-     * @param from
+     * @param from Source entity that the current need to be merged from.
      * @return The merging object;
      * @see MergeHelper
      */
@@ -94,6 +94,7 @@ public abstract class BaseEntity implements Serializable {
      */
     public <T extends BaseEntity> T lazyInit() {
         Stream.of(this.getClass().getDeclaredFields()).filter(this::canBeLazyInit).forEach(f -> Hibernate.initialize(getFieldValue(f)));
+        this.init();
         return (T) this;
     }
 

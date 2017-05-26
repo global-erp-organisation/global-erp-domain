@@ -1,8 +1,10 @@
 package com.camlait.global.erp.domain.product;
 
+import static com.camlait.global.erp.domain.helper.EntityHelper.batchInit;
+import static com.camlait.global.erp.domain.helper.EntityHelper.getUidFor;
+
 import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +24,6 @@ import com.amazonaws.util.CollectionUtils;
 import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
-import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.inventory.Stock;
 import com.camlait.global.erp.domain.inventory.StockCard;
 import com.camlait.global.erp.domain.localization.Localization;
@@ -119,24 +120,16 @@ public class Product extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setProductId(EntityHelper.getUidFor(productId));
+        setProductId(getUidFor(productId));
     }
 
     @Override
     public Product init() {
-        setProductCategoryId(category == null ? null : category.getProductCategoryId());
-        setTarifications(tarifications == null ? Lists.newArrayList() : tarifications.stream().map(tf -> {
-            return tf.init();
-        }).collect(Collectors.toList()));
-        setTaxes(taxes == null ? Lists.newArrayList() : taxes.stream().map(tx -> {
-            return tx.init();
-        }).collect(Collectors.toList()));
-        setStockCards(stockCards == null ? Lists.newArrayList() : stockCards.stream().map(sc -> {
-            return sc.init();
-        }).collect(Collectors.toList()));
-        setStocks(stocks == null ? Lists.newArrayList() : stocks.stream().map(s -> {
-            return s.init();
-        }).collect(Collectors.toList()));
+        setProductCategoryId(getCategory() == null ? null : getCategory().getProductCategoryId());
+        setTarifications(tarifications == null ? Lists.newArrayList() : batchInit(tarifications));
+        setTaxes(taxes == null ? Lists.newArrayList() : batchInit(taxes));
+        setStockCards(stockCards == null ? Lists.newArrayList() : batchInit(stockCards));
+        setStocks(stocks == null ? Lists.newArrayList() : batchInit(stocks));
         return this;
     }
 

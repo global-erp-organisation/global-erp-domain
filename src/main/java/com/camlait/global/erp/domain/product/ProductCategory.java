@@ -1,7 +1,9 @@
 package com.camlait.global.erp.domain.product;
 
+import static com.camlait.global.erp.domain.helper.EntityHelper.batchInit;
+import static com.camlait.global.erp.domain.helper.EntityHelper.getUidFor;
+
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +26,6 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.business.Tax;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.Scope;
-import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
@@ -102,7 +103,7 @@ public class ProductCategory extends BaseEntity {
         return this.scope == Scope.DETAIL;
     }
 
-    public boolean isTotal(ProductCategory categorie) {
+    public boolean isTotal() {
         return this.scope == Scope.TOTAL;
     }
 
@@ -115,23 +116,17 @@ public class ProductCategory extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setProductCategoryId(EntityHelper.getUidFor(productCategoryId));
+        setProductCategoryId(getUidFor(productCategoryId));
         setParentCategoryId(parentCategory == null ? null : parentCategory.getParentCategoryId());
     }
 
     @Override
     public ProductCategory init() {
         setParentCategoryId(parentCategory == null ? null : parentCategory.getProductCategoryId());
-        setParentCategoryCode(parentCategory == null ? null : parentCategory.getParentCategoryCode());
-        setProducts(products == null ? Lists.newArrayList() : products.stream().map(p -> {
-            return p.init();
-        }).collect(Collectors.toList()));
-        setTaxes(taxes == null ? Lists.newArrayList() : taxes.stream().map(t -> {
-            return t.init();
-        }).collect(Collectors.toList()));
-        setCategoryChildren(getCategoryChildren() == null ? Lists.newArrayList() : getCategoryChildren().stream().map(cc -> {
-            return cc.init();
-        }).collect(Collectors.toList()));
+        setParentCategoryCode(parentCategory == null ? null : parentCategory.getProductCategoryCode());
+        setProducts(products == null ? Lists.newArrayList() : batchInit(products));
+        setTaxes(taxes == null ? Lists.newArrayList() : batchInit(taxes));
+        setCategoryChildren(getCategoryChildren() == null ? Lists.newArrayList() : batchInit(getCategoryChildren()));
         return this;
     }
 
