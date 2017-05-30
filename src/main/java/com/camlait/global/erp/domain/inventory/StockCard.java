@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.inventory;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -16,6 +17,7 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.keys.StockCardKey;
 import com.camlait.global.erp.domain.product.Product;
 import com.camlait.global.erp.domain.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +35,8 @@ import lombok.EqualsAndHashCode;
 @IdClass(value = StockCardKey.class)
 public class StockCard extends BaseEntity {
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	@Id
 	private Date stockDate;
 

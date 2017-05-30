@@ -36,6 +36,7 @@ import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.inventory.Inventory;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
@@ -60,6 +61,8 @@ public abstract class Document extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String documentCode;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date documentDate;
 
     @Transient

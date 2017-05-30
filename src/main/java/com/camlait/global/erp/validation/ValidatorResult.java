@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * Encapsulate the validation result
@@ -16,8 +17,10 @@ import lombok.Data;
  * @author Martin Blaise Signe.
  * @param <R> type of the object to return after the validation.
  */
-@Data
+@Getter
+@Builder
 public class ValidatorResult<R> {
-    private List<String> errors = Lists.newArrayList();
-    private R result;
+    @Builder.Default
+    private final List<String> errors = Lists.newArrayList();
+    private final R result;
 }

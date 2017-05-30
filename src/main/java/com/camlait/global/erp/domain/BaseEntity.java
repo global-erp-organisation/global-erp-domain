@@ -23,6 +23,7 @@ import com.camlait.global.erp.domain.exception.LazyInitException;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.helper.MergeHelper;
 import com.camlait.global.erp.domain.helper.SerializerHelper;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -46,10 +47,12 @@ public abstract class BaseEntity implements Serializable {
 
     @ApiModelProperty(hidden = true)
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date createdDate;
 
     @ApiModelProperty(hidden = true)
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date lastUpdatedDate;
 
     /**

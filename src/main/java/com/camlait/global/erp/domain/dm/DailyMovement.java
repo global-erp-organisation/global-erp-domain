@@ -28,6 +28,7 @@ import com.camlait.global.erp.domain.operation.Recovery;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Seller;
 import com.camlait.global.erp.domain.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -54,6 +55,8 @@ public class DailyMovement extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String dmCode;
 
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date dmDate;
 
     @Transient
@@ -72,15 +75,15 @@ public class DailyMovement extends BaseEntity {
     @JoinColumn(name = "storeId")
     private Store store;
 
-    @Builder.Default 
+    @Builder.Default
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<Document> documents = Lists.newArrayList();
 
-    @Builder.Default 
+    @Builder.Default
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<Recovery> recoveries = Lists.newArrayList();
 
-    @Builder.Default 
+    @Builder.Default
     @OneToMany(mappedBy = "dailyMovement")
     private Collection<DailyMovementDetail> dailyMovementDetails = Lists.newArrayList();
     private boolean bmqClos;

@@ -22,6 +22,7 @@ import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.StoreOperator;
 import com.camlait.global.erp.domain.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
@@ -47,7 +48,8 @@ public class Inventory extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String inventoryCode;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date inventoryDate;
 
     private String note;

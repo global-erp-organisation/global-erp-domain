@@ -3,6 +3,7 @@ package com.camlait.global.erp.domain.operation;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,6 +22,7 @@ import com.camlait.global.erp.domain.enumeration.OperationDirection;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Partner;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -36,51 +38,54 @@ import lombok.EqualsAndHashCode;
 @Table(name = "`op-operations`")
 public abstract class Operation extends BaseEntity {
 
-	@Id
-	private String operationId;
+    @Id
+    private String operationId;
 
-	private Date operationDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 
-	@Enumerated(EnumType.STRING)
-	private OperationDirection operationDirection;
+    private Date operationDate;
 
-	private String operationLabel;
+    @Enumerated(EnumType.STRING)
+    private OperationDirection operationDirection;
 
-	private double operationValue;
+    private String operationLabel;
 
-	@Transient
-	private String workerId;
+    private double operationValue;
 
-	@JsonIgnore
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name = "workerId")
-	private Employee worker;
+    @Transient
+    private String workerId;
 
-	@Transient
-	private String partnerId;
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "workerId")
+    private Employee worker;
 
-	@JsonIgnore
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name = "partnerId")
-	private Partner partner;
+    @Transient
+    private String partnerId;
 
-	public Operation() {
-	}
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "partnerId")
+    private Partner partner;
 
-	@PrePersist
-	private void setKey() {
-		setOperationId(EntityHelper.getUidFor(operationId));
-	}
+    public Operation() {
+    }
 
-	@Override
-	public Operation init() {
-		setWorkerId(worker == null ? null : worker.getPartnerId());
-		setPartnerId(partner == null ? null : partner.getPartnerId());
-		return this;
-	}
+    @PrePersist
+    private void setKey() {
+        setOperationId(EntityHelper.getUidFor(operationId));
+    }
 
-	@Override
-	public EnumTypeEntitity toEnum() {
-		return null;
-	}
+    @Override
+    public Operation init() {
+        setWorkerId(worker == null ? null : worker.getPartnerId());
+        setPartnerId(partner == null ? null : partner.getPartnerId());
+        return this;
+    }
+
+    @Override
+    public EnumTypeEntitity toEnum() {
+        return null;
+    }
 }
