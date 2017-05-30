@@ -10,7 +10,7 @@ import lombok.Getter;
 /**
  * Encapsulate the validation result
  * <ul>
- * <li>errors: List of string that represent the error messages after the validation</li>
+ * <li>errors: List of string that contain the error messages after the validation</li>
  * <li>result: Generic type that represent a result to return after the validation.
  * </ul>
  * 
