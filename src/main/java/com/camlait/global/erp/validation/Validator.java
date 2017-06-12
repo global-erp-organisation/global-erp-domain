@@ -28,12 +28,8 @@ public interface Validator<T, R> {
      * @see ValidatorResult
      */
     @SuppressWarnings("unchecked")
-    default ValidatorResult<R> build(List<String> errors, R result){
-         return (ValidatorResult<R>) ValidatorResult.builder(
-                 ).errors(errors)
-                 .result(result)
-                 .build();
+    default ValidatorResult<R> build(List<String> errors, R result) {
+        return (ValidatorResult<R>) ValidatorResult.builder().errors(errors).result(result).build();
     }
-    
-   
+
 }

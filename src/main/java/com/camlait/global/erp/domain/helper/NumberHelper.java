@@ -12,13 +12,13 @@ public final class NumberHelper {
         // no-op.
     }
 
-    public static String convertToLetter(BigDecimal number, Locale locale) {
+    public static String convertToLetter(BigDecimal toConvert, Locale locale) {
         final RuleBasedNumberFormat r = new RuleBasedNumberFormat(locale, RuleBasedNumberFormat.SPELLOUT);
-        return r.format(number);
+        return r.format(toConvert);
     }
 
-    public static String convertToLetter(BigInteger number, Locale locale) {
+    public static String convertToLetter(BigInteger toConvert, Locale locale) {
         final RuleBasedNumberFormat r = new RuleBasedNumberFormat(locale, RuleBasedNumberFormat.SPELLOUT);
-        return r.format(number);
+        return r.format(toConvert);
     }
 }
