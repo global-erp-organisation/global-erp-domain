@@ -171,4 +171,52 @@ public abstract class Document extends BaseEntity {
         }
         return this;
     }
+
+    /**
+     * Computes the value without taxes for the current document.
+     * 
+     * @return The value without taxes for the current document.
+     */
+
+    public Double documentValueWithoutTaxes() {
+        return this.getDocumentDetails().stream().mapToDouble(l -> {
+            return l.getLineUnitPrice() * l.getLineQuantity();
+        }).sum();
+    }
+
+    /**
+     * Computes the taxes value for the current document.
+     * 
+     * @return The total taxes value that belong to the current document.
+     */
+    public Double documentTaxesValue() {
+        return this.getDocumentDetails().stream().mapToDouble(l -> {
+            return l.getDocumentDetailsTaxes().stream().mapToDouble(ldt -> {
+                return l.getLineUnitPrice() * l.getLineQuantity() * ldt.getTaxRate();
+            }).sum();
+        }).sum();
+    }
+
+    /**
+     * Computes the taxes value for the current document.
+     * 
+     * @param taxId Tax identifier.
+     * @return The total tax value for the given tax and the current document.
+     */
+    public Double documentTaxesValue(final String taxId) {
+        return this.getDocumentDetails().stream().mapToDouble(ld -> {
+            return ld.getDocumentDetailsTaxes().stream().filter(ldt -> ldt.getTax().getTaxId().equals(taxId)).mapToDouble(ldt -> {
+                return ld.getLineUnitPrice() * ld.getLineQuantity() * ldt.getTaxRate();
+            }).sum();
+        }).sum();
+    }
+
+    /**
+     * Computes the document value including taxes value.
+     * 
+     * @return The document value including taxes value.
+     */
+    public Double documentValueWithTaxes() throws DataStorageException {
+        return documentValueWithoutTaxes() + documentTaxesValue();
+    }
 }

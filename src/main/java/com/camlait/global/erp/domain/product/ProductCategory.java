@@ -60,6 +60,7 @@ public class ProductCategory extends BaseEntity {
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "parentCategoryId")
+    @ApiModelProperty(hidden = true)
     private ProductCategory parentCategory;
 
     @Column(unique = true)

@@ -22,6 +22,7 @@ import com.camlait.global.erp.domain.BaseEntity;
 import com.camlait.global.erp.domain.document.Document;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
+import com.camlait.global.erp.domain.exception.DataStorageException;
 import com.camlait.global.erp.domain.exception.DataValidationException;
 import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.operation.Recovery;
@@ -144,5 +145,74 @@ public class DailyMovement extends BaseEntity {
     @Override
     public EnumTypeEntitity toEnum() {
         return OtherEnum.BMQ;
+    }
+
+    /**
+     * Computes the current DailyMovement value without taxes value.
+     * 
+     * @return The DailyMovement value without taxes value.
+     */
+    public Double bmqValueWithoutTaxes() {
+        return this.getDocuments().stream().filter(d -> d.isClientBill()).mapToDouble(d -> {
+            return d.documentValueWithoutTaxes();
+        }).sum();
+    }
+
+    /**
+     * Computes the current DailyMovement value including taxes value.
+     * 
+     * @return The DailyMovement value including taxes value.
+     */
+    public Double bmqValueWithTaxes() throws DataStorageException {
+        return this.getDocuments().stream().filter(d -> d.isClientBill()).mapToDouble(d -> {
+            return d.documentValueWithTaxes();
+        }).sum();
+    }
+
+    /**
+     * Computes the total taxes values for the current DailyMovement;
+     * 
+     * @return The total taxes values for the provided DailyMovement.
+     */
+    public Double bmqTaxesValue() {
+        return this.getDocuments().stream().filter(d -> d.isClientBill()).mapToDouble(d -> {
+            return d.documentTaxesValue();
+        }).sum();
+    }
+
+    /**
+     * Computes the total value for a specific tax ties to the current DailyMovement.
+     * 
+     * @param taxed given taxe identifier
+     * @return The total value for the provided tax and the provide DailyMovement.
+     */
+    public Double bmqTaxesValue(String taxId) {
+        return this.getDocuments().stream().filter(d -> d.isClientBill()).mapToDouble(d -> {
+            return d.documentTaxesValue(taxId);
+        }).sum();
+    }
+
+    /**
+     * Computes the cash sales value for the current DailyMovement.
+     * 
+     * @return The cash sales value the provided DailyMovement.
+     */
+
+    public Double bmqCashSalesValue() {
+        return this.getDocuments().stream().filter(d -> d.isCashBill()).mapToDouble(d -> {
+            return d.documentValueWithTaxes();
+        }).sum();
+    }
+
+    /**
+     * Computes The margin value for the current DailyMovement.
+     * 
+     * @return The margin value for the provided DailyMovement.
+     */
+    public Double bmqMarginSalesValue() {
+
+        return this.getDocuments().stream().filter(d -> d.isMarginBill()).mapToDouble(d -> {
+            return d.documentValueWithTaxes();
+        }).sum();
     }
 }
