@@ -66,12 +66,9 @@ public class MergeHelper extends BeanUtilsBean {
      * Set the field destination value with the field source value according to
      * a specific rule.
      * 
-     * @param destination
-     *            Destination object that need to be updated.
-     * @param fieldName
-     *            Field name that need to be updated.
-     * @param sourceValue
-     *            Value of the source field.
+     * @param destination Destination object that need to be updated.
+     * @param fieldName Field name that need to be updated.
+     * @param sourceValue Value of the source field.
      * @throws IllegalAccessException
      * @throws Exception
      */
@@ -89,10 +86,8 @@ public class MergeHelper extends BeanUtilsBean {
      * <p>
      * The source and the destination object should be the same type.
      * 
-     * @param from
-     *            Source object
-     * @param to
-     *            Destination object.
+     * @param from Source object
+     * @param to Destination object.
      * @return The merging object.
      * @throws InvocationTargetException
      * @throws IllegalAccessException
@@ -109,10 +104,8 @@ public class MergeHelper extends BeanUtilsBean {
      * <p>
      * The source and the destination object should be the same type.
      * 
-     * @param from
-     *            Source object
-     * @param to
-     *            Destination object.
+     * @param from Source object
+     * @param to Destination object.
      * @return The merging object.
      */
     public static <T> T mergeDefault(T from, T to) {
@@ -129,10 +122,8 @@ public class MergeHelper extends BeanUtilsBean {
      * Default condition that verify if the destination field value can be
      * override with the source field value or not.
      * 
-     * @param sourceValue Source
-     *            field value
-     * @param destinationValue
-     *            Destination field value
+     * @param sourceValue Source field value
+     * @param destinationValue Destination field value
      * @return
      */
     @SuppressWarnings({"unchecked", "rawtypes"})

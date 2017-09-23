@@ -18,11 +18,11 @@ public class LandStore extends Store {
     private String adresse;
 
     public LandStore() {
-        setStoreType(OtherEnum.MOBILE_STORE);
+        setStoreType(OtherEnum.LAND_STORE);
     }
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return OtherEnum.MOBILE_STORE;
+         return OtherEnum.LAND_STORE;
     }
 }

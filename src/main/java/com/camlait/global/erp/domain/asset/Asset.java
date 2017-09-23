@@ -25,6 +25,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public abstract class Asset extends BaseEntity {
 
+    
     @Id
     private String assetId;
 

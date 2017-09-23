@@ -2,7 +2,6 @@ package com.camlait.global.erp.domain.document;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -148,9 +147,7 @@ public abstract class Document extends BaseEntity {
         setWorkerId(documentWorker == null ? null : documentWorker.getPartnerId());
         setDmId(dailyMovement != null ? dailyMovement.getDmId() : null);
         setInventoryId(inventory != null ? inventory.getInventoryId() : null);
-        setDocumentDetails(documentDetails == null ? Lists.newArrayList() : documentDetails.stream().map(dd -> {
-            return dd.init();
-        }).collect(Collectors.toList()));
+        setDocumentDetails(EntityHelper.batchInit(documentDetails));
         return this;
     }
 

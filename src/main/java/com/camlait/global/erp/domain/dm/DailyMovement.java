@@ -1,5 +1,7 @@
 package com.camlait.global.erp.domain.dm;
 
+import static com.camlait.global.erp.domain.helper.EntityHelper.getUidFor;
+import static com.camlait.global.erp.domain.helper.EntityHelper.batchInit;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +26,6 @@ import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.OtherEnum;
 import com.camlait.global.erp.domain.exception.DataStorageException;
 import com.camlait.global.erp.domain.exception.DataValidationException;
-import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.operation.Recovery;
 import com.camlait.global.erp.domain.partner.Employee;
 import com.camlait.global.erp.domain.partner.Seller;
@@ -102,7 +103,7 @@ public class DailyMovement extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setDmId(EntityHelper.getUidFor(dmId));
+        setDmId(getUidFor(dmId));
         final List<String> errors = Lists.newArrayList();
         if (!errors.isEmpty()) {
             throw new DataValidationException(Joiner.on("\n").join(errors));
@@ -114,15 +115,9 @@ public class DailyMovement extends BaseEntity {
         setStoreId(store == null ? null : store.getStoreId());
         setSellerId(seller == null ? null : seller.getPartnerId());
         setWorkerId(worker == null ? null : worker.getPartnerId());
-        setDailyMovementDetails(dailyMovementDetails == null ? Lists.newArrayList() : dailyMovementDetails.stream().map(dm -> {
-            return dm.init();
-        }).collect(Collectors.toList()));
-        setRecoveries(recoveries == null ? Lists.newArrayList() : recoveries.stream().map(r -> {
-            return r.init();
-        }).collect(Collectors.toList()));
-        setDocuments(documents == null ? Lists.newArrayList() : documents.stream().map(d -> {
-            return d.init();
-        }).collect(Collectors.toList()));
+        setDailyMovementDetails(batchInit(dailyMovementDetails));
+        setRecoveries(batchInit(recoveries));
+        setDocuments(batchInit(documents));
         return this;
     }
 

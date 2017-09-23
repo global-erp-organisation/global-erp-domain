@@ -1,7 +1,9 @@
 package com.camlait.global.erp.domain.partner;
 
+import static com.camlait.global.erp.domain.helper.EntityHelper.batchInit;
+import static com.camlait.global.erp.domain.helper.EntityHelper.getUidFor;
+
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +25,6 @@ import com.camlait.global.erp.domain.asset.PartnerAsset;
 import com.camlait.global.erp.domain.document.business.sale.SaleDocument;
 import com.camlait.global.erp.domain.enumeration.EnumTypeEntitity;
 import com.camlait.global.erp.domain.enumeration.PartnerType;
-import com.camlait.global.erp.domain.helper.EntityHelper;
 import com.camlait.global.erp.domain.localization.Center;
 import com.camlait.global.erp.domain.operation.Operation;
 import com.camlait.global.erp.domain.operation.regulation.RegulationModel;
@@ -99,7 +100,7 @@ public abstract class Partner extends BaseEntity {
 
     @PrePersist
     private void setKey() {
-        setPartnerId(EntityHelper.getUidFor(partnerId));
+        setPartnerId(getUidFor(partnerId));
     }
 
     @Override
@@ -107,18 +108,10 @@ public abstract class Partner extends BaseEntity {
         setCenterId(centre == null ? null : centre.getLocalId());
         setPartnerGroupId(partnerGroup == null ? null : partnerGroup.getPartnerGroupId());
         setTarifId(tarif == null ? null : tarif.getTarifId());
-        setDocuments(documents == null ? Lists.newArrayList() : documents.stream().map(d -> {
-            return d.init();
-        }).collect(Collectors.toList()));
-        setPartnerAssets(partnerAssets == null ? Lists.newArrayList() : partnerAssets.stream().map(pa -> {
-            return pa.init();
-        }).collect(Collectors.toList()));
-        setOperations(operations == null ? Lists.newArrayList() : operations.stream().map(o -> {
-            return o.init();
-        }).collect(Collectors.toList()));
-        setRegulationModels(regulationModels == null ? Lists.newArrayList() : regulationModels.stream().map(rm -> {
-            return rm.init();
-        }).collect(Collectors.toList()));
+        setDocuments(batchInit(documents));
+        setPartnerAssets(batchInit(partnerAssets));
+        setOperations(batchInit(operations));
+        setRegulationModels(batchInit(regulationModels));
         return this;
     }
 

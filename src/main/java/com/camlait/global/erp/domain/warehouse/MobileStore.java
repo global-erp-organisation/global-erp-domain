@@ -17,11 +17,11 @@ import lombok.EqualsAndHashCode;
 public class MobileStore extends Store {
 
     public MobileStore() {
-        setStoreType(OtherEnum.LAND_STORE);
+        setStoreType(OtherEnum.MOBILE_STORE);
     }
     
     @Override
     public EnumTypeEntitity toEnum() {
-         return OtherEnum.LAND_STORE;
+         return OtherEnum.MOBILE_STORE;
     }
 }
